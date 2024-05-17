@@ -21,7 +21,7 @@
 
         </a>
         <div class="login-box">
-            <form action="registerjobseeker" class="form_container" method="post">
+            <form action="registerjobseeker?role=2" class="form_container" method="post">
                 <div class="logo_container">
                     <img style="height: 100%;width: 100%;object-fit: cover" src="./assets/images/easyjobwithouttext.png" alt="alt"/>
                 </div>

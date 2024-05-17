@@ -59,24 +59,7 @@ public class ForgetPassJobseeker extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        JobseekerDAO jd = new JobseekerDAO();
-        if (jd.fogortPass(email) != null) {
-            User u = jd.fogortPass(email);
-            SendEmail se = new SendEmail();
-            Random random = new Random();
-            int token = random.nextInt(1000000);
-            se.sendMailChangePass(u.getEmail(), u.getLastName() + " " + u.getFirstName(), token);
-            request.setAttribute("userID", u.getIdUser());
-            request.setAttribute("token", token);
-            request.getRequestDispatcher("otpchangepass.jsp").forward(request, response);
-            
-        } 
-        else { 
-            request.setAttribute("notice", "Email does not exist, please check again!");
-            request.getRequestDispatcher("forgetpass.jsp").forward(request, response);
-        
-        }
+        processRequest(request, response);
 
     }
 
@@ -91,7 +74,62 @@ public class ForgetPassJobseeker extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String action = request.getParameter("action");
+        int role = Integer.parseInt(request.getParameter("role"));
+        if (role == 2) {
+            String email = request.getParameter("email");
+
+            JobseekerDAO jd = new JobseekerDAO();
+            try {
+                if (jd.fogortPass(email).getRoleId() == 2) {
+                    User u = jd.fogortPass(email);
+                    SendEmail se = new SendEmail();
+                    Random random = new Random();
+                    int token = random.nextInt(1000000);
+                    se.sendMailChangePass(u.getEmail(), u.getLastName() + " " + u.getFirstName(), token);
+                    request.setAttribute("userID", u.getIdUser());
+                    request.setAttribute("token", token);
+                    request.getRequestDispatcher("otpchangepass.jsp").forward(request, response);
+
+                } else {
+                    request.setAttribute("notice", "Email does not exist, please check again!");
+                    request.getRequestDispatcher("forgetpass.jsp").forward(request, response);
+
+                }
+
+            } catch (Exception e) {
+                request.setAttribute("notice", "Email does not exist, please check again!");
+                request.getRequestDispatcher("forgetpass.jsp").forward(request, response);
+            }
+
+        } else if (role == 3) {
+            String email = request.getParameter("email");
+            JobseekerDAO jd = new JobseekerDAO();
+
+            try {
+                if (jd.fogortPass(email).getRoleId() == 3) {
+                    User u = jd.fogortPass(email);
+                    SendEmail se = new SendEmail();
+                    Random random = new Random();
+                    int token = random.nextInt(1000000);
+                    se.sendMailChangePass(u.getEmail(), u.getLastName() + " " + u.getFirstName(), token);
+                    request.setAttribute("userID", u.getIdUser());
+                    request.setAttribute("token", token);
+                    request.getRequestDispatcher("otpchangepassemployeer.jsp").forward(request, response);
+
+                } else {
+                    request.setAttribute("notice", "Email does not exist, please check again!");
+                    request.getRequestDispatcher("forgetpassemployeer.jsp").forward(request, response);
+
+                }
+
+            } catch (Exception e) {
+                request.setAttribute("notice", "Email does not exist, please check again!");
+                request.getRequestDispatcher("forgetpassemployeer.jsp").forward(request, response);
+
+            }
+
+        }
     }
 
     /**

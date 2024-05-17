@@ -81,7 +81,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
             ps.setString(2, newObject.getLastName());
             ps.setString(3, newObject.getEmail());
             ps.setString(4, newObject.getPassword());
-            ps.setInt(5, 2);
+            ps.setInt(5,newObject.getRoleId() );
             int rowAffect = ps.executeUpdate();
             if (rowAffect > 0) {
                 return true;

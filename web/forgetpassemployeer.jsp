@@ -25,11 +25,11 @@
         <div class="flex--item">
             <div class="newsletter-form">
                 <p class="heading"> Enter your email to reset password</p>
-                <form class="form" method="post" action="forgetpass?role=2">
+                <form class="form" method="post" action="forgetpass?role=3">
                     <label for="email">Email:</label>
                     <input required="" placeholder="Enter your email address" name="email" id="email" type="email">
                     <b class="notice-erorr">${notice}</b>
-                    <input value="Reset password" type="submit" style="display: inline-block;padding: 16px 0">
+                    <input value="Reset password" type="submit" style="display: inline-block;padding: 16px 0;background-color: #7808d0">
                     <a style="display: inline-block;color:#007be5; font-size: 15px; text-decoration: none;
 
                        font-family: Whyte, sans-serif; margin-top: 9px; margin-left: 50%;

@@ -25,24 +25,30 @@
 
         </a>
         <div class="middle">
-            <form class="otp-Form" method="post" action="verifychangepass?role=2">
+            <form class="otp-Form" method="post" action="verifyregister?action=verify&role=3">
                 <span class="mainHeading">Enter OTP</span>
-                <p class="otpSubheading">We have sent a verification code to your email.</p>
+                <p class="otpSubheading">We have sent a verification code to your mobile number</p>
                 <div class="inputContainer">
-                    <input name="userID" value="${userID}" hidden="" type="hidden"/>
-                    <input name="token" value="${token}" hidden=""type="hidden"/>
                     <input required="required" maxlength="1" type="text" class="otp-input" name="otp-input1">
                     <input required="required" maxlength="1" type="text" class="otp-input" name="otp-input2">
                     <input required="required" maxlength="1" type="text" class="otp-input" name="otp-input3">
                     <input required="required" maxlength="1" type="text" class="otp-input" name="otp-input4"> 
                     <input required="required" maxlength="1" type="text" class="otp-input" name="otp-input5"> 
                     <input required="required" maxlength="1" type="text" class="otp-input" name="otp-input6"> 
+
+
                 </div>
+                <button style="--clr:#7808d0;background: #7808d0;"  class="verifyButton" type="submit">Verify</button>
                 <b class="notice-erorr">${notice}</b>
-                <button class="verifyButton" type="submit">Verify</button>
-                <button class="exitBtn">×</button>
-                <input name="userID" value="${user.idUser}" hidden="" type="hidden"/>
-                <input name="token" value="${token}" hidden=""type="hidden"/>
+                <button  class="exitBtn">×</button>
+                <p class="resendNote">Didn't receive the code? 
+                    <a style="color: #7808d0;" href="verifyregister?action=resend&firstname=${jobseekerFirstName}&lastname=${jobseekerLastName}&email=${jobseekerEmail}&pass=${jobseekerPassword}&role=3" class="resendBtn">Resend Code</a></p>
+
+                <input name="jobseekerFirstName" value="${jobseekerFirstName}" hidden="" type="hidden"/>
+                <input name="jobseekerLastName" value="${jobseekerLastName}" hidden=""type="hidden"/>
+                <input name="jobseekerEmail" value="${jobseekerEmail}" hidden=""type="hidden"/>
+                <input name="jobseekerPassword" value="${jobseekerPassword}" hidden=""type="hidden"/>
+                <input name="reqToken" value="${reqToken}" hidden=""/>
 
             </form>
 

@@ -74,46 +74,93 @@ public class RegisterJobseekerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String firstName = request.getParameter("firstname");
-        String lastName = request.getParameter("lastname");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-        Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-        Pattern pText = Pattern.compile("^[a-zA-Z]+$");
-        
-        String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
-        String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
 
-        if (!pText.matcher(firstName).find()) {
-            request.setAttribute("notice", "First name cann't containt [1-9] or[!-@]");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
-        }
-        if (!pText.matcher(lastName).find()) {
-            request.setAttribute("notice", "Last name cann't containt [1-9] or[!-@]");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
+        int role = Integer.parseInt(request.getParameter("role"));
+        if (role == 2) {
+            String firstName = request.getParameter("firstname");
+            String lastName = request.getParameter("lastname");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+            Pattern pText = Pattern.compile("^[a-zA-Z]+$");
+
+            String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+            String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+
+            if (!pText.matcher(firstName).find()) {
+                request.setAttribute("notice", "First name cann't containt [1-9] or[!-@]");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            }
+            if (!pText.matcher(lastName).find()) {
+                request.setAttribute("notice", "Last name cann't containt [1-9] or[!-@]");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            }
+
+            if (!p.matcher(password).find()) {
+                request.setAttribute("notice", "Password have [0-9],[a-z],[A-Z],[!-&]");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            }
+            if (firstName.isEmpty() || lastName.isEmpty() || password.isEmpty()) {
+                request.setAttribute("notice", "Please complete all information.");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+            }
+            SendEmail se = new SendEmail();
+            Random random = new Random();
+            int token = random.nextInt(1000000);
+            se.sendMailVeri(email, lastName + " " + firstName, token);
+
+            request.setAttribute("jobseekerFirstName", firstName);
+            request.setAttribute("jobseekerLastName", lastName);
+            request.setAttribute("jobseekerEmail", email);
+            request.setAttribute("jobseekerPassword", password);
+            request.setAttribute("reqToken", token);
+            //
+
+            request.getRequestDispatcher("otpchecker.jsp").forward(request, response);
+
+        } else if (role == 3) {
+
+            String firstName = request.getParameter("firstname");
+            String lastName = request.getParameter("lastname");
+            String email = request.getParameter("email");
+            String password = request.getParameter("password");
+            Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+            Pattern pText = Pattern.compile("^[a-zA-Z]+$");
+
+            String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
+            String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
+
+            if (!pText.matcher(firstName).find()) {
+                request.setAttribute("notice", "First name cann't containt [1-9] or[!-@]");
+                request.getRequestDispatcher("registeremployeer.jsp").forward(request, response);
+            }
+            if (!pText.matcher(lastName).find()) {
+                request.setAttribute("notice", "Last name cann't containt [1-9] or[!-@]");
+                request.getRequestDispatcher("registeremployeer.jsp").forward(request, response);
+            }
+
+            if (!p.matcher(password).find()) {
+                request.setAttribute("notice", "Password have [0-9],[a-z],[A-Z],[!-&]");
+                request.getRequestDispatcher("registeremployeer.jsp").forward(request, response);
+            }
+            if (firstName.isEmpty() || lastName.isEmpty() || password.isEmpty()) {
+                request.setAttribute("notice", "Please complete all information.");
+                request.getRequestDispatcher("registeremployeer.jsp").forward(request, response);
+            }
+            SendEmail se = new SendEmail();
+            Random random = new Random();
+            int token = random.nextInt(1000000);
+            se.sendMailVeri(email, lastName + " " + firstName, token);
+
+            request.setAttribute("jobseekerFirstName", firstName);
+            request.setAttribute("jobseekerLastName", lastName);
+            request.setAttribute("jobseekerEmail", email);
+            request.setAttribute("jobseekerPassword", password);
+            request.setAttribute("reqToken", token);
+            //
+            request.getRequestDispatcher("otpcheckeremployeer.jsp").forward(request, response);
         }
 
-        if (!p.matcher(password).find()) {
-            request.setAttribute("notice", "Password have [0-9],[a-z],[A-Z],[!-&]");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
-        }
-        if (firstName.isEmpty() || lastName.isEmpty() || password.isEmpty()) {
-            request.setAttribute("notice", "Please complete all information.");
-            request.getRequestDispatcher("register.jsp").forward(request, response);
-        }
-        SendEmail se = new SendEmail();
-        Random random = new Random();
-        int token = random.nextInt(1000000);
-        se.sendMailVeri(email, lastName + " " + firstName, token);
-
-        request.setAttribute("jobseekerFirstName", firstName);
-        request.setAttribute("jobseekerLastName", lastName);
-        request.setAttribute("jobseekerEmail", email);
-        request.setAttribute("jobseekerPassword", password);
-        request.setAttribute("reqToken", token);
-        //
-
-        request.getRequestDispatcher("otpchecker.jsp").forward(request, response);
     }
 
     /**

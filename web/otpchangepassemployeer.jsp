@@ -25,7 +25,7 @@
 
         </a>
         <div class="middle">
-            <form class="otp-Form" method="post" action="verifychangepass?role=2">
+            <form class="otp-Form" method="post" action="verifychangepass?role=3">
                 <span class="mainHeading">Enter OTP</span>
                 <p class="otpSubheading">We have sent a verification code to your email.</p>
                 <div class="inputContainer">
@@ -39,7 +39,7 @@
                     <input required="required" maxlength="1" type="text" class="otp-input" name="otp-input6"> 
                 </div>
                 <b class="notice-erorr">${notice}</b>
-                <button class="verifyButton" type="submit">Verify</button>
+                <button style="background-color: #7808d0;" class="verifyButton" type="submit">Verify</button>
                 <button class="exitBtn">×</button>
                 <input name="userID" value="${user.idUser}" hidden="" type="hidden"/>
                 <input name="token" value="${token}" hidden=""type="hidden"/>

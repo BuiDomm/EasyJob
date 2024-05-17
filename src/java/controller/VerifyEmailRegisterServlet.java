@@ -60,25 +60,49 @@ public class VerifyEmailRegisterServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if (action.equals("resend")) {
+        int role = Integer.parseInt(request.getParameter("role"));
+        if (role == 2) {
+            if (action.equals("resend")) {
 
-            String jobseekerFirstName = request.getParameter("firstname");
-            String jobseekerLastName = request.getParameter("lastname");
-            String jobseekerEmail = request.getParameter("email");
-            String jobseekerPassword = request.getParameter("pass");
-            SendEmail se = new SendEmail();
+                String jobseekerFirstName = request.getParameter("firstname");
+                String jobseekerLastName = request.getParameter("lastname");
+                String jobseekerEmail = request.getParameter("email");
+                String jobseekerPassword = request.getParameter("pass");
+                SendEmail se = new SendEmail();
 
-            Random random = new Random();
-            int token = random.nextInt(1000000);
+                Random random = new Random();
+                int token = random.nextInt(1000000);
 
-            se.sendMailVeri(jobseekerEmail, jobseekerLastName + " " + jobseekerFirstName, token);
+                se.sendMailVeri(jobseekerEmail, jobseekerLastName + " " + jobseekerFirstName, token);
 
-            request.setAttribute("jobseekerFirstName", jobseekerFirstName);
-            request.setAttribute("jobseekerLastName", jobseekerLastName);
-            request.setAttribute("jobseekerEmail", jobseekerEmail);
-            request.setAttribute("jobseekerPassword", jobseekerPassword);
-            request.setAttribute("reqToken", token);
-            request.getRequestDispatcher("otpchecker.jsp").forward(request, response);
+                request.setAttribute("jobseekerFirstName", jobseekerFirstName);
+                request.setAttribute("jobseekerLastName", jobseekerLastName);
+                request.setAttribute("jobseekerEmail", jobseekerEmail);
+                request.setAttribute("jobseekerPassword", jobseekerPassword);
+                request.setAttribute("reqToken", token);
+                request.getRequestDispatcher("otpchecker.jsp").forward(request, response);
+            }
+        } else if (role == 3) {
+            if (action.equals("resend")) {
+
+                String jobseekerFirstName = request.getParameter("firstname");
+                String jobseekerLastName = request.getParameter("lastname");
+                String jobseekerEmail = request.getParameter("email");
+                String jobseekerPassword = request.getParameter("pass");
+                SendEmail se = new SendEmail();
+
+                Random random = new Random();
+                int token = random.nextInt(1000000);
+
+                se.sendMailVeri(jobseekerEmail, jobseekerLastName + " " + jobseekerFirstName, token);
+
+                request.setAttribute("jobseekerFirstName", jobseekerFirstName);
+                request.setAttribute("jobseekerLastName", jobseekerLastName);
+                request.setAttribute("jobseekerEmail", jobseekerEmail);
+                request.setAttribute("jobseekerPassword", jobseekerPassword);
+                request.setAttribute("reqToken", token);
+                request.getRequestDispatcher("otpcheckeremployeer.jsp").forward(request, response);
+            }
         }
     }
 
@@ -95,49 +119,100 @@ public class VerifyEmailRegisterServlet extends HttpServlet {
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
+        int role = Integer.parseInt(request.getParameter("role"));
+        if (role == 2) {
 
-        if (action.equals("verify")) {
-            String jobseekerFirstName = request.getParameter("jobseekerFirstName");
-            String jobseekerLastName = request.getParameter("jobseekerLastName");
-            String jobseekerEmail = request.getParameter("jobseekerEmail");
-            String jobseekerPassword = request.getParameter("jobseekerPassword");
-            // data from user jobseeker regis
+            if (action.equals("verify")) {
+                String jobseekerFirstName = request.getParameter("jobseekerFirstName");
+                String jobseekerLastName = request.getParameter("jobseekerLastName");
+                String jobseekerEmail = request.getParameter("jobseekerEmail");
+                String jobseekerPassword = request.getParameter("jobseekerPassword");
+                // data from user jobseeker regis
 
-            int reqToken = Integer.parseInt(request.getParameter("reqToken"));
-            //reqToken from Regis
+                int reqToken = Integer.parseInt(request.getParameter("reqToken"));
+                //reqToken from Regis
 
-            String opt1 = request.getParameter("otp-input1");
-            String opt2 = request.getParameter("otp-input2");
-            String opt3 = request.getParameter("otp-input3");
-            String opt4 = request.getParameter("otp-input4");
-            String opt5 = request.getParameter("otp-input5");
-            String opt6 = request.getParameter("otp-input6");
-            //handleOTP string from input otpchsecker
+                String opt1 = request.getParameter("otp-input1");
+                String opt2 = request.getParameter("otp-input2");
+                String opt3 = request.getParameter("otp-input3");
+                String opt4 = request.getParameter("otp-input4");
+                String opt5 = request.getParameter("otp-input5");
+                String opt6 = request.getParameter("otp-input6");
+                //handleOTP string from input otpchsecker
 
-            String otp = opt1 + opt2 + opt3 + opt4 + opt5 + opt6;
+                String otp = opt1 + opt2 + opt3 + opt4 + opt5 + opt6;
 
-            int numOTP = Integer.parseInt(otp);
+                int numOTP = Integer.parseInt(otp);
 
-            if (reqToken == numOTP) {
-                JobseekerDAO jd = new JobseekerDAO();
-                User u = new User(jobseekerFirstName, jobseekerLastName, jobseekerEmail, jobseekerPassword, 2);
-                if (jd.insert(u)) {
-                    request.setAttribute("successfully", true);
-                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                if (reqToken == numOTP) {
+                    JobseekerDAO jd = new JobseekerDAO();
+                    User u = new User(jobseekerFirstName, jobseekerLastName, jobseekerEmail, jobseekerPassword, 2);
+                    if (jd.insert(u)) {
+                        request.setAttribute("successfully", true);
+                        request.getRequestDispatcher("login.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("notice", "Email already exists on the system.");
+                        request.getRequestDispatcher("register.jsp").forward(request, response);
+                    }
+
                 } else {
-                    request.setAttribute("notice", "Email already exists on the system.");
-                    request.getRequestDispatcher("register.jsp").forward(request, response);
+                    request.setAttribute("jobseekerFirstName", jobseekerFirstName);
+                    request.setAttribute("jobseekerLastName", jobseekerLastName);
+                    request.setAttribute("jobseekerEmail", jobseekerEmail);
+                    request.setAttribute("jobseekerPassword", jobseekerPassword);
+                    request.setAttribute("notice", "Invalid code");
+                    request.setAttribute("reqToken", reqToken);
+                    request.getRequestDispatcher("otpchecker.jsp").forward(request, response);
+
                 }
 
-            } else {
-                request.setAttribute("jobseekerFirstName", jobseekerFirstName);
-                request.setAttribute("jobseekerLastName", jobseekerLastName);
-                request.setAttribute("jobseekerEmail", jobseekerEmail);
-                request.setAttribute("jobseekerPassword", jobseekerPassword);
-                request.setAttribute("notice", "Invalid code");
-                request.setAttribute("reqToken", reqToken);
-                request.getRequestDispatcher("otpchecker.jsp").forward(request, response);
-                
+            }
+
+        } else if (role == 3) {
+
+            if (action.equals("verify")) {
+                String jobseekerFirstName = request.getParameter("jobseekerFirstName");
+                String jobseekerLastName = request.getParameter("jobseekerLastName");
+                String jobseekerEmail = request.getParameter("jobseekerEmail");
+                String jobseekerPassword = request.getParameter("jobseekerPassword");
+                // data from user jobseeker regis
+
+                int reqToken = Integer.parseInt(request.getParameter("reqToken"));
+                //reqToken from Regis
+
+                String opt1 = request.getParameter("otp-input1");
+                String opt2 = request.getParameter("otp-input2");
+                String opt3 = request.getParameter("otp-input3");
+                String opt4 = request.getParameter("otp-input4");
+                String opt5 = request.getParameter("otp-input5");
+                String opt6 = request.getParameter("otp-input6");
+                //handleOTP string from input otpchsecker
+
+                String otp = opt1 + opt2 + opt3 + opt4 + opt5 + opt6;
+
+                int numOTP = Integer.parseInt(otp);
+
+                if (reqToken == numOTP) {
+                    JobseekerDAO jd = new JobseekerDAO();
+                    User u = new User(jobseekerFirstName, jobseekerLastName, jobseekerEmail, jobseekerPassword, 3);
+                    if (jd.insert(u)) {
+                        request.setAttribute("successfully", true);
+                        request.getRequestDispatcher("loginemployeer.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("notice", "Email already exists on the system.");
+                        request.getRequestDispatcher("registeremployeer.jsp").forward(request, response);
+                    }
+
+                } else {
+                    request.setAttribute("jobseekerFirstName", jobseekerFirstName);
+                    request.setAttribute("jobseekerLastName", jobseekerLastName);
+                    request.setAttribute("jobseekerEmail", jobseekerEmail);
+                    request.setAttribute("jobseekerPassword", jobseekerPassword);
+                    request.setAttribute("notice", "Invalid code");
+                    request.setAttribute("reqToken", reqToken);
+                    request.getRequestDispatcher("otpcheckeremployeer.jsp").forward(request, response);
+
+                }
 
             }
 

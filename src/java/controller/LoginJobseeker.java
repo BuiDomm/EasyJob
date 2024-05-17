@@ -74,37 +74,90 @@ public class LoginJobseeker extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String email = request.getParameter("email");
-        String pass = request.getParameter("password");
-        String rem = request.getParameter("rem");
-        HttpSession session = request.getSession();
 
-        Cookie cuser = new Cookie("cuser", email);
-        Cookie cpass = new Cookie("cpass", pass);
-        Cookie crem = new Cookie("crem", rem);
-        if (rem != null) {
-            cuser.setMaxAge(60 * 60 * 24 * 7);
-            cpass.setMaxAge(60 * 60 * 24 * 7);
-            crem.setMaxAge(60 * 60 * 24 * 7);
+        int role = Integer.parseInt(request.getParameter("role"));
+        if (role == 2) {
+            String email = request.getParameter("email");
+            String pass = request.getParameter("password");
+            String rem = request.getParameter("rem");
+            HttpSession session = request.getSession();
 
-        } else {
-            cuser.setMaxAge(0);
-            cpass.setMaxAge(0);
-            crem.setMaxAge(0);
+            Cookie cuser = new Cookie("cuser", email);
+            Cookie cpass = new Cookie("cpass", pass);
+            Cookie crem = new Cookie("crem", rem);
+            if (rem != null) {
+                cuser.setMaxAge(60 * 60 * 24 * 7);
+                cpass.setMaxAge(60 * 60 * 24 * 7);
+                crem.setMaxAge(60 * 60 * 24 * 7);
+
+            } else {
+                cuser.setMaxAge(0);
+                cpass.setMaxAge(0);
+                crem.setMaxAge(0);
+            }
+            response.addCookie(cuser);
+            response.addCookie(cpass);
+            response.addCookie(crem);
+
+            JobseekerDAO jd = new JobseekerDAO();
+            try {
+                if (jd.loginAcount(email, pass).getRoleId() == 2) {
+                    session.setAttribute("account", jd.loginAcount(email, pass));
+                    request.getRequestDispatcher("home.jsp").forward(request, response);
+
+                } else {
+                    request.setAttribute("notice", "Email or password is invalid. Please check again!!");
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                }
+            } catch (Exception e) {
+                request.setAttribute("notice", "Email or password is invalid. Please check again!!");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+
+            }
+
+        } else if (role == 3) {
+
+            String email = request.getParameter("email");
+            String pass = request.getParameter("password");
+            String rem = request.getParameter("rem");
+            HttpSession session = request.getSession();
+
+            Cookie cusere = new Cookie("cuser", email);
+            Cookie cpasse = new Cookie("cpass", pass);
+            Cookie creme = new Cookie("crem", rem);
+            if (rem != null) {
+                cusere.setMaxAge(60 * 60 * 24 * 7);
+                cpasse.setMaxAge(60 * 60 * 24 * 7);
+                creme.setMaxAge(60 * 60 * 24 * 7);
+
+            } else {
+                cusere.setMaxAge(0);
+                cpasse.setMaxAge(0);
+                creme.setMaxAge(0);
+            }
+            response.addCookie(cusere);
+            response.addCookie(cpasse);
+            response.addCookie(creme);
+
+            JobseekerDAO jd = new JobseekerDAO();
+
+            try {
+
+                if (jd.loginAcount(email, pass).getRoleId() == 3) {
+                    session.setAttribute("account", jd.loginAcount(email, pass));
+                    request.getRequestDispatcher("emp.jsp").forward(request, response);
+
+                } else {
+                    request.setAttribute("notice", "Email or password is invalid. Please check again!!");
+                    request.getRequestDispatcher("loginemployeer.jsp").forward(request, response);
+                }
+
+            } catch (Exception e) {
+                request.setAttribute("notice", "Email or password is invalid. Please check again!!");
+                request.getRequestDispatcher("loginemployeer.jsp").forward(request, response);
+            }
         }
-        response.addCookie(cuser);
-        response.addCookie(cpass);
-        response.addCookie(crem);
 
-        JobseekerDAO jd = new JobseekerDAO();
-        if (jd.loginAcount(email, pass) != null) {
-            session.setAttribute("account", jd.loginAcount(email, pass));
-            request.getRequestDispatcher("home.jsp").forward(request, response);
-
-        } else {
-            request.setAttribute("notice", "Email or password is invalid. Please check again!!");
-            request.getRequestDispatcher("login.jsp").forward(request, response);
-        }
     }
 
     /**

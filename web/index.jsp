@@ -44,7 +44,7 @@
                         <figure style="width: 55px;height: 55px;">
                             <img style="height: 100%;width: 100%;object-fit: cover;" src="./assets/images/easyjobb.png" alt="alt"/>
                         </figure>
-                        
+
                     </a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -78,20 +78,37 @@
 
 
                         </ul>
-                        <div style="display: flex;max-height: 45px;margin-left: 120px;margin-bottom: 15px;">
-                            <a style="--clr: #7808d0" class="button" href="login.jsp">
-                                <span class="button__icon-wrapper">
-                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
-                                    <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                    </svg>
+                        <div style="display: flex;align-items: center;margin-left: 100px;">
+                            <div style="display: flex;max-height: 45px;margin-bottom: 15px;">
+                                <a style="--clr:#ff6600" class="button" href="login.jsp">
+                                    <span class="button__icon-wrapper">
+                                        <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                        </svg>
 
-                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
-                                    <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                    </svg>
-                                </span>
-                                Explore All
-                            </a>
+                                        <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                        </svg>
+                                    </span>
+                                    Find A Job
+                                </a>
 
+                            </div>
+                            <div style="display: flex;max-height: 45px;margin-bottom: 15px; margin-left: 20px">
+                                <a style="--clr:#7808d0 " class="button" href="loginemployeer.jsp">
+                                    <span class="button__icon-wrapper">
+                                        <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                        </svg>
+
+                                        <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                        </svg>
+                                    </span>
+                                   Post A Job
+                                </a>
+
+                            </div>
                         </div>
                     </div>
                 </div>

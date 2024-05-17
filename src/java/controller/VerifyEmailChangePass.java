@@ -63,26 +63,22 @@ public class VerifyEmailChangePass extends HttpServlet {
         String confirmpass = request.getParameter("confirmnewpass");
         int idUser = Integer.parseInt(request.getParameter("userIDChange"));
         JobseekerDAO jd = new JobseekerDAO();
-        
-         Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-        
-        
-        
+
+        Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+
         User u = jd.findById(idUser);
         if (newpass.equals(confirmpass)) {
             if (!p.matcher(newpass).find()) {
                 request.setAttribute("user", u);
                 request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
                 request.getRequestDispatcher("updatepass.jsp").forward(request, response);
-            } 
-            
-            else { 
-            
-                 if (jd.changePass(idUser, newpass)) {
-                request.setAttribute("successfully", true);
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-            
+            } else {
+
+                if (jd.changePass(idUser, newpass)) {
+                    request.setAttribute("successfully", true);
+                    request.getRequestDispatcher("login.jsp").forward(request, response);
+                }
+
             }
 
         } else {
@@ -104,31 +100,65 @@ public class VerifyEmailChangePass extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        JobseekerDAO jd = new JobseekerDAO();
-        int idUser = Integer.parseInt(request.getParameter("userID"));
-        int token = Integer.parseInt(request.getParameter("token"));
-        User u = jd.findById(idUser);
-        String opt1 = request.getParameter("otp-input1");
-        String opt2 = request.getParameter("otp-input2");
-        String opt3 = request.getParameter("otp-input3");
-        String opt4 = request.getParameter("otp-input4");
-        String opt5 = request.getParameter("otp-input5");
-        String opt6 = request.getParameter("otp-input6");
-        //handleOTP string from input otpchsecker
+        int role = Integer.parseInt(request.getParameter("role"));
+        if (role == 2) {
 
-        String otp = opt1 + opt2 + opt3 + opt4 + opt5 + opt6;
+            JobseekerDAO jd = new JobseekerDAO();
+            int idUser = Integer.parseInt(request.getParameter("userID"));
+            int token = Integer.parseInt(request.getParameter("token"));
+            User u = jd.findById(idUser);
+            String opt1 = request.getParameter("otp-input1");
+            String opt2 = request.getParameter("otp-input2");
+            String opt3 = request.getParameter("otp-input3");
+            String opt4 = request.getParameter("otp-input4");
+            String opt5 = request.getParameter("otp-input5");
+            String opt6 = request.getParameter("otp-input6");
+            //handleOTP string from input otpchsecker
 
-        int numOTP = Integer.parseInt(otp);
-        if (token == numOTP) {
-            request.setAttribute("user", u);
-            request.getRequestDispatcher("updatepass.jsp").forward(request, response);
-        } else {
-            request.setAttribute("userID", idUser);
-            request.setAttribute("token", token);
+            String otp = opt1 + opt2 + opt3 + opt4 + opt5 + opt6;
 
-            request.setAttribute("notice", "Token invalid!");
-            request.getRequestDispatcher("otpchangepass.jsp").forward(request, response);
+            int numOTP = Integer.parseInt(otp);
+            if (token == numOTP) {
+                request.setAttribute("user", u);
+                request.getRequestDispatcher("updatepass.jsp").forward(request, response);
+            } else {
+                request.setAttribute("userID", idUser);
+                request.setAttribute("token", token);
+
+                request.setAttribute("notice", "Token invalid!");
+                request.getRequestDispatcher("otpchangepass.jsp").forward(request, response);
+            }
+
+        } else if (role == 3) {
+
+            JobseekerDAO jd = new JobseekerDAO();
+            int idUser = Integer.parseInt(request.getParameter("userID"));
+            int token = Integer.parseInt(request.getParameter("token"));
+            User u = jd.findById(idUser);
+            String opt1 = request.getParameter("otp-input1");
+            String opt2 = request.getParameter("otp-input2");
+            String opt3 = request.getParameter("otp-input3");
+            String opt4 = request.getParameter("otp-input4");
+            String opt5 = request.getParameter("otp-input5");
+            String opt6 = request.getParameter("otp-input6");
+            //handleOTP string from input otpchsecker
+
+            String otp = opt1 + opt2 + opt3 + opt4 + opt5 + opt6;
+
+            int numOTP = Integer.parseInt(otp);
+            if (token == numOTP) {
+                request.setAttribute("user", u);
+                request.getRequestDispatcher("updatepass.jsp").forward(request, response);
+            } else {
+                request.setAttribute("userID", idUser);
+                request.setAttribute("token", token);
+
+                request.setAttribute("notice", "Token invalid!");
+                request.getRequestDispatcher("otpchangepassemployeer.jsp").forward(request, response);
+            }
+
         }
+
     }
 
     /**

@@ -25,7 +25,7 @@
 
         </a>
         <div class="middle">
-            <form class="otp-Form" method="post" action="verifyregister?action=verify">
+            <form class="otp-Form" method="post" action="verifyregister?action=verify&role=2">
                 <span class="mainHeading">Enter OTP</span>
                 <p class="otpSubheading">We have sent a verification code to your mobile number</p>
                 <div class="inputContainer">
@@ -42,7 +42,7 @@
                 <b class="notice-erorr">${notice}</b>
                 <button class="exitBtn">×</button>
                 <p class="resendNote">Didn't receive the code? 
-                    <a href="verifyregister?action=resend&firstname=${jobseekerFirstName}&lastname=${jobseekerLastName}&email=${jobseekerEmail}&pass=${jobseekerPassword}" class="resendBtn">Resend Code</a></p>
+                    <a href="verifyregister?action=resend&firstname=${jobseekerFirstName}&lastname=${jobseekerLastName}&email=${jobseekerEmail}&pass=${jobseekerPassword}&role=2" class="resendBtn">Resend Code</a></p>
 
                 <input name="jobseekerFirstName" value="${jobseekerFirstName}" hidden="" type="hidden"/>
                 <input name="jobseekerLastName" value="${jobseekerLastName}" hidden=""type="hidden"/>

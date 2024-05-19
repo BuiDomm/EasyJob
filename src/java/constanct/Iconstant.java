@@ -10,9 +10,9 @@ package constanct;
  */
 public class Iconstant {
 
-    public static final String GOOGLE_CLIENT_ID = "626205375551-nktrtt1det9ulc8obt0632eogdb0bhva.apps.googleusercontent.com";
+    public static final String GOOGLE_CLIENT_ID = System.getenv("626205375551-nktrtt1det9ulc8obt0632eogdb0bhva.apps.googleusercontent.com");
 
-    public static final String GOOGLE_CLIENT_SECRET = "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";
+    public static final String GOOGLE_CLIENT_SECRET = System.getenv("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");
 
     public static final String GOOGLE_REDIRECT_URI = "http://localhost:8080/easyjob/googlelogin";
 

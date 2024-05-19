@@ -148,7 +148,7 @@ public class VerifyEmailChangePass extends HttpServlet {
             int numOTP = Integer.parseInt(otp);
             if (token == numOTP) {
                 request.setAttribute("user", u);
-                request.getRequestDispatcher("updatepass.jsp").forward(request, response);
+                request.getRequestDispatcher("updatepassemployeer.jsp").forward(request, response);
             } else {
                 request.setAttribute("userID", idUser);
                 request.setAttribute("token", token);

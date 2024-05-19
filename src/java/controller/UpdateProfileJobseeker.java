@@ -61,25 +61,61 @@ public class UpdateProfileJobseeker extends HttpServlet {
             throws ServletException, IOException {
         String firstName = request.getParameter("firstname");
         String lastName = request.getParameter("lastname");
-        String password = request.getParameter("password");
-        Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-        if (!p.matcher(password).find()) {
-            request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
-            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-        } else {
+        String password = request.getParameter("pass");
+        String confirmpasss = request.getParameter("confirmpass");
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        JobseekerDAO jd = new JobseekerDAO();
 
-            HttpSession session = request.getSession();
-            User u = (User) session.getAttribute("account");
-            JobseekerDAO jd = new JobseekerDAO();
-            User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), password, u.getRoleId(), u.getMessage(), u.getStatus());
+        Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+        if (password.length() == 0 && confirmpasss.length() == 0) {
+
+            User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), u.getPassword(), 2, u.getMessage(), u.getStatus());
             jd.update(uu);
             session.setAttribute("account", uu);
             request.setAttribute("successfully", true);
             request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-            
+
+        } else if (password.length() != 0 && confirmpasss.length() != 0) {
+            if (!p.matcher(password).find() || !p.matcher(confirmpasss).find()) {
+                request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
+                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+            } else if (!confirmpasss.equals(u.getPassword())) {
+                request.setAttribute("notice", "Your old password incorrect!!!");
+                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+
+            } else {
+
+                User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), password, 2, u.getMessage(), u.getStatus());
+                jd.update(uu);
+                session.setAttribute("account", uu);
+                request.setAttribute("successfully", true);
+                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+            }
+        } else if (password.length() == 0 && confirmpasss.length() == 0) {
+            response.sendRedirect("index.jsp");
+
+        } else if (password.length() != 0 && confirmpasss.length() == 0) {
+            if (!p.matcher(password).find()) {
+                request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
+                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+            } else {
+                User uu = new User(u.getIdUser(), u.getFirstName(), u.getLastName(), u.getEmail(), password, 2, u.getMessage(), u.getStatus());               
+                jd.update(uu);
+                session.setAttribute("account", uu);
+                request.setAttribute("successfully", true);
+                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+
+            }
 
         }
 
+//        else if ((password.length() != 0 && confirmpasss.length() == 0) || password.length() == 0 && confirmpasss.length() != 0) {
+//
+//            request.setAttribute("notice", "Please fill in all information!!!");
+//            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+//
+//        }
     }
 
     /**

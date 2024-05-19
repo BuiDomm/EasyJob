@@ -13,6 +13,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import model.User;
 
 /**
  *
@@ -59,7 +60,7 @@ public class LoginJobseeker extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.invalidate();
+        session.invalidate();            
         response.sendRedirect("index.jsp");
     }
 
@@ -145,7 +146,7 @@ public class LoginJobseeker extends HttpServlet {
 
                 if (jd.loginAcount(email, pass).getRoleId() == 3) {
                     session.setAttribute("account", jd.loginAcount(email, pass));
-                    request.getRequestDispatcher("emp.jsp").forward(request, response);
+                    request.getRequestDispatcher("homeemployeer.jsp").forward(request, response);
 
                 } else {
                     request.setAttribute("notice", "Email or password is invalid. Please check again!!");

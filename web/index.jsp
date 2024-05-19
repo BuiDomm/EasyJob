@@ -121,20 +121,20 @@
             <div class="owl-banner owl-carousel">
                 <div class="banner-item-01">
                     <div class="text-content">
-                        <h4>Find your car today!</h4>
-                        <h2>Lorem ipsum dolor sit amet</h2>
+                        <h4>Find your job today!</h4>
+                        <h2>Good jobs are here</h2>
                     </div>
                 </div>
                 <div class="banner-item-02">
                     <div class="text-content">
-                        <h4>Fugiat Aspernatur</h4>
-                        <h2>Laboriosam reprehenderit ducimus</h2>
+                        <h4>Jobs of your choice</h4>
+                        <h2>Good job with good salary</h2>
                     </div>
                 </div>
                 <div class="banner-item-03">
                     <div class="text-content">
-                        <h4>Saepe Omnis</h4>
-                        <h2>Quaerat suscipit unde minus dicta</h2>
+                        <h4>Everything is free</h4>
+                        <h2>Easy to find a job without losing money</h2>
                     </div>
                 </div>
             </div>

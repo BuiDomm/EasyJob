@@ -24,12 +24,16 @@
         </a>
         <div class="flex--item">
             <div class="newsletter-form">
-                <p class="heading"> Enter your email to reset password</p>
-                <form class="form" method="post" action="forgetpass?role=3">
-                    <label for="email">Email:</label>
-                    <input required="" placeholder="Enter your email address" name="email" id="email" type="email">
+                <p class="heading"> Enter your new password</p>
+                <form class="form" method="get" action="changepassemployer">
+                    <label for="email">New password</label>
+                    <input required="" placeholder="New password" name="newpass" id="email" type="password">
+                    <input placeholder="New password" name="userIDChange" value="${user.idUser}"  type="hidden">
+
+                    <label for="email">Confirm new password</label>
+                    <input required="" placeholder="Confirm new password" name="confirmnewpass" id="email" type="password">
                     <b class="notice-erorr">${notice}</b>
-                    <input value="Reset password" type="submit" style="display: inline-block;padding: 16px 0;background-color: #7808d0">
+                    <input value="Reset password" type="submit" style="display: inline-block;padding: 16px 0;background-color: #7808d0;">
                     <a style="display: inline-block;color:#007be5; font-size: 15px; text-decoration: none;
 
                        font-family: Whyte, sans-serif; margin-top: 9px; margin-left: 50%;

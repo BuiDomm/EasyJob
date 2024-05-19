@@ -105,7 +105,7 @@
                     <path fill="#4285f4" clip-path="url(#B)" d="M48 48L17 24l-4-3 35-10z"></path>
                     </g>
                     </svg>
-                    <a href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/easyjob/googlelogin&response_type=code&client_id=626205375551-nktrtt1det9ulc8obt0632eogdb0bhva.apps.googleusercontent.com&approval_prompt=force" style="text-decoration: none;font-weight: 600;color:#00000080"><i class="fa-brands fa-google-plus-g"></i> &nbsp; Sign In with Google</a>
+                    <a  href="https://accounts.google.com/o/oauth2/auth?scope=email profile openid&redirect_uri=http://localhost:8080/easyjob/googlelogin&response_type=code&client_id=626205375551-nktrtt1det9ulc8obt0632eogdb0bhva.apps.googleusercontent.com&approval_prompt=force" style="text-decoration: none;font-weight: 600;color:#00000080;padding: 12px 105px;"><i class="fa-brands fa-google-plus-g"></i> &nbsp; Sign In with Google</a>
                 </button>
 
 

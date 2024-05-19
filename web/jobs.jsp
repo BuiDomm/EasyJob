@@ -106,20 +106,38 @@
                             </ul>
                             <c:choose>
                                 <c:when test="${sessionScope.account == null}">
-                                    <div class="example-2">
-                                        <a style="--clr: #7808d0" class="button" href="login.jsp">
-                                            <span class="button__icon-wrapper">
-                                                <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
-                                                <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                                </svg>
+                              <div style="display: flex;align-items: center;margin-left: 100px;">
+                            <div style="display: flex;max-height: 45px;margin-bottom: 15px;">
+                                <a style="--clr:#ff6600" class="button" href="login.jsp">
+                                    <span class="button__icon-wrapper">
+                                        <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                        </svg>
 
-                                                <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
-                                                <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                                </svg>
-                                            </span>
-                                            Explore All
-                                        </a>
-                                    </div>
+                                        <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                        </svg>
+                                    </span>
+                                    Find A Job
+                                </a>
+
+                            </div>
+                            <div style="display: flex;max-height: 45px;margin-bottom: 15px; margin-left: 20px">
+                                <a style="--clr:#7808d0 " class="button" href="loginemployeer.jsp">
+                                    <span class="button__icon-wrapper">
+                                        <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                        </svg>
+
+                                        <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
+                                        <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
+                                        </svg>
+                                    </span>
+                                   Post A Job
+                                </a>
+
+                            </div>
+                        </div>
                                 </c:when >
                                 <c:otherwise >
                                     <ul class="example-2" style="">

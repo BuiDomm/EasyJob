@@ -60,7 +60,7 @@ public class LoginJobseeker extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        session.invalidate();            
+        session.invalidate();
         response.sendRedirect("index.jsp");
     }
 
@@ -157,18 +157,43 @@ public class LoginJobseeker extends HttpServlet {
                 request.setAttribute("notice", "Email or password is invalid. Please check again!!");
                 request.getRequestDispatcher("loginemployeer.jsp").forward(request, response);
             }
-        }
+        } else {
 
+            String email = request.getParameter("email");
+            String pass = request.getParameter("password");
+            try {
+                JobseekerDAO jd = new JobseekerDAO();
+
+                if (jd.loginAcount(email, pass).getRoleId() == 1) {
+                    HttpSession session = request.getSession();
+                    session.setAttribute("account", jd.loginAcount(email, pass));
+                    request.getRequestDispatcher("adminhome.jsp").forward(request, response);
+
+                } else {
+                    request.setAttribute("notice", "Email or password is invalid. Please check again!!");
+                    request.getRequestDispatcher("admin.jsp").forward(request, response);
+                }
+
+            } catch (Exception e) {
+                request.setAttribute("notice", "Email or password is invalid. Please check again!!");
+                request.getRequestDispatcher("admin.jsp").forward(request, response);
+            }
+
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
+        /**
+         * Returns a short description of the servlet.
+         *
+         * @return a String containing servlet description
+         */
+        @Override
+        public String getServletInfo
+        
+        
+        
+            () {
         return "Short description";
-    }// </editor-fold>
+        }// </editor-fold>
 
-}
+    }

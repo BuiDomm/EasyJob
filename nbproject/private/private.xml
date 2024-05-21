@@ -4,12 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/src/java/constanct/GoogleLoginHandle.java</file>
+            <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/src/java/controller/LoginJobseeker.java</file>
             <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/web/profilejb.jsp</file>
             <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/src/java/controller/UpdateProfileJobseeker.java</file>
             <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/src/java/controller/GoogleLoginServlet.java</file>
-            <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/src/java/constanct/Iconstant.java</file>
-            <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/web/WEB-INF/web.xml</file>
-            <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/web/META-INF/context.xml</file>
+            <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/web/admin.jsp</file>
+            <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/web/assets/css/admincss.css</file>
         </group>
     </open-files>
 </project-private>

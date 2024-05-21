@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.User;
+import java.sql.Date;
 
 /**
  *
@@ -26,15 +27,18 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
             PreparedStatement ps = getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                int idUser = rs.getInt(1);
+             int idUser = rs.getInt(1);
                 String firstName = rs.getString(2);
                 String lastName = rs.getString(3);
                 String email = rs.getString(4);
                 String password = rs.getString(5);
                 int roleID = rs.getInt(6);
                 String message = rs.getString(7);
-                String status = rs.getString(8);
-                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status);
+                String city = rs.getString(8);
+                String phoneNumber = rs.getString(9);
+                Date dob = rs.getDate(10);
+                String status = rs.getString(11);
+                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, phoneNumber, dob);
                 list.add(u);
             }
         } catch (Exception ex) {
@@ -59,8 +63,11 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
                 String password = rs.getString(5);
                 int roleID = rs.getInt(6);
                 String message = rs.getString(7);
-                String status = rs.getString(8);
-                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status);
+                String city = rs.getString(8);
+                String phoneNumber = rs.getString(9);
+                Date dob = rs.getDate(10);
+                String status = rs.getString(11);
+                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, phoneNumber, dob);
                 return u;
 
             }
@@ -81,7 +88,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
             ps.setString(2, newObject.getLastName());
             ps.setString(3, newObject.getEmail());
             ps.setString(4, newObject.getPassword());
-            ps.setInt(5,newObject.getRoleId() );
+            ps.setInt(5, newObject.getRoleId());
             int rowAffect = ps.executeUpdate();
             if (rowAffect > 0) {
                 return true;
@@ -158,11 +165,14 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
 
     @Override
     public boolean update(User newObject) {
-        String sql = "Update Users \n"
-                + "set FirstName = ?,\n"
-                + "LastName = ? , \n"
-                + "Password = ? \n"
-                + "Where UserID = ?";
+        String sql = "Update Users \n" +
+"                set FirstName = ?,\n" +
+"                LastName =?,\n" +
+"                Password = ?, \n" +
+"                City = ?, \n" +
+"                PhoneNumber = ?,\n" +
+"                DateOfBirth = ?\n" +
+"                Where UserID = ?";
 
         PreparedStatement ps;
         try {
@@ -170,7 +180,10 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
             ps.setString(1, newObject.getFirstName());
             ps.setString(2, newObject.getLastName());
             ps.setString(3, newObject.getPassword());
-            ps.setInt(4, newObject.getIdUser());
+            ps.setString(4, newObject.getCityName());
+            ps.setInt(5, Integer.parseInt(newObject.getPhoneNumber()));
+            ps.setDate(6, (Date) newObject.getDate());
+            ps.setInt(7, newObject.getIdUser());
 
             int rowAffect = ps.executeUpdate();
             if (rowAffect > 0) {

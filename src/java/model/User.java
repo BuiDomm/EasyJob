@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author ASUS
@@ -18,9 +20,13 @@ public class User {
     private int roleId;
     private String message;
     private String status;
+    private String cityName;
+    private String phoneNumber;
+    private Date date;
 
     public User() {
     }
+    
 
     public User(int idUser, String firstName, String lastName, String email, String password, int roleId, String message, String status) {
         this.idUser = idUser;
@@ -32,6 +38,75 @@ public class User {
         this.message = message;
         this.status = status;
     }
+
+    public User(int idUser, String firstName, String lastName, String email, String password, int roleId, String message, String status, Date date) {
+        this.idUser = idUser;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roleId = roleId;
+        this.message = message;
+        this.status = status;
+        this.date = date;
+    }
+    
+
+    public User(int idUser, String firstName, String lastName, String email, String password, int roleId, String message, String status, String cityName, Date date) {
+        this.idUser = idUser;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roleId = roleId;
+        this.message = message;
+        this.status = status;
+        this.cityName = cityName;
+        this.date = date;
+    }
+    
+
+    public User(int idUser, String firstName, String lastName, String email, String password, int roleId, String message, String status, String cityName, String phoneNumber) {
+        this.idUser = idUser;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roleId = roleId;
+        this.message = message;
+        this.status = status;
+        this.cityName = cityName;
+        this.phoneNumber = phoneNumber;
+    }
+
+    
+    public User(int idUser, String firstName, String lastName, String email, String password, int roleId, String message, String status, String cityName, String phoneNumber, Date date) {
+        this.idUser = idUser;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roleId = roleId;
+        this.message = message;
+        this.status = status;
+        this.cityName = cityName;
+        this.phoneNumber = phoneNumber;
+        this.date = date;
+    }
+
+    public User(String firstName, String lastName, String email, String password, int roleId, String message, String status, String cityName, String phoneNumber, Date date) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.roleId = roleId;
+        this.message = message;
+        this.status = status;
+        this.cityName = cityName;
+        this.phoneNumber = phoneNumber;
+        this.date = date;
+    }
+    
 
     public User(String firstName, String lastName, String email, String password, int roleId, String message, String status) {
         this.firstName = firstName;
@@ -86,6 +161,31 @@ public class User {
     public String getPassword() {
         return password;
     }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
 
     public void setPassword(String password) {
         this.password = password;

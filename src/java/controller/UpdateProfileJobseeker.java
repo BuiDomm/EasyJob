@@ -14,6 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.regex.Pattern;
 import model.User;
+import java.sql.Date;
 
 /**
  *
@@ -63,6 +64,11 @@ public class UpdateProfileJobseeker extends HttpServlet {
         String lastName = request.getParameter("lastname");
         String password = request.getParameter("pass");
         String confirmpasss = request.getParameter("confirmpass");
+        String cityName = request.getParameter("cityname");
+        String phoneNumber = request.getParameter("phone");
+        String dobDate = request.getParameter("date");
+        Date dob = Date.valueOf(dobDate);
+
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("account");
         JobseekerDAO jd = new JobseekerDAO();
@@ -70,7 +76,7 @@ public class UpdateProfileJobseeker extends HttpServlet {
         Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
         if (password.length() == 0 && confirmpasss.length() == 0) {
 
-            User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), u.getPassword(), 2, u.getMessage(), u.getStatus());
+            User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), u.getPassword(), u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
             jd.update(uu);
             session.setAttribute("account", uu);
             request.setAttribute("successfully", true);
@@ -86,21 +92,18 @@ public class UpdateProfileJobseeker extends HttpServlet {
 
             } else {
 
-                User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), password, 2, u.getMessage(), u.getStatus());
+                 User uu = new User(u.getIdUser(),firstName, lastName, u.getEmail(), password, u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
                 jd.update(uu);
                 session.setAttribute("account", uu);
                 request.setAttribute("successfully", true);
                 request.getRequestDispatcher("profilejb.jsp").forward(request, response);
             }
-        } else if (password.length() == 0 && confirmpasss.length() == 0) {
-            response.sendRedirect("index.jsp");
-
-        } else if (password.length() != 0 && confirmpasss.length() == 0) {
+        }else if (password.length() != 0 && confirmpasss.length() == 0) {
             if (!p.matcher(password).find()) {
                 request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
                 request.getRequestDispatcher("profilejb.jsp").forward(request, response);
             } else {
-                User uu = new User(u.getIdUser(), u.getFirstName(), u.getLastName(), u.getEmail(), password, 2, u.getMessage(), u.getStatus());               
+                User uu = new User(u.getIdUser(), u.getFirstName(), u.getLastName(), u.getEmail(), password, 2, u.getMessage(), u.getStatus());
                 jd.update(uu);
                 session.setAttribute("account", uu);
                 request.setAttribute("successfully", true);
@@ -108,7 +111,7 @@ public class UpdateProfileJobseeker extends HttpServlet {
 
             }
 
-        }
+        } 
 
 //        else if ((password.length() != 0 && confirmpasss.length() == 0) || password.length() == 0 && confirmpasss.length() != 0) {
 //

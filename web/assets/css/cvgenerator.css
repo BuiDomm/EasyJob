@@ -1,0 +1,411 @@
+@import url("https://fonts.googleapis.com/css2?family=Calligraffitti&family=Open+Sans:wght@400;700&display=swap");
+
+html {
+    font-family: "Open Sans", sans-serif;
+}
+
+
+:root {
+    --bg-clr: #6b7fba;
+    --white: #fff;
+    --rleft-bg: #9ab3eb;
+    --rright-bg: #8096d0;
+    --primary-text-clr: #525252;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    font-family: "Open Sans", sans-serif;
+}
+
+body {
+    background: var(--bg-clr);
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--primary-text-clr);
+    padding: 0 20px;
+}
+
+h2 {
+    font-family: "Calligraffitti", cursive;
+    text-transform: uppercase;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.resume {
+    width: 800px;
+    max-width: 100%;
+    height: auto;
+    display: flex;
+    margin: 50px auto;
+    background: var(--white);
+    padding-bottom: 20px;
+}
+
+.resume .resume_left {
+    width: 270px;
+}
+
+.resume .resume_right {
+    background: var(--rright-bg);
+    width: calc(800px - 270px);
+}
+
+.resume_left .r_profile_pic,
+.resume_right .r_namerole {
+    width: 100%;
+    height: 260px;
+    padding: 35px;
+}
+
+.resume_left .r_profile_pic {
+    background: var(--rleft-bg);
+}
+
+.resume_left .r_profile_pic img {
+    width: 100%;
+}
+
+.resume_left .r_left_sub {
+    padding: 35px;
+}
+
+.resume_left .r_left_sub > div:not(:last-child),
+.resume_right .r_right_sub > div:not(:last-child) {
+    margin-bottom: 35px;
+}
+
+.resume_left .r_aboutme p {
+    text-align: center;
+}
+
+.resume_left .r_skills ul li,
+.resume_left .r_skills ul li p:first-child,
+.resume_left .r_hobbies ul li p:first-child {
+    display: flex;
+    align-items: center;
+}
+
+.resume_left .r_skills ul li:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.resume_left .r_skills ul li p:first-child,
+.resume_left .r_hobbies ul li p:first-child {
+    width: 45px;
+    height: 45px;
+    background: var(--rleft-bg);
+    margin-right: 15px;
+    border-radius: 50%;
+    justify-content: center;
+    font-size: 14px;
+    color: var(--white);
+}
+
+.resume_left .r_hobbies ul {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.resume_left .r_hobbies ul li {
+    margin-bottom: 10px;
+}
+
+.resume_left .r_hobbies ul li p:hover {
+    background: var(--rright-bg);
+}
+
+.resume_right .r_namerole p {
+    font-family: "Calligraffitti", cursive;
+    font-size: 60px;
+    line-height: 80px;
+    text-align: center;
+}
+
+.resume_right .r_namerole p:last-child {
+    font-size: 18px;
+    line-height: 24px;
+    color: var(--white);
+}
+
+.resume_right .r_info {
+    padding: 35px;
+    background: var(--white);
+}
+
+.resume_right .r_info ul {
+    display: flex;
+    justify-content: space-between;
+}
+
+.resume_right .r_info p {
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.resume_right .r_right_sub {
+    padding: 35px;
+    padding-bottom: 0;
+}
+
+.resume_right .r_right_sub p {
+    color: var(--white);
+}
+
+.resume_right .r_right_sub ul li {
+    display: flex;
+    margin-bottom: 20px;
+}
+
+.resume_right .r_right_sub ul li div:first-child {
+    width: 25%;
+    margin-right: 15px;
+}
+
+.resume_right .r_right_sub ul li div:last-child {
+    width: 75%;
+}
+
+.resume_right .r_right_sub p:first-child {
+    font-size: 18px;
+    margin-bottom: 5px;
+}
+.textarea-box {
+    border-radius: 10px;
+    margin-left: -8px;
+    font-family: Open Sans, sans-serif;
+    padding: 10px;
+    text-align: center;
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--primary-text-clr);
+
+}
+
+
+.textarea-box:hover {
+    border: 1px solid #000;
+
+}
+
+
+.p-css {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    unicode-bidi: isolate;
+    line-height: 20px;
+    width: 130px;
+    border:none;
+}
+
+.icon-skill {
+    height: 45px;
+    width: 45px;
+}
+
+input::placeholder {
+    font-size: 16px;
+}
+
+
+
+.p-css:focus {
+
+    border: 1px solid #000;
+
+
+}
+.p-css input[type="text"] {
+    font-size: 12px;
+    line-height: 20px;
+    color: var(--primary-text-clr);
+}
+
+.name--css {
+    width:95%;
+    outline: none;
+    border:none;
+    font-family: "Calligraffitti", cursive;
+    font-size: 50px;
+    text-align: center;
+    background: transparent;
+    color:#525252;
+
+}
+
+.name--css::placeholder {
+    font-family: "Calligraffitti", cursive;
+    font-size: 50px;
+    line-height: 80px;
+    text-align: center;
+}
+.name--css:focus {
+    border: none;
+    outline: none;
+}
+.role {
+
+    font-family: "Calligraffitti", cursive;
+    text-align: center;
+    font-size: 18px;
+    background: transparent;
+    border: none;
+    width: 100%;
+
+}
+.role:focus {
+    border: none;
+    outline: none;
+}
+
+.role::placeholder{
+    font-size: 18px;
+    line-height: 24px;
+
+}
+
+
+
+.email-css {
+
+    font-family: "Open Sans", sans-serif;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    background: transparent;
+    border: none;
+    width: 100%;
+    color: var(--primary-text-clr);
+
+}
+.email-css:focus {
+    border: none;
+    outline: none;
+}
+
+.email-css::placeholder{
+    font-family: "Calligraffitti", cursive;
+    font-size: 18px;
+    line-height: 24px;
+
+}
+
+.year-edu:focus {
+    border: none;
+    outline: none;
+}
+.year-edu {
+    font-size: 18px;
+    color: var(--white);
+    background: transparent;
+    border: none;
+    width: 120px;
+}
+.year-edu::placeholder{
+    font-size: 11px;
+    line-height: 24px;
+    color: #fff;
+
+}
+
+.edu--des:focus {
+    border: none;
+    outline: none;
+}
+
+.edu--des {
+    font-size: 14px;
+
+    color: var(--white);
+    background: transparent;
+    border: none;
+    width: 100%;
+
+}
+.edu--name {
+    font-size: 20px;
+    font-weight: 600;
+
+}
+
+.edu--des::placeholder{
+    font-size: 14px;
+    line-height: 24px;
+    color: #fff;
+
+}
+
+.edu,.experience-item{
+    position: relative;
+}
+
+.addbutton {
+    position: absolute;
+    right: 0;
+    bottom: 8px;
+    padding: 4px 9px;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 18px;
+    color: var(--primary-text-clr);
+    border: 1px dashed #ccc;
+}
+
+.file-upload {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+}
+
+.file-input {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    opacity: 0;
+    cursor: pointer;
+    width: 100%;
+
+}
+
+.file-label {
+    position: absolute;
+    bottom: 30px;
+    left: 0px;
+    display: inline-block;
+    padding: 15px 20px;
+    background-color: transparent;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 68%;
+    text-align: center;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+
+
+}
+
+
+
+file-upload:hover ~ .file-label{
+    z-index: 999;
+}
+
+.file-name {
+    margin-left: 10px;
+    font-style: italic;
+    color: #555;
+}

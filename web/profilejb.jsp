@@ -402,12 +402,12 @@
                                     </c:when>
                                     <c:otherwise>
                                         <input placeholder="Old password" title="Inpit title" name="confirmpass" type="password" class="input_field" id="password_field" value="" hidden="" >
-
+                                        
                                         <i style="font-size: 11px;text-align: start;">**You can create a password to log in to the website with your email</i>
                                     </c:otherwise>
                                 </c:choose>
 
-
+                                    <br>
 
 
                                 <b class="notice-erorr">${notice}</b>

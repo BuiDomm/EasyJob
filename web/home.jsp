@@ -121,7 +121,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="a-new" href="#!">
+                                                <a target="_blank" class="a-new" href="CVGenerator.jsp">
                                                     <svg stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" fill="none" viewBox="0 0 24 24" height="14" width="14" xmlns="http://www.w3.org/2000/svg">
                                                     <rect ry="2" rx="2" height="13" width="13" y="9" x="9"></rect>
                                                     <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>

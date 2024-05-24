@@ -88,9 +88,9 @@
             </div>
             <div class="resume_right">
                 <div class="r_namerole">
-                    <input type="text" autocomplete="off" class="name--css" name="firstName" placeholder="Nguyen" value="" /> 
+                    <input type="text" autocomplete="off" class="name--css" name="firstName" placeholder="Nguyen" value="${sessionScope.account.firstName}" /> 
                     <br>
-                    <input type="text" autocomplete="off" class="name--css" name="lastName" placeholder="Dat" value="" /> 
+                    <input type="text" autocomplete="off" class="name--css" name="lastName" placeholder="Dat" value="${sessionScope.account.lastName}" /> 
                     <br>
                     <!--<p class="role">Web Developer</p>-->
                     <input autocomplete="off" type="text" class="role" name="job" placeholder="Fullstack Deverloper" value="" /> 
@@ -100,11 +100,11 @@
                     <ul>
                         <li>
 
-                            <input autocomplete="off" type="text" class="email-css" name="job" placeholder="easyjob@gmail.com" value="" /> 
+                            <input autocomplete="off" type="text" class="email-css" name="job" placeholder="easyjob@gmail.com" value="${sessionScope.account.email}" /> 
 
                         </li>
                         <li>
-                            <input autocomplete="off" type="text" class="email-css" name="job" placeholder="(84)331235132" value="" /> 
+                            <input autocomplete="off" type="text" class="email-css" name="job" placeholder="(84)331235132" value="${not empty sessionScope.account.phoneNumber ? "0" + sessionScope.account.phoneNumber : " "} " /> 
                         </li>
                     </ul>
                 </div>
@@ -149,7 +149,7 @@
                 </div>
             </div>
         </section>
-        <button class="download-button" onclick="downloadPDF()">Download Content</button>  
+        <button class="download-button" onclick="downloadPDF()">Download CV</button>  
     </body>
 
     <script>

@@ -27,7 +27,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
             PreparedStatement ps = getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-             int idUser = rs.getInt(1);
+                int idUser = rs.getInt(1);
                 String firstName = rs.getString(2);
                 String lastName = rs.getString(3);
                 String email = rs.getString(4);
@@ -45,6 +45,38 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
             Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    public User getInfo(int id) {
+
+        String sql = "SELECT \n"
+                + "*\n"
+                + "FROM \n"
+                + "    Jobs j\n"
+                + "JOIN \n"
+                + "    CompanyProfile cp ON j.CompanyID = cp.CompanyID\n"
+                + "JOIN \n"
+                + "    Users u ON cp.UserID = u.UserID\n"
+                + "WHERE \n"
+                + "    j.JobID = ?";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String firstName = rs.getString("FirstName");
+                String lastName = rs.getString("LastName");
+                String email = rs.getString("Email");
+                int userID = rs.getInt("RoleID");
+                String phoneNumber = rs.getString(9);
+                String status = rs.getString(11);
+                User u = new User( firstName, lastName, email, userID, status, phoneNumber);
+                return u;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
@@ -165,14 +197,14 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
 
     @Override
     public boolean update(User newObject) {
-        String sql = "Update Users \n" +
-"                set FirstName = ?,\n" +
-"                LastName =?,\n" +
-"                Password = ?, \n" +
-"                City = ?, \n" +
-"                PhoneNumber = ?,\n" +
-"                DateOfBirth = ?\n" +
-"                Where UserID = ?";
+        String sql = "Update Users \n"
+                + "                set FirstName = ?,\n"
+                + "                LastName =?,\n"
+                + "                Password = ?, \n"
+                + "                City = ?, \n"
+                + "                PhoneNumber = ?,\n"
+                + "                DateOfBirth = ?\n"
+                + "                Where UserID = ?";
 
         PreparedStatement ps;
         try {

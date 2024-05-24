@@ -1,6 +1,6 @@
 <%-- 
-    Document   : emp
-    Created on : May 17, 2024, 2:23:05 AM
+    Document   : templatecv
+    Created on : May 24, 2024, 10:21:31 AM
     Author     : ASUS
 --%>
 
@@ -12,6 +12,5 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <h1>emp World!</h1>
     </body>
 </html>

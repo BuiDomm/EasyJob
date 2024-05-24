@@ -26,7 +26,6 @@ public class User {
 
     public User() {
     }
-    
 
     public User(int idUser, String firstName, String lastName, String email, String password, int roleId, String message, String status) {
         this.idUser = idUser;
@@ -50,7 +49,6 @@ public class User {
         this.status = status;
         this.date = date;
     }
-    
 
     public User(int idUser, String firstName, String lastName, String email, String password, int roleId, String message, String status, String cityName, Date date) {
         this.idUser = idUser;
@@ -64,7 +62,6 @@ public class User {
         this.cityName = cityName;
         this.date = date;
     }
-    
 
     public User(int idUser, String firstName, String lastName, String email, String password, int roleId, String message, String status, String cityName, String phoneNumber) {
         this.idUser = idUser;
@@ -79,7 +76,6 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    
     public User(int idUser, String firstName, String lastName, String email, String password, int roleId, String message, String status, String cityName, String phoneNumber, Date date) {
         this.idUser = idUser;
         this.firstName = firstName;
@@ -106,7 +102,6 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.date = date;
     }
-    
 
     public User(String firstName, String lastName, String email, String password, int roleId, String message, String status) {
         this.firstName = firstName;
@@ -185,7 +180,6 @@ public class User {
     public void setDate(Date date) {
         this.date = date;
     }
-    
 
     public void setPassword(String password) {
         this.password = password;
@@ -215,9 +209,18 @@ public class User {
         this.status = status;
     }
 
+    public User(String firstName, String lastName, String email, int roleId, String status, String phoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.roleId = roleId;
+        this.status = status;
+        this.phoneNumber = phoneNumber;
+    }
+
     @Override
     public String toString() {
         return "User{" + "idUser=" + idUser + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password + ", roleId=" + roleId + ", message=" + message + ", status=" + status + '}';
     }
-    
+
 }

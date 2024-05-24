@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +9,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="icon" href="assets/images/favicon.ico">
-                <link rel="stylesheet" href="assets/css/button.css">
+        <link rel="stylesheet" href="assets/css/button.css">
 
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
@@ -22,6 +23,8 @@
         <link rel="stylesheet" href="assets/css/fontawesome.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/owl.css">
+        <link rel="stylesheet" href="assets/css/icontop.css">
+        <link rel="stylesheet" href="assets/css/button.css">
 
     </head>
 
@@ -38,48 +41,7 @@
         <!-- ***** Preloader End ***** -->
 
         <!-- Header -->
-        <header class="">
-            <nav class="navbar navbar-expand-lg">
-                <div class="container">
-                    <a style="width: 55px;height: 55px;display: inline-block" class="navbar-brand" href="index.jsp">
-                        <figure style="width: 100%;height: 100%;margin-right: -30px;">
-                            <img style="height: 100%;width: 100%;object-fit: cover;" src="./assets/images/easyjobb.png" alt="alt"/>
-                        </figure>
-
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarResponsive">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.jsp">Home
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li> 
-
-                            <li class="nav-item"><a class="nav-link" href="jobs.jsp">Jobs</a></li>
-
-                            <li class="nav-item"><a class="nav-link" href="about-us.jsp">About us</a></li>
-
-                            <li class="nav-item active"><a class="nav-link" href="blog.jsp">Blog</a></li>
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
-
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="team.jsp">Team</a>
-                                    <a class="dropdown-item" href="testimonials.jsp">Testimonials</a>
-                                    <a class="dropdown-item" href="terms.jsp">Terms</a>
-                                </div>
-                            </li>
-
-                            <li class="nav-item"><a class="nav-link" href="contact.jsp">Contact Us</a></li>
-                        </ul>
-                    </div>
-                </div>
-            </nav>
-        </header>
+       <jsp:include page="header.jsp"/>
 
         <!-- Page Content -->
         <div class="page-heading about-heading header-text" style="background-image: url(assets/images/heading-6-1920x500.jpg);">

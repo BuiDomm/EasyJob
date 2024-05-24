@@ -4,7 +4,6 @@
  */
 package dao;
 
-import java.sql.Date;
 import java.util.Random;
 import model.User;
 
@@ -18,14 +17,15 @@ public class test {
 
         JobseekerDAO jd = new JobseekerDAO();
         User u = new User("Buiii", "Nhan", "nhanbtde170234@fpt.edu.vn", "Congdeptrai.vn?", 2);
-//        jd.insert(u);
 //        User u1 = new User("Truong", "van", "n@gmail.com","passs", 2, "","","da nang","",);
 
 //        jd.insert(u1);
-
         Random random = new Random();
-
-//        System.out.println(jd.update(u));
+        CategoryDAO cd = new CategoryDAO();
+        CompanyDAO com = new CompanyDAO();
+        JobDAO job = new JobDAO();
+//        System.out.println(jd.insert(u)
+//        );
     }
 
 }

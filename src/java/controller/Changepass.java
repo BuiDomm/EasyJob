@@ -14,13 +14,12 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.regex.Pattern;
 import model.User;
-import java.sql.Date;
 
 /**
  *
  * @author ASUS
  */
-public class UpdateProfileJobseeker extends HttpServlet {
+public class Changepass extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +38,10 @@ public class UpdateProfileJobseeker extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateProfileJobseeker</title>");
+            out.println("<title>Servlet Changepass</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateProfileJobseeker at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet Changepass at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,43 +59,7 @@ public class UpdateProfileJobseeker extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String firstName = request.getParameter("firstname");
-        String lastName = request.getParameter("lastname");
-        String password = request.getParameter("pass");
-        String cityName = request.getParameter("cityname");
-        String phoneNumber = request.getParameter("phone");
-        String dobDate = request.getParameter("date");
-        Date dob = Date.valueOf(dobDate);
-
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("account");
-        JobseekerDAO jd = new JobseekerDAO();
-        Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-        if (password.length() == 0) {
-            User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), u.getPassword(), u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
-            jd.update(uu);
-            session.setAttribute("account", uu);
-            request.setAttribute("successfully", true);
-            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-
-        } else if (password.length() != 0) {
-            if (!p.matcher(password).find()) {
-                request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
-                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-            } else {
-                User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), password, u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
-                jd.update(uu);
-                session.setAttribute("account", uu);
-                request.setAttribute("successfully", true);
-                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-            }
-        }
-//        else if ((password.length() != 0 && confirmpasss.length() == 0) || password.length() == 0 && confirmpasss.length() != 0) {
-//
-//            request.setAttribute("notice", "Please fill in all information!!!");
-//            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-//
-//        }
+        processRequest(request, response);
     }
 
     /**
@@ -110,7 +73,45 @@ public class UpdateProfileJobseeker extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        String currentPass = request.getParameter("currentpass");
+        String newPass = request.getParameter("newpass");
+        String confirmPass = request.getParameter("confirmnewpass");
+        JobseekerDAO jd = new JobseekerDAO();
+        int role = Integer.parseInt(request.getParameter("role"));
+        Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+
+        if (role == 2) {
+            if (u.getPassword().equals(currentPass)) {
+
+                if (newPass.equals(confirmPass)) {
+                    if (p.matcher(newPass).find()) {
+
+                        jd.changePass(u.getIdUser(), newPass);
+                        u.setPassword(newPass);
+                        session.setAttribute("account", u);
+                        request.setAttribute("successfully", true);
+                        request.getRequestDispatcher("changepass.jsp").forward(request, response);
+                    } else {
+                        request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
+                        request.getRequestDispatcher("changepass.jsp").forward(request, response);
+
+                    }
+
+                } else {
+                    request.setAttribute("notice", "The new password and confirm is not same!!!");
+                    request.getRequestDispatcher("changepass.jsp").forward(request, response);
+
+                }
+
+            } else {
+                request.setAttribute("notice", "The current password is wrong!!!");
+                request.getRequestDispatcher("changepass.jsp").forward(request, response);
+            }
+
+        }
+
     }
 
     /**

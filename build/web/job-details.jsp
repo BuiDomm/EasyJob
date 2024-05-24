@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,79 +23,27 @@
         <link rel="stylesheet" href="assets/css/fontawesome.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/owl.css">
+        <link rel="stylesheet" href="assets/css/icontop.css">
+        <link rel="stylesheet" href="assets/css/button.css">
+
+
 
     </head>
 
     <body>
 
         <!-- ***** Preloader Start ***** -->
-        <div id="preloader">
-            <div class="jumper">
-                <div></div>
-                <div></div>
-                <div></div>
-            </div>
-        </div>  
+        <!--        <div id="preloader">
+                    <div class="jumper">
+                        <div></div>
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>  -->
         <!-- ***** Preloader End ***** -->
 
         <!-- Header -->
-        <header class="">
-            <nav class="navbar navbar-expand-lg">
-                <div class="container">
-                    <a style="width: 55px;height: 55px;display: inline-block" class="navbar-brand" href="index.jsp">
-                        <figure style="width: 100%;height: 100%;margin-right: -30px;">
-                            <img style="height: 100%;width: 100%;object-fit: cover;" src="./assets/images/easyjobb.png" alt="alt"/>
-                        </figure>
-
-                    </a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarResponsive">
-                        <ul class="navbar-nav ml-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" href="index.jsp">Home
-                                    <span class="sr-only">(current)</span>
-                                </a>
-                            </li> 
-
-                            <li class="nav-item active"><a class="nav-link" href="jobs.jsp">Jobs</a></li>
-
-                            <li class="nav-item"><a class="nav-link" href="about-us.jsp">About us</a></li>
-
-                            <li class="nav-item"><a class="nav-link" href="blog.jsp">Blog</a></li>
-
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
-
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="team.jsp">Team</a>
-                                    <a class="dropdown-item" href="testimonials.jsp">Testimonials</a>
-                                    <a class="dropdown-item" href="terms.jsp">Terms</a>
-                                </div>
-                            </li>
-
-                            <li class="nav-item"><a class="nav-link" href="contact.jsp">Contact Us</a></li>
-                        </ul>
-                        <div style="display: flex;max-height: 45px;margin-left: 120px;margin-bottom: 15px;">
-                            <a style="--clr: #7808d0" class="button" href="login.jsp">
-                                <span class="button__icon-wrapper">
-                                    <svg width="10" class="button__icon-svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 15">
-                                    <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                    </svg>
-
-                                    <svg class="button__icon-svg  button__icon-svg--copy" xmlns="http://www.w3.org/2000/svg" width="10" fill="none" viewBox="0 0 14 15">
-                                    <path fill="currentColor" d="M13.376 11.552l-.264-10.44-10.44-.24.024 2.28 6.96-.048L.2 12.56l1.488 1.488 9.432-9.432-.048 6.912 2.304.024z"></path>
-                                    </svg>
-                                </span>
-                                Explore All
-                            </a>
-
-                        </div>
-                    </div>
-                </div>
-            </nav>
-        </header>
+        <jsp:include page="header.jsp"/>
 
         <!-- Page Content -->
         <div class="page-heading about-heading header-text" style="background-image: url(assets/images/heading-6-1920x500.jpg);">
@@ -116,27 +65,29 @@
                 <div class="row">
                     <div class="col-md-9 col-sm-8">
                         <p class="lead">
-                            <i class="fa fa-map-marker"></i> London &nbsp;&nbsp;
+                            <i class="fa fa-map-marker"></i> <i>${cc.location}</i> &nbsp;&nbsp;
                             <i class="fa fa-calendar"></i> 20-06-2020 &nbsp;&nbsp;
                             <i class="fa fa-file"></i> Contract
                         </p>
-
-                        <br>
-                        <br>
-
+                        <br/>
+                        <p>${cc.descrip}}</p>
+                        <br/>
                         <div class="form-group">
-                            <h5>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</h5>
+                            <h5>${cc.title}</h5>
                         </div>
+                        <h4>
+                            Conditions met</h4>
+                        <ul>
+                            <li>Ten Cong Ty: <b>ABC</b></li>
+                            <li>Job Position: <b>${cc.category.categoryName}</b></li>
+                            <li>Year Experience: <b>${cc.yearEx}</b></li>
+                            <li>Salary <b>${cc.salary}</b></li>
+                            <li>Location: <b>${cc.location}</b></li>
 
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Qui, delectus totam non est excepturi expedita, illum vitae vel dolore exercitationem nobis quasi dicta illo id  quas. Error commodi, modi minus. <br><br>
-                            Perferendis, quidem, facilis. Aspernatur alias numquam saepe deleniti dolorem quos repudiandae eaque ad eligendi quam, ratione, error minima culpa suscipit nostrum magni omnis est. Suscipit dolor sint aut maiores eius, id nemo, optio, quos tempora cum est quas. At recusandae obcaecati consequatur ipsa dignissimos, eius commodi qui quae exercitationem fugiat, voluptatem, nesciunt!
-                        </p>   
-
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem voluptatem vero culpa rerum similique labore, nisi minus voluptatum numquam fugiat. <br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Placeat fugit sint reiciendis quas temporibus quam maxime nulla vitae consectetur perferendis, fugiat assumenda ex dicta molestias soluta est quo totam cum?</p> 
-
-                        <br>
-                        <br>
+                        </ul>
                     </div>
+
+
 
                     <div class="col-md-3 col-sm-4">
                         <div class="contact-form">
@@ -174,7 +125,7 @@
                         </div>
 
                         <p class="lead">
-                            <i class="fa fa-map-marker"></i> London 
+                            <i class="fa fa-map-marker"></i> 
                         </p>
 
                         <p>Looking to improve the security at your place of business? If so, we will provide you with the trained security officers and professionally licensed personnel needed for any business. From a security guard for construction site security to private event security, you can be sure to get the very best from our staff. Alternatively we provide tailor-made security guard training for your existing security staff.</p>
@@ -193,7 +144,10 @@
 
                                 <br>
 
-                                <strong>John Smith</strong>
+
+
+
+                                <strong>${u.firstName} ${u.lastName}</strong>
                             </p>
 
                             <p>
@@ -202,7 +156,7 @@
                                 <br>
 
                                 <strong>
-                                    <a href="tel:123-456-789">123-456-789</a>
+                                    <a href="tel:${not empty u.phoneNumber ? u.phoneNumber : ""}">${not empty u.phoneNumber ? u.phoneNumber : "Unknow"}</a>
                                 </strong>
                             </p>
 
@@ -212,7 +166,7 @@
                                 <br>
 
                                 <strong>
-                                    <a href="tel:456789123">456789123</a>
+                                    <a href="tel:${not empty u.phoneNumber ? u.phoneNumber : ""}">${not empty u.phoneNumber ? u.phoneNumber : "Unknow"}</a>
                                 </strong>
                             </p>
 
@@ -222,19 +176,11 @@
                                 <br>
 
                                 <strong>
-                                    <a href="mailto:john@carsales.com">john@carsales.com</a>
+                                    <a href="mailto:john@carsales.com">${u.email}</a>
                                 </strong>
                             </p>
 
-                            <p>
-                                <span>Website</span>
 
-                                <br>
-
-                                <strong>
-                                    <a href="http://www.cannonguards.com/">http://www.cannonguards.com/</a>
-                                </strong>
-                            </p>
                         </div>
                     </div>
                 </div>

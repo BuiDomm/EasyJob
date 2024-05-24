@@ -4,23 +4,22 @@
  */
 package controller;
 
-import dao.JobseekerDAO;
+import dao.JobDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.util.regex.Pattern;
-import model.User;
-import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
+import model.Job;
 
 /**
  *
  * @author ASUS
  */
-public class UpdateProfileJobseeker extends HttpServlet {
+public class RenderJobList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -39,10 +38,10 @@ public class UpdateProfileJobseeker extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet UpdateProfileJobseeker</title>");
+            out.println("<title>Servlet RenderJobList</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet UpdateProfileJobseeker at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet RenderJobList at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,43 +59,10 @@ public class UpdateProfileJobseeker extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String firstName = request.getParameter("firstname");
-        String lastName = request.getParameter("lastname");
-        String password = request.getParameter("pass");
-        String cityName = request.getParameter("cityname");
-        String phoneNumber = request.getParameter("phone");
-        String dobDate = request.getParameter("date");
-        Date dob = Date.valueOf(dobDate);
-
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("account");
-        JobseekerDAO jd = new JobseekerDAO();
-        Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-        if (password.length() == 0) {
-            User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), u.getPassword(), u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
-            jd.update(uu);
-            session.setAttribute("account", uu);
-            request.setAttribute("successfully", true);
-            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-
-        } else if (password.length() != 0) {
-            if (!p.matcher(password).find()) {
-                request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
-                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-            } else {
-                User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), password, u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
-                jd.update(uu);
-                session.setAttribute("account", uu);
-                request.setAttribute("successfully", true);
-                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-            }
-        }
-//        else if ((password.length() != 0 && confirmpasss.length() == 0) || password.length() == 0 && confirmpasss.length() != 0) {
-//
-//            request.setAttribute("notice", "Please fill in all information!!!");
-//            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-//
-//        }
+        JobDAO jd = new JobDAO();
+        List<Job> list = jd.getAll();
+        request.setAttribute("listjob", list);
+        request.getRequestDispatcher("jobs.jsp").forward(request, response);
     }
 
     /**

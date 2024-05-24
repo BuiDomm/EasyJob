@@ -18,7 +18,7 @@ import org.apache.http.client.fluent.Request;
  */
 public class GoogleLoginHandle {
 
-    public  String getToken(String code) throws ClientProtocolException, IOException {
+    public static String getToken(String code) throws ClientProtocolException, IOException {
 
         String response = Request.Post(Iconstant.GOOGLE_LINK_GET_TOKEN)
                 .bodyForm(
@@ -40,7 +40,7 @@ public class GoogleLoginHandle {
 
     }
 
-    public  GoogleAccount getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
+    public static GoogleAccount getUserInfo(final String accessToken) throws ClientProtocolException, IOException {
 
         String link = Iconstant.GOOGLE_LINK_GET_USER_INFO + accessToken;
 
@@ -51,5 +51,4 @@ public class GoogleLoginHandle {
         return googlePojo;
 
     }
-
 }

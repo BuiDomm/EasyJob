@@ -12,19 +12,14 @@
         <meta name="author" content="">
         <link rel="icon" href="assets/images/favicon.ico">
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
         <title>Easyjob | Free Job For Everyone</title>
-
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
         <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
-
-
     </head>
 
     <body>
@@ -61,7 +56,7 @@
                             </a>
                         </li> 
 
-                        <li class="nav-item"><a class="nav-link" href="jobs.jsp">Jobs</a></li>
+                        <li class="nav-item"><a class="nav-link" href="renderjob">Jobs</a></li>
 
                         <li class="nav-item"><a class="nav-link" href="about-us.jsp">About us</a></li>
 

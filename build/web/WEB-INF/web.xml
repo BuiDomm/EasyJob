@@ -28,6 +28,22 @@
         <servlet-name>ChangePassEmployer</servlet-name>
         <servlet-class>controller.ChangePassEmployer</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Changepass</servlet-name>
+        <servlet-class>controller.Changepass</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PagingJob</servlet-name>
+        <servlet-class>controller.PagingJob</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RenderJobList</servlet-name>
+        <servlet-class>controller.RenderJobList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>JobDetails</servlet-name>
+        <servlet-class>controller.JobDetails</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>RegisterJobseekerServlet</servlet-name>
         <url-pattern>/registerjobseeker</url-pattern>
@@ -63,5 +79,21 @@
     <servlet-mapping>
         <servlet-name>ChangePassEmployer</servlet-name>
         <url-pattern>/changepassemployer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Changepass</servlet-name>
+        <url-pattern>/changepass</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PagingJob</servlet-name>
+        <url-pattern>/paging</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RenderJobList</servlet-name>
+        <url-pattern>/renderjob</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JobDetails</servlet-name>
+        <url-pattern>/jobdetails</url-pattern>
     </servlet-mapping>
 </web-app>

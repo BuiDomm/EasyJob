@@ -37,6 +37,7 @@ h2 {
 }
 
 .resume {
+    position: relative;
     width: 800px;
     max-width: 100%;
     height: auto;
@@ -279,11 +280,16 @@ input::placeholder {
     font-family: "Open Sans", sans-serif;
     text-align: center;
     font-weight: 700;
-    font-size: 18px;
+    font-size: 15.5px;
     background: transparent;
     border: none;
-    width: 100%;
+    width: 110%;
     color: var(--primary-text-clr);
+
+}
+.addbutton:hover{
+    cursor: pointer;
+
 
 }
 .email-css:focus {
@@ -408,4 +414,25 @@ file-upload:hover ~ .file-label{
     margin-left: 10px;
     font-style: italic;
     color: #555;
+}
+
+
+.download-button {
+    position: absolute;
+    bottom: -100px;
+    right:400px; 
+    padding: 10px 20px;
+    outline: none;
+    border: none;
+    font-size: 20px;
+    font-weight: 600;
+    border-radius: 12px;
+    color:#000;
+
+}
+.download-button:hover {
+    cursor: pointer;
+    color: #fff; 
+    background-color: #aaa;
+    
 }

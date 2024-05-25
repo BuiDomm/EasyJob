@@ -73,7 +73,7 @@ public class UpdateProfileJobseeker extends HttpServlet {
         JobseekerDAO jd = new JobseekerDAO();
         Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
         if (password.length() == 0) {
-            User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), u.getPassword(), u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
+            User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), u.getPassword(), u.getRoleId(), u.getMessage(), u.getStatus(), cityName, "0"+phoneNumber, dob);
             jd.update(uu);
             session.setAttribute("account", uu);
             request.setAttribute("successfully", true);
@@ -84,7 +84,7 @@ public class UpdateProfileJobseeker extends HttpServlet {
                 request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
                 request.getRequestDispatcher("profilejb.jsp").forward(request, response);
             } else {
-                User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), password, u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
+                User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), password, u.getRoleId(), u.getMessage(), u.getStatus(), cityName, "0"+phoneNumber, dob);
                 jd.update(uu);
                 session.setAttribute("account", uu);
                 request.setAttribute("successfully", true);

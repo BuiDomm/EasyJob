@@ -66,14 +66,14 @@
                     <div class="col-md-9 col-sm-8">
                         <p class="lead">
                             <i class="fa fa-map-marker"></i> <i>${cc.location}</i> &nbsp;&nbsp;
-                            <i class="fa fa-calendar"></i> 20-06-2020 &nbsp;&nbsp;
+                            <i class="fa fa-calendar"></i> ${cc.date} &nbsp;&nbsp;
                             <i class="fa fa-file"></i> Contract
                         </p>
                         <br/>
-                        <p>${cc.descrip}}</p>
+                        <p>${cc.descrip}</p>
                         <br/>
                         <div class="form-group">
-                            <h5>${cc.title}</h5>
+                            <h5><i>${cc.title}</i></h5>
                         </div>
                         <h4>
                             Conditions met</h4>
@@ -125,7 +125,7 @@
                         </div>
 
                         <p class="lead">
-                            <i class="fa fa-map-marker"></i> 
+                            <i class="fa fa-map-marker">&nbsp;${cc.location}</i> 
                         </p>
 
                         <p>Looking to improve the security at your place of business? If so, we will provide you with the trained security officers and professionally licensed personnel needed for any business. From a security guard for construction site security to private event security, you can be sure to get the very best from our staff. Alternatively we provide tailor-made security guard training for your existing security staff.</p>
@@ -145,8 +145,6 @@
                                 <br>
 
 
-
-
                                 <strong>${u.firstName} ${u.lastName}</strong>
                             </p>
 
@@ -156,7 +154,9 @@
                                 <br>
 
                                 <strong>
+
                                     <a href="tel:${not empty u.phoneNumber ? u.phoneNumber : ""}">${not empty u.phoneNumber ? u.phoneNumber : "Unknow"}</a>
+                               
                                 </strong>
                             </p>
 
@@ -164,19 +164,18 @@
                                 <span>Mobile phone</span>
 
                                 <br>
-
+                                
+                                    
                                 <strong>
+                       
                                     <a href="tel:${not empty u.phoneNumber ? u.phoneNumber : ""}">${not empty u.phoneNumber ? u.phoneNumber : "Unknow"}</a>
                                 </strong>
                             </p>
-
                             <p>
                                 <span>Email</span>
-
                                 <br>
-
                                 <strong>
-                                    <a href="mailto:john@carsales.com">${u.email}</a>
+                                    <a href="mailto:${u.email}">${u.email}</a>
                                 </strong>
                             </p>
 

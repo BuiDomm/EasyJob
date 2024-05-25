@@ -24,8 +24,8 @@ public class test {
         CategoryDAO cd = new CategoryDAO();
         CompanyDAO com = new CompanyDAO();
         JobDAO job = new JobDAO();
-//        System.out.println(jd.insert(u)
-//        );
+        JobseekerDAO jse = new JobseekerDAO();
+        System.out.println(jse.getInfo(1).getPhoneNumber());
     }
 
 }

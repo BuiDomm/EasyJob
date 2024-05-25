@@ -208,6 +208,7 @@ public class User {
     public void setStatus(String status) {
         this.status = status;
     }
+    
 
     public User(String firstName, String lastName, String email, int roleId, String status, String phoneNumber) {
         this.firstName = firstName;
@@ -220,7 +221,9 @@ public class User {
 
     @Override
     public String toString() {
-        return "User{" + "idUser=" + idUser + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password + ", roleId=" + roleId + ", message=" + message + ", status=" + status + '}';
+        return "User{" + "idUser=" + idUser + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", password=" + password + ", roleId=" + roleId + ", message=" + message + ", status=" + status + ", cityName=" + cityName + ", phoneNumber=" + phoneNumber + ", date=" + date + '}';
     }
+
+
 
 }

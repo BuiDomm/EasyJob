@@ -4,6 +4,8 @@
  */
 package model;
 
+import java.sql.Date;
+
 /**
  *
  * @author ASUS
@@ -18,7 +20,36 @@ public class Job {
     private String location;
     private int salary;
     private String status;
+    private Date date;
 
+    public Job(int jobID, Company company, Category category, String title, String descrip, int yearEx, String location, int salary, String status, Date date) {
+        this.jobID = jobID;
+        this.company = company;
+        this.category = category;
+        this.title = title;
+        this.descrip = descrip;
+        this.yearEx = yearEx;
+        this.location = location;
+        this.salary = salary;
+        this.status = status;
+        this.date = date;
+    }
+
+    public Job(Company company, Category category, String title, String descrip, int yearEx, String location, int salary, String status, Date date) {
+        this.company = company;
+        this.category = category;
+        this.title = title;
+        this.descrip = descrip;
+        this.yearEx = yearEx;
+        this.location = location;
+        this.salary = salary;
+        this.status = status;
+        this.date = date;
+    }
+
+    
+    
+    
     public Job(int jobID, Company company, Category category, String title, String descrip, int yearEx, String location, int salary, String status) {
         this.jobID = jobID;
         this.company = company;
@@ -58,8 +89,10 @@ public class Job {
 
     @Override
     public String toString() {
-        return "Job{" + "jobID=" + jobID + ", company=" + company + ", category=" + category + ", title=" + title + ", descrip=" + descrip + ", yearEx=" + yearEx + ", location=" + location + ", salary=" + salary + ", status=" + status + '}';
+        return "Job{" + "jobID=" + jobID + ", company=" + company + ", category=" + category + ", title=" + title + ", descrip=" + descrip + ", yearEx=" + yearEx + ", location=" + location + ", salary=" + salary + ", status=" + status + ", date=" + date + '}';
     }
+
+  
 
     public void setJobID(int jobID) {
         this.jobID = jobID;
@@ -68,6 +101,15 @@ public class Job {
     public Company getCompany() {
         return company;
     }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+    
 
     public void setCompany(Company company) {
         this.company = company;

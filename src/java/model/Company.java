@@ -9,12 +9,14 @@ package model;
  * @author ASUS
  */
 public class Company {
+
     private int companyID;
-    private User user;
     private String nameCompany;
+    private User user;
     private String aboutUS;
     private String add;
     private String status;
+    private String url;
 
     public Company(int companyID, User user, String aboutUS, String add, String status) {
         this.companyID = companyID;
@@ -23,6 +25,26 @@ public class Company {
         this.add = add;
         this.status = status;
     }
+
+    public Company(int companyID, String nameCompany, User user, String aboutUS, String add, String status, String url) {
+        this.companyID = companyID;
+        this.nameCompany = nameCompany;
+        this.user = user;
+        this.aboutUS = aboutUS;
+        this.add = add;
+        this.status = status;
+        this.url = url;
+    }
+
+    public Company(String nameCompany, User user, String aboutUS, String add, String status, String url) {
+        this.nameCompany = nameCompany;
+        this.user = user;
+        this.aboutUS = aboutUS;
+        this.add = add;
+        this.status = status;
+        this.url = url;
+    }
+    
     
 
     public Company() {
@@ -71,15 +93,32 @@ public class Company {
         return status;
     }
 
+    public String getNameCompany() {
+        return nameCompany;
+    }
+
+    public void setNameCompany(String nameCompany) {
+        this.nameCompany = nameCompany;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    
+
     public void setStatus(String status) {
         this.status = status;
     }
 
     @Override
     public String toString() {
-        return "Company{" + "companyID=" + companyID + ", user=" + user + ", aboutUS=" + aboutUS + ", add=" + add + ", status=" + status + '}';
+        return "Company{" + "companyID=" + companyID + ", nameCompany=" + nameCompany + ", user=" + user + ", aboutUS=" + aboutUS + ", add=" + add + ", status=" + status + ", url=" + url + '}';
     }
-    
-    
-    
+
+  
+
 }

@@ -30,13 +30,15 @@ public class CompanyDAO extends DBContext implements BaseDAO<Company> {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 int idCompany = rs.getInt(1);
-                int idUser = rs.getInt(2);
-                String aboutUs = rs.getString(3);
-                String add = rs.getString(4);
-                String status = rs.getString(5);
+                String nameCompany = rs.getString(2);
+                int idUser = rs.getInt(3);
+                String aboutUs = rs.getString(4);
+                String add = rs.getString(5);
+                String status = rs.getString(6);
+                String url = rs.getString(7);
                 JobseekerDAO jd = new JobseekerDAO();
                 User user = jd.findById(idUser);
-                Company c = new Company(idCompany, user, aboutUs, add, status);
+                Company c = new Company(idCompany, nameCompany, user, aboutUs, add, status, url);
                 list.add(c);
             }
         } catch (Exception ex) {
@@ -54,14 +56,16 @@ public class CompanyDAO extends DBContext implements BaseDAO<Company> {
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-             int idCompany = rs.getInt(1);
-                int idUser = rs.getInt(2);
-                String aboutUs = rs.getString(3);
-                String add = rs.getString(4);
+                int idCompany = rs.getInt(1);
+                String nameCompany = rs.getString(2);
+                int idUser = rs.getInt(3);
+                String aboutUs = rs.getString(4);
+                String add = rs.getString(5);
                 String status = rs.getString(5);
+                String url = rs.getString(6);
                 JobseekerDAO jd = new JobseekerDAO();
                 User user = jd.findById(idUser);
-                Company c = new Company(idCompany, user, aboutUs, add, status);
+                Company c = new Company(idCompany, nameCompany, user, aboutUs, add, status, url);
                 return c;
             }
         } catch (Exception ex) {

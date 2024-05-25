@@ -212,7 +212,7 @@
                     <div class="col-md-9">
                         <div class="row">
                             <c:forEach var="item" items="${listjob}" >
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="product-item">
                                         <a href="jobdetails?id=${item.jobID}"><img src="assets/images/product-1-370x270.jpg" alt=""></a>
                                         <div class="down-content">
@@ -220,7 +220,7 @@
 
                                             <h6>Salary: ${item.salary}</h6>
 
-                                            <h4><small><i class="fa fa-briefcase"></i> ${item.category.categoryName}<br> <strong><i class="fa fa-building"></i> Ten Cong Ty</strong></small></h4>
+                                            <h4><small><i class="fa fa-briefcase"></i> ${item.category.categoryName}<br> <strong><i class="fa fa-building"></i>${item.company.nameCompany}</strong></small></h4>
 
                                             <small>
                                                 <strong title="Posted on">Years of Experience: ${item.yearEx}</strong> &nbsp;&nbsp;&nbsp;&nbsp;

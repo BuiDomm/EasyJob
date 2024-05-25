@@ -60,8 +60,7 @@
                                             <span class="sr-only">(current)</span>
                                         </a>
                                 </li> 
-
-                                <li class="nav-item"><a class="nav-link" href="renderjob">Jobs</a></li>
+                                <li class="nav-item"><a class="nav-link" href="paging?id=1">Jobs</a></li>
 
                                 <li class="nav-item active"><a class="nav-link" href="about-us.jsp">About us</a></li>
 

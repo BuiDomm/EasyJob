@@ -42,9 +42,10 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
                 String location = rs.getString(7);
                 int salary = rs.getInt(8);
                 String status = rs.getString(9);
+                Date date = rs.getDate(10);
                 Company company = com.findById(idCompany);
                 Category category = cd.findById(idCategory);
-                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
                 list.add(j);
             }
         } catch (Exception ex) {
@@ -52,8 +53,6 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return list;
     }
-
-   
 
     @Override
     public Job findById(int id) {
@@ -73,9 +72,10 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
                 String location = rs.getString(7);
                 int salary = rs.getInt(8);
                 String status = rs.getString(9);
+                Date date = rs.getDate(10);
                 Company company = com.findById(idCompany);
                 Category category = cd.findById(idCategory);
-                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
                 return j;
 
             }
@@ -109,6 +109,35 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         return 0;
     }
 
+    public List<Job> getTop3() {
+        List<Job> list = new ArrayList<>();
+        String sql = "SElect TOP 3  * FROM Jobs\n"
+                + "Order by JobID DESC";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idJob = rs.getInt(1);
+                int idCompany = rs.getInt(2);
+                int idCategory = rs.getInt(3);
+                String title = rs.getString(4);
+                String desc = rs.getString(5);
+                int expY = rs.getInt(6);
+                String location = rs.getString(7);
+                int salary = rs.getInt(8);
+                String status = rs.getString(9);
+                Date date = rs.getDate(10);
+                Company company = com.findById(idCompany);
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+                list.add(j);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public List<Job> getAllFollowPage(int num) {
         List<Job> list = new ArrayList<>();
         CategoryDAO cd = new CategoryDAO();
@@ -130,9 +159,11 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
                 String location = rs.getString(7);
                 int salary = rs.getInt(8);
                 String status = rs.getString(9);
+                Date date = rs.getDate(10);
                 Company company = com.findById(idCompany);
                 Category category = cd.findById(idCategory);
-                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+
                 list.add(j);
             }
 

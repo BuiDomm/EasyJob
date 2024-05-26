@@ -11,7 +11,7 @@ import java.sql.Date;
  * @author ASUS
  */
 public class User {
-
+    
     private int idUser;
     private String firstName;
     private String lastName;

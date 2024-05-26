@@ -40,6 +40,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
                 String status = rs.getString(11);
                 User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, "0"+phoneNumber, dob);
                 list.add(u);
+           
             }
         } catch (Exception ex) {
             Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -82,7 +83,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
     @Override
     public User findById(int id) {
         String sql = "SELECT * FROM Users \n"
-                + "Where UserID =? ";
+                + "Where UserID = ? ";
         try {
             PreparedStatement ps = getConnection().prepareStatement(sql);
             ps.setInt(1, id);
@@ -99,7 +100,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
                 String phoneNumber = rs.getString(9);
                 Date dob = rs.getDate(10);
                 String status = rs.getString(11);
-                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, "0"+phoneNumber, dob);
+                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, phoneNumber, dob);
                 return u;
             }
         } catch (Exception ex) {
@@ -185,7 +186,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
             ps.setString(2, pass);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(11), rs.getString(8), "0"+rs.getString(9), rs.getDate(10));
+                return new User(rs.getInt(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5), rs.getInt(6), rs.getString(7), rs.getString(11), rs.getString(8), rs.getString(9), rs.getDate(10));
             }
         } catch (Exception e) {
 

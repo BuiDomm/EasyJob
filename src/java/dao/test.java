@@ -25,7 +25,10 @@ public class test {
         CompanyDAO com = new CompanyDAO();
         JobDAO job = new JobDAO();
         JobseekerDAO jse = new JobseekerDAO();
-        System.out.println(jse.getInfo(1).getPhoneNumber());
+
+        for (User u1 : jse.getAll()) {
+                System.out.println(u1);
+        }
     }
 
 }

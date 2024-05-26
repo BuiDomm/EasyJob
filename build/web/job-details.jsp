@@ -73,10 +73,11 @@
                         <p>${cc.descrip}</p>
                         <br/>
                         <div class="form-group">
-                            <h5><i>${cc.title}</i></h5>
+                            <h5>Job title: <i>${cc.title}</i></h5>
                         </div>
-                        <h4>
-                            Conditions met</h4>
+
+                        <hr>
+                        <h5 style="margin-bottom: 5px">*Conditions met</h5>
                         <ul>
                             <li>Ten Cong Ty: <b>ABC</b></li>
                             <li>Job Position: <b>${cc.category.categoryName}</b></li>
@@ -156,7 +157,7 @@
                                 <strong>
 
                                     <a href="tel:${not empty u.phoneNumber ? u.phoneNumber : ""}">${not empty u.phoneNumber ? u.phoneNumber : "Unknow"}</a>
-                               
+
                                 </strong>
                             </p>
 
@@ -164,10 +165,10 @@
                                 <span>Mobile phone</span>
 
                                 <br>
-                                
-                                    
+
+
                                 <strong>
-                       
+
                                     <a href="tel:${not empty u.phoneNumber ? u.phoneNumber : ""}">${not empty u.phoneNumber ? u.phoneNumber : "Unknow"}</a>
                                 </strong>
                             </p>
@@ -180,6 +181,11 @@
                             </p>
 
 
+                        </div>
+                        <div class="contact-form">
+                            <div class="form-group">
+                                <a style="text-align: center" href="#!" class="filled-button btn-block">Message with Employer</a>
+                            </div>
                         </div>
                     </div>
                 </div>

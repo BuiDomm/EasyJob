@@ -69,6 +69,7 @@
                                     <a class="dropdown-item" href="team.jsp">Team</a>
                                     <a class="dropdown-item" href="testimonials.jsp">Testimonials</a>
                                     <a class="dropdown-item" href="terms.jsp">Terms</a>
+                                    <a class="dropdown-item" href="./CVSeeker">CV Profile</a>
                                 </div>
                             </li>
 

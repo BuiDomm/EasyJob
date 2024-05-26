@@ -231,5 +231,83 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    //Cv Task
+    public User findByEmail(String email) {
+        String sql = "SELECT * FROM Users \n"
+                + "Where Email = ? ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idUser = rs.getInt(1);
+                String firstName = rs.getString(2);
+                String lastName = rs.getString(3);
+                String password = rs.getString(5);
+                int roleID = rs.getInt(6);
+                String message = rs.getString(7);
+                String city = rs.getString(8);
+                String phoneNumber = rs.getString(9);
+                Date dob = rs.getDate(10);
+                String status = rs.getString(11);
+                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, phoneNumber, dob);
+                return u;
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;    }
+
+   
+    public String getRoleByEmail(String email) {
+       String sql = "select RoleName from Roles where RoleID = (select RoleID from Users where Email= ?)";
+                
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setString(1, email);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String roleName = rs.getString(1);                
+                return roleName;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;   
+    }
+
+    
+    public boolean updateUserFromCV(String email, String firstName, String lastName, String phoneNumber, String newEmail, String city) {
+        String sql = "Update Users\n"
+                + "		set FirstName = ?\n"
+                + "		, LastName = ?\n"
+                + "		, PhoneNumber = ?\n"
+                + "		, City = ?\n"
+                + "		, Email = ?\n"
+                + "		Where Email = ?";
+        //User u = findById(idUser);
+        PreparedStatement ps;
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setString(1, firstName);
+            ps.setString(2, lastName);
+            ps.setString(3, phoneNumber);
+            ps.setString(4, city);
+            ps.setString(5, newEmail);
+            ps.setString(6, email);
+            
+
+            int rowAffect = ps.executeUpdate();
+            if (rowAffect > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
 
 }

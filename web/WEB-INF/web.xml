@@ -44,28 +44,23 @@
         <servlet-name>JobDetails</servlet-name>
         <servlet-class>controller.JobDetails</servlet-class>
     </servlet>
+    
+    
     <servlet>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <servlet-class>controller.FileUploadServlet</servlet-class>
-        <multipart-config>
-            <location>/tmp</location>
-            <max-file-size>20848820</max-file-size>
-            <max-request-size>418018841</max-request-size>
-            <file-size-threshold>1048576</file-size-threshold>
-        </multipart-config>
+        <servlet-name>AdminListAccount</servlet-name>
+        <servlet-class>controller.AdminListAccount</servlet-class>
+    </servlet>
+     <servlet>
+        <servlet-name>AdminLockAccount</servlet-name>
+        <servlet-class>controller.AdminLockAccount</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>CVJobSeekerServlet</servlet-name>
-        <servlet-class>controller.CVJobSeekerServlet</servlet-class>
+        <servlet-name>AdminUnlockAccount</servlet-name>
+        <servlet-class>controller.AdminUnlockAccount</servlet-class>
     </servlet>
-    <servlet>
-        <servlet-name>EmployerDetailCVServlet</servlet-name>
-        <servlet-class>controller.EmployerDetailCVServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>CreateCVServlet</servlet-name>
-        <servlet-class>controller.CreateCVServlet</servlet-class>
-    </servlet>
+    
+    
+    
     <servlet-mapping>
         <servlet-name>RegisterJobseekerServlet</servlet-name>
         <url-pattern>/registerjobseeker</url-pattern>
@@ -118,20 +113,18 @@
         <servlet-name>JobDetails</servlet-name>
         <url-pattern>/jobdetails</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FileUploadServlet</servlet-name>
-        <url-pattern>/upload</url-pattern>
+    
+    
+     <servlet-mapping>
+        <servlet-name>AdminListAccount</servlet-name>
+        <url-pattern>/listaccount</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>CVJobSeekerServlet</servlet-name>
-        <url-pattern>/CVSeeker</url-pattern>
+        <servlet-name>AdminLockAccount</servlet-name>
+        <url-pattern>/lockaccount</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>EmployerDetailCVServlet</servlet-name>
-        <url-pattern>/detailCV</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>CreateCVServlet</servlet-name>
-        <url-pattern>/createCV</url-pattern>
+     <servlet-mapping>
+        <servlet-name>AdminUnlockAccount</servlet-name>
+        <url-pattern>/unlockaccount</url-pattern>
     </servlet-mapping>
 </web-app>

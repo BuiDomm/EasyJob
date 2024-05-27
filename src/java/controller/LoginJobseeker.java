@@ -167,7 +167,7 @@ public class LoginJobseeker extends HttpServlet {
                 if (jd.loginAcount(email, pass).getRoleId() == 1) {
                     HttpSession session = request.getSession();
                     session.setAttribute("account", jd.loginAcount(email, pass));
-                    request.getRequestDispatcher("adminhome.jsp").forward(request, response);
+                     request.getRequestDispatcher("./Admin/adminhome.jsp").forward(request, response);
 
                 } else {
                     request.setAttribute("notice", "Email or password is invalid. Please check again!!");

@@ -5,6 +5,9 @@
 package dao;
 
 import java.util.Random;
+import model.Apply;
+import model.CVProfile;
+import model.Job;
 import model.User;
 
 /**
@@ -25,10 +28,25 @@ public class test {
         CompanyDAO com = new CompanyDAO();
         JobDAO job = new JobDAO();
         JobseekerDAO jse = new JobseekerDAO();
+        CVDAO cvd = new CVDAO();
+//        System.out.println(cvd.findByIdUser(1));
+        
+        Job j = job.findById(4);
+        
+        CVProfile cvp = cvd.findById(1);
+//                System.out.println(cvp);
 
-        for (User u1 : jse.getAll()) {
-                System.out.println(u1);
-        }
+        ApplyDAO ad = new ApplyDAO();
+        Apply a = new Apply(j, cvp, "Pending");
+        
+//        System.out.println(ad.insert(a));
+
+        System.out.println(ad.findListByIdCV(1));
+        
+        
+
+//        System.out.println(jse.getRoleByEmail("nhanbtde170234@fpt.edu.vn"));
+
     }
 
 }

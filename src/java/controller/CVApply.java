@@ -7,25 +7,21 @@ package controller;
 import dao.ApplyDAO;
 import dao.CVDAO;
 import dao.JobDAO;
-import dao.JobseekerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import javax.mail.Session;
 import model.Apply;
 import model.CVProfile;
 import model.Job;
-import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class JobDetails extends HttpServlet {
+public class CVApply extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +40,10 @@ public class JobDetails extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet JobDetails</title>");
+            out.println("<title>Servlet CVApply</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet JobDetails at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet CVApply at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -65,46 +61,17 @@ public class JobDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
+        int idProfile = Integer.parseInt(request.getParameter("idprofile"));
+        int idjob = Integer.parseInt(request.getParameter("idjob"));
         JobDAO jd = new JobDAO();
-        JobseekerDAO jdd = new JobseekerDAO();
-        Job job = jd.findById(id);
-        User u = jdd.getInfo(id);
-        // thong tin nha tuyen dung
-        CVDAO cvd = new CVDAO();
-
-        HttpSession session = request.getSession();
-        //account của user
-        User user = (User) session.getAttribute("account");
-
-        // Check thử cong viec nay da apply chua
+        CVDAO cd = new CVDAO();
+        Job jb = jd.findById(idjob);
+        CVProfile cv = cd.findById(idProfile);
         ApplyDAO ap = new ApplyDAO();
-        Apply a = ap.findByJobIDAndCvID(id, user.getIdUser());
-
-        if (a != null) {
-            CVProfile cvp = cvd.findByIdUser(user.getIdUser());
-
-            request.setAttribute("u", u);
-            //thong tin job
-            request.setAttribute("cc", job);
-            //
-            request.setAttribute("check", "existed");
-            request.setAttribute("profile", cvp);
-            request.getRequestDispatcher("job-details.jsp").forward(request, response);
-
-        } else {
-
-            CVProfile cvp = cvd.findByIdUser(user.getIdUser());
-
-            request.setAttribute("u", u);
-            //thong tin job
-            request.setAttribute("cc", job);
-            //
-            request.setAttribute("check", "success");
-            request.setAttribute("profile", cvp);
-            request.getRequestDispatcher("job-details.jsp").forward(request, response);
-        }
-
+        Apply a = new Apply(jb, cv, "Pending");
+        ap.insert(a);
+        request.setAttribute("successfully", true);
+        request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
     }
 
     /**

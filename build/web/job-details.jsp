@@ -25,13 +25,35 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/icontop.css">
         <link rel="stylesheet" href="assets/css/button.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
 
 
 
     </head>
 
     <body>
+        <%
+Boolean isVerified = (Boolean) request.getAttribute("successfully");
+if (isVerified == null) {
+    isVerified = false;
+}
+            
+        %>
+        <script>
 
+            var isVerifiedParam = <%= isVerified %>;
+            console.log(isVerifiedParam);
+            if (isVerifiedParam) {
+                toastr.success("Your profile has been applied to the recruitment application!!!", "Easyjob Notice", {
+                    timeOut: 2000,
+                });
+
+            }
+
+        </script>
         <!-- ***** Preloader Start ***** -->
         <!--        <div id="preloader">
                     <div class="jumper">
@@ -93,7 +115,17 @@
                     <div class="col-md-3 col-sm-4">
                         <div class="contact-form">
                             <div class="form-group">
-                                <button type="submit" class="filled-button btn-block">Apply for this job</button>
+                                <c:choose>
+                                    <c:when test="${check == 'existed'}">
+                                        <a style="text-align: center;pointer-events:none; background-color: #ccc" href="#!" class="filled-button btn-block">Applied to this job.</a>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <a style="text-align: center;" href="cvapply?idprofile=${profile.CVId}&idjob=${cc.jobID}" class="filled-button btn-block">Apply for this job.</a>
+                                    </c:otherwise>
+                                </c:choose>
+
+
+
                             </div>
                         </div>
 

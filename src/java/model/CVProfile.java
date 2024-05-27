@@ -127,6 +127,12 @@ public class CVProfile {
     public void setAvatar(String Avatar) {
         this.Avatar = Avatar;
     }
+
+    @Override
+    public String toString() {
+        return "CVProfile{" + "CVId=" + CVId + ", UserID=" + UserID + ", Number=" + Number + ", Skills=" + Skills + ", Experience=" + Experience + ", Description=" + Description + ", Education=" + Education + ", Certification=" + Certification + ", LinkUrl=" + LinkUrl + ", Avatar=" + Avatar + ", LinkPdf=" + LinkPdf + '}';
+    }
+    
     
     
 }

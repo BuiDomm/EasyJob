@@ -186,7 +186,7 @@
                                                             </a>
                                                         </li>
                                                         <li>
-                                                            <a class="a-new" href="#!">
+                                                            <a class="a-new" href="cvapplied">
                                                                 <img width="30" height="30" src="https://img.icons8.com/material-outlined/30/view.png" alt="view"/>
                                                                 <span>CVs submitted</span>
                                                             </a>

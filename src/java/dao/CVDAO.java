@@ -36,7 +36,7 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
                 String education = rs.getString(6);
                 String certifications = rs.getString(7);
                 String linkUrl = rs.getString(8);
-                int number = rs.getInt(9);
+                int number = rs.getInt(9);      
                 String avatar = rs.getString(10);
                 String linkPdf = rs.getString(11);
                 
@@ -52,6 +52,66 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
     
     
     
+    public CVProfile findByIdUser(int id) {
+
+        String sql = "	SELECT * FROM CVProfile\n"
+                + "	 WHERE UserID=? ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idCV = rs.getInt(1);
+                int idUser = rs.getInt(2);
+                String skill = rs.getString(3);
+                String exper = rs.getString(4);
+                String des =rs.getString(5);
+                String edu = rs.getString(6);
+                String certi = rs.getString(7);
+                String url = rs.getString(8);
+                int num = rs.getInt(9);
+                String img = rs.getString(10);
+                String pdf = rs.getString(11);
+                CVProfile cv = new CVProfile(idCV, idUser, num, skill, exper, des, edu, certi, url, img, pdf);
+                return cv;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
+    public CVProfile findByID(int id) {
+
+        String sql = "	SELECT * FROM CVProfile\n"
+                + "	 WHERE CVid=? ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idCV = rs.getInt(1);
+                int idUser = rs.getInt(2);
+                String skill = rs.getString(3);
+                String exper = rs.getString(4);
+                String des =rs.getString(5);
+                String edu = rs.getString(6);
+                String certi = rs.getString(7);
+                String url = rs.getString(8);
+                int num = rs.getInt(9);
+                String img = rs.getString(10);
+                String pdf = rs.getString(11);
+                CVProfile cv = new CVProfile(idCV, idUser, num, skill, exper, des, edu, certi, url, img, pdf);
+                return cv;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+    
     
     
 
@@ -62,7 +122,31 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
 
     @Override
     public CVProfile findById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+                String sql = "	SELECT * FROM CVProfile\n"
+                + "	 WHERE CVId=? ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idCV = rs.getInt(1);
+                int idUser = rs.getInt(2);
+                String skill = rs.getString(3);
+                String exper = rs.getString(4);
+                String des =rs.getString(5);
+                String edu = rs.getString(6);
+                String certi = rs.getString(7);
+                String url = rs.getString(8);
+                int num = rs.getInt(9);
+                String img = rs.getString(10);
+                String pdf = rs.getString(11);
+                CVProfile cv = new CVProfile(idCV, idUser, num, skill, exper, des, edu, certi, url, img, pdf);
+                return cv;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override

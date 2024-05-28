@@ -10,7 +10,6 @@
         <meta name="author" content="">
         <link rel="icon" href="assets/images/favicon.ico">
         <link rel="stylesheet" href="assets/css/icontop.css">
-
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
         <title>Easyjob | Free Job For Everyone</title>
         <!-- Bootstrap core CSS -->
@@ -150,7 +149,7 @@
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="a-new" href="#!">
+                                                <a class="a-new" href="cvapplied">
                                                     <img width="30" height="30" src="https://img.icons8.com/material-outlined/30/view.png" alt="view"/>
                                                     <span>CVs submitted</span>
                                                 </a>

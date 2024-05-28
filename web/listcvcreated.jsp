@@ -21,18 +21,21 @@
             href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap"
             rel="stylesheet"
             />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" integrity="sha512-3PN6gfRNZEX4YFyz+sIyTF6pGlQiryJu9NlGhu9LrLMQ7eDjNgudQoFDK3WSNAayeIKc6B8WXXpo4a7HqxjKwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link rel="stylesheet" href="assets/css/icontop.css">
 
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
-        <link rel="stylesheet" href="assets/css/style.css">
+        <!--<link rel="stylesheet" href="assets/css/style.css">-->
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
         <link rel="stylesheet" href="assets/css/cvapplied.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     </head>
-    <jsp:include page="header.jsp"/>
 
 
     <div id="preloader">
@@ -43,22 +46,64 @@
         </div>
     </div>
 
+    <%
+Boolean isVerified = (Boolean) request.getAttribute("successfully");
+if (isVerified == null) {
+isVerified = false;
+}
+            
+    %>
+    <script>
+
+        var isVerifiedParam = <%= isVerified %>;
+        console.log(isVerifiedParam);
+        if (isVerifiedParam) {
+            toastr.success("Created Job Is Successfully!!!", "Easyjob Notice", {
+                timeOut: 2000,
+            });
+
+        }
+
+    </script>
+
     <body>
+
+        <jsp:include page="headeremp.jsp"/>
 
         <div class="container">
             <div style="height: 150px;width: 100%;"></div>
 
             <h3>Cv Apllied</h3>
+
             <hr>
             <div class="jobs-list-container">
-                <h2 style="margin-bottom: 25px">You have applied to ${fn:length(list)} jobs</h2>
+                <h2 style="margin-bottom: 25px">You have created to ${fn:length(list)} jobs</h2>
 
                 <input class="job-search" type="text" placeholder="Search here..." />
 
+                <div style="border-color: green; position: relative" class="job">
+                    <!--<img src="images/software-engineer.svg">de anh o day -->
+                    <svg width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="66" height="66" rx="16" fill="#083D77"/>
+                    <path d="M49 21C49 16.664 41.674 13 33 13C24.326 13 17 16.664 17 21V25C17 29.336 24.326 33 33 33C41.674 33 49 29.336 49 25V21ZM33 47C24.326 47 17 43.336 17 39V45C17 49.336 24.326 53 33 53C41.674 53 49 49.336 49 45V39C49 43.336 41.674 47 33 47Z" fill="#A2E3FF"/>
+                    <path d="M49 29C49 33.336 41.674 37 33 37C24.326 37 17 33.336 17 29V35C17 39.336 24.326 43 33 43C41.674 43 49 39.336 49 35V29Z" fill="#A2E3FF"/>
+                    </svg>
+
+                    <h3 class="job-title ">${job.category.categoryName}</h3>
+                    <div class="details">${job.title}</div>
+                    <div class="details">Company: ${job.company.nameCompany}</div>
+                    <a href="jobdetails?id=${job.jobID}" class="details-btn">More Details</a>
+                    <span class="open-positions">Status: ${job.status}</span> 
+                    <a href="#!"><i style="color:red;font-size: 20px;position: absolute;right: 20px;top: 10px" class="fa-solid fa-xmark iconn"></i></a>
+                </div>
+
+
+
+                <hr>
 
                 <div class="jobs">
-                    <c:forEach items="${list}" var="i">
 
+                    <c:forEach items="${list}" var="i">
                         <div class="job">
                             <!--<img src="images/software-engineer.svg">de anh o day -->
                             <svg width="66" height="66" viewBox="0 0 66 66" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -67,17 +112,15 @@
                             <path d="M49 29C49 33.336 41.674 37 33 37C24.326 37 17 33.336 17 29V35C17 39.336 24.326 43 33 43C41.674 43 49 39.336 49 35V29Z" fill="#A2E3FF"/>
                             </svg>
 
-
-                            <h3 class="job-title ">${i.job.category.categoryName}</h3>
-                            <div class="details">${i.job.title}</div>
-                            <div class="details">Company: ${i.job.company.nameCompany}</div>
-                            <a href="jobdetails?id=${i.job.jobID}" class="details-btn">More Details</a>
+                            <h3 class="job-title ">${i.category.categoryName}</h3>
+                            <div class="details">${i.title}</div>
+                            <div class="details">Company: ${i.company.nameCompany}</div>
+                            <a href="jobdetails?id=${i.jobID}" class="details-btn">More Details</a>
                             <span class="open-positions">Status: ${i.status}</span> 
                         </div>
 
 
                     </c:forEach>
-
 
                 </div>
 

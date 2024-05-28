@@ -73,7 +73,6 @@ public class CVApply extends HttpServlet {
         request.setAttribute("successfully", true);
         request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
     }
-
     /**
      * Handles the HTTP <code>POST</code> method.
      *

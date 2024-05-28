@@ -68,9 +68,13 @@ public class JobDetails extends HttpServlet {
         int id = Integer.parseInt(request.getParameter("id"));
         JobDAO jd = new JobDAO();
         JobseekerDAO jdd = new JobseekerDAO();
+        //lay thong tin cua job tu id job
         Job job = jd.findById(id);
-        User u = jdd.getInfo(id);
+
+        //lay thong tin nguoi dang bai tu id job
         // thong tin nha tuyen dung
+        User u = jdd.getInfo(id);
+
         CVDAO cvd = new CVDAO();
 
         HttpSession session = request.getSession();

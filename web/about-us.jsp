@@ -54,7 +54,7 @@
         <!-- Header -->
 
 
-       <jsp:include page="header.jsp"/>
+        <jsp:include page="header.jsp"/>
 
         <!-- Page Content -->
         <div class="page-heading about-heading header-text" style="background-image: url(assets/images/heading-1-1920x500.jpg);">

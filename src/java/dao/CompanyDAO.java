@@ -74,6 +74,32 @@ public class CompanyDAO extends DBContext implements BaseDAO<Company> {
         return null;
     }
 
+    public Company findByUserId(int id) {
+        String sql = "Select * from CompanyProfile\n"
+                + "Where UserID = ? ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idCompany = rs.getInt(1);
+                String nameCompany = rs.getString(2);
+                int idUser = rs.getInt(3);
+                String aboutUs = rs.getString(4);
+                String add = rs.getString(5);
+                String status = rs.getString(5);
+                String url = rs.getString(6);
+                JobseekerDAO jd = new JobseekerDAO();
+                User user = jd.findById(idUser);
+                Company c = new Company(idCompany, nameCompany, user, aboutUs, add, status, url);
+                return c;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     @Override
     public boolean insert(Company newObject) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

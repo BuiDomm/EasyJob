@@ -36,7 +36,7 @@
 
     <body>
         <%
-Boolean isVerified = (Boolean) request.getAttribute("successfully");
+    Boolean isVerified = (Boolean) request.getAttribute("successfully");
 if (isVerified == null) {
     isVerified = false;
 }

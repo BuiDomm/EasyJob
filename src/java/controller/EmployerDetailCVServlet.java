@@ -12,6 +12,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import model.CVProfile;
 import model.User;
 
@@ -26,88 +27,48 @@ public class EmployerDetailCVServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int jobseekerId = 0;
-        try{
-             jobseekerId = Integer.parseInt(request.getParameter("UserId"));
-        }catch(Exception e){
+        try {
+            jobseekerId = Integer.parseInt(request.getParameter("UserId"));
+        } catch (Exception e) {
             response.sendRedirect("login.jsp");
         }
-        
-        JobseekerDAO jsDAO = new JobseekerDAO();
-        CVDAO cvDao = new CVDAO();
-        String roleRequired = "employer";
-        
-        // Lay ra email cua jobseeker by id
-        User newUser = jsDAO.findById(jobseekerId);
-        // Neu ton tai jobseeker vs id do
-        if(newUser != null){
-            // Get all cookies from the request
-            Cookie[] cookies = request.getCookies();
-            String cuser = null;
 
-            // Check if cookies are not null
-            if (cookies != null) {
-                // Loop through the cookies to find the one named "cuser"
-                for (Cookie cookie : cookies) {
-                    if ("cuser".equals(cookie.getName())) {
-                        cuser = cookie.getValue();
-                        break; // Exit loop once the cookie is found
-                    }
-                }
-            }
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("account");
 
-            // Nếu đã login 
-            if (cuser != null) {
-                String roleName = jsDAO.getRoleByEmail(cuser);
-                //Nếu role là jobseeker ,gọi jsp cvProfile
-                if(roleName.toLowerCase().equalsIgnoreCase(roleRequired)){
-                    // Truyền cv vs thông tin user sang jsp
-                    // Gọi hàm DAO để lấy CVProfile dựa trên email
-                    String jobseekerEmail = newUser.getEmail();
-                    CVProfile cvProfile = cvDao.findByEmail(jobseekerEmail);
-                    User user = jsDAO.findByEmail(jobseekerEmail);
+        if (user != null && user.getRoleId() == 3) {
+            JobseekerDAO jsDAO = new JobseekerDAO();
+            CVDAO cvDao = new CVDAO();
 
-                    if (cvProfile != null && user != null) {
-                        // Xử lý link url ,nếu không đủ 4 dấu | cho 4 loại link thì điền thêm để in ra jsp không lỗi
-                        String linkUrl = cvProfile.getLinkUrl();
-                         // Kiểm tra xem chuỗi có ít hơn 3 kí tự '|' không
-                        int count = countOccurrences(linkUrl, '|');
-                        if (count < 3) {
-                            // Tính số lượng kí tự '|' cần thêm vào
-                            int diff = 3 - count;
+            User jobseeker = jsDAO.findById(jobseekerId);
+            if (jobseeker != null) {
+                CVProfile cvProfile = cvDao.findByEmail(jobseeker.getEmail());
 
-                            // Thêm kí tự '|' vào chuỗi để có đủ 4 kí tự '|'
-                            for (int i = 0; i < diff; i++) {
-                                linkUrl += "|";
-                            }
+                if (cvProfile != null) {
+                    String linkUrl = cvProfile.getLinkUrl();
+                    int count = countOccurrences(linkUrl, '|');
+                    if (count < 3) {
+                        int diff = 3 - count;
+                        for (int i = 0; i < diff; i++) {
+                            linkUrl += "|";
                         }
-
-
-                        // Truyền thông tin CVProfile, user qua request
-                        request.setAttribute("cv", cvProfile);
-                        request.setAttribute("user", user);
-                        // Chuyển hướng đến trang JSP
-                        request.getRequestDispatcher("CVProfileForView.jsp").forward(request, response);
-                    } else {
-                        response.getWriter().println("Không tìm thấy CVProfile cho email: " + cuser);
                     }
-                }
-                //Nếu role không phải jobseeker ,chuyển trang login
-                else{
-                    response.sendRedirect("login.jsp");
-                }
-            } 
 
-            // Nếu chưa login chuyển sang trang login 
-            else {
-               response.sendRedirect("login.jsp");
+                    request.setAttribute("cv", cvProfile);
+                    request.setAttribute("user", jobseeker);
+                    request.getRequestDispatcher("CVProfileForView.jsp").forward(request, response);
+                } else {
+                    response.getWriter().println("Không tìm thấy CVProfile cho email: " + jobseeker.getEmail());
+                }
+            } else {
+                response.getWriter().println("Không tìm thấy jobseeker cho id: " + jobseekerId);
             }
-        }
-        else {
-            response.getWriter().println("Không tìm thấy jobseeker cho id: " + jobseekerId);
+        } else {
+            response.sendRedirect("login.jsp");
         }
     }
-    
-     // Hàm đếm số lần xuất hiện của một kí tự trong chuỗi
+
+    // Hàm đếm số lần xuất hiện của một kí tự trong chuỗi
     public int countOccurrences(String inputString, char ch) {
         int count = 0;
         for (int i = 0; i < inputString.length(); i++) {
@@ -118,10 +79,9 @@ public class EmployerDetailCVServlet extends HttpServlet {
         return count;
     }
 
-   
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
     }
 }

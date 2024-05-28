@@ -12,5 +12,12 @@
             <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/web/blog.jsp</file>
             <file>file:/C:/Users/ASUS/OneDrive/Documents/NetBeansProjects/EasyJob/web/listcvapplied.jsp</file>
         </group>
+        <group name="PE_PRJ301">
+            <file>file:/C:/Users/This%20PC/Desktop/EasyJobReal2/EasyJob/src/java/controller/PagingJob.java</file>
+            <file>file:/C:/Users/This%20PC/Desktop/EasyJobReal2/EasyJob/src/java/controller/RenderJobList.java</file>
+            <file>file:/C:/Users/This%20PC/Desktop/EasyJobReal2/EasyJob/src/java/dao/JobDAO.java</file>
+            <file>file:/C:/Users/This%20PC/Desktop/EasyJobReal2/EasyJob/src/java/dao/CVDAO.java</file>
+            <file>file:/C:/Users/This%20PC/Desktop/EasyJobReal2/EasyJob/src/java/controller/JobDetails.java</file>
+        </group>
     </open-files>
 </project-private>

@@ -109,7 +109,7 @@ public class LoginJobseeker extends HttpServlet {
             } else if (user.getRoleId() == 3) {
                 request.getRequestDispatcher("homeemployeer.jsp").forward(request, response);
             } else if (user.getRoleId() == 1) {
-             request.getRequestDispatcher("./Admin/adminhome.jsp").forward(request, response);
+                request.getRequestDispatcher("./Admin/adminhome.jsp").forward(request, response);
             }
         } else {
             request.setAttribute("notice", "Email or password is invalid. Please check again!!");
@@ -120,7 +120,7 @@ public class LoginJobseeker extends HttpServlet {
             } else {
                 request.getRequestDispatcher("admin.jsp").forward(request, response);
             }
-        } 
+        }
         // hello world
     }
 
@@ -135,4 +135,3 @@ public class LoginJobseeker extends HttpServlet {
     }// </editor-fold>
 
 }
-

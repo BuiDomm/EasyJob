@@ -108,7 +108,7 @@ public class LoginJobseeker extends HttpServlet {
             } else if (user.getRoleId() == 3) {
                 request.getRequestDispatcher("homeemployeer.jsp").forward(request, response);
             } else if (user.getRoleId() == 1) {
-                request.getRequestDispatcher("adminhome.jsp").forward(request, response);
+                request.getRequestDispatcher("./Admin/adminhome.jsp").forward(request, response);
             }
         } else {
             request.setAttribute("notice", "Email or password is invalid. Please check again!!");

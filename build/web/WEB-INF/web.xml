@@ -158,4 +158,36 @@
         <servlet-name>CreateJob</servlet-name>
         <url-pattern>/createjob</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name>AdminListAccount</servlet-name>
+        <servlet-class>controller.AdminListAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminLockAccount</servlet-name>
+        <servlet-class>controller.AdminLockAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminUnlockAccount</servlet-name>
+        <servlet-class>controller.AdminUnlockAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AdminServlet</servlet-name>
+        <servlet-class>controller.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminListAccount</servlet-name>
+        <url-pattern>/listaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminLockAccount</servlet-name>
+        <url-pattern>/lockaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminUnlockAccount</servlet-name>
+        <url-pattern>/unlockaccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AdminServlet</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
 </web-app>

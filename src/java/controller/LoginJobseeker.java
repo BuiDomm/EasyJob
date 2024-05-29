@@ -45,6 +45,7 @@ public class LoginJobseeker extends HttpServlet {
             out.println("<h1>Servlet LoginJobseeker at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
+            //hello
         }
     }
 

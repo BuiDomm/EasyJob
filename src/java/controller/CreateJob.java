@@ -104,10 +104,10 @@ public class CreateJob extends HttpServlet {
         JobDAO jd = new JobDAO();
         jd.insert(j);
         List<Job> list = jd.findByIdUser(epl.getIdUser());
-        
+        Job currentJob = jd.getJobCurrentInsert(epl.getIdUser());
         request.setAttribute("successfully", true);
         request.setAttribute("list", list);
-        request.setAttribute("job", j);
+        request.setAttribute("job", currentJob);
         request.getRequestDispatcher("listcvcreated.jsp").forward(request, response);
     }
 

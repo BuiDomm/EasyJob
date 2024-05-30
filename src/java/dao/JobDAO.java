@@ -21,10 +21,10 @@ import model.User;
  * @author ASUS
  */
 public class JobDAO extends DBContext implements BaseDAO<Job> {
-    
+
     CompanyDAO com = new CompanyDAO();
     CategoryDAO cd = new CategoryDAO();
-    
+
     @Override
     public List<Job> getAll() {
         List<Job> list = new ArrayList<>();
@@ -53,6 +53,36 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return list;
     }
+
+    public List<Job> getAllJobAccept() {
+        List<Job> list = new ArrayList<>();
+        String sql = "SELECT * FROM jobs \n"
+                + "Where Status = 'Accept'";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idJob = rs.getInt(1);
+                int idCompany = rs.getInt(2);
+                int idCategory = rs.getInt(3);
+                String title = rs.getString(4);
+                String desc = rs.getString(5);
+                int expY = rs.getInt(6);
+                String location = rs.getString(7);
+                int salary = rs.getInt(8);
+                String status = rs.getString(9);
+                Date date = rs.getDate(10);
+                Company company = com.findById(idCompany);
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+                list.add(j);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public Job findByCompanyId(int id) {
         String sql = "Select * from jobs\n"
                 + "where CompanyID = ? ";
@@ -82,6 +112,7 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return null;
     }
+
     @Override
     public Job findById(int id) {
         String sql = "Select * from jobs\n"
@@ -105,14 +136,14 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
                 Category category = cd.findById(idCategory);
                 Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
                 return j;
-                
+
             }
         } catch (Exception ex) {
             Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
-    
+
     public List<Job> findByIdUser(int id) {
         List<Job> list = new ArrayList<>();
         String sql = "SELECT * FROM jobs\n"
@@ -138,18 +169,18 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
                 Category category = cd.findById(idCategory);
                 Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
                 list.add(j);
-                
+
             }
         } catch (Exception ex) {
             Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
-    
+
     public int getPageNumber() {
-        
-        String sql = "Select count(*) as countjob from jobs";
-        
+
+        String sql = "Select count(*) as countjob from jobs where status = 'Accept'";
+
         try {
             PreparedStatement ps = getConnection().prepareStatement(sql);
             ResultSet rs = ps.executeQuery();
@@ -161,15 +192,15 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
                     numberpage = numberpage + 1;
                 }
                 return numberpage;
-                
+
             }
-            
+
         } catch (Exception ex) {
             Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return 0;
     }
-    
+
     public List<Job> getTop3() {
         List<Job> list = new ArrayList<>();
         String sql = "SElect TOP 3  * FROM Jobs\n"
@@ -199,10 +230,43 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         return list;
     }
     
-    public List<Job> getAllFollowPage(int num) {
+    
+    
+        public List<Job> getTop3Succes() {
+        List<Job> list = new ArrayList<>();
+        String sql = "SElect TOP 3  * FROM Jobs "
+                + "Where Status = 'Accept' \n"
+                + "Order by JobID DESC";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idJob = rs.getInt(1);
+                int idCompany = rs.getInt(2);
+                int idCategory = rs.getInt(3);
+                String title = rs.getString(4);
+                String desc = rs.getString(5);
+                int expY = rs.getInt(6);
+                String location = rs.getString(7);
+                int salary = rs.getInt(8);
+                String status = rs.getString(9);
+                Date date = rs.getDate(10);
+                Company company = com.findById(idCompany);
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+                list.add(j);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+
+     public List<Job> getAllFollowPage(int num) {
         List<Job> list = new ArrayList<>();
         CategoryDAO cd = new CategoryDAO();
-        String sql = "Select * from jobs\n"
+        String sql = "Select * from jobs where status = 'Accept'\n"
                 + "	order by JobID\n"
                 + "	offset ? rows \n"
                 + "	fetch first 12 rows only";
@@ -224,16 +288,16 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
                 Company company = com.findById(idCompany);
                 Category category = cd.findById(idCategory);
                 Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
-                
+
                 list.add(j);
             }
-            
+
         } catch (Exception ex) {
             Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
-    
+
     @Override
     public boolean insert(Job newObject) {
         String sql = "	Insert Into Jobs(CompanyID,CategoryID,Title,Description,ExperienceYears,Location,Salary,Status) \n"
@@ -257,9 +321,64 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
             Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-        
+
     }
     
+       public boolean updateStatusExpire(int idJob) {
+
+        String sql = "Update Jobs\n"
+                + "Set Status = 'Expire'\n"
+                + "Where JobID = ?";
+
+        PreparedStatement ps;
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, idJob);
+
+            int rowAffect = ps.executeUpdate();
+            if (rowAffect > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+    
+    public Job getJobCurrentInsert(int idUser) {
+        List<Job> list = new ArrayList<>();
+        String sql = "SELECT TOP 1 * FROM Jobs\n"
+                + "JOIN CompanyProfile as COM On COM.CompanyID = Jobs.CompanyID\n"
+                + "JOIN Users as Us ON Us.UserID = COM.UserID\n"
+                + "Where Us.UserID = ? \n"
+                + "ORder by JobID DESC";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, idUser);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idJob = rs.getInt(1);
+                int idCompany = rs.getInt(2);
+                int idCategory = rs.getInt(3);
+                String title = rs.getString(4);
+                String desc = rs.getString(5);
+                int expY = rs.getInt(6);
+                String location = rs.getString(7);
+                int salary = rs.getInt(8);
+                String status = rs.getString(9);
+                Date date = rs.getDate(10);
+                Company company = com.findById(idCompany);
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+                return j;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+    
+
     @Override
     public boolean update(Job job) {
         String sql = "UPDATE [dbo].[Jobs]\n"
@@ -273,16 +392,16 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
                 + "      \n"
                 + " WHERE JobID=? ";
         try {
-           PreparedStatement st = getConnection().prepareStatement(sql);
-           st.setInt(1, job.getCategory().getCategoryID());
-           st.setString(2, job.getTitle());
-           st.setString(3,job.getDescrip());
-           st.setInt(4, job.getYearEx());
-           st.setString(5, job.getLocation());
-           st.setInt(6,job.getSalary());
-           st.setInt(7, job.getJobID());
-                   
-             int rowAffect = st.executeUpdate();
+            PreparedStatement st = getConnection().prepareStatement(sql);
+            st.setInt(1, job.getCategory().getCategoryID());
+            st.setString(2, job.getTitle());
+            st.setString(3, job.getDescrip());
+            st.setInt(4, job.getYearEx());
+            st.setString(5, job.getLocation());
+            st.setInt(6, job.getSalary());
+            st.setInt(7, job.getJobID());
+
+            int rowAffect = st.executeUpdate();
             if (rowAffect > 0) {
                 return true;
             }
@@ -291,10 +410,26 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return false;
     }
-    
+
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE Jobs \n"
+                + "Where JobID =?";
+        PreparedStatement ps;
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            int rowAffect = ps.executeUpdate();
+            if (rowAffect > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        return false;
+
     }
-    
+
 }

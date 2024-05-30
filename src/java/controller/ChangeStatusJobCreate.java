@@ -4,8 +4,6 @@
  */
 package controller;
 
-import dao.ApplyDAO;
-import dao.CVDAO;
 import dao.JobDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,15 +11,12 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Apply;
-import model.CVProfile;
-import model.Job;
 
 /**
  *
  * @author ASUS
  */
-public class CVApply extends HttpServlet {
+public class ChangeStatusJobCreate extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +35,10 @@ public class CVApply extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CVApply</title>");
+            out.println("<title>Servlet ChangeStatusJobCreate</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CVApply at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangeStatusJobCreate at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,18 +56,18 @@ public class CVApply extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idProfile = Integer.parseInt(request.getParameter("idprofile"));
-        int idjob = Integer.parseInt(request.getParameter("idjob"));
+        int id = Integer.parseInt(request.getParameter("id"));
         JobDAO jd = new JobDAO();
-        CVDAO cd = new CVDAO();
-        Job jb = jd.findById(idjob);
-        CVProfile cv = cd.findById(idProfile);
-        ApplyDAO ap = new ApplyDAO();
-        Apply a = new Apply(jb, cv, "Pending");
-        ap.insert(a);
-        request.setAttribute("successfully1", true);
-        request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
+        if (jd.updateStatusExpire(id)) {
+            request.setAttribute("successfully1", true);
+            request.setAttribute("checkExpire", "Yes");
+            request.getRequestDispatcher("jobdetailemployeer?id=" + id).forward(request, response);
+        } else {
+            request.setAttribute("successfully1", false);
+            request.getRequestDispatcher("jobdetailemployeer?id=" + id).forward(request, response);
+        }
     }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -85,6 +80,7 @@ public class CVApply extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**

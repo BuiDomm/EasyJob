@@ -28,12 +28,12 @@
             <ul class="navbar-nav ">
 
                 <li class="navbar-item">
-                    <a style="    width: 140px;display: inline-flex;align-items: center;" class="nav-link" href="#!"> <i class="fa fa-floppy-o"></i>Profile
+                    <a style="    width: 140px;display: inline-flex;align-items: center;" class="nav-link" href="profilejb.jsp"> <i class="fa fa-floppy-o"></i>Profile
                     </a>
                 </li> 
 
                 <li class="navbar-item">
-                    <a style="    width: 140px;display: inline-flex;align-items: center;" class="nav-link" href="#!"> <i class="fa fa-sitemap"></i>Company
+                    <a style="    width: 140px;display: inline-flex;align-items: center;" class="nav-link" href="companycontrolservlet"> <i class="fa fa-sitemap"></i>Company
                     </a>
                 </li> 
                 <li class="navbar-item">
@@ -41,7 +41,7 @@
                     </a>
                 </li> 
                 <li class="navbar-item">
-                    <a style="    width: 140px;display: inline-flex;align-items: center;" class="nav-link" href="#!"> <i class="
+                    <a style=" width: 140px;display: inline-flex;align-items: center;" class="nav-link" href="listjobcreated"> <i class="
                                                                                                                          fa fa-question
                                                                                                 "></i>Created
                     </a>

@@ -81,32 +81,39 @@ public class JobDetails extends HttpServlet {
         //account của user
         User user = (User) session.getAttribute("account");
 
-        // Check thử cong viec nay da apply chua
-        ApplyDAO ap = new ApplyDAO();
-        Apply a = ap.findByJobIDAndCvID(id, user.getIdUser());
+        if (user != null) {
 
-        if (a != null) {
-            CVProfile cvp = cvd.findByIdUser(user.getIdUser());
+            // Check thử cong viec nay da apply chua
+            ApplyDAO ap = new ApplyDAO();
+            Apply a = ap.findByJobIDAndCvID(id, user.getIdUser());
 
-            request.setAttribute("u", u);
-            //thong tin job
-            request.setAttribute("cc", job);
-            //
-            request.setAttribute("check", "existed");
-            request.setAttribute("profile", cvp);
-            request.getRequestDispatcher("job-details.jsp").forward(request, response);
+            if (a != null) {
+                CVProfile cvp = cvd.findByIdUser(user.getIdUser());
 
+                request.setAttribute("u", u);
+                //thong tin job
+                request.setAttribute("cc", job);
+                //
+                request.setAttribute("check", "existed");
+                request.setAttribute("profile", cvp);
+                request.getRequestDispatcher("job-details.jsp").forward(request, response);
+
+            } else {
+                CVProfile cvp = cvd.findByIdUser(user.getIdUser());
+                request.setAttribute("u", u);
+                //thong tin job
+                request.setAttribute("cc", job);
+                //
+                request.setAttribute("check", "success");
+                request.setAttribute("profile", cvp);
+                request.getRequestDispatcher("job-details.jsp").forward(request, response);
+            }
         } else {
-
-            CVProfile cvp = cvd.findByIdUser(user.getIdUser());
-
-            request.setAttribute("u", u);
-            //thong tin job
+            // vẫn có thể xem được job khi không đăng nhập
             request.setAttribute("cc", job);
-            //
-            request.setAttribute("check", "success");
-            request.setAttribute("profile", cvp);
+            request.setAttribute("u", u);
             request.getRequestDispatcher("job-details.jsp").forward(request, response);
+
         }
 
     }

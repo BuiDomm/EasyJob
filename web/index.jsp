@@ -143,7 +143,7 @@
                 <div class="col-md-12">
                     <div class="section-heading">
                         <h2>Featured Jobs</h2>
-                        <a href="jobs.jsp">view more <i class="fa fa-angle-right"></i></a>
+                        <a href="paging?id=1">view more <i class="fa fa-angle-right"></i></a>
                     </div>
                 </div>
                   <jsp:useBean id="jobItem" class="dao.JobDAO" /> 

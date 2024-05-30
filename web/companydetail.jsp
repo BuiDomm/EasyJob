@@ -39,8 +39,8 @@
 
         <body>
 
-            <jsp:include page="employerheader.jsp"/>
-            
+           <jsp:include page="headeremp.jsp"/>
+           <!--<div style="height: 200px;"></div>-->
             <!-- banner start -->
             <c:if test="${com == null}">
             <div class=" container-fluid ">
@@ -135,7 +135,7 @@
             </div>
                                      
       </c:if>
-      <jsp:include page="employermenu.jsp"/> 
+      <%--<jsp:include page="employermenu.jsp"/>--%> 
 
 
 

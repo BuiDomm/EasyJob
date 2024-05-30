@@ -1,11 +1,10 @@
+package controller;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-package controller;
 
-import dao.ApplyDAO;
-import dao.CVDAO;
 import dao.JobDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,15 +12,16 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Apply;
-import model.CVProfile;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
 import model.Job;
+import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class CVApply extends HttpServlet {
+public class ViewListJobCreated extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +40,10 @@ public class CVApply extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CVApply</title>");
+            out.println("<title>Servlet ViewListJobCreated</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CVApply at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ViewListJobCreated at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,18 +61,15 @@ public class CVApply extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int idProfile = Integer.parseInt(request.getParameter("idprofile"));
-        int idjob = Integer.parseInt(request.getParameter("idjob"));
+        HttpSession session = request.getSession();
+        User epl = (User) session.getAttribute("account");
         JobDAO jd = new JobDAO();
-        CVDAO cd = new CVDAO();
-        Job jb = jd.findById(idjob);
-        CVProfile cv = cd.findById(idProfile);
-        ApplyDAO ap = new ApplyDAO();
-        Apply a = new Apply(jb, cv, "Pending");
-        ap.insert(a);
-        request.setAttribute("successfully1", true);
-        request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
+        List<Job> list = jd.findByIdUser(epl.getIdUser());
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("listcvcreated.jsp").forward(request, response);
+
     }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *

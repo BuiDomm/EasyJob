@@ -39,7 +39,7 @@
 
         <body>
 
-          <jsp:include page="employerheader.jsp"/>
+            <jsp:include page="headeremp.jsp"/>
 <!-- Banner Starts Here -->
 <div style="padding: 0" class=" banner header-text">
         <div class="owl-banner owl-carousel">
@@ -47,7 +47,7 @@
             <div class="banner-item-02">
                 <div class="text-content">
                     
-                    <h2><a class="btn btn-outline-light" style="color: white;font-size: 72px" href="#">Upload Your Jobs</a></h2>
+                    <h2><a class="btn btn-outline-light" style="color: white;font-size: 72px" href="createjob?id=${sessionScope.account.idUser}">Upload Your Jobs</a></h2>
                 </div>
             </div>
            

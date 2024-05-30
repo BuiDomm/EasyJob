@@ -22,10 +22,10 @@
 
         <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
-        <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
         <link rel="stylesheet" href="assets/css/icontop.css">
+          <link rel="stylesheet" href="assets/css/style.css">
 
     </head>
 
@@ -63,145 +63,126 @@
                 <div class="row">
                     <div class="col-md-3">
                         <div class="contact-form">
-                            <form action="#">
-                                <h5 style="margin-bottom: 15px">Type</h5>
+                            <form action="searchAndFilter">
 
-                                <div>
+                                <div class="search-form">
                                     <label>
-                                        <input type="checkbox">
-
-                                        <small>Contract (5)</small>
+                                        <input type="text" >
+                                        <ul>
+                                            <li data-char="t">t</li>
+                                            <li data-char="i">i</li>
+                                            <li data-char="t2">t</li> 
+                                            <li data-char="l">l</li>
+                                            <li data-char="e">e</li>
+                                        </ul>
                                     </label>
                                 </div>
 
-                                <div>
-                                    <label>
-                                        <input type="checkbox">
 
-                                        <small>Full time (5)</small>
-                                    </label>
-                                </div>
 
-                                <div>
-                                    <label>
-                                        <input type="checkbox">
+                                <h5 style="margin: 15px 0">Company</h5>
 
-                                        <small>Internship (5)</small>
-                                    </label>
-                                </div>
+                                <c:forEach var="c" items="${listCompany}" >
+                                    <div>
+                                        <label>
+                                            <input name="company" value="${c.companyID}" type="radio">
+
+                                            <small va>${c.nameCompany}</small>
+                                        </label>
+                                    </div>
+
+                                </c:forEach>
+
+
 
                                 <br>
 
                                 <h5 style="margin-bottom: 15px">Category</h5>
+                                <c:forEach var="c" items="${listCategory}" >
+                                    <div>
+                                        <label>
+                                            <input name="category" value="${c.categoryID}" type="radio">
+
+                                            <small>${c.categoryName}</small>
+                                        </label>
+                                    </div>
+                                </c:forEach>
+
+                                <br>
+
+                                <h5 style="margin-bottom: 15px">Location</h5>
+                                <c:forEach var="l" items="${listLocation}" >
+                                    <div>
+                                        <label>
+                                            <input name="location" value="${l.location}" type="radio">
+
+                                            <small>${l.location}</small>
+                                        </label>
+                                    </div>
+                                </c:forEach>
+
+                              
+                                <br>
+
+
+                                <h5 style="margin-bottom: 15px">Salary</h5>
+
 
                                 <div>
                                     <label>
-                                        <input type="checkbox">
+                                        <input name="salary" value="2000" type="radio">
 
-                                        <small>Accounting / Finance / Insurance Jobs (5)</small>
+                                        <small>< 2000</small>
                                     </label>
                                 </div>
 
                                 <div>
                                     <label>
-                                        <input type="checkbox">
+                                        <input name="salary" value="3000" type="radio">
 
-                                        <small>Accounting / Finance / Insurance Jobs (5)</small>
+                                        <small>2000 - 4000</small>
                                     </label>
                                 </div>
 
                                 <div>
                                     <label>
-                                        <input type="checkbox">
+                                        <input name="salary" value="4000" type="radio">
 
-                                        <small>Accounting / Finance / Insurance Jobs (5)</small>
+                                        <small>> 4000</small>
                                     </label>
                                 </div>
 
                                 <br>
 
-                                <h5 style="margin-bottom: 15px">Career levels</h5>
-
-                                <div>
-                                    <label>
-                                        <input type="checkbox">
-
-                                        <small>Entry Level (5)</small>
-                                    </label>
-                                </div>
-
-                                <div>
-                                    <label>
-                                        <input type="checkbox">
-
-                                        <small>Entry Level (5)</small>
-                                    </label>
-                                </div>
-
-                                <div>
-                                    <label>
-                                        <input type="checkbox">
-
-                                        <small>Entry Level (5)</small>
-                                    </label>
-                                </div>
-
-                                <br>
-
-                                <h5 style="margin-bottom: 15px">Education levels</h5>
-
-                                <div>
-                                    <label>
-                                        <input type="checkbox">
-
-                                        <small>Associate Degree (5)</small>
-                                    </label>
-                                </div>
-
-                                <div>
-                                    <label>
-                                        <input type="checkbox">
-
-                                        <small>Associate Degree (5)</small>
-                                    </label>
-                                </div>
-
-                                <div>
-                                    <label>
-                                        <input type="checkbox">
-
-                                        <small>Associate Degree (5)</small>
-                                    </label>
-                                </div>
-
-                                <br>
 
 
                                 <h5 style="margin-bottom: 15px">Years of experience</h5>
 
                                 <div>
                                     <label>
-                                        <input type="checkbox">
+                                        <input name="year" value="1" type="radio">
 
-                                        <small>&lt; 1 (5)</small>
+                                        <small value="1">< 1 Year</small>
                                     </label>
                                 </div>
 
                                 <div>
                                     <label>
-                                        <input type="checkbox">
+                                        <input value="2" type="radio">
 
-                                        <small>&lt; 1 (5)</small>
+                                        <small>1 - 2 Year</small>
                                     </label>
                                 </div>
 
                                 <div>
                                     <label>
-                                        <input type="checkbox">
+                                        <input value="3" type="radio">
 
-                                        <small>&lt; 1 (5)</small>
+                                        <small>> 3 Year</small>
                                     </label>
                                 </div>
+
+                                <button type="submit" class="text-white w-100 p-lg-1" style="background-color: #ff6600; border: none">submit</button>
                             </form>
                         </div>
                     </div>
@@ -256,7 +237,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="inner-content">
-                            <p>Copyright © 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
+                            <p>Copyright Â© 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
                         </div>
                     </div>
                 </div>

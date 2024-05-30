@@ -106,6 +106,10 @@
         <servlet-name>GoogleLoginServlet</servlet-name>
         <servlet-class>controller.GoogleLoginServlet</servlet-class>
     </servlet>
+ <servlet>
+        <servlet-name>SearchAndFilter</servlet-name>
+        <servlet-class>controller.SearchAndFilter</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>GoogleLoginServlet</servlet-name>
         <url-pattern>/googlelogin</url-pattern>
@@ -189,5 +193,9 @@
     <servlet-mapping>
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+     <servlet-mapping>
+        <servlet-name>SearchAndFilter</servlet-name>
+        <url-pattern>/searchAndFilter</url-pattern>
     </servlet-mapping>
 </web-app>

@@ -99,15 +99,99 @@ public class CompanyDAO extends DBContext implements BaseDAO<Company> {
         }
         return null;
     }
-
-    @Override
-    public boolean insert(Company newObject) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public Company findCompanyByUserId(int userid){
+        JobseekerDAO j = new JobseekerDAO();
+        String sql = "SELECT *FROM CompanyProfile where USERID = ?;";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1,userid);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int companyID = rs.getInt("CompanyID");
+            String companyName = rs.getString("CompanyName");
+            int userID = rs.getInt("UserID");
+            String aboutUs = rs.getString("AboutUs");
+            String address = rs.getString("Address");
+            String status = rs.getString("Status");
+            String url = rs.getString("Url");
+            User user = j.findById(userID);
+            Company company = new Company(companyID, companyName, user, aboutUs, address, status, url);
+            return company;
+                    
+            }
+        } catch (Exception e) {
+        }
+        return null;
+    }
+    public boolean isCompanyNameExists(String name) {
+        String sql = "SELECT * FROM CompanyProfile WHERE LOWER(CompanyName) = LOWER(?)";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setString(1, name);
+            ResultSet rs = ps.executeQuery();
+            return rs.next();
+        } catch (Exception ex) {
+            Logger.getLogger(CompanyDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override
-    public boolean update(Company newObject) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public boolean insert(Company company) {
+         String sql="INSERT INTO [dbo].[CompanyProfile]\n" +
+"           ([CompanyName]\n" +
+"           ,[UserID]\n" +
+"           ,[AboutUs]\n" +
+"           ,[Address]\n" +
+"           ,[Status]\n" +
+"           ,[Url])\n" +
+"     VALUES\n" +
+"           (?,?,?,?,?,?)";
+       try {
+             PreparedStatement st = getConnection().prepareStatement(sql);
+             st.setString(1, company.getNameCompany());
+             st.setInt(2, company.getUser().getIdUser());
+             st.setString(3, company.getAboutUS());
+             st.setString(4, company.getAdd());
+             st.setString(5, company.getStatus());
+             st.setString(6, company.getUrl());
+             
+            int rowAffect = st.executeUpdate();
+            if (rowAffect > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean update(Company company) {
+       String sql = "UPDATE [dbo].[CompanyProfile]\n"
+               + "   SET [CompanyName] = ?\n"
+               + "      ,[AboutUs] = ?\n"
+               + "      ,[Address] = ?\n"
+               + "      ,[Status] = ?\n"
+               + "      ,[Url] = ?\n"
+               + " WHERE CompanyID=?";
+       try {
+           PreparedStatement st = getConnection().prepareStatement(sql);
+           st.setString(1, company.getNameCompany());
+            
+             st.setString(2, company.getAboutUS());
+             st.setString(3, company.getAdd());
+             st.setString(4, company.getStatus());
+             st.setString(5, company.getUrl()); 
+             st.setInt(6, company.getCompanyID());
+             int rowAffect = st.executeUpdate();
+            if (rowAffect > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     @Override

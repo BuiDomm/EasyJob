@@ -254,5 +254,29 @@
         <servlet-name>updatejobservlet</servlet-name>
         <url-pattern>/updatejobservlet</url-pattern>
     </servlet-mapping>
+       <servlet>
+        <servlet-name>ViewListJobCreated</servlet-name>
+        <servlet-class>controller.ViewListJobCreated</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>ViewListJobCreated</servlet-name>
+        <url-pattern>/listjobcreated</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>JobDetailForEmployer</servlet-name>
+        <url-pattern>/jobdetailemployeer</url-pattern>
+    </servlet-mapping>
+         <servlet>
+        <servlet-name>JobDetailForEmployer</servlet-name>
+        <servlet-class>controller.JobDetailForEmployer</servlet-class>
+    </servlet>
+     <servlet-mapping>
+        <servlet-name>ChangeStatusJobCreate</servlet-name>
+        <url-pattern>/statuschange</url-pattern>
+    </servlet-mapping>
+     <servlet>
+        <servlet-name>ChangeStatusJobCreate</servlet-name>
+        <servlet-class>controller.ChangeStatusJobCreate</servlet-class>
+    </servlet>
     
 </web-app>

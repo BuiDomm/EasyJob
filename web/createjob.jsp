@@ -14,10 +14,11 @@
         <!-- Main css -->
         <link rel="stylesheet" href="css/style.css">
         <link rel="stylesheet" href="assets/css/createjob.css">
-        
+
 
     </head>
-    <body>
+    <body>   
+
 
         <div class="main">
             <div class="container">
@@ -38,7 +39,7 @@
                                     <input type="text" name="namework" id="father_name" required/>
                                 </div>
                             </div>
-                          
+
                             <!--                            <div class="form-radio">
                                                             <label for="gender" class="radio-label">Gender :</label>
                                                             <div class="form-radio-item">
@@ -59,7 +60,7 @@
                                     <option selected disabled="true">Categories</option>
                                     <jsp:useBean id="cate" class="dao.CategoryDAO" /> 
                                     <c:forEach var="c" items="${cate.all}"> 
-                                        <option value="${c.categoryID}">${c.categoryName}</option>
+                                        <option ${c.categoryName eq oldObject.publisher.name ? 'selected' :''} value="${c.categoryID}">${c.categoryName}</option>
                                     </c:forEach>
                                 </select>
 
@@ -78,7 +79,7 @@
 
                             <div class="form-group">
                                 <label for="location">Location :</label>
-                                <input type="text" name="email" id="location" />
+                                <input type="text" name="location" id="location" />
                             </div>
 
                             <div class="form-group">
@@ -88,7 +89,7 @@
                             </div>
 
                             <div class="form-submit">
-                                <input type="submit" value="Reset All" class="submit" name="reset" id="reset" />
+                                <a href="homeemployeer.jsp">  <input type="" value="Back Home" class="submit" name="reset" id="reset" /></a>
                                 <input type="submit" value="Submit Form" class="submit" name="submit" id="submit" />
                             </div>
                         </form>

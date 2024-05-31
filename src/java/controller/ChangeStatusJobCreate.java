@@ -4,30 +4,19 @@
  */
 package controller;
 
-import dao.ApplyDAO;
-import dao.CVDAO;
-import dao.CompanyDAO;
 import dao.JobDAO;
-import dao.JobseekerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import javax.mail.Session;
-import model.Apply;
-import model.CVProfile;
-import model.Company;
-import model.Job;
-import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class JobDetails extends HttpServlet {
+public class ChangeStatusJobCreate extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +35,10 @@ public class JobDetails extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet JobDetails</title>");
+            out.println("<title>Servlet ChangeStatusJobCreate</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet JobDetails at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChangeStatusJobCreate at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -69,62 +58,14 @@ public class JobDetails extends HttpServlet {
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         JobDAO jd = new JobDAO();
-        JobseekerDAO jdd = new JobseekerDAO();
-        //lay thong tin cua job tu id job
-        Job job = jd.findById(id);
-        // Lay ra thong tin company theo id job
-        CompanyDAO cm = new CompanyDAO();
-        Company com = cm.findCompanyByIdJob(id);
-
-        //lay thong tin nguoi dang bai tu id job
-        // thong tin nha tuyen dung
-        User u = jdd.getInfo(id);
-
-        CVDAO cvd = new CVDAO();
-
-        HttpSession session = request.getSession();
-        //account của user
-        User user = (User) session.getAttribute("account");
-
-        if (user != null) {
-
-            // Check thử cong viec nay da apply chua
-            ApplyDAO ap = new ApplyDAO();
-            Apply a = ap.findByJobIDAndCvID(id, user.getIdUser());
-            // 
-
-            if (a != null) {
-                CVProfile cvp = cvd.findByIdUser(user.getIdUser());
-
-                request.setAttribute("u", u);
-                //thong tin job
-                request.setAttribute("cc", job);
-                //
-                request.setAttribute("check", "existed");
-                request.setAttribute("profile", cvp);
-                request.setAttribute("com", com);
-                request.getRequestDispatcher("job-details.jsp").forward(request, response);
-
-            } else {
-                CVProfile cvp = cvd.findByIdUser(user.getIdUser());
-                request.setAttribute("u", u);
-                //thong tin job
-                request.setAttribute("cc", job);
-                //
-                request.setAttribute("check", "success");
-                request.setAttribute("profile", cvp);
-                request.setAttribute("com", com);
-                request.getRequestDispatcher("job-details.jsp").forward(request, response);
-            }
+        if (jd.updateStatusExpire(id)) {
+            request.setAttribute("successfully1", true);
+            request.setAttribute("checkExpire", "Yes");
+            request.getRequestDispatcher("jobdetailemployeer?id=" + id).forward(request, response);
         } else {
-            // vẫn có thể xem được job khi không đăng nhập
-            request.setAttribute("cc", job);
-            request.setAttribute("u", u);
-            request.setAttribute("com", com);
-            request.getRequestDispatcher("job-details.jsp").forward(request, response);
-
+            request.setAttribute("successfully1", false);
+            request.getRequestDispatcher("jobdetailemployeer?id=" + id).forward(request, response);
         }
-
     }
 
     /**
@@ -139,6 +80,7 @@ public class JobDetails extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**

@@ -21,7 +21,7 @@
 
         <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
-        <link rel="stylesheet" href="assets/css/style.css">
+        <!--<link rel="stylesheet" href="assets/css/style.css">-->
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/icontop.css">
         <link rel="stylesheet" href="assets/css/button.css">
@@ -47,11 +47,35 @@ if (isVerified == null) {
             var isVerifiedParam = <%= isVerified %>;
             console.log(isVerifiedParam);
             if (isVerifiedParam) {
-                toastr.success("Your profile has been applied to the recruitment application!!!", "Easyjob Notice", {
+                toastr.error("Your profile has been applied to the recruitment application!!!", "Easyjob Notice", {
                     timeOut: 2000,
                 });
 
             }
+
+        </script>  
+        <%
+Boolean isVerified1 = (Boolean) request.getAttribute("successfully1");
+if (isVerified1 == null) {
+isVerified1 = false;
+}
+            
+        %>
+        <script>
+
+            var isVerifiedParam1 = <%= isVerified1 %>;
+            console.log(isVerifiedParam1);
+            if (isVerifiedParam1) {
+                toastr.success("Update Status Job Is Successfully!!", "Easyjob Notice", {
+                    timeOut: 2000,
+                });
+
+                if (!isVerifiedParam1) {
+                    toastr.success("Update Status Job Is Error", "Easyjob Notice", {
+                        timeOut: 2000,
+                    });
+
+                }
 
         </script>
         <!-- ***** Preloader Start ***** -->
@@ -65,7 +89,9 @@ if (isVerified == null) {
         <!-- ***** Preloader End ***** -->
 
         <!-- Header -->
-        <jsp:include page="header.jsp"/>
+        <jsp:include page="headeremp.jsp"/>
+
+
 
         <!-- Page Content -->
         <div class="page-heading about-heading header-text" style="background-image: url(assets/images/heading-6-1920x500.jpg);">
@@ -86,13 +112,13 @@ if (isVerified == null) {
             <div class="container">
                 <div class="row">
                     <div class="col-md-9 col-sm-8">
-                        <p class="lead">
-                            <i class="fa fa-map-marker"></i> <i>${cc.location}</i> &nbsp;&nbsp;
+                        <p class="lead" style="display: flex; align-items: center">
+                            <i  class="fa fa-map-marker"></i> <i>${cc.location}</i> &nbsp;&nbsp;
                             <i class="fa fa-calendar"></i> ${cc.date} &nbsp;&nbsp;
-                            <i class="fa fa-file"></i> Contract
-                        </p>
-                        <br/>
-                        <p>${cc.descrip}</p>
+                            Status: &nbsp; <c:if test="${cc.status == 'Accept'}"> <i style="color: green">${cc.status}</i> </c:if> <c:if test="${cc.status == 'Pending'}"> <i style="color: #bbb">${cc.status}</i> </c:if> <c:if test="${cc.status == 'Reject'}"> <i style="color: red">${cc.status}</i> </c:if><c:if test="${cc.status == 'Expire'}"> <i style="color: orange">${cc.status}</i> </c:if>
+                            </p>
+                            <br/>
+                                        <p>${cc.descrip}</p>
                         <br/>
                         <div class="form-group">
                             <h5>Job title: <i>${cc.title}</i></h5>
@@ -113,28 +139,30 @@ if (isVerified == null) {
 
 
                     <div class="col-md-3 col-sm-4">
-                        <div class="contact-form">
-                            <div class="form-group">
-                                <c:choose>
-                                    <c:when test="${check == 'existed'}">
-                                        <a style="text-align: center;pointer-events:none; background-color: #ccc" href="#!" class="filled-button btn-block">Applied to this job.</a>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <a style="text-align: center;" href="cvapply?idprofile=${profile.CVId}&idjob=${cc.jobID}" class="filled-button btn-block">Apply for this job.</a>
-                                    </c:otherwise>
-                                </c:choose>
 
+                        <div>                         
+                            <c:if test="${cc.status == 'Expire'}">
+                                <a style="pointer-events: none;" href="statuschange?id=${cc.jobID}">
+                                    <div style="display: flex; align-items: center;justify-content: center"> <label for="exipre">Mark to Expire Job! &nbsp;</label> 
+                                        <input style="display: inline-block;margin-bottom: 5px" type="checkbox" id="exipre" name="expire" ${cc.status == 'Expire' ? "checked":""}/>
 
+                                    </div>
+                                </a>
+                            </c:if>
+                            <c:if test="${cc.status == 'Accept'}">
+                                <a href="#!" onclick="handlerStatus('${cc.title}', '${cc.jobID}', 'expire-checkbox-${cc.jobID}'); return false;">
+                                    <div style="display: flex; align-items: center;justify-content: center">
+                                        <label for="expire-checkbox-${cc.jobID}">Mark to Expire Job! &nbsp;</label>
+                                        <input style="display: inline-block; margin-bottom: 5px" type="checkbox" id="expire-checkbox-${cc.jobID}" name="expire" ${checkExpire == 'Yes' ? "checked" : ""}/>
+                                    </div>
+                                </a>
+                            </c:if>
 
-                            </div>
                         </div>
-
                         <div>
-                            <img style="width: 255px;height: 186px;object-fit: cover" src="${com.url}" alt="" class="img-fluid wc-image">
+                            <img style="width: 255px;height: 186px;object-fit: cover;" src="${com.url}" alt="" class="img-fluid wc-image">
                         </div>
-
                         <br>
-
                         <ul class="social-icons text-center">
                             <li><a href="#"><i class="fa fa-facebook"></i></a></li>
                             <li><a href="#"><i class="fa fa-envelope"></i></a></li>
@@ -144,6 +172,14 @@ if (isVerified == null) {
 
                         <br>
                         <br>
+                        <c:if test="${cc.status == 'Accept'}">
+                            <div class="contact-form">
+                                <div class="form-group">
+                                    <a style="text-align: center;background:#7808d0; " href="#!" class="filled-button btn-block">Jobseeker was applied</a>
+                                </div>
+                            </div>
+
+                        </c:if>
                     </div>
                 </div>
             </div>
@@ -158,7 +194,7 @@ if (isVerified == null) {
                         </div>
 
                         <p class="lead">
-                            <i class="fa fa-map-marker">&nbsp;${cc.location}</i> 
+                            <i style="width:255px;" class="fa fa-map-marker">&nbsp;${cc.location}</i> 
                         </p>
 
                         <p>Looking to improve the security at your place of business? If so, we will provide you with the trained security officers and professionally licensed personnel needed for any business. From a security guard for construction site security to private event security, you can be sure to get the very best from our staff. Alternatively we provide tailor-made security guard training for your existing security staff.</p>
@@ -172,6 +208,8 @@ if (isVerified == null) {
                         </div>
 
                         <div class="left-content">
+
+
                             <p>
                                 <span>Name</span>
 
@@ -214,11 +252,7 @@ if (isVerified == null) {
 
 
                         </div>
-                        <div class="contact-form">
-                            <div class="form-group">
-                                <a style="text-align: center" href="#!" class="filled-button btn-block">Message with Employer</a>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
             </div>
@@ -302,15 +336,20 @@ if (isVerified == null) {
             </div>
         </div>
 
+        <script>
+                function handlerStatus(namebook, id, checkboxId) {
+                    var checkbox = document.getElementById(checkboxId);
+                    if (confirm("You cann't return your step, this is job will be hire!! \nDo you want to mark job as expired: " + namebook)) {
+                        window.location.href = "statuschange?id=" + id;
+                    } else {
+                        checkbox.checked = false;
+                    }
+                }
 
-        <!-- Bootstrap core JavaScript -->
-        <script src="vendor/jquery/jquery.min.js"></script>
-        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+        </script>   
 
 
-        <!-- Additional Scripts -->
-        <script src="assets/js/custom.js"></script>
-        <script src="assets/js/owl.js"></script>
     </body>
 
 </html>

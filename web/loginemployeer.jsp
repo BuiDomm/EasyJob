@@ -76,7 +76,7 @@
                     <b class="notice-erorr">${notice}</b>
                 <div style="display: flex;align-items: center; gap:0 15px; margin-left: -63%">
                     <label class="container1">
-                        <input  ${cookie.creme != null ?"checked":""} checked="checked" type="checkbox" name="rem"/> 
+                        <input  ${cookie.creme != null ?"checked":""} type="checkbox" name="rem"/> 
                         <div class="checkmark"></div>
                     </label>
                     <h4>Remember Me</h4>

@@ -103,13 +103,20 @@ public class LoginJobseeker extends HttpServlet {
             JobseekerDAO jd = new JobseekerDAO();
             try {
                 if (jd.loginAcount(email, pass).getRoleId() == 2) {
-                    session.setAttribute("account", jd.loginAcount(email, pass));
-                    request.getRequestDispatcher("home.jsp").forward(request, response);
+                    if (jd.loginAcount(email, pass).getStatus().equalsIgnoreCase("Lock")) {
+                        request.setAttribute("notice", "Your account has been blocked! Please come back later. ");
+                        request.getRequestDispatcher("login.jsp").forward(request, response);
+
+                    } else {
+                        session.setAttribute("account", jd.loginAcount(email, pass));
+                        request.getRequestDispatcher("home.jsp").forward(request, response);
+                    }
 
                 } else {
                     request.setAttribute("notice", "Email or password is invalid. Please check again!!");
                     request.getRequestDispatcher("login.jsp").forward(request, response);
                 }
+
             } catch (Exception e) {
                 request.setAttribute("notice", "Email or password is invalid. Please check again!!");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
@@ -145,8 +152,14 @@ public class LoginJobseeker extends HttpServlet {
             try {
 
                 if (jd.loginAcount(email, pass).getRoleId() == 3) {
-                    session.setAttribute("account", jd.loginAcount(email, pass));
-                    request.getRequestDispatcher("homeemployeer.jsp").forward(request, response);
+                    if (jd.loginAcount(email, pass).getStatus().equalsIgnoreCase("Lock")) {
+                        request.setAttribute("notice", "Your account has been blocked! Please come back later. ");
+                        request.getRequestDispatcher("loginemployeer.jsp").forward(request, response);
+
+                    } else {
+                        session.setAttribute("account", jd.loginAcount(email, pass));
+                        request.getRequestDispatcher("homeemployeer.jsp").forward(request, response);
+                    }
 
                 } else {
                     request.setAttribute("notice", "Email or password is invalid. Please check again!!");
@@ -181,8 +194,7 @@ public class LoginJobseeker extends HttpServlet {
 
         }
     }
-    
-    
+
     /**
      * Returns a short description of the servlet.
      *

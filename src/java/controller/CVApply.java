@@ -70,7 +70,7 @@ public class CVApply extends HttpServlet {
         ApplyDAO ap = new ApplyDAO();
         Apply a = new Apply(jb, cv, "Pending");
         ap.insert(a);
-        request.setAttribute("successfully", true);
+        request.setAttribute("successfully1", true);
         request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
     }
     /**

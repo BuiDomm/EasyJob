@@ -5,6 +5,7 @@
 
 package controller;
 
+import dao.FilterDAO;
 import dao.JobDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.List;
+import model.Category;
+import model.Company;
 import model.Job;
 
 /**
@@ -62,6 +65,18 @@ public class PagingJob extends HttpServlet {
             JobDAO bd = new JobDAO();
             List<Job> list = bd.getAllFollowPage(num);
             request.setAttribute("listjob", list);
+            FilterDAO dao = new FilterDAO();
+            
+            List<Company> listCompany = dao.getAllCompany();
+            List<Category> listCategory = dao.getAllCategory();
+            List<Job> listLocation = dao.getAllLocation();
+            
+            request.setAttribute("listjob", list);
+          
+         
+            request.setAttribute("listCompany", listCompany);
+            request.setAttribute("listCategory", listCategory);
+            request.setAttribute("listLocation", listLocation);
             request.getRequestDispatcher("jobs.jsp").forward(request, response);
         } 
     } 

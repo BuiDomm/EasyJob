@@ -178,6 +178,34 @@
         <servlet-name>AdminServlet</servlet-name>
         <servlet-class>controller.AdminServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>insertcompanyservlet</servlet-name>
+        <servlet-class>controller.insertcompanyservlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>companycontrolservlet</servlet-name>
+        <servlet-class>controller.companycontrolservlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadcompanyservlet</servlet-name>
+        <servlet-class>controller.loadcompanyservlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>editcompanyservlet</servlet-name>
+        <servlet-class>controller.editcompanyservlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>employerjobdetailservlet</servlet-name>
+        <servlet-class>controller.employerjobdetailservlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadjobservlet</servlet-name>
+        <servlet-class>controller.loadjobservlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>updatejobservlet</servlet-name>
+        <servlet-class>controller.updatejobservlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AdminListAccount</servlet-name>
         <url-pattern>/listaccount</url-pattern>
@@ -198,4 +226,33 @@
         <servlet-name>SearchAndFilter</servlet-name>
         <url-pattern>/searchAndFilter</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>insertcompanyservlet</servlet-name>
+        <url-pattern>/insertcompanyservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>companycontrolservlet</servlet-name>
+        <url-pattern>/companycontrolservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadcompanyservlet</servlet-name>
+        <url-pattern>/loadcompanyservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>editcompanyservlet</servlet-name>
+        <url-pattern>/editcompanyservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>employerjobdetailservlet</servlet-name>
+        <url-pattern>/employerjobdetailservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadjobservlet</servlet-name>
+        <url-pattern>/loadjobservlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updatejobservlet</servlet-name>
+        <url-pattern>/updatejobservlet</url-pattern>
+    </servlet-mapping>
+    
 </web-app>

@@ -228,4 +228,31 @@ public class CompanyDAO extends DBContext implements BaseDAO<Company> {
         return null;
     }
 
+    public List<Company> getTop3() {
+        List<Company> list = new ArrayList<>();
+        String sql = "SElect TOP 3  * FROM CompanyProfile\n"
+                + "JOIN Jobs as J on j.CompanyID = CompanyProfile.CompanyID Where J.Status = 'Accept'\n"
+                + "Order by JobID DESC";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idCompany = rs.getInt(1);
+                String nameCompany = rs.getString(2);
+                int idUser = rs.getInt(3);
+                String aboutUs = rs.getString(4);
+                String add = rs.getString(5);
+                String status = rs.getString(6);
+                String url = rs.getString(7);
+                JobseekerDAO jd = new JobseekerDAO();
+                User user = jd.findById(idUser);
+                Company c = new Company(idCompany, nameCompany, user, aboutUs, add, status, url);
+                list.add(c);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
 }

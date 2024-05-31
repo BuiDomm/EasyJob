@@ -213,12 +213,13 @@
 
 
                     <jsp:useBean id="jobItem" class="dao.JobDAO" /> 
-
+                    <jsp:useBean id="comItem" class="dao.CompanyDAO" /> 
+                    <c:set var="counter" value="0" />
                     <c:forEach  items="${jobItem.top3Succes}" var="item">
 
                         <div class="col-md-4">
                             <div class="product-item">
-                                <a href="jobdetails?id=${item.jobID}"><img src="assets/images/product-1-370x270.jpg" alt=""></a>
+                                <a href="jobdetails?id=${item.jobID}"><img  style="width: 370px;height: 270px;object-fit: cover" src="${comItem.top3.get(counter).url}" alt=""></a>
                                 <div class="down-content">
                                     <a href="job-details.jsp"><h4>${item.title}</h4></a>
 
@@ -233,6 +234,7 @@
                                 </div>
                             </div>
                         </div>
+                        <c:set var="counter" value="${counter + 1}" />
                     </c:forEach>  
 
                 </div>

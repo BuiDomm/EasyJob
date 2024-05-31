@@ -160,7 +160,7 @@ isVerified1 = false;
 
                         </div>
                         <div>
-                            <img src="assets/images/product-1-370x270.jpg" alt="" class="img-fluid wc-image">
+                            <img style="width: 255px;height: 186px;object-fit: cover;" src="${com.url}" alt="" class="img-fluid wc-image">
                         </div>
                         <br>
                         <ul class="social-icons text-center">
@@ -194,7 +194,7 @@ isVerified1 = false;
                         </div>
 
                         <p class="lead">
-                            <i style="width:220px;" class="fa fa-map-marker">&nbsp;${cc.location}</i> 
+                            <i style="width:255px;" class="fa fa-map-marker">&nbsp;${cc.location}</i> 
                         </p>
 
                         <p>Looking to improve the security at your place of business? If so, we will provide you with the trained security officers and professionally licensed personnel needed for any business. From a security guard for construction site security to private event security, you can be sure to get the very best from our staff. Alternatively we provide tailor-made security guard training for your existing security staff.</p>

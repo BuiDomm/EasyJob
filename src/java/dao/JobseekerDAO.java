@@ -38,9 +38,9 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
                 String phoneNumber = rs.getString(9);
                 Date dob = rs.getDate(10);
                 String status = rs.getString(11);
-                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, "0"+phoneNumber, dob);
+                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, "0" + phoneNumber, dob);
                 list.add(u);
-           
+
             }
         } catch (Exception ex) {
             Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -71,7 +71,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
                 int userID = rs.getInt("RoleID");
                 String phoneNumber = rs.getString("PhoneNumber");
                 String status = rs.getString(11);
-                User u = new User( firstName, lastName, email, userID, status, "0"+phoneNumber);
+                User u = new User(firstName, lastName, email, userID, status, "0" + phoneNumber);
                 return u;
             }
         } catch (Exception ex) {
@@ -111,8 +111,8 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
 
     @Override
     public boolean insert(User newObject) {
-        String sql = "Insert Into Users(FirstName,LastName,Email,Password,RoleID)\n"
-                + "Values (?,?,?,?,?)";
+        String sql = "Insert Into Users(FirstName,LastName,Email,Password,RoleID,Status)\n"
+                + "Values (?,?,?,?,?,?)";
         PreparedStatement ps;
         try {
             ps = getConnection().prepareStatement(sql);
@@ -121,6 +121,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
             ps.setString(3, newObject.getEmail());
             ps.setString(4, newObject.getPassword());
             ps.setInt(5, newObject.getRoleId());
+            ps.setString(6, newObject.getStatus());
             int rowAffect = ps.executeUpdate();
             if (rowAffect > 0) {
                 return true;
@@ -231,7 +232,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     //Cv Task
     public User findByEmail(String email) {
         String sql = "SELECT * FROM Users \n"
@@ -258,27 +259,26 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
         } catch (Exception ex) {
             Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;    }
+        return null;
+    }
 
-   
     public String getRoleByEmail(String email) {
-       String sql = "select RoleName from Roles where RoleID = (select RoleID from Users where Email= ?)";
-                
+        String sql = "select RoleName from Roles where RoleID = (select RoleID from Users where Email= ?)";
+
         try {
             PreparedStatement ps = getConnection().prepareStatement(sql);
             ps.setString(1, email);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String roleName = rs.getString(1);                
+                String roleName = rs.getString(1);
                 return roleName;
             }
         } catch (Exception ex) {
             Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return null;   
+        return null;
     }
 
-    
     public boolean updateUserFromCV(String email, String firstName, String lastName, String phoneNumber, String newEmail, String city) {
         String sql = "Update Users\n"
                 + "		set FirstName = ?\n"
@@ -297,7 +297,6 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
             ps.setString(4, city);
             ps.setString(5, newEmail);
             ps.setString(6, email);
-            
 
             int rowAffect = ps.executeUpdate();
             if (rowAffect > 0) {
@@ -308,6 +307,5 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
         }
         return false;
     }
-
 
 }

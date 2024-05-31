@@ -130,7 +130,7 @@ if (isVerified == null) {
                         </div>
 
                         <div>
-                            <img src="assets/images/product-1-370x270.jpg" alt="" class="img-fluid wc-image">
+                            <img style="width: 255px;height: 186px;object-fit: cover" src="${com.url}" alt="" class="img-fluid wc-image">
                         </div>
 
                         <br>

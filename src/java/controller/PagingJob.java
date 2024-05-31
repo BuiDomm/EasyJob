@@ -69,25 +69,22 @@ public class PagingJob extends HttpServlet {
             JobDAO bd = new JobDAO();
             CompanyDAO cd = new CompanyDAO();
             List<Job> list = bd.getAllFollowPage(num);
-            List<Company> listCompany = new ArrayList<>();
+            List<Company> listCompanyByJob = new ArrayList<>();
             for (Job j : list) {
                 Company c = cd.findCompanyByIdJob(j.getJobID());
-                listCompany.add(c);
+                listCompanyByJob.add(c);
             }
-            request.setAttribute("listcompany", listCompany);
-            request.setAttribute("listjob", list);
             FilterDAO dao = new FilterDAO();
-            
+
             List<Company> listCompany = dao.getAllCompany();
             List<Category> listCategory = dao.getAllCategory();
             List<Job> listLocation = dao.getAllLocation();
-            
+
             request.setAttribute("listjob", list);
-          
-         
             request.setAttribute("listCompany", listCompany);
             request.setAttribute("listCategory", listCategory);
             request.setAttribute("listLocation", listLocation);
+            request.setAttribute("listCompanyByJob", listCompanyByJob);
             request.getRequestDispatcher("jobs.jsp").forward(request, response);
         }
     }

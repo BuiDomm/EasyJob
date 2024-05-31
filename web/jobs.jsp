@@ -193,7 +193,7 @@
                             <c:forEach var="item" items="${listjob}" >
                                 <div class="col-md-4">
                                     <div class="product-item">
-                                        <a href="jobdetails?id=${item.jobID}"><img style="height: 47%; object-fit: cover" src="${listcompany.get(counter).url}" alt=""></a>
+                                        <a href="jobdetails?id=${item.jobID}"><img style="height: 47%; object-fit: cover" src="${listCompanyByJob.get(counter).url}" alt=""></a>
                                         <div class="down-content">
                                             <a href="jobdetails?id=${item.jobID}"><h4>${item.title}</h4></a>
 

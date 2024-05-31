@@ -67,7 +67,7 @@
 
                                 <div class="search-form">
                                     <label>
-                                        <input type="text" >
+                                        <input type="text" name="search"  >
                                         <ul>
                                             <li data-char="t">t</li>
                                             <li data-char="i">i</li>
@@ -168,7 +168,7 @@
 
                                 <div>
                                     <label>
-                                        <input value="2" type="radio">
+                                        <input  name="year" value="2" type="radio">
 
                                         <small>1 - 2 Year</small>
                                     </label>
@@ -176,7 +176,7 @@
 
                                 <div>
                                     <label>
-                                        <input value="3" type="radio">
+                                        <input  name="year" value="3" type="radio">
 
                                         <small>> 3 Year</small>
                                     </label>
@@ -189,13 +189,12 @@
 
                     <div class="col-md-9">
                         <div class="row">
-                            <c:set var="counter" value="0" />
                             <c:forEach var="item" items="${listjob}" >
                                 <div class="col-md-4">
                                     <div class="product-item">
-                                        <a href="jobdetails?id=${item.jobID}"><img style="height: 47%; object-fit: cover" src="${listcompany.get(counter).url}" alt=""></a>
+                                        <a href="jobdetails?id=${item.jobID}"><img src="assets/images/product-1-370x270.jpg" alt=""></a>
                                         <div class="down-content">
-                                            <a href="jobdetails?id=${item.jobID}"><h4>${item.title}</h4></a>
+                                            <a href="./jobdetails?id=${item.jobID}"><h4>${item.title}</h4></a>
 
                                             <h6>Salary: ${item.salary}</h6>
 
@@ -211,7 +210,7 @@
                                     </div>
                                 </div>
 
-                                <c:set var="counter" value="${counter + 1}" />
+
                             </c:forEach>
 
                             <div class="col-md-12">
@@ -238,7 +237,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="inner-content">
-                            <p>Copyright Â© 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
+                            <p>Copyright © 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
                         </div>
                     </div>
                 </div>

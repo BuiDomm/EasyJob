@@ -47,7 +47,7 @@
                     </a>
                 </li> 
                 <li class="navbar-item">
-                    <a style="    width: 140px;display: inline-flex;align-items: center;" class="nav-link" href="#!"> <i class="
+                    <a style="    width: 140px;display: inline-flex;align-items: center;" class="nav-link" href="listApplyCv"> <i class="
                                                                                                                          fa fa-folder-open
                                                                                                                          "></i>Cvs
                     </a>

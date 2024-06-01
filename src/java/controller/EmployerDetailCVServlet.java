@@ -27,8 +27,10 @@ public class EmployerDetailCVServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int jobseekerId = 0;
+        int applyId = 0;
         try {
             jobseekerId = Integer.parseInt(request.getParameter("UserId"));
+            applyId = Integer.parseInt(request.getParameter("ApplyId"));
         } catch (Exception e) {
             response.sendRedirect("login.jsp");
         }
@@ -56,6 +58,7 @@ public class EmployerDetailCVServlet extends HttpServlet {
 
                     request.setAttribute("cv", cvProfile);
                     request.setAttribute("user", jobseeker);
+                    request.setAttribute("applyId", applyId);
                     request.getRequestDispatcher("CVProfileForView.jsp").forward(request, response);
                 } else {
                     response.getWriter().println("Không tìm thấy CVProfile cho email: " + jobseeker.getEmail());

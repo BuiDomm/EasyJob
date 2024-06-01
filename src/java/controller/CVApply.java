@@ -69,10 +69,16 @@ public class CVApply extends HttpServlet {
         CVProfile cv = cd.findById(idProfile);
         ApplyDAO ap = new ApplyDAO();
         Apply a = new Apply(jb, cv, "Pending");
-        ap.insert(a);
-        request.setAttribute("successfully1", true);
-        request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
+
+        if (ap.findByJobIDAndCvID(idjob, idProfile) == null) {
+            ap.insert(a);
+            request.setAttribute("successfully", true);
+            request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
+        } else {
+            request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
+        }
     }
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *

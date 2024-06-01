@@ -120,5 +120,9 @@ public class ApplyDAO extends DBContext implements BaseDAO<Apply> {
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    
+    public static void main(String[] args) {
+        ApplyDAO ap = new ApplyDAO();
+    }
 
 }

@@ -106,7 +106,7 @@
         <servlet-name>GoogleLoginServlet</servlet-name>
         <servlet-class>controller.GoogleLoginServlet</servlet-class>
     </servlet>
- <servlet>
+    <servlet>
         <servlet-name>SearchAndFilter</servlet-name>
         <servlet-class>controller.SearchAndFilter</servlet-class>
     </servlet>
@@ -222,7 +222,7 @@
         <servlet-name>AdminServlet</servlet-name>
         <url-pattern>/admin</url-pattern>
     </servlet-mapping>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>SearchAndFilter</servlet-name>
         <url-pattern>/searchAndFilter</url-pattern>
     </servlet-mapping>
@@ -254,11 +254,11 @@
         <servlet-name>updatejobservlet</servlet-name>
         <url-pattern>/updatejobservlet</url-pattern>
     </servlet-mapping>
-       <servlet>
+    <servlet>
         <servlet-name>ViewListJobCreated</servlet-name>
         <servlet-class>controller.ViewListJobCreated</servlet-class>
     </servlet>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ViewListJobCreated</servlet-name>
         <url-pattern>/listjobcreated</url-pattern>
     </servlet-mapping>
@@ -266,17 +266,26 @@
         <servlet-name>JobDetailForEmployer</servlet-name>
         <url-pattern>/jobdetailemployeer</url-pattern>
     </servlet-mapping>
-         <servlet>
+    <servlet>
         <servlet-name>JobDetailForEmployer</servlet-name>
         <servlet-class>controller.JobDetailForEmployer</servlet-class>
     </servlet>
-     <servlet-mapping>
+    <servlet-mapping>
         <servlet-name>ChangeStatusJobCreate</servlet-name>
         <url-pattern>/statuschange</url-pattern>
     </servlet-mapping>
-     <servlet>
+    <servlet>
         <servlet-name>ChangeStatusJobCreate</servlet-name>
         <servlet-class>controller.ChangeStatusJobCreate</servlet-class>
     </servlet>
+    <servlet-mapping>
+        <servlet-name>DeleteJobEmployer</servlet-name>
+        <url-pattern>/deletejob</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>DeleteJobEmployer</servlet-name>
+        <servlet-class>controller.DeleteJobEmployer</servlet-class>
+    </servlet>
+   
     
 </web-app>

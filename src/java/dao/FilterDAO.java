@@ -33,7 +33,7 @@ public class FilterDAO {
                 + "FROM Jobs J\n"
                 + "LEFT JOIN CompanyProfile C ON J.CompanyID = C.CompanyID\n"
                 + "LEFT JOIN Categories CAT ON J.CategoryID = CAT.CategoryID\n"
-                + "WHERE J.Status = 'Active'");
+                + "WHERE J.Status = 'Accept'");
 
         if (title != null) {
             query.append(" AND J.Title LIKE ?");

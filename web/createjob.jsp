@@ -28,7 +28,9 @@
                     </div> 
                     <div class="signup-form">
                         <form method="post" class="register-form" id="register-form" method="createjob">
+                            
                             <h2 style="">Create an article post a job! </h2>
+                            
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="name">Name company:</label>

@@ -67,9 +67,21 @@ public class CreateJob extends HttpServlet {
         
         int idUser = Integer.parseInt(request.getParameter("id"));
         CompanyDAO cd = new CompanyDAO();
-        Company com = cd.findByUserId(idUser);
+        Company com = cd.findCompanyByUserId(idUser);
         request.setAttribute("com", com);
+        String errorMessage ;
+        if(com == null){
+          errorMessage ="You must create your company first !";
+          request.setAttribute("errormess", errorMessage);
+            request.getRequestDispatcher("companydetail.jsp").forward(request, response);
+        }else if("Disabled".equals(com.getStatus())){
+            errorMessage ="You must active your company first !";
+          request.setAttribute("errormess", errorMessage);
+            request.getRequestDispatcher("loadcompanyservlet").forward(request, response);
+        }else{
+        
         request.getRequestDispatcher("createjob.jsp").forward(request, response);
+        }
         
     }
 

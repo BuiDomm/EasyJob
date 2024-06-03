@@ -39,8 +39,14 @@
 
         <body>
 
-            <jsp:include page="employerheader.jsp"/>
+            <jsp:include page="headeremp.jsp"/>
             <!-- banner start -->
+            <c:if test="${not empty errormess}">
+                    <script type="text/javascript">
+                      alert("${errormess}");
+                    </script>
+                    
+            </c:if>
             <div class=" container-fluid ">
 
 

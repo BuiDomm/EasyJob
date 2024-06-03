@@ -1,23 +1,22 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package controller;
 
-import dao.ApplyDAO;
+import dao.AdminDAO;
 import dao.CVDAO;
 import dao.CompanyDAO;
 import dao.JobDAO;
 import dao.JobseekerDAO;
-import java.io.IOException;
-import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import javax.mail.Session;
-import model.Apply;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 import model.CVProfile;
 import model.Company;
 import model.Job;
@@ -25,9 +24,9 @@ import model.User;
 
 /**
  *
- * @author ASUS
+ * @author DELL
  */
-public class JobDetails extends HttpServlet {
+public class AdminJobDetail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,15 +40,15 @@ public class JobDetails extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet JobDetails</title>");
+            out.println("<title>Servlet ModerationTalentControl</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet JobDetails at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ModerationTalentControl at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -76,7 +75,6 @@ public class JobDetails extends HttpServlet {
         CompanyDAO cm = new CompanyDAO();
         Company com = cm.findCompanyByIdJob(id);
 
-        //lay thong tin nguoi dang bai tu id job
         // thong tin nha tuyen dung
         User u = jdd.getInfo(id);
 
@@ -86,46 +84,17 @@ public class JobDetails extends HttpServlet {
         //account của user
         User user = (User) session.getAttribute("account");
 
-        if (user != null) {
+        CVProfile cvp = cvd.findByIdUser(user.getIdUser());
+        request.setAttribute("u", u);
+        //thong tin job
+        request.setAttribute("cc", job);
 
-            // Check thử cong viec nay da apply chua
-            ApplyDAO ap = new ApplyDAO();
-            Apply a = ap.findByJobIDAndCvID(id, user.getIdUser());
-            // 
+        request.setAttribute("jobid", id);
+        request.setAttribute("check", "success");
+        request.setAttribute("profile", cvp);
+        request.setAttribute("com", com);
 
-            if (a != null) {
-                CVProfile cvp = cvd.findByIdUser(user.getIdUser());
-
-                request.setAttribute("u", u);
-                //thong tin job
-                request.setAttribute("cc", job);
-                //
-                request.setAttribute("check", "existed");
-                request.setAttribute("profile", cvp);
-                request.setAttribute("com", com);
-                request.setAttribute("apply", a);
-                request.getRequestDispatcher("job-details.jsp").forward(request, response);
-
-            } else {
-                CVProfile cvp = cvd.findByIdUser(user.getIdUser());
-                request.setAttribute("u", u);
-                //thong tin job
-                request.setAttribute("cc", job);
-                //
-                request.setAttribute("check", "success");
-                request.setAttribute("profile", cvp);
-                request.setAttribute("com", com);
-                request.setAttribute("apply", a);
-                request.getRequestDispatcher("job-details.jsp").forward(request, response);
-            }
-        } else {
-            // vẫn có thể xem được job khi không đăng nhập
-            request.setAttribute("cc", job);
-            request.setAttribute("u", u);
-            request.setAttribute("com", com);
-            request.getRequestDispatcher("job-details.jsp").forward(request, response);
-
-        }
+        request.getRequestDispatcher("./Admin/jobdetail.jsp").forward(request, response);
 
     }
 
@@ -152,5 +121,4 @@ public class JobDetails extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

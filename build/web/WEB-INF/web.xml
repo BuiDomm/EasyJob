@@ -78,6 +78,30 @@
         <servlet-name>CreateJob</servlet-name>
         <servlet-class>controller.CreateJob</servlet-class>
     </servlet>
+     <servlet>
+        <servlet-name>ListCVApply</servlet-name>
+        <servlet-class>controller.ListCVApply</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>AcceptCvApply</servlet-name>
+        <servlet-class>controller.AcceptCvApply</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RejectCvApply</servlet-name>
+        <servlet-class>controller.RejectCvApply</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ListCVApply</servlet-name>
+        <url-pattern>/listApplyCv</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AcceptCvApply</servlet-name>
+        <url-pattern>/acceptApply</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RejectCvApply</servlet-name>
+        <url-pattern>/rejectApply</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>RegisterJobseekerServlet</servlet-name>
         <url-pattern>/registerjobseeker</url-pattern>

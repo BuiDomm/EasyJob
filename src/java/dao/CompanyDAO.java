@@ -254,5 +254,8 @@ public class CompanyDAO extends DBContext implements BaseDAO<Company> {
         }
         return list;
     }
-
+        public static void main(String[] args) {
+            CompanyDAO comdao = new CompanyDAO();
+            
+    }
 }

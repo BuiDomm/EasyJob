@@ -28,6 +28,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.4.0/css/all.min.css" integrity="sha512-eBNnVs5xPOVglLWDGXyZnZZ2K2ixXhR/3aECgCpFnW2dGCd/yiqXZ6fcB3BubeA91kM6NX234b6Wrah8RiYAPA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 
 
@@ -116,12 +117,20 @@ if (isVerified == null) {
                         <div class="contact-form">
                             <div class="form-group">
                                 <c:choose>
-                                    <c:when test="${check == 'existed'}">
+
+                                    <c:when test="${apply.status == null}">
+                                        <a style="text-align: center; background-color: #ff6600" href="cvapply?idprofile=${profile.CVId}&idjob=${cc.jobID}" class="filled-button btn-block">Applied to this job.</a>
+                                    </c:when>
+
+                                    <c:when test="${apply.status == 'Pending'}">
                                         <a style="text-align: center;pointer-events:none; background-color: #ccc" href="#!" class="filled-button btn-block">Applied to this job.</a>
                                     </c:when>
-                                    <c:otherwise>
-                                        <a style="text-align: center;" href="cvapply?idprofile=${profile.CVId}&idjob=${cc.jobID}" class="filled-button btn-block">Apply for this job.</a>
-                                    </c:otherwise>
+                                    <c:when test="${apply.status == 'Reject'}">
+                                        <a style="text-align: center;background-color: red;pointer-events:none" href="#!" class="filled-button btn-block"><i class="fas fa-times"></i> &nbsp; Your CV has been reject.</a>
+                                    </c:when>
+                                    <c:when test="${apply.status == 'Accept'}">
+                                        <a style="text-align: center;pointer-events:none; background-color: green" href="#!" class="filled-button btn-block"> <i class="fas fa-check"></i> &nbsp;Your CV has been approve.</a>
+                                    </c:when>
                                 </c:choose>
 
 

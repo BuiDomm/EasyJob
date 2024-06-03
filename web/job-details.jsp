@@ -13,7 +13,7 @@
         <link rel="icon" href="assets/images/favicon.ico">
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-        
+
 
         <title>PHPJabbers.com | Free Job Agency Website Template</title>
 
@@ -132,8 +132,14 @@ if (isVerified == null) {
                             </div>
                             <div class="contact-form">
                                 <div class="form-group">
-                                    
-                                    <a id="saveJobFavoriteBtn" style="text-align: center" href="#" class="filled-button btn-block">Save favorite job</a>
+                                    <c:choose>
+                                        <c:when test="${empty sessionScope.account}">
+                                            <a style="text-align: center" href="login.jsp" class="filled-button btn-block">Save favorite job</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <a id="saveJobFavoriteBtn" style="text-align: center" href="#" class="filled-button btn-block">Save favorite job</a>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
                             </div>
                         </div>

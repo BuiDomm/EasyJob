@@ -13,10 +13,6 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import model.User;
 
-/**
- *
- * @author DELL
- */
 public class AcceptCvApply extends HttpServlet {
         protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {

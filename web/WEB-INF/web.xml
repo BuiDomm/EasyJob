@@ -83,7 +83,7 @@
         <servlet-name>employerhomeservlet</servlet-name>
         <servlet-class>controller.employerhomeservlet</servlet-class>
     </servlet>
-
+    <servlet>
         <servlet-name> RequestListJob</servlet-name>
         <servlet-class>controller.RequestListJob</servlet-class>
     </servlet>  

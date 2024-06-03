@@ -77,7 +77,14 @@
                                 <div class="card-header text-bg-primary">Welcome, <c:out value="${user.email}" /> </div>
                                 <div class="card-body">
                                     
-                                    <h5 class="text-center mb-1"><c:out value="${user.firstName}" /> <c:out value="${user.lastName}" /></h5>
+                                    <div class="d-flex flex-column align-items-center text-center">
+                                            <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="Admin" class="rounded-circle p-1 bg-primary" width="110">
+                                            <div class="mt-3">
+                                                <h4><c:out value="${user.firstName}" /> <c:out value="${user.lastName}" /></h4>
+
+
+                                            </div>
+                                        </div>
                                 </div>
                             </div>
                         </div>

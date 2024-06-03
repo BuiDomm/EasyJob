@@ -12,23 +12,15 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import model.Job;
 import model.User;
 
 /**
  *
  * @author DELL
  */
-public class AdminListAccount extends HttpServlet {
-      /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+public class RequestListJob extends HttpServlet {
+     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
          response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -57,23 +49,15 @@ public class AdminListAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String indexPage = request.getParameter("index");
-        if(indexPage == null) indexPage = "1";
-        int index = Integer.parseInt(indexPage);
+      
         AdminDAO dao = new AdminDAO();
-        int count = dao.getTotalUser();
-        int endPage = count/4;
-        if(count % 4 != 0){
-          endPage++;
+        List<Job> listJ = dao.getJobByStatus("Pending");
+        for (Job job : listJ) {
+            System.out.println(job);
         }
-        List<User> list = dao.pagingAccount(index);  
-        System.out.println("hekk");
-        System.out.println(list);
-        
-        request.setAttribute("user", list);
-        request.setAttribute("endP", endPage);
         request.setAttribute("dao", dao);
-        request.getRequestDispatcher("./Admin/listaccount.jsp").forward(request, response);  
+        request.setAttribute("listJ", listJ);
+        request.getRequestDispatcher("./Admin/modejob.jsp").forward(request, response);  
       
     }
 

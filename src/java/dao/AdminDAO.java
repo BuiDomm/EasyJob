@@ -10,6 +10,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import model.Category;
+import model.Company;
+import model.Job;
 import model.User;
 
 /**
@@ -21,6 +26,8 @@ public class AdminDAO {
     Connection conn = null;
     PreparedStatement ps = null;
     ResultSet rs = null;
+    CompanyDAO com = new CompanyDAO();
+    CategoryDAO cd = new CategoryDAO();
 
     public int getTotalUser() {
         String query = "select count(*) from Users";
@@ -40,11 +47,11 @@ public class AdminDAO {
         List<User> list = new ArrayList<>();
         String sql = " select * from Users\n"
                 + "order by UserID\n"
-                + "OFFSET ? rows fetch next 10 rows only";
+                + "OFFSET ? rows fetch next 4 rows only";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, index);
+            ps.setInt(1, (index - 1) * 4);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int idUser = rs.getInt(1);
@@ -122,12 +129,96 @@ public class AdminDAO {
         }
     }
 
+    public List<Job> getJobByStatus(String statusString) {
+        List<Job> list = new ArrayList<>();
+        String sql = "SELECT * FROM jobs j\n"
+                + "where j.Status =  ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, statusString);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int idJob = rs.getInt(1);
+                int idCompany = rs.getInt(2);
+                int idCategory = rs.getInt(3);
+                String title = rs.getString(4);
+                String desc = rs.getString(5);
+                int expY = rs.getInt(6);
+                String location = rs.getString(7);
+                int salary = rs.getInt(8);
+                String status = rs.getString(9);
+                Date date = rs.getDate(10);
+                Company company = com.findById(idCompany);
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+                list.add(j);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    //company
+    public Company companyByJobId(int id) {
+        String sql = "select * from CompanyProfile cp\n"
+                + "join Jobs j on cp.CompanyID = j.CompanyID\n"
+                + "where j.JobID = ? ";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int idCompany = rs.getInt(1);
+                String nameCompany = rs.getString(2);
+                int idUser = rs.getInt(3);
+                String aboutUs = rs.getString(4);
+                String add = rs.getString(5);
+                String status = rs.getString(6);
+                String url = rs.getString(7);
+                JobseekerDAO jd = new JobseekerDAO();
+                User user = jd.findById(idUser);
+                Company c = new Company(idCompany, nameCompany, user, aboutUs, add, status, url);
+                return c;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void accpetJob(String jobid) {
+        String query = "Update Jobs SET Status = 'Accept' where JobID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, jobid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void rejectJob(String jobid) {
+        String query = "Update Jobs SET Status = 'Reject' where JobID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, jobid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     public static void main(String[] args) {
         AdminDAO dao = new AdminDAO();
 //        dao.lockAccount("2");
-        List<User> a = dao.pagingAccount(0);
+        Company b = dao.companyByJobId(1);
+        System.out.println(b);
+        List<Job> a = dao.getJobByStatus("Pending");
 
-        for (User users : a) {
+        for (Job users : a) {
             System.out.println(users);
         }
 

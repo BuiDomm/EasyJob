@@ -66,7 +66,7 @@
                             <c:forEach var="item" items="${listJ}">
                                 <div class="col-md-4 mt-5">
                                     <div class="product-item">
-                                        <a href="adminJobDetail?id=${item.jobID}"><img style="height: 47%; object-fit: cover" src="./${dao.companyByJobId(item.jobID).url}" alt=""></a>
+                                        <a href="adminJobDetail?id=${item.jobID}"><img style="height: 400px; width: 400px; object-fit: cover;" src="./${dao.companyByJobId(item.jobID).url}" alt=""></a>
                                         <div class="down-content">
                                             <a href="adminJobDetail?id=${item.jobID}"><h4>${item.title}</h4></a>
                                             <h6>Salary: ${item.salary}</h6>

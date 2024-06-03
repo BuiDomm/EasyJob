@@ -31,7 +31,7 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
         <link rel="stylesheet" href="assets/css/styles.css">
-        <link rel="stylesheet" href="assets/css/style.css">
+        <!--<link rel="stylesheet" href="assets/css/style.css">-->
         <link rel="stylesheet" href="assets/css/icontop.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -61,7 +61,7 @@
             <div class="container">
                 <h2 class="mb-5">List Cv Apply</h2>
                 <div class="table-responsive">
-                    <table class="table table-striped custom-table">
+                    <table style="margin-bottom: 150px; margin-top: 20px; overflow-y:scroll" class="table table-striped custom-table">
                         <thead>
                             <tr>                           
                                 <th scope="col">Name</th>
@@ -125,12 +125,6 @@
     </div>
 
     <!-- Popup End -->
-
-
-        <jsp:include page="employermenu.jsp"/> 
-
-
-
 
 
         <!-- Bootstrap core JavaScript -->

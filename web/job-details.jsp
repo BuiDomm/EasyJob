@@ -13,6 +13,7 @@
         <link rel="icon" href="assets/images/favicon.ico">
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
+        
 
         <title>PHPJabbers.com | Free Job Agency Website Template</title>
 
@@ -113,6 +114,8 @@ if (isVerified == null) {
 
 
                     <div class="col-md-3 col-sm-4">
+
+
                         <div class="contact-form">
                             <div class="form-group">
                                 <c:choose>
@@ -127,10 +130,17 @@ if (isVerified == null) {
 
 
                             </div>
+                            <div class="contact-form">
+                                <div class="form-group">
+                                    
+                                    <a id="saveJobFavoriteBtn" style="text-align: center" href="#" class="filled-button btn-block">Save favorite job</a>
+                                </div>
+                            </div>
                         </div>
 
+
                         <div>
-                            <img style="width: 255px;height: 186px;object-fit: cover" src="${com.url}" alt="" class="img-fluid wc-image">
+                            <img src="assets/images/product-1-370x270.jpg" alt="" class="img-fluid wc-image">
                         </div>
 
                         <br>
@@ -302,6 +312,30 @@ if (isVerified == null) {
             </div>
         </div>
 
+
+        <script>
+            $(document).ready(function () {
+                $("#saveJobFavoriteBtn").click(function (event) {
+                    event.preventDefault();
+                    var userId = "${sessionScope.account.idUser}";
+                    var jobId = ${cc.jobID}
+
+                    $.ajax({
+                        url: "${pageContext.request.contextPath}/favoriteJobs",
+                        type: "GET",
+                        data: {uid: userId, jid: jobId},
+                        success: function (response) {
+                            toastr.success("Save Job Successfully!", "Easyjob Notice", {
+                                timeOut: 2000,
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            console.log("Job fail");
+                        }
+                    })
+                })
+            });
+        </script>
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>

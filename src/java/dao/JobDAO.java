@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Category;
 import model.Company;
+import model.FavoriteJobDTO;
 import model.Job;
 import model.User;
 
@@ -430,6 +431,46 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
 
         return false;
 
+    }
+    
+    public String getJobTitleById(int id) {
+        String sql = "Select Title from jobs\n"
+                + "where JobID = ? ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                String title = rs.getString("Title");
+                return title;
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public FavoriteJobDTO findJobFavoriteById(int id) {
+        String sql = "SELECT j.JobID, j.Title, j.ExperienceYears, j.Location, j.Salary, c.CompanyName FROM jobs j JOIN CompanyProfile c ON j.CompanyID = c.CompanyID WHERE j.JobID = ?";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int idJob = rs.getInt(1);
+                String title = rs.getString(2);
+                int expY = rs.getInt(3);
+                String location = rs.getString(4);
+                int salary = rs.getInt(5);
+                String companyName = rs.getString(6);
+
+                return new FavoriteJobDTO(idJob, title, expY, location, salary, companyName);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
 }

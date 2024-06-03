@@ -103,6 +103,7 @@ public class JobDetails extends HttpServlet {
                 request.setAttribute("check", "existed");
                 request.setAttribute("profile", cvp);
                 request.setAttribute("com", com);
+                request.setAttribute("apply", a);
                 request.getRequestDispatcher("job-details.jsp").forward(request, response);
 
             } else {
@@ -114,6 +115,7 @@ public class JobDetails extends HttpServlet {
                 request.setAttribute("check", "success");
                 request.setAttribute("profile", cvp);
                 request.setAttribute("com", com);
+                request.setAttribute("apply", a);
                 request.getRequestDispatcher("job-details.jsp").forward(request, response);
             }
         } else {

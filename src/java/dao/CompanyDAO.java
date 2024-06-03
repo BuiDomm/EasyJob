@@ -61,8 +61,8 @@ public class CompanyDAO extends DBContext implements BaseDAO<Company> {
                 int idUser = rs.getInt(3);
                 String aboutUs = rs.getString(4);
                 String add = rs.getString(5);
-                String status = rs.getString(5);
-                String url = rs.getString(6);
+                String status = rs.getString(6);
+                String url = rs.getString(7);
                 JobseekerDAO jd = new JobseekerDAO();
                 User user = jd.findById(idUser);
                 Company c = new Company(idCompany, nameCompany, user, aboutUs, add, status, url);
@@ -87,8 +87,8 @@ public class CompanyDAO extends DBContext implements BaseDAO<Company> {
                 int idUser = rs.getInt(3);
                 String aboutUs = rs.getString(4);
                 String add = rs.getString(5);
-                String status = rs.getString(5);
-                String url = rs.getString(6);
+                String status = rs.getString(6);
+                String url = rs.getString(7);
                 JobseekerDAO jd = new JobseekerDAO();
                 User user = jd.findById(idUser);
                 Company c = new Company(idCompany, nameCompany, user, aboutUs, add, status, url);
@@ -254,5 +254,8 @@ public class CompanyDAO extends DBContext implements BaseDAO<Company> {
         }
         return list;
     }
-
+        public static void main(String[] args) {
+            CompanyDAO comdao = new CompanyDAO();
+            
+    }
 }

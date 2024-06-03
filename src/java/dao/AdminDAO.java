@@ -95,9 +95,8 @@ public class AdminDAO {
         }
         return list;
     }
-    
-    
-     public void lockAccount(String userId) {
+
+    public void lockAccount(String userId) {
         String query = "UPDATE Users SET Status = 'Lock' WHERE UserID = ?";
         try {
             conn = new DBContext().getConnection();
@@ -106,10 +105,10 @@ public class AdminDAO {
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
     }
-     
-      public void unlockAccount(String userId) {
+
+    public void unlockAccount(String userId) {
         String query = "UPDATE Users\n"
                 + "SET Status = 'Active'\n"
                 + "WHERE UserID = ?;";
@@ -120,7 +119,7 @@ public class AdminDAO {
             ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace();
-        } 
+        }
     }
 
     public static void main(String[] args) {

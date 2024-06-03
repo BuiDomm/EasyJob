@@ -83,35 +83,7 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         return list;
     }
 
-    public Job findByCompanyId(int id) {
-        String sql = "Select * from jobs\n"
-                + "where CompanyID = ? ";
-        try {
-            PreparedStatement ps = getConnection().prepareStatement(sql);
-            ps.setInt(1, id);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                int idJob = rs.getInt(1);
-                int idCompany = rs.getInt(2);
-                int idCategory = rs.getInt(3);
-                String title = rs.getString(4);
-                String desc = rs.getString(5);
-                int expY = rs.getInt(6);
-                String location = rs.getString(7);
-                int salary = rs.getInt(8);
-                String status = rs.getString(9);
-                Date date = rs.getDate(10);
-                Company company = com.findById(idCompany);
-                Category category = cd.findById(idCategory);
-                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
-                return j;
-
-            }
-        } catch (Exception ex) {
-            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
+   
 
     @Override
     public Job findById(int id) {
@@ -377,20 +349,65 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return null;
     }
+    public int countAcceptedJobs(int companyId) {
+    String sql = "SELECT COUNT(*) AS AcceptedJobCount FROM Jobs WHERE CompanyID = ? AND Status = 'Accept'";
+    try {
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+        ps.setInt(1, companyId);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("AcceptedJobCount");
+        }
+    } catch (Exception ex) {
+        Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return 0;
+}
+
+public int countRejectJobs(int companyId) {
+    String sql = "SELECT COUNT(*) AS RejectJobCount FROM Jobs WHERE CompanyID = ? AND Status = 'Reject'";
+    try {
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+        ps.setInt(1, companyId);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("RejectJobCount");
+        }
+    } catch (Exception ex) {
+        Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return 0;
+}
+
+public int countPendingJobs(int companyId) {
+    String sql = "SELECT COUNT(*) AS PendingJobCount FROM Jobs WHERE CompanyID = ? AND Status = 'Pending'";
+    try {
+        PreparedStatement ps = getConnection().prepareStatement(sql);
+        ps.setInt(1, companyId);
+        ResultSet rs = ps.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("PendingJobCount");
+        }
+    } catch (Exception ex) {
+        Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+    }
+    return 0;
+}
+
     
 
     @Override
     public boolean update(Job job) {
         String sql = "UPDATE [dbo].[Jobs]\n"
-                + "   SET \n"
-                + "      [CategoryID] = ?\n"
+                + "   SET [CategoryID] = ?\n"
                 + "      ,[Title] = ?\n"
                 + "      ,[Description] = ?\n"
                 + "      ,[ExperienceYears] = ?\n"
-                + "      ,[Location] =?\n"
+                + "      ,[Location] = ?\n"
                 + "      ,[Salary] = ?\n"
-                + "      \n"
-                + " WHERE JobID=? ";
+                + "      ,[Status] = ?\n"
+                + "      ,[Date] = GETDATE()\n"
+                + " WHERE JobID=?";
         try {
             PreparedStatement st = getConnection().prepareStatement(sql);
             st.setInt(1, job.getCategory().getCategoryID());
@@ -399,7 +416,8 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
             st.setInt(4, job.getYearEx());
             st.setString(5, job.getLocation());
             st.setInt(6, job.getSalary());
-            st.setInt(7, job.getJobID());
+            st.setString(7, job.getStatus());
+            st.setInt(8, job.getJobID());
 
             int rowAffect = st.executeUpdate();
             if (rowAffect > 0) {
@@ -431,5 +449,6 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         return false;
 
     }
+    
 
 }

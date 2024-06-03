@@ -79,6 +79,11 @@
         <servlet-class>controller.CreateJob</servlet-class>
     </servlet>
     <servlet>
+
+        <servlet-name>employerhomeservlet</servlet-name>
+        <servlet-class>controller.employerhomeservlet</servlet-class>
+    </servlet>
+
         <servlet-name> RequestListJob</servlet-name>
         <servlet-class>controller.RequestListJob</servlet-class>
     </servlet>  
@@ -110,6 +115,7 @@
         <servlet-name> RequestListJob</servlet-name>
         <url-pattern>/requestList</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>RegisterJobseekerServlet</servlet-name>
         <url-pattern>/registerjobseeker</url-pattern>
@@ -310,6 +316,7 @@
         <servlet-name>ChangeStatusJobCreate</servlet-name>
         <servlet-class>controller.ChangeStatusJobCreate</servlet-class>
     </servlet>
+
     <servlet>
         <servlet-name>ListCVApply</servlet-name>
         <servlet-class>controller.ListCVApply</servlet-class>
@@ -334,6 +341,7 @@
         <servlet-name>RejectCvApply</servlet-name>
         <url-pattern>/rejectApply</url-pattern>
     </servlet-mapping>
+
     <servlet-mapping>
         <servlet-name>DeleteJobEmployer</servlet-name>
         <url-pattern>/deletejob</url-pattern>
@@ -342,6 +350,10 @@
         <servlet-name>DeleteJobEmployer</servlet-name>
         <servlet-class>controller.DeleteJobEmployer</servlet-class>
     </servlet>
-   
-    
+
+    <servlet-mapping>
+        <servlet-name>employerhomeservlet</servlet-name>
+        <url-pattern>/employerhomeservlet</url-pattern>
+    </servlet-mapping>
+
 </web-app>

@@ -35,14 +35,16 @@ public class loadjobservlet extends HttpServlet {
         User user = (User) session.getAttribute("account");
         CategoryDAO ctd = new CategoryDAO();
         CompanyDAO dao = new CompanyDAO();
-        Company com = dao.findCompanyByUserId(user.getIdUser());   
+        Company com = dao.findCompanyByUserId(user.getIdUser()); 
+        request.setAttribute("com", com);  
+        int id = Integer.parseInt(request.getParameter("id"));
+        
         JobDAO jd = new JobDAO();
         List<Category> list = ctd.getAll();
-        Job job = jd.findByCompanyId(com.getCompanyID());
-        request.setAttribute("categories", list);
-        request.setAttribute("com", com);
+        Job job = jd.findById(id);
+        request.setAttribute("u", user);
+        request.setAttribute("categories", list); 
         request.setAttribute("job", job);
-        request.getRequestDispatcher("EditJob.jsp").forward(request, response);
-    } 
+        request.getRequestDispatcher("EditJob.jsp").forward(request, response);    } 
 
 }

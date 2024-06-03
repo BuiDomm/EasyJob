@@ -16,9 +16,9 @@
 
 
 <header style="display: flex;
-        align-items: center;">
+        align-items: center;position: relative">
     <nav class="navbar navbar-expand-lg all-nav">
-        <a class="navbar-brand" href="homeemployeer.jsp">
+        <a class="navbar-brand" href="employerhomeservlet">
             <figure style="width: 65px;height: 65px;margin-left: 40px;margin-top: 16px">
                 <img style="height: 100%;width: 100%;object-fit: cover;" src="./assets/images/easyjobb.png" alt="alt"/>
             </figure>

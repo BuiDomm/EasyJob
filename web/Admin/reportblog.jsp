@@ -23,69 +23,8 @@
 
     <body>
         <div class="dash">
-            <div class="dash-nav dash-nav-dark">
-                <header>
-                    <a href="#!" class="menu-toggle">
-                        <i class="fas fa-bars"></i>
-                    </a>
-                    <!--                    <a href="index.jsp" class="spur-logo"><i class="fas fa-bolt"></i> <span>Admin</span></a>-->
-                    <a href="homeadmin.jsp" style="display: inline-block; text-decoration: none;">
-                        <img src="assets/images/easyjobb.png" alt="alt" style="width: 50px; height: 50px; vertical-align: middle;">
-                        <span style="vertical-align: middle; color: #ff6d00; font-size: 28px">Admin</span>
-                    </a>
-                </header>
-                <nav class="dash-nav-list">
-                    <a href="homeadmin.jsp" class="dash-nav-item"  >
-                        <i class="fas fa-home" ></i> Dashboard </a>
-                    <!--                    <div class="dash-nav-dropdown">-->
-                    <a href="jobadmin.jsp" class="dash-nav-item" >
-                        <i class="fas fa-chart-bar"></i> Jobs </a>
-                    <!--                        <div class="dash-nav-dropdown-menu">
-                                                <a href="chartjs.jsp" class="dash-nav-dropdown-item">Chart.js</a>
-                                            </div>-->
-                    <!--                    </div>-->
-                    <div class="dash-nav-dropdown ">
-                        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle" >
-                            <i class="fas fa-bullhorn"></i> Moderation
-                        </a>
-
-                        <div class="dash-nav-dropdown-menu">
-                            <a href="modejob.jsp" class="dash-nav-dropdown-item">Job Recruitment</a>
-                            <a href="modeblog.jsp" class="dash-nav-dropdown-item">Blog</a>
-<!--                            <div class="dash-nav-dropdown ">
-                                <a href="#" class="dash-nav-dropdown-item dash-nav-dropdown-toggle">Icons</a>
-                                <div class="dash-nav-dropdown-menu">
-                                    <a href="icons.jsp" class="dash-nav-dropdown-item">Solid Icons</a>
-                                    <a href="icons.jsp#regular-icons" class="dash-nav-dropdown-item">Regular Icons</a>
-                                    <a href="icons.jsp#brand-icons" class="dash-nav-dropdown-item">Brand Icons</a>
-                                </div>
-                            </div>-->
-<!--                            <a href="stats.jsp" class="dash-nav-dropdown-item">Stats</a>
-                            <a href="tables.jsp" class="dash-nav-dropdown-item">Tables</a>
-                            <a href="typography.jsp" class="dash-nav-dropdown-item">Typography</a>
-                            <a href="userinterface.jsp" class="dash-nav-dropdown-item">User Interface</a>-->
-                        </div>
-                    </div>
-                    <div class="dash-nav-dropdown">
-                        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
-                            <i class="fas fa-clipboard-check"></i> Handle Report </a>
-                        <div class="dash-nav-dropdown-menu">
-                            <a href="reportjob.jsp" class="dash-nav-dropdown-item">Job Recruitment</a>
-                            <a href="reportblog.jsp" class="dash-nav-dropdown-item">Blog</a>
-                            
-                        </div>
-                    </div>
-<!--                    <div class="dash-nav-dropdown">-->
-                        <a href="listaccountpackage.jsp" class="dash-nav-item">
-                            <i class="fas fa-chevron-up"></i> Account Package </a>
-<!--                        <div class="dash-nav-dropdown-menu">
-                            <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="dash-nav-dropdown-item">GitHub</a>
-                            <a href="http://hackerthemes.com" target="_blank" class="dash-nav-dropdown-item">HackerThemes</a>
-                        </div>-->
-<!--                    </div>-->
-                    <a href="listaccount.jsp" class="dash-nav-item">
-                        <i class="far fa-address-card"></i> Acounts </a>
-                </nav>
+             <div class="dash-nav dash-nav-dark">
+                <%@include file="header.jsp" %>
             </div>
             <div class="dash-app">
                 <header class="dash-toolbar">

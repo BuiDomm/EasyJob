@@ -158,7 +158,7 @@ public class LoginJobseeker extends HttpServlet {
 
                     } else {
                         session.setAttribute("account", jd.loginAcount(email, pass));
-                        request.getRequestDispatcher("homeemployeer.jsp").forward(request, response);
+                        response.sendRedirect("employerhomeservlet");
                     }
 
                 } else {

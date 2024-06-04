@@ -307,5 +307,10 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
         }
         return false;
     }
+    
+    public static void main(String[] args) {
+        JobseekerDAO jd = new JobseekerDAO();
+        System.out.println(jd.findById(1));
+    }
 
 }

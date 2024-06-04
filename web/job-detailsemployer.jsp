@@ -28,6 +28,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
 
 
 
@@ -78,6 +80,7 @@ isVerified1 = false;
                 }
 
         </script>
+
         <!-- ***** Preloader Start ***** -->
         <!--        <div id="preloader">
                     <div class="jumper">
@@ -113,15 +116,15 @@ isVerified1 = false;
                 <div class="row">
                     <div class="col-md-9 col-sm-8">
                         <p class="lead" style="display: flex; align-items: center">
-                            <i  class="fa fa-map-marker"></i> <i>${cc.location}</i> &nbsp;&nbsp;
-                            <i class="fa fa-calendar"></i> ${cc.date} &nbsp;&nbsp;
+                            <i style="font-size: 28px;margin-top: -12px;"  class="fa fa-map-marker"></i> <i>${cc.location}</i> &nbsp;&nbsp;
+                            <i style="font-size: 28px;margin-top: -12px;" class="fa fa-calendar"></i> ${cc.date} &nbsp;&nbsp;
                             Status: &nbsp; <c:if test="${cc.status == 'Accept'}"> <i style="color: green">${cc.status}</i> </c:if> <c:if test="${cc.status == 'Pending'}"> <i style="color: #bbb">${cc.status}</i> </c:if> <c:if test="${cc.status == 'Reject'}"> <i style="color: red">${cc.status}</i> </c:if><c:if test="${cc.status == 'Expire'}"> <i style="color: orange">${cc.status}</i> </c:if>
                             </p>
                             <br/>
-                                        <p>${cc.descrip}</p>
+                                            <p>${cc.descrip}</p>
                         <br/>
                         <div class="form-group">
-                            <h5>Job title: <i>${cc.title}</i></h5>
+                            <h5><i style="color: #bbb">Job title: &nbsp;&nbsp;   </i><i>${cc.title}</i></h5>
                         </div>
 
                         <hr>
@@ -159,8 +162,45 @@ isVerified1 = false;
                             </c:if>
 
                         </div>
-                        <div>
-                            <img style="width: 255px;height: 186px;object-fit: cover;" src="${com.url}" alt="" class="img-fluid wc-image">
+                        <div class="col-md-3 col-lg-12">
+                            <c:if test="${cc.status == 'Pending'}">
+                                <div class="contact-form">
+                                    <div class="form-group">
+
+                                        <a style="text-align: center;" href="#!" data-toggle="modal" data-target="#confirmModal" class="filled-button btn-block">Edit Job Information</a>
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h6 class="modal-title" id="confirmModalLabel">Are you sure you want to edit this job information?</h6>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div class="modal-body text-center">
+
+                                                        <p style="color: red">This action will revert your post to a new pending status </p>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                                        <a href="loadjobservlet?id=${cc.jobID}" class="btn btn-primary">Yes</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </c:if>
+                            
+                            <div>
+
+                                <img src="${com.url}" alt="" class="img-fluid wc-image">
+                            </div>
+                            <br>
+                            <br>
+                            <br>
                         </div>
                         <br>
                         <ul class="social-icons text-center">
@@ -335,7 +375,7 @@ isVerified1 = false;
                 </div>
             </div>
         </div>
-
+        <jsp:include page="footeremp.jsp"/>
         <script>
                 function handlerStatus(namebook, id, checkboxId) {
                     var checkbox = document.getElementById(checkboxId);

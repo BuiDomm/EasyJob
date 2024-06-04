@@ -72,7 +72,15 @@
                             <div class="details">${i.job.title}</div>
                             <div class="details">Company: ${i.job.company.nameCompany}</div>
                             <a href="jobdetails?id=${i.job.jobID}" class="details-btn">More Details</a>
-                            <span class="open-positions">Status: ${i.status}</span> 
+                            <span class="open-positions" 
+                                  style="color:
+                                  <c:choose>
+                                      <c:when test="${i.status == 'Accept'}">green</c:when>
+                                      <c:when test="${i.status == 'Reject'}">red</c:when>
+                                      <c:otherwise>#ddd</c:otherwise>
+                                  </c:choose>;">
+                                Status: ${i.status}
+                            </span>
                         </div>
 
 

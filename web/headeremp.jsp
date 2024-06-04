@@ -16,9 +16,9 @@
 
 
 <header style="display: flex;
-        align-items: center;">
+        align-items: center;position: relative">
     <nav class="navbar navbar-expand-lg all-nav">
-        <a class="navbar-brand" href="homeemployeer.jsp">
+        <a class="navbar-brand" href="employerhomeservlet">
             <figure style="width: 65px;height: 65px;margin-left: 40px;margin-top: 16px">
                 <img style="height: 100%;width: 100%;object-fit: cover;" src="./assets/images/easyjobb.png" alt="alt"/>
             </figure>
@@ -47,7 +47,7 @@
                     </a>
                 </li> 
                 <li class="navbar-item">
-                    <a style="    width: 140px;display: inline-flex;align-items: center;" class="nav-link" href="#!"> <i class="
+                    <a style="    width: 140px;display: inline-flex;align-items: center;" class="nav-link" href="listApplyCv"> <i class="
                                                                                                                          fa fa-folder-open
                                                                                                                          "></i>Cvs
                     </a>

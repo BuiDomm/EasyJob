@@ -1,30 +1,32 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package controller;
 
-import dao.CategoryDAO;
+import dao.AdminDAO;
+import dao.CVDAO;
 import dao.CompanyDAO;
 import dao.JobDAO;
-import java.io.IOException;
-import java.io.PrintWriter;
+import dao.JobseekerDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
-import model.Category;
+import model.CVProfile;
 import model.Company;
 import model.Job;
 import model.User;
 
 /**
  *
- * @author ASUS
+ * @author DELL
  */
-public class CreateJob extends HttpServlet {
+public class AdminJobDetail extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,15 +40,15 @@ public class CreateJob extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
+        try ( PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CreateJob</title>");
+            out.println("<title>Servlet ModerationTalentControl</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CreateJob at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ModerationTalentControl at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,25 +66,36 @@ public class CreateJob extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        int idUser = Integer.parseInt(request.getParameter("id"));
-        CompanyDAO cd = new CompanyDAO();
-        Company com = cd.findCompanyByUserId(idUser);
+        int id = Integer.parseInt(request.getParameter("id"));
+        JobDAO jd = new JobDAO();
+        JobseekerDAO jdd = new JobseekerDAO();
+        //lay thong tin cua job tu id job
+        Job job = jd.findById(id);
+        // Lay ra thong tin company theo id job
+        CompanyDAO cm = new CompanyDAO();
+        Company com = cm.findCompanyByIdJob(id);
+
+        // thong tin nha tuyen dung
+        User u = jdd.getInfo(id);
+
+        CVDAO cvd = new CVDAO();
+
+        HttpSession session = request.getSession();
+        //account của user
+        User user = (User) session.getAttribute("account");
+
+        CVProfile cvp = cvd.findByIdUser(user.getIdUser());
+        request.setAttribute("u", u);
+        //thong tin job
+        request.setAttribute("cc", job);
+
+        request.setAttribute("jobid", id);
+        request.setAttribute("check", "success");
+        request.setAttribute("profile", cvp);
         request.setAttribute("com", com);
-        String errorMessage ;
-        if(com == null){
-          errorMessage ="You must create your company first !";
-          request.setAttribute("errormess", errorMessage);
-            request.getRequestDispatcher("companydetail.jsp").forward(request, response);
-        }else if("Disabled".equals(com.getStatus())){
-            errorMessage ="You must active your company first !";
-          request.setAttribute("errormess", errorMessage);
-            request.getRequestDispatcher("loadcompanyservlet").forward(request, response);
-        }else{
-        
-        request.getRequestDispatcher("createjob.jsp").forward(request, response);
-        }
-        
+
+        request.getRequestDispatcher("./Admin/jobdetail.jsp").forward(request, response);
+
     }
 
     /**
@@ -96,31 +109,7 @@ public class CreateJob extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User epl = (User) session.getAttribute("account");
-        CompanyDAO comdao = new CompanyDAO();
-        Company com = comdao.findByUserId(epl.getIdUser());
-        
-        String nameCompnay = request.getParameter("name");
-        String nameWork = request.getParameter("namework");
-        int idCate = Integer.parseInt(request.getParameter("cateID"));
-        int yearExpr = Integer.parseInt(request.getParameter("experiences"));
-        int salary = Integer.parseInt(request.getParameter("salary"));
-        String location = request.getParameter("location");
-        String desc = request.getParameter("description");
-        CategoryDAO cd = new CategoryDAO();
-        Category c = cd.findById(idCate);
-        
-        Job j = new Job(com, c, nameWork, desc, yearExpr, location, salary, "Pending");
-        
-        JobDAO jd = new JobDAO();
-        jd.insert(j);
-        List<Job> list = jd.findByIdUser(epl.getIdUser());
-        Job currentJob = jd.getJobCurrentInsert(epl.getIdUser());
-        request.setAttribute("successfully", true);
-        request.setAttribute("list", list);
-        request.setAttribute("job", currentJob);
-        request.getRequestDispatcher("listcvcreated.jsp").forward(request, response);
+        processRequest(request, response);
     }
 
     /**
@@ -132,5 +121,4 @@ public class CreateJob extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

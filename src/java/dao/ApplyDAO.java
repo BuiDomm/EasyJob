@@ -111,6 +111,45 @@ public class ApplyDAO extends DBContext implements BaseDAO<Apply> {
         return false;
     }
 
+    public int countApplicationsByCompanyId(int companyId) {
+        String sql = "SELECT COUNT(*) AS ApplicationCount FROM Applications A "
+                + "JOIN Jobs J ON A.JobID = J.JobID "
+                + "WHERE J.CompanyID = ?";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, companyId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("ApplicationCount");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ApplyDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public int countApplicationsByMonthAndYear(int year, int month, int companyId) {
+        String sql = "SELECT COUNT(ApplicationID) AS NumberOfApplications\n"
+                + "FROM Applications A\n"
+                + "JOIN Jobs J ON A.JobID = J.JobID\n"
+                + "WHERE DATEPART(YEAR, ApplicationDate) = ?\n"
+                + "AND DATEPART(MONTH, ApplicationDate) = ?\n"
+                + "AND J.CompanyID = ?";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, year);
+            ps.setInt(2, month);
+            ps.setInt(3, companyId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("NumberOfApplications");
+            }
+        } catch (Exception e) {
+            Logger.getLogger(ApplyDAO.class.getName()).log(Level.SEVERE, null, e);
+        }
+        return 0;
+    }
+
     @Override
     public boolean update(Apply newObject) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

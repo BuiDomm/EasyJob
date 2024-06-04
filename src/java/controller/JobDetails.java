@@ -90,7 +90,10 @@ public class JobDetails extends HttpServlet {
 
             // Check thử cong viec nay da apply chua
             ApplyDAO ap = new ApplyDAO();
-            Apply a = ap.findByJobIDAndCvID(id, user.getIdUser());
+            CVDAO cvdd = new CVDAO();
+            
+            
+            Apply a = ap.findByJobIDAndCvID(id, cvdd.findByIdUser(user.getIdUser()).getCVId());
             // 
 
             if (a != null) {

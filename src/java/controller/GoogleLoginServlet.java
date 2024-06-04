@@ -39,7 +39,7 @@ public class GoogleLoginServlet extends HttpServlet {
         String token = gg.getToken(code);
         GoogleAccount gc = gg.getUserInfo(token);
         JobseekerDAO jd = new JobseekerDAO();
-        User newU = new User(gc.getGiven_name(), gc.getFamily_name(), gc.getEmail(), "", 2, "", "");
+        User newU = new User(gc.getGiven_name(), gc.getFamily_name(), gc.getEmail(), "", 2, "", "Active");
         System.out.println(newU);
     }
 
@@ -62,7 +62,7 @@ public class GoogleLoginServlet extends HttpServlet {
         String token = gg.getToken(code);
         GoogleAccount gc = gg.getUserInfo(token);
         JobseekerDAO jd = new JobseekerDAO();
-        User newU = new User(gc.getGiven_name(), gc.getFamily_name(), gc.getEmail(), "", 2, "", "");
+        User newU = new User(gc.getGiven_name(), gc.getFamily_name(), gc.getEmail(), "", 2, "", "Active");
         //dang ky
         if (jd.insert(newU)) {
             User userr = jd.fogortPass(newU.getEmail());

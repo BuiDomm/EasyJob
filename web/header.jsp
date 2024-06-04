@@ -23,7 +23,7 @@
         <link rel="stylesheet" href="assets/css/button.css">
     </head>
     <body>
-          <header class="">
+        <header class="">
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
                     <c:choose>
@@ -73,7 +73,12 @@
                                         <a class="dropdown-item" href="team.jsp">Team</a>
                                         <a class="dropdown-item" href="testimonials.jsp">Testimonials</a>
                                         <a class="dropdown-item" href="terms.jsp">Terms</a>
-                                        <a class="dropdown-item" href="./CVSeeker">CV Profile</a>
+                                        <c:choose>
+                                            <c:when test="${sessionScope.account != null}">
+                                                <a class="dropdown-item" href="./CVSeeker">CV Profile</a>
+                                                <a class="dropdown-item" href="${pageContext.request.contextPath}/favoriteJobList">List saved job</a>
+                                            </c:when>
+                                        </c:choose>
                                     </div>
                                 </li>
 

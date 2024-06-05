@@ -91,36 +91,31 @@ public class JobDetails extends HttpServlet {
             // Check thử cong viec nay da apply chua
             ApplyDAO ap = new ApplyDAO();
             CVDAO cvdd = new CVDAO();
-            
-            
-            Apply a = ap.findByJobIDAndCvID(id, cvdd.findByIdUser(user.getIdUser()).getCVId());
-            // 
 
-            if (a != null) {
+            try {
+                Apply a = ap.findByJobIDAndCvID(id, cvdd.findByIdUser(user.getIdUser()).getCVId());
                 CVProfile cvp = cvd.findByIdUser(user.getIdUser());
 
                 request.setAttribute("u", u);
                 //thong tin job
                 request.setAttribute("cc", job);
                 //
-                request.setAttribute("check", "existed");
                 request.setAttribute("profile", cvp);
                 request.setAttribute("com", com);
                 request.setAttribute("apply", a);
                 request.getRequestDispatcher("job-details.jsp").forward(request, response);
 
-            } else {
+            } catch (Exception e) {
                 CVProfile cvp = cvd.findByIdUser(user.getIdUser());
                 request.setAttribute("u", u);
                 //thong tin job
                 request.setAttribute("cc", job);
                 //
-                request.setAttribute("check", "success");
                 request.setAttribute("profile", cvp);
                 request.setAttribute("com", com);
-                request.setAttribute("apply", a);
                 request.getRequestDispatcher("job-details.jsp").forward(request, response);
             }
+
         } else {
             // vẫn có thể xem được job khi không đăng nhập
             request.setAttribute("cc", job);

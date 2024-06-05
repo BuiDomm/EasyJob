@@ -35,7 +35,7 @@ public class ApplyDAO extends DBContext implements BaseDAO<Apply> {
 
         List<Apply> list = new ArrayList<>();
         String sql = "	SELECT * FROM Applications\n"
-                + "Where CVid =?";
+                + "Where CVid =? ORDER BY ApplicationDate DESC";
         try {
             PreparedStatement ps = getConnection().prepareStatement(sql);
             ps.setInt(1, id);

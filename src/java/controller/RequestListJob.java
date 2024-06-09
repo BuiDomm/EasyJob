@@ -20,18 +20,19 @@ import model.User;
  * @author DELL
  */
 public class RequestListJob extends HttpServlet {
-     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ModerationTalentControl</title>");  
+            out.println("<title>Servlet ModerationTalentControl</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ModerationTalentControl at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ModerationTalentControl at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -49,16 +50,27 @@ public class RequestListJob extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
+        String indexPage = request.getParameter("index");
+        if (indexPage == null) {
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
         AdminDAO dao = new AdminDAO();
-        List<Job> listJ = dao.getJobByStatus("Pending");
+        int count = dao.getNumberJobStatus("Pending");
+        int endPage = count / 4;
+        if (count % 4 != 0) {
+            endPage++;
+        }
+        List<Job> listJ = dao.pagingJobsByStatus(index, "Pending");
         for (Job job : listJ) {
             System.out.println(job);
         }
+
+        request.setAttribute("endP", endPage);
         request.setAttribute("dao", dao);
         request.setAttribute("listJ", listJ);
-        request.getRequestDispatcher("./Admin/modejob.jsp").forward(request, response);  
-      
+        request.getRequestDispatcher("./Admin/modejob.jsp").forward(request, response);
+
     }
 
     /**

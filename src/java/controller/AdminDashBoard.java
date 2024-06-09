@@ -15,21 +15,18 @@ import java.io.IOException;
  *
  * @author DELL
  */
-public class AdminRejectJob extends HttpServlet {
+public class AdminDashBoard extends HttpServlet {
         protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         String jobid = request.getParameter("jobId");
-          String returnPage = request.getParameter("returnP");
-        AdminDAO dao = new AdminDAO();
-        dao.rejectJob(jobid);
+            AdminDAO dao = new AdminDAO();
+        int totalAccount = dao.getTotalUser();
+        int totalJobs = dao.getTotalJob();
+        int totalCompany = dao.getTotalCompany();
+        request.setAttribute("totalAccount", totalAccount);
+        request.setAttribute("totalJobs", totalJobs);
+        request.setAttribute("totalCompany", totalCompany);
         
-         if("listActive".equals(returnPage)){
-           response.sendRedirect("listJobAccept");
-        }else{
-          response.sendRedirect("requestList");
-         }
-         
-       
+        request.getRequestDispatcher("./Admin/adminhome.jsp").forward(request, response);
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

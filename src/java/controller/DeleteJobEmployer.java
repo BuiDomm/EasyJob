@@ -68,7 +68,7 @@ public class DeleteJobEmployer extends HttpServlet {
         List<Job> list = jd.findByIdUser(epl.getIdUser());
         request.setAttribute("successfully1", true);
         request.setAttribute("list", list);
-        request.getRequestDispatcher("listcvcreated.jsp").forward(request, response);
+        request.getRequestDispatcher("listjobcreated").forward(request, response);
 
     }
 

@@ -51,7 +51,7 @@
             <!-- Banner Ends Here -->
 
             <div class="services" style="background-image:url(assets/images/other-image-fullscren-1-1920x900.jpg);" >
-                <div style="border-radius: 15px" class="container mt-3 shadow h-120 py-2 p-5 ">
+                <div style="border-radius: 15px; background-color:#f3f3f4;box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);" class="container mt-3 p-5 ">
                     <div style="border-radius: 15px;background-color: white " class=" row shadow h-100 py-2 d-sm-flex mb-5">
                         <h1 style="margin: auto;color: #333333" class="">Your Dashboard</h1>
 
@@ -131,7 +131,7 @@
 
                     <!-- chart -->
                 </div>
-                <div style="border-radius: 15px" class="container mt-4 shadow h-120 py-2 ">
+                <div style="border-radius: 15px; background-color:#f3f3f4;box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);" class="container mt-4  h-120  ">
                     <div class="row p-4">
                         <div style="border-radius: 15px" class=" col-lg-7 bg-light shadow h-120 py-2 p-5">
                             <h3>Number of Applicants Per Month</h3>

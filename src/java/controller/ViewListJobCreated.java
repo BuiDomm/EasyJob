@@ -4,7 +4,6 @@ package controller;
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
-
 import dao.JobDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -34,19 +33,18 @@ public class ViewListJobCreated extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ViewListJobCreated</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ViewListJobCreated at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        HttpSession session = request.getSession();
+        User epl = (User) session.getAttribute("account");
+        JobDAO jd = new JobDAO();
+        List<Job> list = jd.findByIdUser(epl.getIdUser());
+        List<Job> acceptjob = jd.findAcceptJobByIdUser(epl.getIdUser());
+        List<Job> rejecttjob = jd.findRejectJobByIdUser(epl.getIdUser());
+        List<Job> pendingjob = jd.findPendingJobByIdUser(epl.getIdUser());
+        request.setAttribute("list", list);
+        request.setAttribute("acceptlist", acceptjob);
+        request.setAttribute("rejectlist", rejecttjob);
+        request.setAttribute("pendinglist", pendingjob);
+        request.getRequestDispatcher("listcvcreated.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -61,13 +59,8 @@ public class ViewListJobCreated extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User epl = (User) session.getAttribute("account");
-        JobDAO jd = new JobDAO();
-        List<Job> list = jd.findByIdUser(epl.getIdUser());
-        request.setAttribute("list", list);
-        request.getRequestDispatcher("listcvcreated.jsp").forward(request, response);
 
+        processRequest(request, response);
     }
 
     /**

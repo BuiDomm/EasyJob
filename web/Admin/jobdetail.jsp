@@ -1,8 +1,9 @@
 <%-- 
     Document   : jobdetail
-    Created on : Jun 2, 2024, 2:37:52 PM
-    Author     : DELL
+    Created on : 5 thg 6, 2024, 15:07:24
+    Author     : ducanh2192003
 --%>
+
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
@@ -174,17 +175,27 @@
                         </div>
                         <div class="row justify-content-end">
 
-                            <div class="col-2">
-
-                                <a onclick="showMess('${jobid}',
-                                                'adminAcceptJob?jobId=', '${cc.title}', '${u.firstName} ${u.lastName}', 'accept')"  
-                                   class="btn btn-block btn-success btn-md">Accept Jobs</a>
-                            </div>
-                            <div class="col-2">
-                                <a onclick="showMess('${jobid}',
+                            <c:if test="${hidenButton != 'rejectButton'}">
+                                 <div class="col-2">
+                                    <a onclick="showMess('${jobid}',
                                                 'adminRejectJob?jobId=', '${cc.title}', '${u.firstName} ${u.lastName}', 'reject')"  
-                                   class="btn btn-block btn-danger btn-md">Reject Jobs</a>
-                            </div>
+                                       class="btn btn-block btn-danger btn-md">Reject Jobs</a>
+                                </div>
+                            </c:if>
+
+
+                            <c:if test="${hidenButton != 'activeButton'}">
+                                <div class="col-2">
+
+                                    <a onclick="showMess('${jobid}',
+                                                   'adminAcceptJob?jobId=', '${cc.title}', '${u.firstName} ${u.lastName}', 'accept')"  
+                                       class="btn btn-block btn-success btn-md">Accept Jobs</a>
+                                </div>
+                               
+                            </c:if>
+
+
+
                         </div>
 
                     </div>
@@ -196,7 +207,7 @@
                     var option = confirm('Are you sure you want to ' + key + ' this Job?\n' +
                             'Title: ' + title + '\n' +
                             'Account name: ' + name);
-                     if (option === true) {
+                    if (option === true) {
                         window.location.href = url + id;
                     }
                 } else if (key === "accept") {

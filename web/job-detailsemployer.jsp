@@ -25,6 +25,7 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/icontop.css">
         <link rel="stylesheet" href="assets/css/button.css">
+        <link rel="stylesheet" href="assets/css/styles.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
@@ -113,7 +114,7 @@ isVerified1 = false;
 
         <div class="products">
             <div class="container">
-                <div class="row">
+                <div style="border-radius: 15px; background-color:#f3f3f4;box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);" class="row p-4">
                     <div class="col-md-9 col-sm-8">
                         <p class="lead" style="display: flex; align-items: center">
                             <i style="font-size: 28px;margin-top: -12px;"  class="fa fa-map-marker"></i> <i>${cc.location}</i> &nbsp;&nbsp;
@@ -121,16 +122,16 @@ isVerified1 = false;
                             Status: &nbsp; <c:if test="${cc.status == 'Accept'}"> <i style="color: green">${cc.status}</i> </c:if> <c:if test="${cc.status == 'Pending'}"> <i style="color: #bbb">${cc.status}</i> </c:if> <c:if test="${cc.status == 'Reject'}"> <i style="color: red">${cc.status}</i> </c:if><c:if test="${cc.status == 'Expire'}"> <i style="color: orange">${cc.status}</i> </c:if>
                             </p>
                             <br/>
-                                            <p>${cc.descrip}</p>
+                                        <p>${cc.descrip}</p>
                         <br/>
                         <div class="form-group">
-                            <h5><i style="color: #bbb">Job title: &nbsp;&nbsp;   </i><i>${cc.title}</i></h5>
+                            <h5><i style="color: white">Job title: &nbsp;&nbsp;   </i><i>${cc.title}</i></h5>
                         </div>
 
                         <hr>
                         <h5 style="margin-bottom: 5px">*Conditions met</h5>
                         <ul>
-                            <li>Ten Cong Ty: <b>ABC</b></li>
+                            <li>Company: <b>ABC</b></li>
                             <li>Job Position: <b>${cc.category.categoryName}</b></li>
                             <li>Year Experience: <b>${cc.yearEx}</b></li>
                             <li>Salary <b>${cc.salary}</b></li>
@@ -167,7 +168,7 @@ isVerified1 = false;
                                 <div class="contact-form">
                                     <div class="form-group">
 
-                                        <a style="text-align: center;" href="#!" data-toggle="modal" data-target="#confirmModal" class="filled-button btn-block">Edit Job Information</a>
+                                        <a style="text-align: center;" href="#!" data-toggle="modal" data-target="#confirmModal" class="filled-button btn-block shadow">Edit Job Information</a>
                                         <!-- Modal -->
                                         <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
@@ -193,7 +194,7 @@ isVerified1 = false;
                                     </div>
                                 </div>
                             </c:if>
-                            
+
                             <div>
 
                                 <img src="${com.url}" alt="" class="img-fluid wc-image">
@@ -215,7 +216,7 @@ isVerified1 = false;
                         <c:if test="${cc.status == 'Accept'}">
                             <div class="contact-form">
                                 <div class="form-group">
-                                    <a style="text-align: center;background:#7808d0; " href="#!" class="filled-button btn-block">Jobseeker was applied</a>
+                                    <a style="text-align: center;background:#7808d0; " href="#!" class="filled-button btn-block shadow"  onclick="scrollToTable();">Jobseeker was applied</a>
                                 </div>
                             </div>
 
@@ -297,7 +298,57 @@ isVerified1 = false;
                 </div>
             </div>
         </div>
+        <!-- table -->
+        <c:if test="${cc.status == 'Accept'}">
+            <div id="appliedCVTable" style="border-radius: 15px; background-color: #f3f3f4;box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);" class="container mt-5 ">
+                <c:if test="${listApply.isEmpty()}">
+                    <h3 class="mb-3 p-3">There is no CV has been applied</h3>
 
+                </c:if>
+                <c:if test="${!listApply.isEmpty()}">
+                    <h3  class="mb-3 p-3">CV Applied</h3>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Email</th>
+                                <th scope="col">Phone Number</th>
+                                <th scope="col">Apply Date</th>
+                                <th scope="col">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <c:set var="counter" value="0" />
+                            <c:forEach items="${listApply}" var="i">
+
+                                <c:set var="counter" value="${counter + 1}" />
+                                <tr onclick="window.location.href = '<c:url value='detailCV?UserId=${dao.getUserByCVid(i.cvProfile.CVId).idUser}&ApplyId=${i.applicationID}'/>'">
+                                    <th scope="row">${counter}</th>
+                                    <td>${dao.getUserByCVid(i.cvProfile.CVId).firstName}</td>
+                                    <td>${dao.getUserByCVid(i.cvProfile.CVId).email}</td>
+                                    <td>${dao.getUserByCVid(i.cvProfile.CVId).phoneNumber}</td>
+                                    <td>${i.applicationDate}</td>
+                                    <c:if test="${i.status == 'Accept'}">
+                                        <td style="color: green;" class="open-positions">${i.status}</td>
+                                    </c:if>
+                                    <c:if test="${i.status == 'Pending'}">
+                                        <td style="color: #bbb;" class="open-positions">${i.status}</td>
+                                    </c:if>
+                                    <c:if test="${i.status == 'Reject'}">
+                                        <td style="color: red;" class="open-positions">${i.status}</td>
+                                    </c:if>
+
+                                </tr>
+
+                            </c:forEach>
+                        </tbody>
+                    </table>
+
+                </c:if>
+            </div>  
+        </c:if>
+        <!-- table -->                        
         <footer>
             <div class="container">
                 <div class="row">
@@ -385,6 +436,12 @@ isVerified1 = false;
                         checkbox.checked = false;
                     }
                 }
+
+                function scrollToTable() {
+                    document.getElementById('appliedCVTable').scrollIntoView({behavior: 'smooth'});
+                }
+
+
 
 
         </script>   

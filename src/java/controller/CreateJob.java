@@ -120,7 +120,7 @@ public class CreateJob extends HttpServlet {
         request.setAttribute("successfully", true);
         request.setAttribute("list", list);
         request.setAttribute("job", currentJob);
-        request.getRequestDispatcher("listcvcreated.jsp").forward(request, response);
+        request.getRequestDispatcher("listjobcreated").forward(request, response);
     }
 
     /**

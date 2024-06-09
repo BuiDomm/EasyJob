@@ -84,8 +84,6 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         return list;
     }
 
-   
-
     @Override
     public Job findById(int id) {
         String sql = "Select * from jobs\n"
@@ -150,6 +148,105 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         return list;
     }
 
+    public List<Job> findAcceptJobByIdUser(int id) {
+        List<Job> list = new ArrayList<>();
+        String sql = "SELECT * FROM jobs\n"
+                + "Join CompanyProfile as CM on CM.CompanyID = jobs.CompanyID\n"
+                + "JOIN Users as u on u.UserID = CM.UserID\n"
+                + "Where u.UserID = ? AND jobs.Status = 'Accept'\n"
+                + "ORDER BY jobs.Date DESC";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idJob = rs.getInt(1);
+                int idCompany = rs.getInt(2);
+                int idCategory = rs.getInt(3);
+                String title = rs.getString(4);
+                String desc = rs.getString(5);
+                int expY = rs.getInt(6);
+                String location = rs.getString(7);
+                int salary = rs.getInt(8);
+                String status = rs.getString(9);
+                Date date = rs.getDate(10);
+                Company company = com.findById(idCompany);
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+                list.add(j);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<Job> findRejectJobByIdUser(int id) {
+        List<Job> list = new ArrayList<>();
+        String sql = "SELECT * FROM jobs\n"
+                + "Join CompanyProfile as CM on CM.CompanyID = jobs.CompanyID\n"
+                + "JOIN Users as u on u.UserID = CM.UserID\n"
+                + "Where u.UserID = ? AND jobs.Status = 'Reject'\n"
+                + "ORDER BY jobs.Date DESC";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idJob = rs.getInt(1);
+                int idCompany = rs.getInt(2);
+                int idCategory = rs.getInt(3);
+                String title = rs.getString(4);
+                String desc = rs.getString(5);
+                int expY = rs.getInt(6);
+                String location = rs.getString(7);
+                int salary = rs.getInt(8);
+                String status = rs.getString(9);
+                Date date = rs.getDate(10);
+                Company company = com.findById(idCompany);
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+                list.add(j);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<Job> findPendingJobByIdUser(int id) {
+        List<Job> list = new ArrayList<>();
+        String sql = "SELECT * FROM jobs\n"
+                + "Join CompanyProfile as CM on CM.CompanyID = jobs.CompanyID\n"
+                + "JOIN Users as u on u.UserID = CM.UserID\n"
+                + "Where u.UserID = ? AND jobs.Status = 'Pending'\n"
+                + "ORDER BY jobs.Date DESC";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idJob = rs.getInt(1);
+                int idCompany = rs.getInt(2);
+                int idCategory = rs.getInt(3);
+                String title = rs.getString(4);
+                String desc = rs.getString(5);
+                int expY = rs.getInt(6);
+                String location = rs.getString(7);
+                int salary = rs.getInt(8);
+                String status = rs.getString(9);
+                Date date = rs.getDate(10);
+                Company company = com.findById(idCompany);
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+                list.add(j);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     public int getPageNumber() {
 
         String sql = "Select count(*) as countjob from jobs where status = 'Accept'";
@@ -202,10 +299,8 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return list;
     }
-    
-    
-    
-        public List<Job> getTop3Succes() {
+
+    public List<Job> getTop3Succes() {
         List<Job> list = new ArrayList<>();
         String sql = "SElect TOP 3  * FROM Jobs "
                 + "Where Status = 'Accept' \n"
@@ -234,9 +329,8 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return list;
     }
-    
 
-     public List<Job> getAllFollowPage(int num) {
+    public List<Job> getAllFollowPage(int num) {
         List<Job> list = new ArrayList<>();
         CategoryDAO cd = new CategoryDAO();
         String sql = "Select * from jobs where status = 'Accept'\n"
@@ -296,8 +390,8 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         return false;
 
     }
-    
-       public boolean updateStatusExpire(int idJob) {
+
+    public boolean updateStatusExpire(int idJob) {
 
         String sql = "Update Jobs\n"
                 + "Set Status = 'Expire'\n"
@@ -317,7 +411,7 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return false;
     }
-    
+
     public Job getJobCurrentInsert(int idUser) {
         List<Job> list = new ArrayList<>();
         String sql = "SELECT TOP 1 * FROM Jobs\n"
@@ -350,52 +444,51 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return null;
     }
+
     public int countAcceptedJobs(int companyId) {
-    String sql = "SELECT COUNT(*) AS AcceptedJobCount FROM Jobs WHERE CompanyID = ? AND Status = 'Accept'";
-    try {
-        PreparedStatement ps = getConnection().prepareStatement(sql);
-        ps.setInt(1, companyId);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("AcceptedJobCount");
+        String sql = "SELECT COUNT(*) AS AcceptedJobCount FROM Jobs WHERE CompanyID = ? AND Status = 'Accept'";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, companyId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("AcceptedJobCount");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (Exception ex) {
-        Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+        return 0;
     }
-    return 0;
-}
 
-public int countRejectJobs(int companyId) {
-    String sql = "SELECT COUNT(*) AS RejectJobCount FROM Jobs WHERE CompanyID = ? AND Status = 'Reject'";
-    try {
-        PreparedStatement ps = getConnection().prepareStatement(sql);
-        ps.setInt(1, companyId);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("RejectJobCount");
+    public int countRejectJobs(int companyId) {
+        String sql = "SELECT COUNT(*) AS RejectJobCount FROM Jobs WHERE CompanyID = ? AND Status = 'Reject'";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, companyId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("RejectJobCount");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (Exception ex) {
-        Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+        return 0;
     }
-    return 0;
-}
 
-public int countPendingJobs(int companyId) {
-    String sql = "SELECT COUNT(*) AS PendingJobCount FROM Jobs WHERE CompanyID = ? AND Status = 'Pending'";
-    try {
-        PreparedStatement ps = getConnection().prepareStatement(sql);
-        ps.setInt(1, companyId);
-        ResultSet rs = ps.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("PendingJobCount");
+    public int countPendingJobs(int companyId) {
+        String sql = "SELECT COUNT(*) AS PendingJobCount FROM Jobs WHERE CompanyID = ? AND Status = 'Pending'";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, companyId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("PendingJobCount");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-    } catch (Exception ex) {
-        Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
+        return 0;
     }
-    return 0;
-}
-
-    
 
     @Override
     public boolean update(Job job) {
@@ -450,7 +543,6 @@ public int countPendingJobs(int companyId) {
         return false;
 
     }
-    
 
     public String getJobTitleById(int id) {
         String sql = "Select Title from jobs\n"
@@ -492,7 +584,7 @@ public int countPendingJobs(int companyId) {
         return null;
     }
 
-        public Job findByCompanyId(int id) {
+    public Job findByCompanyId(int id) {
         String sql = "Select * from jobs\n"
                 + "where CompanyID = ? ";
         try {
@@ -521,6 +613,5 @@ public int countPendingJobs(int companyId) {
         }
         return null;
     }
-
 
 }

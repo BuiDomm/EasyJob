@@ -5,6 +5,7 @@
 package controller;
 
 import dao.CompanyDAO;
+import dao.JobApplyDAO;
 import dao.JobDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.Apply;
 import model.Company;
 import model.Job;
 import model.User;
@@ -68,6 +71,13 @@ public class JobDetailForEmployer extends HttpServlet {
         Company com = cm.findCompanyByIdJob(id);
         JobDAO jd = new JobDAO();
         Job b = jd.findById(id);
+         JobApplyDAO dao = new JobApplyDAO();
+        List<Apply> listApply = dao.ListApplyByUserIdAndJobID(u.getIdUser(),id);
+        for (Apply apply : listApply) {
+            System.out.println(apply.getCvProfile().getUserID());
+        }
+         request.setAttribute("dao", dao);
+        request.setAttribute("listApply", listApply);
         request.setAttribute("com", com);
         request.setAttribute("cc", b);
         request.setAttribute("u", u);

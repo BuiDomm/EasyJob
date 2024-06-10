@@ -76,7 +76,6 @@
                         <tbody>
                         <c:forEach items="${listApply}" var="i">
                             <tr scope="row">
-
                                 <td class="pl-0">
                                     <div class="d-flex align-items-center">
                                         
@@ -88,7 +87,7 @@
                                 <td>${i.job.title}</td>
                                 <td>${i.applicationDate}</td>
                                 <td>${i.status}</td>
-                                <td><a href="detailCV?UserId=${dao.getUserByCVid(i.cvProfile.CVId).idUser}&ApplyId=${i.applicationID}" class="more">Details</a></td>
+                                <td><a target="_blank" href="detailCV?UserId=${dao.getUserByCVid(i.cvProfile.CVId).idUser}&ApplyId=${i.applicationID}" class="more">Details</a></td>
                             </tr>
                         </c:forEach>
 

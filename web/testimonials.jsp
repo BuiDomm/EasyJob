@@ -125,10 +125,10 @@
                         <c:set var="cid" value="${c.companyID}" />
                         <div class="col-md-4">
                             <div class="service-item">
-                                <a href="${pageContext.request.contextPath}/jobCompany?cid=${cid}" class="services-item-image"><img src="${c.url}" class="img-fluid rounded" alt=""></a>
+                                <a href="${pageContext.request.contextPath}/jobCompany?cid=${cid}" class="services-item-image"><img style="width: 350px; height: 350px;object-fit: cover" src="${c.url}" class="img-fluid rounded" alt=""></a>
 
 
-                                <div class="down-content">
+                                <div class="down-content" style="height: 219px;">
                                     <h4><i class="fa fa-briefcase"></i> <a href="${pageContext.request.contextPath}/jobCompany?cid=${cid}" style="color: #B22222">${c.nameCompany}</a></h4>
                                     <h4><i class="fa fa-map-marker"></i> <a href="${pageContext.request.contextPath}/jobCompany?cid=${cid}" style="color: #8B7765">${c.add}</a></h4>
 

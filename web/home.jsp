@@ -329,13 +329,13 @@
                             <a href="${pageContext.request.contextPath}/companyList">read more <i class="fa fa-angle-right"></i></a>
                         </div>
                     </div>
-                    <c:forEach  items="${comItem.threeFirstCompany}" var="item"> 
+                <c:forEach  items="${comItem.threeFirstCompany}" var="item"> 
                         <div class="col-lg-4 col-md-6">
                             <div class="service-item">
                                 <c:set var="cid" value="${item.companyID}" />
-                                <a href="#" class="services-item-image"><img src="${item.url}" class="img-fluid" alt=""></a>
+                                <a href="#" class="services-item-image"><img style="width: 350px; height: 293px; object-fit: cover" src="${item.url}" class="img-fluid" alt=""></a>
 
-                                <div class="down-content">
+                                <div class="down-content" style="height: 219px">
 
 
                                     <h4><i class="fa fa-briefcase"></i> <a href="${pageContext.request.contextPath}/companyList" style="color: #B22222">${item.nameCompany}</a></h4>

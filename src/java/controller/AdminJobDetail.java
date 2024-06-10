@@ -67,6 +67,7 @@ public class AdminJobDetail extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
+        String hidenButton = request.getParameter("hidenButton");
         JobDAO jd = new JobDAO();
         JobseekerDAO jdd = new JobseekerDAO();
         //lay thong tin cua job tu id job
@@ -88,11 +89,12 @@ public class AdminJobDetail extends HttpServlet {
         request.setAttribute("u", u);
         //thong tin job
         request.setAttribute("cc", job);
-
+       request.setAttribute("hidenButton", hidenButton);
         request.setAttribute("jobid", id);
         request.setAttribute("check", "success");
         request.setAttribute("profile", cvp);
         request.setAttribute("com", com);
+        
 
         request.getRequestDispatcher("./Admin/jobdetail.jsp").forward(request, response);
 

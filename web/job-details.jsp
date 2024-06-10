@@ -120,11 +120,9 @@ if (isVerified == null) {
                         <div class="contact-form">
                             <div class="form-group">
                                 <c:choose>
-
-                                    <c:when test="${apply.status == null}">
-                                        <a style="text-align: center; background-color: #ff6600" href="cvapply?idprofile=${profile.CVId}&idjob=${cc.jobID}" class="filled-button btn-block">Applied to this job.</a>
+                                    <c:when test="${apply.status ==null}">
+                                        <a style="text-align: center; background-color: #ff6600" onclick="handlerStatuss('${profile.CVId}', '${cc.jobID}')" href="#!" class="filled-button btn-block">Applied to this job.</a>
                                     </c:when>
-
                                     <c:when test="${apply.status == 'Pending'}">
                                         <a style="text-align: center;pointer-events:none; background-color: #ccc" href="#!" class="filled-button btn-block">Applied to this job.</a>
                                     </c:when>
@@ -155,7 +153,7 @@ if (isVerified == null) {
 
 
                         <div>
-                            <img src="assets/images/product-1-370x270.jpg" alt="" class="img-fluid wc-image">
+                            <img src="${com.url}" alt="" class="img-fluid wc-image">
                         </div>
 
                         <br>
@@ -350,7 +348,22 @@ if (isVerified == null) {
                     })
                 })
             });
+
+
+            function handlerStatuss(idpro, idjob) {
+                if (!idpro) {
+                    if (confirm("You need to create your CV profile first before apply for job!!")) {
+                        window.location.href = "CVSeeker";
+                    }
+                } else
+                    window.location.href = "cvapply?idprofile=" + idpro + "&idjob=" + idjob;
+            }
+
+
         </script>
+
+
+
 
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>

@@ -57,7 +57,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                                 <!--                                <a class="dropdown-item" href="#!">Profile</a>-->
-                                <a class="dropdown-item" href="login.jsp">Logout</a>
+                                <a class="dropdown-item" href="index.jsp">Logout</a>
                             </div>
                         </div>
                     </div>
@@ -67,47 +67,39 @@
                         <div class="row dash-row">
                             <div class="col-xl-4">
                                 <div class="stats stats-primary">
-                                    <h3 class="stats-title"> Sign ups </h3>
+                                    <h3 class="stats-title"> Users </h3>
                                     <div class="stats-content">
                                         <div class="stats-icon">
                                             <i class="fas fa-user"></i>
                                         </div>
                                         <div class="stats-data">
-                                            <div class="stats-number">114</div>
-                                            <div class="stats-change">
-                                                <span class="stats-percentage">+25%</span>
-                                                <span class="stats-timeframe">from last month</span>
-                                            </div>
+                                            <div class="stats-number">${totalAccount}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-4">
                                 <div class="stats stats-success ">
-                                    <h3 class="stats-title"> Revenue </h3>
+                                    <h3 class="stats-title"> Jobs </h3>
                                     <div class="stats-content">
                                         <div class="stats-icon">
-                                            <i class="fas fa-cart-arrow-down"></i>
+                                            <i class="fas fa-chart-bar"></i>
                                         </div>
                                         <div class="stats-data">
-                                            <div class="stats-number">$25,541</div>
-                                            <div class="stats-change">
-                                                <span class="stats-percentage">+17.5%</span>
-                                                <span class="stats-timeframe">from last month</span>
-                                            </div>
+                                            <div class="stats-number">${totalJobs}</div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-xl-4">
                                 <div class="stats stats-danger">
-                                    <h3 class="stats-title"> Open tickets </h3>
+                                    <h3 class="stats-title"> Company </h3>
                                     <div class="stats-content">
                                         <div class="stats-icon">
-                                            <i class="fas fa-phone"></i>
+                                            <i class="fas fa-hotel"></i>
                                         </div>
                                         <div class="stats-data">
-                                            <div class="stats-number">5</div>
+                                            <div class="stats-number">${totalCompany}</div>
                                         </div>
                                     </div>
                                 </div>

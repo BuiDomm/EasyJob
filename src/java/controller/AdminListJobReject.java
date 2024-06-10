@@ -1,52 +1,36 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package controller;
 
-import dao.CompanyDAO;
-import dao.JobApplyDAO;
-import dao.JobDAO;
-import java.io.IOException;
-import java.io.PrintWriter;
+import dao.AdminDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
-import model.Apply;
-import model.Company;
 import model.Job;
-import model.User;
 
 /**
  *
- * @author ASUS
+ * @author DELL
  */
-public class JobDetailForEmployer extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class AdminListJobReject extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
+         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet JobDetailForEmployer</title>");
+            out.println("<title>Servlet ModerationTalentControl</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet JobDetailForEmployer at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ModerationTalentControl at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,24 +48,27 @@ public class JobDetailForEmployer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("account");
-        int id = Integer.parseInt(request.getParameter("id"));
-        CompanyDAO cm = new CompanyDAO();
-        Company com = cm.findCompanyByIdJob(id);
-        JobDAO jd = new JobDAO();
-        Job b = jd.findById(id);
-         JobApplyDAO dao = new JobApplyDAO();
-        List<Apply> listApply = dao.ListApplyByUserIdAndJobID(u.getIdUser(),id);
-        for (Apply apply : listApply) {
-            System.out.println(apply.getCvProfile().getUserID());
+         String indexPage = request.getParameter("index");
+        if (indexPage == null) {
+            indexPage = "1";
         }
-         request.setAttribute("dao", dao);
-        request.setAttribute("listApply", listApply);
-        request.setAttribute("com", com);
-        request.setAttribute("cc", b);
-        request.setAttribute("u", u);
-        request.getRequestDispatcher("job-detailsemployer.jsp").forward(request, response);
+        int index = Integer.parseInt(indexPage);
+        AdminDAO dao = new AdminDAO();
+        int count = dao.getNumberJobStatus("Reject");
+        int endPage = count / 4;
+        if (count % 4 != 0) {
+            endPage++;
+        }
+         List<Job> listJ = dao.pagingJobsByStatus(index,"Reject");  
+        for (Job job : listJ) {
+            System.out.println(job);
+        }
+        
+         request.setAttribute("endP", endPage);
+        request.setAttribute("dao", dao);
+        request.setAttribute("listJ", listJ);
+        request.getRequestDispatcher("./Admin/listjobreject.jsp").forward(request, response);
+      
     }
 
     /**
@@ -107,5 +94,4 @@ public class JobDetailForEmployer extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

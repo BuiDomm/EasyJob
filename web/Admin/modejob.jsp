@@ -62,14 +62,15 @@
                 <main class="dash-content" style="padding-top: 0 !important;">
                     <div class="container-fluid" >
                         <div class="row">
-                            <c:set var="counter" value="0" />
                             <c:forEach var="item" items="${listJ}">
-                                <div class="col-md-4 mt-5">
+                                <div class="col-md-4">
                                     <div class="product-item">
-                                        <a href="adminJobDetail?id=${item.jobID}"><img style="height: 400px; width: 400px; object-fit: cover;" src="./${dao.companyByJobId(item.jobID).url}" alt=""></a>
+                                        <a href="adminJobDetail?id=${item.jobID}"><img style="height: 47%; object-fit: cover" src="./${dao.companyByJobId(item.jobID).url}" alt=""></a>
                                         <div class="down-content">
                                             <a href="adminJobDetail?id=${item.jobID}"><h4>${item.title}</h4></a>
+
                                             <h6>Salary: ${item.salary}</h6>
+
                                             <h4><small><i class="fa fa-briefcase"></i> ${item.category.categoryName}<br> <strong><i class="fa fa-building"></i>${item.company.nameCompany}</strong></small></h4>
 
                                             <small>
@@ -81,7 +82,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <c:set var="counter" value="${counter + 1}" />
                             </c:forEach>
 
 
@@ -94,8 +94,8 @@
                                             <span aria-hidden="true">&laquo;</span>
                                         </a>
                                     </li>
-                                    <c:forEach begin="1" end="4" var="i">
-                                        <li class="page-item"><a class="page-link" href="listaccount?index=${i}">${i}</a></li>
+                                    <c:forEach begin="1" end="${endP}" var="i">
+                                        <li class="page-item"><a class="page-link" href="requestList?index=${i}">${i}</a></li>
                                         </c:forEach>
                                     <li class="page-item">
                                         <a class="page-link" href="#" aria-label="Next">

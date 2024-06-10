@@ -29,6 +29,8 @@ public class AdminDAO {
     CompanyDAO com = new CompanyDAO();
     CategoryDAO cd = new CategoryDAO();
 
+    
+    //user
     public int getTotalUser() {
         String query = "select count(*) from Users";
         try {
@@ -47,11 +49,11 @@ public class AdminDAO {
         List<User> list = new ArrayList<>();
         String sql = " select * from Users\n"
                 + "order by UserID\n"
-                + "OFFSET ? rows fetch next 4 rows only";
+                + "OFFSET ? rows fetch next 6 rows only";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, (index - 1) * 4);
+            ps.setInt(1, (index - 1) * 6);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int idUser = rs.getInt(1);
@@ -103,6 +105,7 @@ public class AdminDAO {
         return list;
     }
 
+
     public void lockAccount(String userId) {
         String query = "UPDATE Users SET Status = 'Lock' WHERE UserID = ?";
         try {
@@ -127,6 +130,71 @@ public class AdminDAO {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //job
+    public List<Job> pagingJobsByStatus(int index,String statusString ) {
+        List<Job> list = new ArrayList<>();
+        String sql = " select * from Jobs j\n"
+                + " where j.Status =  ?\n"
+                + "order by JobID\n"
+                + "OFFSET ? rows fetch next 4 rows only";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+             ps.setString(1, statusString);
+            ps.setInt(2, (index - 1) * 4);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                  int idJob = rs.getInt(1);
+                int idCompany = rs.getInt(2);
+                int idCategory = rs.getInt(3);
+                String title = rs.getString(4);
+                String desc = rs.getString(5);
+                int expY = rs.getInt(6);
+                String location = rs.getString(7);
+                int salary = rs.getInt(8);
+                String status = rs.getString(9);
+                Date date = rs.getDate(10);
+                Company company = com.findById(idCompany);
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+                list.add(j);
+            }
+        } catch (Exception ex) {
+
+        }
+        return list;
+    }
+    
+     public int getTotalJob() {
+        String query = "select count(*) from Jobs\n";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+    public int getNumberJobStatus(String statusString) {
+        String query = "SELECT count(*) FROM jobs j\n"
+                + "where j.Status =  ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, statusString);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
     }
 
     public List<Job> getJobByStatus(String statusString) {
@@ -161,6 +229,21 @@ public class AdminDAO {
     }
 
     //company
+    
+    public int getTotalCompany() {
+        String query = "select count(*) from CompanyProfile cp\n";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+    
     public Company companyByJobId(int id) {
         String sql = "select * from CompanyProfile cp\n"
                 + "join Jobs j on cp.CompanyID = j.CompanyID\n"

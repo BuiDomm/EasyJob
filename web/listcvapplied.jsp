@@ -71,6 +71,7 @@
                             <h3 class="job-title ">${i.job.category.categoryName}</h3>
                             <div class="details">${i.job.title}</div>
                             <div class="details">Company: ${i.job.company.nameCompany}</div>
+                            <div class="">Date Apply: ${i.applicationDate}</div>
                             <a href="jobdetails?id=${i.job.jobID}" class="details-btn">More Details</a>
                             <span class="open-positions" 
                                   style="color:

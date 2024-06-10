@@ -25,7 +25,7 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
         <link rel="stylesheet" href="assets/css/icontop.css">
-          <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/style.css">
 
     </head>
 
@@ -121,7 +121,7 @@
                                     </div>
                                 </c:forEach>
 
-                              
+
                                 <br>
 
 
@@ -189,12 +189,13 @@
 
                     <div class="col-md-9">
                         <div class="row">
+                            <c:set var="counter" value="0" />
                             <c:forEach var="item" items="${listjob}" >
                                 <div class="col-md-4">
                                     <div class="product-item">
-                                        <a href="jobdetails?id=${item.jobID}"><img src="assets/images/product-1-370x270.jpg" alt=""></a>
+                                        <a href="jobdetails?id=${item.jobID}"><img style="height: 47%; object-fit: cover" src="${listCompanyByJob.get(counter).url}" alt=""></a>
                                         <div class="down-content">
-                                            <a href="./jobdetails?id=${item.jobID}"><h4>${item.title}</h4></a>
+                                            <a href="jobdetails?id=${item.jobID}"><h4>${item.title}</h4></a>
 
                                             <h6>Salary: ${item.salary}</h6>
 
@@ -210,7 +211,7 @@
                                     </div>
                                 </div>
 
-
+                                <c:set var="counter" value="${counter + 1}" />
                             </c:forEach>
 
                             <div class="col-md-12">

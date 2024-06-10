@@ -355,5 +355,31 @@
         <servlet-name>employerhomeservlet</servlet-name>
         <url-pattern>/employerhomeservlet</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name> AdminListJobAccept</servlet-name>
+        <servlet-class>controller.AdminListJobAccept</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminListJobAccept</servlet-name>
+        <url-pattern>/listJobAccept</url-pattern>
+    </servlet-mapping>
+    
+    
+    <servlet>
+        <servlet-name> AdminListJobReject</servlet-name>
+        <servlet-class>controller.AdminListJobReject</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminListJobReject</servlet-name>
+        <url-pattern>/listJobReject</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name> AdminDashBoard</servlet-name>
+        <servlet-class>controller.AdminDashBoard</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminDashBoard</servlet-name>
+        <url-pattern>/adminDashBoard</url-pattern>
+    </servlet-mapping>
 
 </web-app>

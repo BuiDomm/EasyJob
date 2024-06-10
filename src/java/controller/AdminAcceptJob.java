@@ -19,10 +19,17 @@ public class AdminAcceptJob extends HttpServlet {
         protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
          String jobid = request.getParameter("jobId");
+         String returnPage = request.getParameter("returnP");
         
         AdminDAO dao = new AdminDAO();
         dao.accpetJob(jobid);
-        response.sendRedirect("requestList");
+//            System.out.println(("listActive".equals(returnPage)));
+       
+        if("listReject".equals(returnPage)){
+           response.sendRedirect("listJobReject");
+        }else{
+          response.sendRedirect("requestList");
+         }
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

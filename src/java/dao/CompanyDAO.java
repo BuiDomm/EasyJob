@@ -20,7 +20,9 @@ import model.User;
  * @author ASUS
  */
 public class CompanyDAO extends DBContext implements BaseDAO<Company> {
-
+    
+    private static final int RECORDS_PER_PAGE = 6;
+    
     @Override
     public List<Company> getAll() {
         List<Company> list = new ArrayList<>();
@@ -257,5 +259,137 @@ public class CompanyDAO extends DBContext implements BaseDAO<Company> {
         public static void main(String[] args) {
             CompanyDAO comdao = new CompanyDAO();
             
+    }
+        
+    public List<Company> getSearchCompanies(String cname, String addr) {
+        List<Company> list = new ArrayList<>();
+        String sql = "SELECT * FROM CompanyProfile WHERE (CompanyName LIKE ? OR Address LIKE ? ) AND status = 'Active' ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setString(1, "%" + cname + "%");
+            ps.setString(2, "%" + addr + "%");
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idCompany = rs.getInt(1);
+                String nameCompany = rs.getString(2);
+                int idUser = rs.getInt(3);
+                String aboutUs = rs.getString(4);
+                String add = rs.getString(5);
+                String status = rs.getString(6);
+                String url = rs.getString(7);
+                JobseekerDAO jd = new JobseekerDAO();
+                User user = jd.findById(idUser);
+                Company c = new Company(idCompany, nameCompany, user, aboutUs, add, status, url);
+                list.add(c);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public List<Company> getThreeFirstCompany() {
+        List<Company> list = new ArrayList<>();
+        String sql = "SELECT TOP 3 * FROM CompanyProfile where status = 'Active'";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idCompany = rs.getInt(1);
+                String nameCompany = rs.getString(2);
+                int idUser = rs.getInt(3);
+                String aboutUs = rs.getString(4);
+                String add = rs.getString(5);
+                String status = rs.getString(6);
+                String url = rs.getString(7);
+                JobseekerDAO jd = new JobseekerDAO();
+                User user = jd.findById(idUser);
+                Company c = new Company(idCompany, nameCompany, user, aboutUs, add, status, url);
+                list.add(c);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public int getTotalJobCompany(int cId) {
+        System.out.println("CID: " + cId);
+        int res = 0;
+        String sql = "SELECT COUNT(*) as total FROM Jobs where CompanyID = ? AND status = 'Accept' ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, cId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                res = rs.getInt("total");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return res;
+    }
+
+    public int getTotalComs() {
+        try {
+            String sql = "select count(CompanyID)  from CompanyProfile where [Status] = 'Active'";
+
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CompanyDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
+    public List<Company> getCompanyWithPagging(int page) {
+        
+        List<Company> list = new ArrayList<>();
+        int start = (page-1) * RECORDS_PER_PAGE;
+        try {
+            String sql = "SELECT * FROM CompanyProfile \n"
+                    + "WHERE [Status] = 'Active' \n"
+                    + "ORDER BY CompanyID \n"
+                    + "OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";
+
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, start);
+            ps.setInt(2, RECORDS_PER_PAGE);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idCompany = rs.getInt(1);
+                String nameCompany = rs.getString(2);
+                int idUser = rs.getInt(3);
+                String aboutUs = rs.getString(4);
+                String add = rs.getString(5);
+                String status = rs.getString(6);
+                String url = rs.getString(7);
+                JobseekerDAO jd = new JobseekerDAO();
+                User user = jd.findById(idUser);
+                Company c = new Company(idCompany, nameCompany, user, aboutUs, add, status, url);
+                list.add(c);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CompanyDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public int getNoOfCompanies() {
+        int noOfCom = 0;
+        String sql = "SELECT COUNT(*) FROM CompanyProfile WHERE [Status] = 'Active' ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                noOfCom = rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CompanyDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return noOfCom;
     }
 }

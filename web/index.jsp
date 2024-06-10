@@ -273,7 +273,7 @@
                                     <h4><i class="fa fa-briefcase"></i> <a href="${pageContext.request.contextPath}/companyList" style="color: #B22222">${item.nameCompany}</a></h4>
                                     <h4><i class="fa fa-map-marker"></i> <a href="${pageContext.request.contextPath}/companyList" style="color: #8B7765">${item.add}</a></h4>
 
-                                    <button class="btn btn-primary" style="background-color: #00AA00;">${comItem.getTotalJobCompany(cid)} New Jobs</button>
+                                    <a href="${pageContext.request.contextPath}/jobCompany?cid=${cid}" class="btn btn-primary" style="background-color: #00AA00;">${comItem.getTotalJobCompany(cid)} New Jobs</a>
                                 </div>
                             </div>
                         </div>

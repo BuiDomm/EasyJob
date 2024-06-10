@@ -153,7 +153,7 @@
 
                         <div class="col-md-4">
                             <div class="product-item">
-                                <a href="jobdetails?id=${item.jobID}"><img style="width: 370px;height: 270px;object-fit: contain" src="${comItem.top3.get(counter).url}" alt=""></a>
+                                <a href="jobdetails?id=${item.jobID}"><img style="width: 350px;height: 270px;object-fit: cover" src="${comItem.top3.get(counter).url}" alt=""></a>
                                 <div class="down-content">
                                     <a href="job-details.jsp"><h4>${item.title}</h4></a>
 

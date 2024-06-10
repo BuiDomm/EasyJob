@@ -87,7 +87,7 @@
                                 <td>${i.job.title}</td>
                                 <td>${i.applicationDate}</td>
                                 <td>${i.status}</td>
-                                <td><a target="_blank" href="detailCV?UserId=${dao.getUserByCVid(i.cvProfile.CVId).idUser}&ApplyId=${i.applicationID}" class="more">Details</a></td>
+                                <td><a href="./detailCV?UserId=${dao.getUserByCVid(i.cvProfile.CVId).idUser}&ApplyId=${i.applicationID}" class="more">Details</a></td>
                             </tr>
                         </c:forEach>
 

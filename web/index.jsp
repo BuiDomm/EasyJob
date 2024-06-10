@@ -64,7 +64,7 @@
 
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="team.jsp">Team</a>
-                                    <a class="dropdown-item" href="testimonials.jsp">Testimonials</a>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/companyList">Testimonials</a>
                                     <a class="dropdown-item" href="terms.jsp">Terms</a>
                                 </div>
                             </li>
@@ -251,79 +251,33 @@
             </div>
         </div>
 
-        <div class="happy-clients">
+        <div class="services" style="background-image: url(assets/images/company1.jpg);" >
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="section-heading">
-                            <h2>Happy Clients</h2>
+                            <h2 style="color: #000">Company</h2>
 
-                            <a href="testimonials.jsp">read more <i class="fa fa-angle-right"></i></a>
+                            <a href="${pageContext.request.contextPath}/companyList">read more <i class="fa fa-angle-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-md-12">
-                        <div class="owl-clients owl-carousel text-center">
+                    <c:forEach  items="${comItem.threeFirstCompany}" var="item"> 
+                        <div class="col-lg-4 col-md-6">
                             <div class="service-item">
-                                <div class="icon">
-                                    <i class="fa fa-user"></i>
-                                </div>
-                                <div class="down-content">
-                                    <h4>John Doe</h4>
-                                    <p class="n-m"><em>"Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at quia quaerat."</em></p>
-                                </div>
-                            </div>
+                                <c:set var="cid" value="${item.companyID}" />
+                                <a href="#" class="services-item-image"><img src="${item.url}" class="img-fluid" alt=""></a>
 
-                            <div class="service-item">
-                                <div class="icon">
-                                    <i class="fa fa-user"></i>
-                                </div>
                                 <div class="down-content">
-                                    <h4>Jane Smith</h4>
-                                    <p class="n-m"><em>"Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at quia quaerat."</em></p>
-                                </div>
-                            </div>
 
-                            <div class="service-item">
-                                <div class="icon">
-                                    <i class="fa fa-user"></i>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Antony Davis</h4>
-                                    <p class="n-m"><em>"Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at quia quaerat."</em></p>
-                                </div>
-                            </div>
 
-                            <div class="service-item">
-                                <div class="icon">
-                                    <i class="fa fa-user"></i>
-                                </div>
-                                <div class="down-content">
-                                    <h4>John Doe</h4>
-                                    <p class="n-m"><em>"Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at quia quaerat."</em></p>
-                                </div>
-                            </div>
+                                    <h4><i class="fa fa-briefcase"></i> <a href="${pageContext.request.contextPath}/companyList" style="color: #B22222">${item.nameCompany}</a></h4>
+                                    <h4><i class="fa fa-map-marker"></i> <a href="${pageContext.request.contextPath}/companyList" style="color: #8B7765">${item.add}</a></h4>
 
-                            <div class="service-item">
-                                <div class="icon">
-                                    <i class="fa fa-user"></i>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Jane Smith</h4>
-                                    <p class="n-m"><em>"Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at quia quaerat."</em></p>
-                                </div>
-                            </div>
-
-                            <div class="service-item">
-                                <div class="icon">
-                                    <i class="fa fa-user"></i>
-                                </div>
-                                <div class="down-content">
-                                    <h4>Antony Davis</h4>
-                                    <p class="n-m"><em>"Lorem ipsum dolor sit amet, consectetur an adipisicing elit. Itaque, corporis nulla at quia quaerat."</em></p>
+                                    <button class="btn btn-primary" style="background-color: #00AA00;">${comItem.getTotalJobCompany(cid)} New Jobs</button>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </c:forEach> 
                 </div>
             </div>
         </div>

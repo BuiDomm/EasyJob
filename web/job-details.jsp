@@ -97,13 +97,13 @@ if (isVerified == null) {
                         <p>${cc.descrip}</p>
                         <br/>
                         <div class="form-group">
-                            <h5>Job title: <i>${cc.title}</i></h5>
+                            <h5><i>${cc.title}</i></h5>
                         </div>
 
                         <hr>
                         <h5 style="margin-bottom: 5px">*Conditions met</h5>
                         <ul>
-                            <li>Ten Cong Ty: <b>ABC</b></li>
+                            <li>Company Name: <b>${com.nameCompany}</b></li>
                             <li>Job Position: <b>${cc.category.categoryName}</b></li>
                             <li>Year Experience: <b>${cc.yearEx}</b></li>
                             <li>Salary <b>${cc.salary}</b></li>
@@ -150,11 +150,18 @@ if (isVerified == null) {
                                 </div>
                             </div>
                         </div>
-
+                        <div style="display: flex; align-items: center; flex-direction: column;gap: 2px">
+                            <p>Company: <i>${com.nameCompany}</i></p>
+                        </div>
 
                         <div>
                             <img src="${com.url}" alt="" class="img-fluid wc-image">
                         </div>
+                        <div style="display: flex; align-items: center; flex-direction: column;gap: 2px">
+                            <p>Address: <i>${com.add}</i></p>
+
+                        </div>
+
 
                         <br>
 

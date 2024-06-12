@@ -54,7 +54,7 @@
                                 <i class="fas fa-user"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                                <a class="dropdown-item" href="#!">Profile</a>
+                                <a class="dropdown-item" href="changepass.jsp">Change Password</a>
                                 <a class="dropdown-item" href="login.jsp">Logout</a>
                             </div>
                         </div>
@@ -176,9 +176,9 @@
                         <div class="row justify-content-end">
 
                             <c:if test="${hidenButton != 'rejectButton'}">
-                                 <div class="col-2">
+                                <div class="col-2">
                                     <a onclick="showMess('${jobid}',
-                                                'adminRejectJob?jobId=', '${cc.title}', '${u.firstName} ${u.lastName}', 'reject')"  
+                                                    'adminRejectJob?jobId=', '${cc.title}', '${u.firstName} ${u.lastName}', 'reject')"  
                                        class="btn btn-block btn-danger btn-md">Reject Jobs</a>
                                 </div>
                             </c:if>
@@ -188,10 +188,10 @@
                                 <div class="col-2">
 
                                     <a onclick="showMess('${jobid}',
-                                                   'adminAcceptJob?jobId=', '${cc.title}', '${u.firstName} ${u.lastName}', 'accept')"  
+                                                    'adminAcceptJob?jobId=', '${cc.title}', '${u.firstName} ${u.lastName}', 'accept')"  
                                        class="btn btn-block btn-success btn-md">Accept Jobs</a>
                                 </div>
-                               
+
                             </c:if>
 
 

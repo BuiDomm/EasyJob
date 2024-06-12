@@ -28,7 +28,30 @@ public class ApplyDAO extends DBContext implements BaseDAO<Apply> {
 
     @Override
     public Apply findById(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM Applications\n"
+                + "Where ApplicationID =? ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idApp = rs.getInt(1);
+                int jobID = rs.getInt(2);
+                int CVid = rs.getInt(3);
+                Date date = rs.getDate(4);
+                String status = rs.getString(5);
+
+                JobDAO jd = new JobDAO();
+                Job j = jd.findById(jobID);
+                CVDAO cv = new CVDAO();
+                CVProfile cp = cv.findByID(CVid);
+                Apply a = new Apply(idApp, j, cp, date, status);
+                return a;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public List<Apply> findListByIdCV(int id) {
@@ -159,9 +182,11 @@ public class ApplyDAO extends DBContext implements BaseDAO<Apply> {
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     public static void main(String[] args) {
         ApplyDAO ap = new ApplyDAO();
+        
+        System.out.println(ap.findById(2044));
     }
 
 }

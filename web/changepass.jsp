@@ -18,6 +18,8 @@
         <link rel="icon" href="assets/images/favicon.ico">
         <link rel="stylesheet" href="assets/css/icontop.css">
         <link rel="stylesheet" href="assets/css/login.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
@@ -34,7 +36,7 @@
 
         <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
-        <link rel="stylesheet" href="assets/css/style.css">
+
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
         <link rel="stylesheet" href="assets/css/icontop.css">
@@ -204,7 +206,8 @@
                             </div>
                         </div>
                     </c:when>
-                    <c:otherwise> 
+                    <c:when test="${sessionScope.account.roleId == 2}">
+                        <link rel="stylesheet" href="assets/css/style.css">
                         <div class="container">
 
 
@@ -329,7 +332,18 @@
 
                             </div>
                         </div>
-                    </c:otherwise>
+
+                    </c:when>
+                    <c:when test="${sessionScope.account.roleId == 3}">
+
+                        <jsp:include page="headeremp.jsp"/>
+
+                    </c:when>
+                    <c:when test="${sessionScope.account.roleId == 1}">
+
+                        <jsp:include page="headeremp.jsp"/>
+
+                    </c:when>
 
                 </c:choose>
 

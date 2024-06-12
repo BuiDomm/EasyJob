@@ -53,7 +53,7 @@
                                 <i class="fas fa-user"></i>
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                                <a class="dropdown-item" href="#!">Profile</a>
+                                <a class="dropdown-item" href="changepass.jsp">Change Password</a>
                                 <a class="dropdown-item" href="login.jsp">Logout</a>
                             </div>
                         </div>

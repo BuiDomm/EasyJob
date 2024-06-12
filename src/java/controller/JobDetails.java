@@ -101,6 +101,8 @@ public class JobDetails extends HttpServlet {
                 request.setAttribute("cc", job);
                 //
                 request.setAttribute("profile", cvp);
+                request.setAttribute("cv", cvp);
+                request.setAttribute("user", user);
                 request.setAttribute("com", com);
                 request.setAttribute("apply", a);
                 request.getRequestDispatcher("job-details.jsp").forward(request, response);

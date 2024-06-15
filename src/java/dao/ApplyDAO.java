@@ -173,6 +173,50 @@ public class ApplyDAO extends DBContext implements BaseDAO<Apply> {
         return 0;
     }
 
+    public List<Apply> searchCVAppliApply(int cvProfileID, String keywwordString) {
+        List<Apply> list = new ArrayList<>();
+        String sql = "SELECT a.*\n"
+                + "FROM Applications a\n"
+                + "JOIN Jobs j ON a.JobID = j.JobID\n"
+                + "JOIN Categories c ON j.CategoryID = c.CategoryID\n"
+                + "WHERE a.CVId = ? AND (\n"
+                + "    CAST(a.CVId AS CHAR) LIKE ?\n"
+                + "    OR j.Title LIKE ?\n"
+                + "    OR CAST(a.ApplicationDate AS CHAR) LIKE ?\n"
+                + "    OR a.Status LIKE ?\n"
+                + "    OR c.CategoryName LIKE ?\n"
+                + ")";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            String searchPattern = "%" + keywwordString + "%";
+            ps.setInt(1, cvProfileID);
+            ps.setString(2, searchPattern);
+            ps.setString(3, searchPattern);
+            ps.setString(4, searchPattern);
+            ps.setString(5, searchPattern);
+            ps.setString(6, searchPattern);
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idApp = rs.getInt(1);
+                int jobID = rs.getInt(2);
+                int CVid = rs.getInt(3);
+                Date date = rs.getDate(4);
+                String status = rs.getString(5);
+
+                JobDAO jd = new JobDAO();
+                Job j = jd.findById(jobID);
+                CVDAO cv = new CVDAO();
+                CVProfile cp = cv.findByID(CVid);
+                Apply a = new Apply(idApp, j, cp, date, status);
+                list.add(a);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
     @Override
     public boolean update(Apply newObject) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
@@ -180,13 +224,48 @@ public class ApplyDAO extends DBContext implements BaseDAO<Apply> {
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE Applications \n"
+                + "Where ApplicationID =?";
+        PreparedStatement ps;
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            int rowAffect = ps.executeUpdate();
+            if (rowAffect > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(CVDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        return false;
+    }
+
+    public boolean deleteByIDJobAndIDCvProfile(int idjob, int idCvProfile) {
+        String sql = "DELETE Applications \n"
+                + "Where JobID =? AND CVId = ?";
+        PreparedStatement ps;
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, idjob);
+            ps.setInt(2, idCvProfile);
+
+            int rowAffect = ps.executeUpdate();
+            if (rowAffect > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(ApplyDAO.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        return false;
     }
 
     public static void main(String[] args) {
         ApplyDAO ap = new ApplyDAO();
-        
-        System.out.println(ap.findById(2044));
+        System.out.println(ap.searchCVAppliApply(7, "2024-06-15").size());
     }
 
 }

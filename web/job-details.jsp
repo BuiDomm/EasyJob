@@ -5,23 +5,16 @@
 <html lang="en">
 
     <head>
-
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="stylesheet" href="assets/css/button.css">
-
         <link rel="icon" href="assets/images/favicon.ico">
-
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-
-
         <title>PHPJabbers.com | Free Job Agency Website Template</title>
-
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
         <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
         <link rel="stylesheet" href="assets/css/style.css">
@@ -32,35 +25,48 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.4.0/css/all.min.css" integrity="sha512-eBNnVs5xPOVglLWDGXyZnZZ2K2ixXhR/3aECgCpFnW2dGCd/yiqXZ6fcB3BubeA91kM6NX234b6Wrah8RiYAPA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <link
             rel="stylesheet"
             href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
             />
-        `
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" integrity="sha512-3PN6gfRNZEX4YFyz+sIyTF6pGlQiryJu9NlGhu9LrLMQ7eDjNgudQoFDK3WSNAayeIKc6B8WXXpo4a7HqxjKwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-
-    </head>
-
-    <body>
-        <%
-    Boolean isVerified = (Boolean) request.getAttribute("successfully");
-if (isVerified == null) {
-    isVerified = false;
-}
-            
-        %>
-        <script>
-
-            var isVerifiedParam = <%= isVerified %>;
-            console.log(isVerifiedParam);
-            if (isVerifiedParam) {
-                toastr.success("Your profile has been applied to the recruitment application!!!", "Easyjob Notice", {
-                    timeOut: 2000,
-                });
+        <style>
+            .toast-top-right {
+                background-color: #60F382;
+            }
+            .toast .toast-success {
+                background-color: #7dce8f;
+            }
+            .toast .toast-message ,.toast-title{
+                color:#000;
             }
 
-        </script>
+
+        </style>
+    </head>
+    <%
+Boolean isVerified = (Boolean) request.getAttribute("successfully");
+if (isVerified == null) {
+isVerified = false;
+}
+            
+    %>
+    <script>
+
+        var isVerifiedParam = <%= isVerified %>;
+        console.log(isVerifiedParam);
+        if (isVerifiedParam) {
+            toastr.success("Your profile has been applied to the recruitment application!!!", "Easyjob Notice", {
+                timeOut: 2000,
+            });
+        }
+
+    </script>
+
+    <body>
+
 
 
         <section>
@@ -85,20 +91,20 @@ if (isVerified == null) {
                         <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
                         <script>
-            function savePDF() {
+        function savePDF() {
 
-                var overviewContent = document.querySelector('.row.gy-4');
-                html2canvas(overviewContent, {
-                    onrendered: function (canvas) {
+            var overviewContent = document.querySelector('.row.gy-4');
+            html2canvas(overviewContent, {
+                onrendered: function (canvas) {
 
-                        var imgData = canvas.toDataURL('image/png');
-                        var {jsPDF} = window.jspdf;
-                        var pdf = new jsPDF();
-                        pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), null, 'FAST');
-                        pdf.save("cv.pdf");
-                    }
-                });
-            }
+                    var imgData = canvas.toDataURL('image/png');
+                    var {jsPDF} = window.jspdf;
+                    var pdf = new jsPDF();
+                    pdf.addImage(imgData, 'PNG', 0, 0, pdf.internal.pageSize.getWidth(), pdf.internal.pageSize.getHeight(), null, 'FAST');
+                    pdf.save("cv.pdf");
+                }
+            });
+        }
 
                         </script>
 
@@ -123,6 +129,8 @@ if (isVerified == null) {
                                 border: 2px solid yellow;
                                 border-radius: 5px;
                             }
+
+
                         </style>
                     </head>
 
@@ -332,21 +340,21 @@ if (isVerified == null) {
                         <script src="https://unpkg.com/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
                         <script>
 
-            function showMess(id, url, name, key) {
-                if (key === "reject") {
-                    var option = confirm('Are you sure you want to ' + key + ' CV of \n' +
-                            'Account name: ' + name + ' ?');
-                    if (option === true) {
-                        window.location.href = url + id;
-                    }
-                } else if (key === "accept") {
-                    var option = confirm('Are you sure you want to ' + key + ' CV of \n' +
-                            'Account name: ' + name + ' ?');
-                    if (option === true) {
-                        window.location.href = url + id;
-                    }
+        function showMess(id, url, name, key) {
+            if (key === "reject") {
+                var option = confirm('Are you sure you want to ' + key + ' CV of \n' +
+                        'Account name: ' + name + ' ?');
+                if (option === true) {
+                    window.location.href = url + id;
+                }
+            } else if (key === "accept") {
+                var option = confirm('Are you sure you want to ' + key + ' CV of \n' +
+                        'Account name: ' + name + ' ?');
+                if (option === true) {
+                    window.location.href = url + id;
                 }
             }
+        }
 
                         </script>
                     </body>
@@ -433,7 +441,9 @@ if (isVerified == null) {
                                         <a style="text-align: center; background-color: #ff6600" onclick="handlerStatuss('${profile.CVId}', '${cc.jobID}')"  href="#!" class="filled-button btn-block show-modal">Applied to this job.</a>
                                     </c:when>
                                     <c:when test="${apply.status == 'Pending'}">
-                                        <a style="text-align: center;pointer-events:none; background-color: #ccc" href="#!" class="filled-button btn-block">Applied to this job.</a>
+                                        <a class="filled-button btn-block hover" style="text-align: center; background-color: #ff4444" onclick="withdrawJob('${cc.category.categoryName}', '${cc.jobID}')" href="#!" class="filled-button btn-block">
+                                            Withdraw job application.
+                                        </a>
                                     </c:when>
                                     <c:when test="${apply.status == 'Reject'}">
                                         <a style="text-align: center;background-color: red;pointer-events:none" href="#!" class="filled-button btn-block"><i class="fas fa-times"></i> &nbsp; Your CV has been reject.</a>
@@ -713,11 +723,18 @@ if (isVerified == null) {
                 }
             }
 
-
+            function withdrawJob(name, idJob) {
+                console.log(name);
+                if (confirm("Do you really want to withdraw your CV from : " + name + " job ?")) {
+                    window.location.href = "withdraw?idjob=" + idJob;
+                }
+            }
 
 
 
         </script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
+
 
 
 

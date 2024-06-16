@@ -117,12 +117,15 @@
                             <span style="color: green;" class="open-positions">Status: ${job.status}</span> 
                         </c:if>
                         <c:if test=" ${job.status != 'Accept'}">
-                            <a href="deletejob?id=${job.jobID}"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
+
+                            <a onclick="handlerDeleteJob(${job.jobID})" href="#!"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
+
                             </c:if>
                     </div>
                 </c:if>
             </div>
         </div>
+
 
 
         <c:if test="${not empty list && hasNonExpiredJob}">
@@ -140,12 +143,15 @@
                 </div>
                 <hr> 
                 <!-- Filter list start -->        
+
                 <div style="border-radius: 15px; background-color:#f3f3f4;box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);" class="container mt-5 p-4 ">
 
                     <h3 class="mb-3">Job Post Tabs</h3>
                     <!-- Nav tabs -->
 
+
                     <ul style="border-radius: 15px;background-color: white;z-index: 10;margin: auto" class="row nav position-absolute responsive-nav" id="myTab" role="tablist">
+
 
                         <li  class="nav-item col p-3 text-center">
                             <a style="border-radius: 15px" class="nav-link active btn-success "data-toggle="tab" href="#accept" role="tab" >Job Accept</a>
@@ -211,7 +217,10 @@
                                                 <div class="details text-primary font-italic">Date: ${i.date}</div>
                                                 <a href="jobdetailemployeer?id=${i.jobID}" class="details-btn">More Details</a>
                                                 <span style="color: red;" class="open-positions">Status: ${i.status}</span> 
-                                                <a href="deletejob?id=${i.jobID}"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
+
+
+                                                <a onclick="handlerDeleteJob(${i.jobID})" href="#!"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
+
 
                                             </div>
                                         </c:if>
@@ -240,7 +249,8 @@
                                                 <div class="details text-primary font-italic">Date: ${i.date}</div>
                                                 <a href="jobdetailemployeer?id=${i.jobID}" class="details-btn">More Details</a>
                                                 <span style="color: #bbb;" class="open-positions">Status: ${i.status}</span> 
-                                                <a href="deletejob?id=${i.jobID}"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
+
+                                                <a onclick="handlerDeleteJob(${i.jobID})" href="#!"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
 
                                             </div>
                                         </c:if>
@@ -303,7 +313,7 @@
                                     <span style="color: red;" class="open-positions">Status: ${i.status}</span> 
                                 </c:if>
                                 <c:if test="${i.status != 'Accept' && i.status != 'Expire'}">
-                                    <a href="deletejob?id=${i.jobID}"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
+                                    <a onclick="handlerDeleteJob(${i.jobID})" href="#!"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
                                     </c:if>
                             </div>
                         </c:if>
@@ -313,8 +323,19 @@
         </div>
         <jsp:include page="footeremp.jsp"/>
 
+
+        <script>
+            function handlerDeleteJob(idjob) {
+
+                if (confirm("Do you really want to delete this job?")) {
+                    window.location.href = "deletejob?id=" + idjob;
+                }
+            }
+
+
+        </script>
         <!-- Bootstrap core JavaScript -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>    
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <!-- Additional Scripts -->

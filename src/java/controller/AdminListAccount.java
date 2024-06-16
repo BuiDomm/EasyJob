@@ -62,8 +62,8 @@ public class AdminListAccount extends HttpServlet {
         int index = Integer.parseInt(indexPage);
         AdminDAO dao = new AdminDAO();
         int count = dao.getTotalUser();
-        int endPage = count/6;
-        if(count % 6 != 0){
+        int endPage = count/4;
+        if(count % 4 != 0){
           endPage++;
         }
         List<User> list = dao.pagingAccount(index);  

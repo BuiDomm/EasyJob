@@ -24,7 +24,6 @@
         <link rel="stylesheet" href="assets/css/style_4.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/icontop.css">
-
         <style>
             .search-input-placeholder-black {
                 width: calc(100% - 30px); /* Adjust based on icon width and padding */
@@ -118,6 +117,7 @@
                     </div>
                 </form>
 
+
                 <!-- fix -->
                 <div class="row">
                     <jsp:useBean id="comItem" class="dao.CompanyDAO" /> 
@@ -125,12 +125,12 @@
                         <c:set var="cid" value="${c.companyID}" />
                         <div class="col-md-4">
                             <div class="service-item">
-                                <a href="${pageContext.request.contextPath}/jobCompany?cid=${cid}" class="services-item-image"><img style="width: 350px; height: 350px;object-fit: cover" src="${c.url}" class="img-fluid rounded" alt=""></a>
+                                <a href="#" class="services-item-image"><img src="assets/images/blog-3-370x270.jpg" class="img-fluid rounded" alt=""></a>
 
 
-                                <div class="down-content" style="height: 219px;">
-                                    <h4><i class="fa fa-briefcase"></i> <a href="${pageContext.request.contextPath}/jobCompany?cid=${cid}" style="color: #B22222">${c.nameCompany}</a></h4>
-                                    <h4><i class="fa fa-map-marker"></i> <a href="${pageContext.request.contextPath}/jobCompany?cid=${cid}" style="color: #8B7765">${c.add}</a></h4>
+                                <div class="down-content">
+                                    <h4><i class="fa fa-briefcase"></i> <a href="testimonials.jsp" style="color: #B22222">${c.nameCompany}</a></h4>
+                                    <h4><i class="fa fa-map-marker"></i> <a href="testimonials.jsp" style="color: #8B7765">${c.add}</a></h4>
 
                                     <a href="${pageContext.request.contextPath}/jobCompany?cid=${cid}" class="btn btn-primary" style="background-color: #00AA00;">${comItem.getTotalJobCompany(cid)} New Jobs</a>
 
@@ -138,7 +138,7 @@
                             </div>
                         </div>
                     </c:forEach>
-
+                    
                     <c:if test="${noOfPages > 1}">
                         <div class="col-md-12">
                             <nav aria-label="Page navigation">
@@ -174,7 +174,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="inner-content">
-                            <p>Copyright ? 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
+                            <p>Copyright © 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
                         </div>
                     </div>
                 </div>

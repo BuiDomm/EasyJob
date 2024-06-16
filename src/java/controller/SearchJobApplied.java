@@ -6,9 +6,6 @@ package controller;
 
 import dao.ApplyDAO;
 import dao.CVDAO;
-import dao.CompanyDAO;
-import dao.JobDAO;
-import dao.JobseekerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,18 +13,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import javax.mail.Session;
+import java.util.ArrayList;
+import java.util.List;
 import model.Apply;
 import model.CVProfile;
-import model.Company;
-import model.Job;
 import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class JobDetails extends HttpServlet {
+public class SearchJobApplied extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +42,10 @@ public class JobDetails extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet JobDetails</title>");
+            out.println("<title>Servlet SearchJobApplied</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet JobDetails at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet SearchJobApplied at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,65 +63,15 @@ public class JobDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        JobDAO jd = new JobDAO();
-        JobseekerDAO jdd = new JobseekerDAO();
-        //lay thong tin cua job tu id job
-        Job job = jd.findById(id);
-        // Lay ra thong tin company theo id job
-        CompanyDAO cm = new CompanyDAO();
-        Company com = cm.findCompanyByIdJob(id);
-
-        //lay thong tin nguoi dang bai tu id job
-        // thong tin nha tuyen dung
-        User u = jdd.getInfo(id);
-
-        CVDAO cvd = new CVDAO();
-
+        String keyword = request.getParameter("keyword");
         HttpSession session = request.getSession();
-        //account của user
-        User user = (User) session.getAttribute("account");
-
-        if (user != null) {
-
-            // Check thử cong viec nay da apply chua
-            ApplyDAO ap = new ApplyDAO();
-            CVDAO cvdd = new CVDAO();
-
-            try {
-                Apply a = ap.findByJobIDAndCvID(id, cvdd.findByIdUser(user.getIdUser()).getCVId());
-                CVProfile cvp = cvd.findByIdUser(user.getIdUser());
-                //thong tin nha tuyen dung
-                request.setAttribute("u", u);
-                //thong tin job
-                request.setAttribute("cc", job);
-                //
-                request.setAttribute("profile", cvp);
-                request.setAttribute("cv", cvp);
-                request.setAttribute("user", user);
-                request.setAttribute("com", com);
-                request.setAttribute("apply", a);
-                request.getRequestDispatcher("job-details.jsp").forward(request, response);
-
-            } catch (Exception e) {
-                CVProfile cvp = cvd.findByIdUser(user.getIdUser());
-                request.setAttribute("u", u);
-                //thong tin job
-                request.setAttribute("cc", job);
-                //
-                request.setAttribute("profile", cvp);
-                request.setAttribute("com", com);
-                request.getRequestDispatcher("job-details.jsp").forward(request, response);
-            }
-
-        } else {
-            // vẫn có thể xem được job khi không đăng nhập
-            request.setAttribute("cc", job);
-            request.setAttribute("u", u);
-            request.setAttribute("com", com);
-            request.getRequestDispatcher("job-details.jsp").forward(request, response);
-
-        }
+        User u = (User) session.getAttribute("account");
+        CVDAO cd = new CVDAO();
+        CVProfile cp = cd.findByIdUser(u.getIdUser());
+        ApplyDAO ad = new ApplyDAO();
+        List<Apply> list = ad.searchCVAppliApply(cp.getCVId(), keyword);
+        request.setAttribute("list", list);
+        request.getRequestDispatcher("listcvapplied.jsp").forward(request, response);
 
     }
 

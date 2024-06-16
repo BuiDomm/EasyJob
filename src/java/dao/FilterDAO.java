@@ -68,7 +68,7 @@ public class FilterDAO {
         }
 
         query.append(" ORDER BY J.JobID OFFSET ? ROWS FETCH NEXT 4 ROWS ONLY;");
-
+        System.out.println(query);
         try {
             conn = new DBContext().getConnection();//open connection to SQL
             ps = conn.prepareStatement(query.toString());

@@ -25,7 +25,10 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
 
     CompanyDAO com = new CompanyDAO();
     CategoryDAO cd = new CategoryDAO();
-
+    
+    
+    private static final int RECORDS_PER_PAGE = 6;
+    
     @Override
     public List<Job> getAll() {
         List<Job> list = new ArrayList<>();
@@ -613,5 +616,53 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return null;
     }
+    
+    public List<Job> getJobsCompany(int cid, int page) {
+        List<Job> list = new ArrayList<>();
+        int start = (page - 1) * RECORDS_PER_PAGE;
+        String sql = "SELECT * FROM Jobs WHERE CompanyID = ? AND Status = 'Accept' ORDER BY JobID OFFSET ? ROWS FETCH NEXT ? ROWS ONLY ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, cid);
+            ps.setInt(2, start);
+            ps.setInt(3, RECORDS_PER_PAGE);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idJob = rs.getInt(1);
+                int idCompany = rs.getInt(2);
+                int idCategory = rs.getInt(3);
+                String title = rs.getString(4);
+                String desc = rs.getString(5);
+                int expY = rs.getInt(6);
+                String location = rs.getString(7);
+                int salary = rs.getInt(8);
+                String status = rs.getString(9);
+                Date date = rs.getDate(10);
+                Company company = com.findById(idCompany);
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+                list.add(j);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public int getNoOfJobCom(int cid) {
+        int noOfJCom = 0;
+        String sql = "SELECT COUNT(*) FROM Jobs WHERE CompanyID = ? AND Status = 'Accept' ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, cid);
+            ResultSet rs = ps.executeQuery();
+            if(rs.next()) {
+                noOfJCom = rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return noOfJCom;
+    }
 
+    
 }

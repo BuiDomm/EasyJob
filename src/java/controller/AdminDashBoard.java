@@ -10,28 +10,40 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
+import model.Job;
+import model.Statistic;
 
 /**
  *
  * @author DELL
  */
 public class AdminDashBoard extends HttpServlet {
-        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-            AdminDAO dao = new AdminDAO();
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        AdminDAO dao = new AdminDAO();
         int totalAccount = dao.getTotalUser();
         int totalJobs = dao.getTotalJob();
         int totalCompany = dao.getTotalCompany();
+        List<Statistic> statistic = dao.getJobByMonth();
+        Map<Job, Integer> topJob = dao.getTopJobWithApplyCount();
+        request.setAttribute("statistic", statistic);
+
+        request.setAttribute("topJob", topJob);
+        request.setAttribute("dao", dao);
         request.setAttribute("totalAccount", totalAccount);
         request.setAttribute("totalJobs", totalJobs);
         request.setAttribute("totalCompany", totalCompany);
-        
+
         request.getRequestDispatcher("./Admin/adminhome.jsp").forward(request, response);
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -39,12 +51,13 @@ public class AdminDashBoard extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-         processRequest(request, response);
-    } 
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -52,12 +65,13 @@ public class AdminDashBoard extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

@@ -23,7 +23,7 @@
         <link rel="stylesheet" href="assets/css/button.css">
     </head>
     <body>
-        <header class="">
+        <header class="headerclass">
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
                     <c:choose>
@@ -71,7 +71,7 @@
 
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="team.jsp">Team</a>
-                                        <a class="dropdown-item" href="testimonials.jsp">Testimonials</a>
+                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/companyList">Testimonials</a>
                                         <a class="dropdown-item" href="terms.jsp">Terms</a>
                                         <c:choose>
                                             <c:when test="${sessionScope.account != null}">

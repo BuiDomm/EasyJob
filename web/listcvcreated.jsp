@@ -30,6 +30,21 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" integrity="sha512-3PN6gfRNZEX4YFyz+sIyTF6pGlQiryJu9NlGhu9LrLMQ7eDjNgudQoFDK3WSNAayeIKc6B8WXXpo4a7HqxjKwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>  
     </head>
+    <style>
+        .responsive-nav {
+            width: 50%;
+        }
+        @media (max-width: 1440px) {
+            .responsive-nav {
+                width: 50%;
+            }
+        }
+        @media(max-width: 1920px) {
+            .responsive-nav {
+                width: 35%;
+            }
+        }
+    </style>
     <div id="preloader">
         <div class="jumper">
             <div></div>
@@ -102,22 +117,41 @@
                             <span style="color: green;" class="open-positions">Status: ${job.status}</span> 
                         </c:if>
                         <c:if test=" ${job.status != 'Accept'}">
+
                             <a onclick="handlerDeleteJob(${job.jobID})" href="#!"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
+
                             </c:if>
                     </div>
                 </c:if>
             </div>
         </div>
-        <!-- Filter list start -->
+
+
 
         <c:if test="${not empty list && hasNonExpiredJob}">
             <div style="padding-left: 120px;padding-right: 120px" class="container mt-3">
+                <div  class="container p-5">
+                    
+                    <a href="manageskilltest">  
+                        
+                        <div style="border-radius: 24px" class="bg-dark text-center mx-5 py-3">
+                            <h2 class="text-light text-uppercase">Skill Test Manage</h2>
+                           
+                            <p class="text-light">For Employer here</p>
+                        </div>
+                    </a> 
+                </div>
+                <hr> 
+                <!-- Filter list start -->        
+
                 <div style="border-radius: 15px; background-color:#f3f3f4;box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);" class="container mt-5 p-4 ">
 
                     <h3 class="mb-3">Job Post Tabs</h3>
                     <!-- Nav tabs -->
 
-                    <ul style="border-radius: 15px;background-color: white;z-index: 10;margin: auto" class=" row nav w-50 position-absolute " id="myTab" role="tablist">
+
+                    <ul style="border-radius: 15px;background-color: white;z-index: 10;margin: auto" class="row nav position-absolute responsive-nav" id="myTab" role="tablist">
+
 
                         <li  class="nav-item col p-3 text-center">
                             <a style="border-radius: 15px" class="nav-link active btn-success "data-toggle="tab" href="#accept" role="tab" >Job Accept</a>
@@ -183,7 +217,10 @@
                                                 <div class="details text-primary font-italic">Date: ${i.date}</div>
                                                 <a href="jobdetailemployeer?id=${i.jobID}" class="details-btn">More Details</a>
                                                 <span style="color: red;" class="open-positions">Status: ${i.status}</span> 
+
+
                                                 <a onclick="handlerDeleteJob(${i.jobID})" href="#!"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
+
 
                                             </div>
                                         </c:if>
@@ -212,7 +249,9 @@
                                                 <div class="details text-primary font-italic">Date: ${i.date}</div>
                                                 <a href="jobdetailemployeer?id=${i.jobID}" class="details-btn">More Details</a>
                                                 <span style="color: #bbb;" class="open-positions">Status: ${i.status}</span> 
+
                                                 <a onclick="handlerDeleteJob(${i.jobID})" href="#!"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
+
                                             </div>
                                         </c:if>
                                     </c:forEach>

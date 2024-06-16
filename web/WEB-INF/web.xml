@@ -363,8 +363,6 @@
         <servlet-name> AdminListJobAccept</servlet-name>
         <url-pattern>/listJobAccept</url-pattern>
     </servlet-mapping>
-    
-    
     <servlet>
         <servlet-name> AdminListJobReject</servlet-name>
         <servlet-class>controller.AdminListJobReject</servlet-class>
@@ -381,5 +379,14 @@
         <servlet-name> AdminDashBoard</servlet-name>
         <url-pattern>/adminDashBoard</url-pattern>
     </servlet-mapping>
+    <servlet>
+        <servlet-name> AdminListBlog</servlet-name>
+        <servlet-class>controller.AdminListBlog</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminListBlog</servlet-name>
+        <url-pattern>/adminListBlog</url-pattern>
+    </servlet-mapping>
+
 
 </web-app>

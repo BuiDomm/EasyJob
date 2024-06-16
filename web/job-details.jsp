@@ -67,8 +67,6 @@ isVerified = false;
 
     <body>
 
-
-
         <section>
 
             <span class="overlay"></span>

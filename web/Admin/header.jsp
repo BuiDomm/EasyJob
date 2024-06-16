@@ -1,14 +1,13 @@
+
 <link href="../assets/css/spur.css" rel="stylesheet" type="text/css"/>
 <link href="../assets/css/demo.css" rel="stylesheet" type="text/css"/>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <header>
-<!--    <a href="#!" class="menu-toggle">
+    <a href="#!" class="menu-toggle">
         <i class="fas fa-bars"></i>
-    </a>-->
-
-    <!--                    <a href="index.jsp" class="spur-logo"><i class="fas fa-bolt"></i> <span>Admin</span></a>-->
+    </a>
     <a href="adminDashBoard" style="display: inline-block; text-decoration: none;">
         <img src="./assets/images/easyjobb.png" alt="alt" style="width: 50px; height: 50px; vertical-align: middle;">
         <span style="vertical-align: middle; color: #ff6d00; font-size: 28px">Admin</span>
@@ -35,7 +34,7 @@
 
         <div class="dash-nav-dropdown-menu">
             <a href="requestList" class="dash-nav-dropdown-item">Job Recruitment</a>
-            <a href="./Admin/modeblog.jsp" class="dash-nav-dropdown-item">Blog</a>
+            <a href="adminListBlog" class="dash-nav-dropdown-item">Blog</a>
         </div>
     </div>
     <div class="dash-nav-dropdown">
@@ -48,13 +47,13 @@
         </div>
     </div>
     <!--                    <div class="dash-nav-dropdown">-->
-    <a href="listaccountpackage.jsp" class="dash-nav-item">
-        <i class="fas fa-chevron-up"></i> Account Package </a>
+    <!--    <a href="listaccountpackage.jsp" class="dash-nav-item">
+            <i class="fas fa-chevron-up"></i> Account Package </a>-->
     <!--                        <div class="dash-nav-dropdown-menu">
                                 <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="dash-nav-dropdown-item">GitHub</a>
                                 <a href="http://hackerthemes.com" target="_blank" class="dash-nav-dropdown-item">HackerThemes</a>
                             </div>-->
     <!--                    </div>-->
-    <a href="listaccount" class="dash-nav-item">
+    <a href="./listaccount" class="dash-nav-item">
         <i class="far fa-address-card"></i> Acounts </a>
 </nav>

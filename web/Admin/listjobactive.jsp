@@ -1,10 +1,8 @@
 <%-- 
-    Document   : listjobactive
-    Created on : 5 thg 6, 2024, 15:25:45
+    Document   : tables
+    Created on : 21 thg 5, 2024, 15:25:45
     Author     : ducanh2192003
 --%>
-
-
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>

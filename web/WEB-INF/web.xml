@@ -382,6 +382,15 @@
         <servlet-name> AdminDashBoard</servlet-name>
         <url-pattern>/adminDashBoard</url-pattern>
     </servlet-mapping>
+
+                  <servlet>
+        <servlet-name> AdminListBlog</servlet-name>
+        <servlet-class>controller.AdminListBlog</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminListBlog</servlet-name>
+        <url-pattern>/adminListBlog</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>SearchJobApplied</servlet-name>
         <url-pattern>/searchjobapplied</url-pattern>
@@ -390,4 +399,5 @@
         <servlet-name>WithdrawJob</servlet-name>
         <url-pattern>/withdraw</url-pattern>
     </servlet-mapping>
+
 </web-app>

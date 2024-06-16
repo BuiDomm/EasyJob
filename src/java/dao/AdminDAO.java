@@ -9,12 +9,16 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import model.Category;
 import model.Company;
 import model.Job;
+import model.Statistic;
 import model.User;
 
 /**
@@ -29,10 +33,9 @@ public class AdminDAO {
     CompanyDAO com = new CompanyDAO();
     CategoryDAO cd = new CategoryDAO();
 
-    
     //user
     public int getTotalUser() {
-        String query = "select count(*) from Users";
+        String query = "select count(*) from Users WHERE RoleID <> 1";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -49,11 +52,11 @@ public class AdminDAO {
         List<User> list = new ArrayList<>();
         String sql = " select * from Users\n"
                 + "order by UserID\n"
-                + "OFFSET ? rows fetch next 6 rows only";
+                + "OFFSET ? rows fetch next 4 rows only";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-            ps.setInt(1, (index - 1) * 6);
+            ps.setInt(1, (index - 1) * 4);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int idUser = rs.getInt(1);
@@ -105,7 +108,6 @@ public class AdminDAO {
         return list;
     }
 
-
     public void lockAccount(String userId) {
         String query = "UPDATE Users SET Status = 'Lock' WHERE UserID = ?";
         try {
@@ -133,7 +135,7 @@ public class AdminDAO {
     }
 
     //job
-    public List<Job> pagingJobsByStatus(int index,String statusString ) {
+    public List<Job> pagingJobsByStatus(int index, String statusString) {
         List<Job> list = new ArrayList<>();
         String sql = " select * from Jobs j\n"
                 + " where j.Status =  ?\n"
@@ -142,11 +144,11 @@ public class AdminDAO {
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
-             ps.setString(1, statusString);
+            ps.setString(1, statusString);
             ps.setInt(2, (index - 1) * 4);
             rs = ps.executeQuery();
             while (rs.next()) {
-                  int idJob = rs.getInt(1);
+                int idJob = rs.getInt(1);
                 int idCompany = rs.getInt(2);
                 int idCategory = rs.getInt(3);
                 String title = rs.getString(4);
@@ -166,8 +168,8 @@ public class AdminDAO {
         }
         return list;
     }
-    
-     public int getTotalJob() {
+
+    public int getTotalJob() {
         String query = "select count(*) from Jobs\n";
         try {
             conn = new DBContext().getConnection();
@@ -229,7 +231,6 @@ public class AdminDAO {
     }
 
     //company
-    
     public int getTotalCompany() {
         String query = "select count(*) from CompanyProfile cp\n";
         try {
@@ -243,7 +244,7 @@ public class AdminDAO {
         }
         return 0;
     }
-    
+
     public Company companyByJobId(int id) {
         String sql = "select * from CompanyProfile cp\n"
                 + "join Jobs j on cp.CompanyID = j.CompanyID\n"
@@ -294,17 +295,137 @@ public class AdminDAO {
         }
     }
 
+    // statistic
+    public List<Statistic> getJobByMonth() {
+        List<Statistic> list = new ArrayList<>();
+        String sql = "WITH Months AS (\n"
+                + "    SELECT 1 AS Month UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL\n"
+                + "    SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL\n"
+                + "    SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9 UNION ALL\n"
+                + "    SELECT 10 UNION ALL SELECT 11 UNION ALL SELECT 12\n"
+                + ")\n"
+                + "SELECT\n"
+                + "    NULL AS Year,\n"
+                + "    m.Month,\n"
+                + "    COALESCE(COUNT(j.Date), 0) AS JobCount\n"
+                + "FROM Months m\n"
+                + "LEFT JOIN Jobs j ON m.Month = MONTH(j.Date) AND YEAR(j.Date) = 2024\n"
+                + "GROUP BY m.Month\n"
+                + "ORDER BY m.Month;";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int year = rs.getInt(1);
+                int month = rs.getInt(2);
+                int countJob = rs.getInt(3);
+                Statistic j = new Statistic(year, month, countJob);
+                list.add(j);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public Map<Job, Integer> getTopJobWithApplyCount() {
+        Map<Job, Integer> accountPurchaseCountMap = new HashMap<>();
+        String query = "SELECT TOP 5 J.Title, J.[Location], J.Salary, COUNT(*) AS ApplyCount\n"
+                + " from Jobs J JOIN Applications A ON J.JobID = A.JobID\n"
+                + "where j.Status = 'Accept'\n"
+                + "GROUP BY J.Title, J.[Location], J.Salary\n"
+                + "ORDER BY ApplyCount DESC";
+        try {
+            conn = new DBContext().getConnection(); // Open connection to SQL
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Job job = new Job(
+                        rs.getString("title"),
+                        rs.getString("location"),
+                        rs.getInt("salary"));
+
+                int purchaseCount = rs.getInt("ApplyCount");
+
+                accountPurchaseCountMap.put(job, purchaseCount);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return accountPurchaseCountMap;
+    }
+
+    //blog
+    public int getNumberBlogStatus(String statusString) {
+        String query = "SELECT count(*) FROM Blogs b\n"
+                + "where b.[Status] =  ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, statusString);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+//    public List<Blog> pagingBlogByStatus(int index, String statusString) {
+//        List<Blog> list = new ArrayList<>();
+//        String sql = " select * from Blogs b\n"
+//                + " where b.Status =  ? \n"
+//                + "order by b.BlogID \n"
+//                + "OFFSET ? rows fetch next 4 rows only";
+//        try {
+//            conn = new DBContext().getConnection();
+//            ps = conn.prepareStatement(sql);
+//            ps.setString(1, statusString);
+//            ps.setInt(2, (index - 1) * 4);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                list.add(new Blog(
+//                        rs.getInt(1),
+//                        rs.getInt(2),
+//                        rs.getString(3),
+//                        rs.getString(4),
+//                        rs.getDate(5),
+//                        rs.getString(6),
+//                        rs.getString(7)));
+//            }
+//        } catch (Exception ex) {
+//
+//        }
+//        return list;
+//    }
+
     public static void main(String[] args) {
         AdminDAO dao = new AdminDAO();
+
+//        List<Blog> a = dao.pagingBlogByStatus(1, "Pending");
+//        for (Blog blog : a) {
+//            System.out.println(blog);
+//        }
+
 //        dao.lockAccount("2");
-        Company b = dao.companyByJobId(1);
-        System.out.println(b);
-        List<Job> a = dao.getJobByStatus("Pending");
-
-        for (Job users : a) {
-            System.out.println(users);
-        }
-
+//        Company b = dao.companyByJobId(1);
+//        System.out.println(b);
+//        List<Job> a = dao.getJobByStatus("Pending");
+//        Map<Job, Integer> e = dao.getTopJobWithApplyCount();
+//        for (Map.Entry<Job, Integer> entry : e.entrySet()) {
+//            Job job = entry.getKey();
+//            Integer applyCount = entry.getValue();
+//
+//            System.out.println("Title: " + job.getTitle() + " - Purchase Count: " + applyCount);
+//        }
+//        
+//        List<Statistic> s = dao.getJobByMonth();
+//        for (Statistic users : s) {
+//            System.out.println(users);
+//        }
     }
 
 }

@@ -94,7 +94,7 @@
                                             <c:forEach var="u" items="${user}">
                                                 <c:if test="${u.roleId != 1}">
                                                     <tr>
-                                                        <th scope="row">${u.idUser}</th>
+                                                        <th >${u.idUser}</th>
                                                         <td>${u.firstName}</td>
                                                         <td>${u.lastName}</td>
                                                         <td>${u.email}</td>

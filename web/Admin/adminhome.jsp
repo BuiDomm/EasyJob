@@ -1,10 +1,5 @@
-<%-- 
-    Document   : adminhome
-    Created on : May 20, 2024, 12:55:55 PM
-    Author     : ASUS
---%>
-
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <!doctype html>
 <html lang="en">
@@ -20,6 +15,34 @@
 
 
         <link href="./assets/css/spur.css" rel="stylesheet" type="text/css"/>
+        <style>
+            .rank-circle {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                color: white;
+                line-height: 30px;
+                text-align: center;
+                font-weight: bold;
+                background-color: #ddd; /* Màu mặc định */
+            }
+
+            .gold {
+                background-color: gold;
+            }        /* Vàng cho số 1 */
+            .silver {
+                background-color: silver;
+            }    /* Bạc cho số 2 */
+            .bronze {
+                background-color: #cd7f32;
+            }   /* Đồng cho số 3 */
+            .green {
+                background-color: #28a745;
+            }    /* Xanh lá cho số 4 */
+            .blue {
+                background-color: #007bff;
+            }     /* Xanh dương cho số 5 */
+        </style>
 
         <title>Spur - A Bootstrap Admin Template</title>
     </head>
@@ -37,14 +60,14 @@
                     <a href="#!" class="searchbox-toggle">
                         <i class="fas fa-search"></i>
                     </a>
-                    <!--                    <form class="searchbox" action="#!">
+<!--                                        <form class="searchbox" action="#!">
                                             <a href="#!" class="searchbox-toggle"> <i class="fas fa-arrow-left"></i> </a>
                                             <button type="submit" class="searchbox-submit"> <i class="fas fa-search"></i> </button>
                                             <input type="text" class="searchbox-input" placeholder="type to search">
                                         </form>-->
 
                     <div class="tools">
-                        <!--                        <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="tools-item">
+<!--                                                <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="tools-item">
                                                     <i class="fab fa-github"></i>
                                                 </a>-->
                         <a href="#!" class="tools-item">
@@ -58,8 +81,12 @@
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                                 <!--                                <a class="dropdown-item" href="#!">Profile</a>-->
+
                                 <a class="dropdown-item" href="changepass.jsp">Change Password</a>
-                                <a class="dropdown-item" href="index.jsp">Logout</a>
+                             
+
+                                <a class="dropdown-item" href="loginjobseeker">Logout</a>
+
                             </div>
                         </div>
                     </div>
@@ -134,10 +161,10 @@
                                             var myChart = new Chart(ctx, {
                                                 type: 'bar',
                                                 data: {
-                                                    labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                                                    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                                                     datasets: [{
                                                             label: 'Blue',
-                                                            data: [12, 19, 3, 5, 2],
+                                                            data: [<c:forEach items="${statistic}" var="a">${a.countJob},</c:forEach>],
                                                             backgroundColor: window.chartColors.primary,
                                                             borderColor: 'transparent'
                                                         }]
@@ -155,158 +182,172 @@
                                                     }
                                                 }
                                             });
-                                        </script>
+                                            </script>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card spur-card">
-                                    <div class="card-header">
-                                        <div class="spur-card-icon">
-                                            <i class="fas fa-bell"></i>
+
+                                <div class="col-xl-6">
+                                    <div class="card mb-2">
+                                        <div class="card-header">
+                                            <h5 class="card-title text-center">Top 5 Job</h5>
                                         </div>
-                                        <div class="spur-card-title"> Notifications </div>
-                                    </div>
-                                    <div class="card-body ">
-                                        <div class="notifications">
-                                            <a href="#!" class="notification">
-                                                <div class="notification-icon">
-                                                    <i class="fas fa-inbox"></i>
-                                                </div>
-                                                <div class="notification-text">New comment</div>
-                                                <span class="notification-time">21 days ago</span>
-                                            </a>
-                                            <a href="#!" class="notification">
-                                                <div class="notification-icon">
-                                                    <i class="fas fa-inbox"></i>
-                                                </div>
-                                                <div class="notification-text">New comment</div>
-                                                <span class="notification-time">21 days ago</span>
-                                            </a>
-                                            <a href="#!" class="notification">
-                                                <div class="notification-icon">
-                                                    <i class="fas fa-inbox"></i>
-                                                </div>
-                                                <div class="notification-text">New comment</div>
-                                                <span class="notification-time">21 days ago</span>
-                                            </a>
-                                            <div class="notifications-show-all">
-                                                <a href="#!">Show all</a>
+                                        <div class="card-body">
+                                            <div class="border rounded-3">
+                                                <div class="table-responsive">
+                                                    <table class="table align-middle custom-table m-0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="text-center">#</th>
+                                                                <th class="text-center">Title</th>
+                                                                <th class="text-center">Location</th>
+                                                                <th class="text-center">Salary</th>
+                                                                <th class="text-center w-100">Number Apply</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+
+                                                        <c:forEach var="entry" items="${topJob}" varStatus="status">
+                                                            <tr>
+                                                                <td class="text-center">
+                                                                    <div class="rank-circle ${status.index == 0 ? 'gold' : status.index == 1 ? 'silver' : status.index == 2 ? 'bronze' : status.index == 3 ? 'green' : status.index == 4 ? 'blue' : ''}">
+                                                                        ${status.index + 1}
+                                                                    </div>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <div class="fw-semibold">${entry.key.getTitle()}</div>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <div class="fw-semibold">${entry.key.getLocation()}</div>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <div class="fw-semibold">${entry.key.getSalary()}</div>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <span class="badge bg-primary rounded-circle fs-4 text-white">${entry.value}</span>
+                                                                </td>
+                                                            </tr>
+                                                        </c:forEach>
+
+
+
+                                                    </tbody>
+                                                </table>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
-                            <div class="col-xl-6">
-                                <div class="card spur-card">
-                                    <div class="card-header">
-                                        <div class="spur-card-icon">
-                                            <i class="fas fa-chart-bar"></i>
-                                        </div>
-                                        <div class="spur-card-title"> Two bars </div>
-                                        <div class="spur-card-menu">
-                                            <div class="dropdown show">
-                                                <a class="spur-card-menu-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body spur-card-body-chart">
-                                        <canvas id="spurChartjsTwoBars"></canvas>
-                                        <script>
-                                            var ctx = document.getElementById("spurChartjsTwoBars").getContext('2d');
-                                            var myChart = new Chart(ctx, {
-                                                type: 'bar',
-                                                data: {
-                                                    labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                                                    datasets: [{
-                                                            label: 'Blue',
-                                                            data: [12, 19, 3, 5, 2],
-                                                            backgroundColor: window.chartColors.primary,
-                                                            borderColor: 'transparent'
-                                                        }, {
-                                                            label: 'Red',
-                                                            data: [4, 12, 11, 2, 14],
-                                                            backgroundColor: window.chartColors.danger,
-                                                            borderColor: 'transparent'
-                                                        }]
-                                                },
-                                                options: {
-                                                    legend: {
-                                                        display: false
-                                                    },
-                                                    scales: {
-                                                        yAxes: [{
-                                                                ticks: {
-                                                                    beginAtZero: true
-                                                                }
-                                                            }]
-                                                    }
-                                                }
-                                            });
-                                        </script>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-6">
-                                <div class="card spur-card">
-                                    <div class="card-header">
-                                        <div class="spur-card-icon">
-                                            <i class="fas fa-chart-bar"></i>
-                                        </div>
-                                        <div class="spur-card-title"> Line </div>
-                                        <div class="spur-card-menu">
-                                            <div class="dropdown show">
-                                                <a class="spur-card-menu-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                </a>
-                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
-                                                    <a class="dropdown-item" href="#">Action</a>
-                                                    <a class="dropdown-item" href="#">Another action</a>
-                                                    <a class="dropdown-item" href="#">Something else here</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="card-body spur-card-body-chart">
-                                        <canvas id="spurChartjsLine"></canvas>
-                                        <script>
-                                            var ctx = document.getElementById("spurChartjsLine").getContext('2d');
-                                            var myChart = new Chart(ctx, {
-                                                type: 'line',
-                                                data: {
-                                                    labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                                                    datasets: [{
-                                                            label: 'Blue',
-                                                            data: [12, 19, 3, 5, 2],
-                                                            backgroundColor: window.chartColors.primary,
-                                                            borderColor: window.chartColors.primary,
-                                                            fill: false
-                                                        }, {
-                                                            label: 'Red',
-                                                            data: [4, 12, 11, 2, 14],
-                                                            backgroundColor: window.chartColors.danger,
-                                                            borderColor: window.chartColors.danger,
-                                                            fill: false
-                                                        }]
-                                                },
-                                                options: {
-                                                    legend: {
-                                                        display: false
-                                                    }
-                                                }
-                                            });
-                                        </script>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!--                        <div class="row">
+                                                    <div class="col-xl-6">
+                                                        <div class="card spur-card">
+                                                            <div class="card-header">
+                                                                <div class="spur-card-icon">
+                                                                    <i class="fas fa-chart-bar"></i>
+                                                                </div>
+                                                                <div class="spur-card-title"> Two bars </div>
+                                                                <div class="spur-card-menu">
+                                                                    <div class="dropdown show">
+                                                                        <a class="spur-card-menu-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        </a>
+                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                                                            <a class="dropdown-item" href="#">Action</a>
+                                                                            <a class="dropdown-item" href="#">Another action</a>
+                                                                            <a class="dropdown-item" href="#">Something else here</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body spur-card-body-chart">
+                                                                <canvas id="spurChartjsTwoBars"></canvas>
+                                                                <script>
+                                                                    var ctx = document.getElementById("spurChartjsTwoBars").getContext('2d');
+                                                                    var myChart = new Chart(ctx, {
+                                                                        type: 'bar',
+                                                                        data: {
+                                                                            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                                                                            datasets: [{
+                                                                                    label: 'Blue',
+                                                                                    data: [12, 19, 3, 5, 2],
+                                                                                    backgroundColor: window.chartColors.primary,
+                                                                                    borderColor: 'transparent'
+                                                                                }, {
+                                                                                    label: 'Red',
+                                                                                    data: [4, 12, 11, 2, 14],
+                                                                                    backgroundColor: window.chartColors.danger,
+                                                                                    borderColor: 'transparent'
+                                                                                }]
+                                                                        },
+                                                                        options: {
+                                                                            legend: {
+                                                                                display: false
+                                                                            },
+                                                                            scales: {
+                                                                                yAxes: [{
+                                                                                        ticks: {
+                                                                                            beginAtZero: true
+                                                                                        }
+                                                                                    }]
+                                                                            }
+                                                                        }
+                                                                    });
+                                                                </script>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-xl-6">
+                                                        <div class="card spur-card">
+                                                            <div class="card-header">
+                                                                <div class="spur-card-icon">
+                                                                    <i class="fas fa-chart-bar"></i>
+                                                                </div>
+                                                                <div class="spur-card-title"> Line </div>
+                                                                <div class="spur-card-menu">
+                                                                    <div class="dropdown show">
+                                                                        <a class="spur-card-menu-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                        </a>
+                                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                                                            <a class="dropdown-item" href="#">Action</a>
+                                                                            <a class="dropdown-item" href="#">Another action</a>
+                                                                            <a class="dropdown-item" href="#">Something else here</a>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-body spur-card-body-chart">
+                                                                <canvas id="spurChartjsLine"></canvas>
+                                                                <script>
+                                                                    var ctx = document.getElementById("spurChartjsLine").getContext('2d');
+                                                                    var myChart = new Chart(ctx, {
+                                                                        type: 'line',
+                                                                        data: {
+                                                                            labels: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                                                                            datasets: [{
+                                                                                    label: 'Blue',
+                                                                                    data: [12, 19, 3, 5, 2],
+                                                                                    backgroundColor: window.chartColors.primary,
+                                                                                    borderColor: window.chartColors.primary,
+                                                                                    fill: false
+                                                                                }, {
+                                                                                    label: 'Red',
+                                                                                    data: [4, 12, 11, 2, 14],
+                                                                                    backgroundColor: window.chartColors.danger,
+                                                                                    borderColor: window.chartColors.danger,
+                                                                                    fill: false
+                                                                                }]
+                                                                        },
+                                                                        options: {
+                                                                            legend: {
+                                                                                display: false
+                                                                            }
+                                                                        }
+                                                                    });
+                                                                </script>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>-->
                     </div>
                 </main>
             </div>

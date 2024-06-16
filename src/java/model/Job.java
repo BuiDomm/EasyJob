@@ -26,6 +26,12 @@ public class Job {
      public Job( String location) {  
         this.location = location;   
     }
+     
+     public Job( String title, String location, int salary ) {  
+        this.title = title;
+        this.location = location;  
+        this.salary = salary;    
+    }
 
 
     public Job(int jobID, Company company, Category category, String title, String descrip, int yearEx, String location, int salary, String status, Date date) {

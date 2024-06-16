@@ -4,28 +4,48 @@
  */
 package controller;
 
+import EmailAutoman.SendEmail;
+import dao.ApplyDAO;
+import dao.CompanyDAO;
 import dao.JobApplyDAO;
+import dao.JobseekerDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import model.Apply;
+import model.Company;
 import model.User;
 
 public class AcceptCvApply extends HttpServlet {
-        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-         String applyid = request.getParameter("applyid");
-        
+
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String applyid = request.getParameter("applyid");
+
         JobApplyDAO dao = new JobApplyDAO();
         dao.accpetCv(applyid);
+        // Gui mail khi accept 
+        SendEmail sm = new SendEmail();
+        ApplyDAO ad = new ApplyDAO();
+        CompanyDAO comdao = new CompanyDAO();
+        JobseekerDAO jd = new JobseekerDAO();
+
+        Apply a = ad.findById(Integer.parseInt(applyid));
+        Company com = comdao.findCompanyByIdJob(a.getJob().getJobID());
+        User u = jd.findById(a.getCvProfile().getUserID());
+        
+        sm.sendUpdateStatusCVApply(u.getEmail(), u.getLastName()+" " + u.getFirstName(), com, a);
+        // Gui mail khi accept
         response.sendRedirect("listApplyCv");
-    } 
+    }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /** 
+    /**
      * Handles the HTTP <code>GET</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -33,12 +53,13 @@ public class AcceptCvApply extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
-         processRequest(request, response);
-    } 
+            throws ServletException, IOException {
+        processRequest(request, response);
+    }
 
-    /** 
+    /**
      * Handles the HTTP <code>POST</code> method.
+     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -46,12 +67,13 @@ public class AcceptCvApply extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-    throws ServletException, IOException {
+            throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /** 
+    /**
      * Returns a short description of the servlet.
+     *
      * @return a String containing servlet description
      */
     @Override

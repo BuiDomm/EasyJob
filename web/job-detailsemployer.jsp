@@ -125,7 +125,7 @@ isVerified1 = false;
                                         <p>${cc.descrip}</p>
                         <br/>
                         <div class="form-group">
-                            <h5><i style="color: white">Job title: &nbsp;&nbsp;   </i><i>${cc.title}</i></h5>
+                            <h5 style="color: #aaa"><i style="color: #000">Job title: &nbsp;&nbsp;   </i><i>${cc.title}</i></h5>
                         </div>
 
                         <hr>

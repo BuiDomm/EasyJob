@@ -79,14 +79,13 @@
         <servlet-class>controller.CreateJob</servlet-class>
     </servlet>
     <servlet>
-
         <servlet-name>employerhomeservlet</servlet-name>
         <servlet-class>controller.employerhomeservlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name> RequestListJob</servlet-name>
         <servlet-class>controller.RequestListJob</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet>
         <servlet-name> AdminJobDetail</servlet-name>
         <servlet-class>controller.AdminJobDetail</servlet-class>
@@ -98,15 +97,23 @@
     <servlet>
         <servlet-name> AdminRejectJob</servlet-name>
         <servlet-class>controller.AdminRejectJob</servlet-class>
-    </servlet>  
+    </servlet>
+    <servlet>
+        <servlet-name>SearchJobApplied</servlet-name>
+        <servlet-class>controller.SearchJobApplied</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>WithdrawJob</servlet-name>
+        <servlet-class>controller.WithdrawJob</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name> AdminJobDetail</servlet-name>
         <url-pattern>/adminJobDetail</url-pattern>
-    </servlet-mapping>  
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name> AdminAcceptJob</servlet-name>
         <url-pattern>/adminAcceptJob</url-pattern>
-    </servlet-mapping>  
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name> AdminRejectJob</servlet-name>
         <url-pattern>/adminRejectJob</url-pattern>
@@ -115,7 +122,6 @@
         <servlet-name> RequestListJob</servlet-name>
         <url-pattern>/requestList</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>RegisterJobseekerServlet</servlet-name>
         <url-pattern>/registerjobseeker</url-pattern>
@@ -316,7 +322,6 @@
         <servlet-name>ChangeStatusJobCreate</servlet-name>
         <servlet-class>controller.ChangeStatusJobCreate</servlet-class>
     </servlet>
-
     <servlet>
         <servlet-name>ListCVApply</servlet-name>
         <servlet-class>controller.ListCVApply</servlet-class>
@@ -341,7 +346,6 @@
         <servlet-name>RejectCvApply</servlet-name>
         <url-pattern>/rejectApply</url-pattern>
     </servlet-mapping>
-
     <servlet-mapping>
         <servlet-name>DeleteJobEmployer</servlet-name>
         <url-pattern>/deletejob</url-pattern>
@@ -350,7 +354,6 @@
         <servlet-name>DeleteJobEmployer</servlet-name>
         <servlet-class>controller.DeleteJobEmployer</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>employerhomeservlet</servlet-name>
         <url-pattern>/employerhomeservlet</url-pattern>
@@ -358,7 +361,7 @@
     <servlet>
         <servlet-name> AdminListJobAccept</servlet-name>
         <servlet-class>controller.AdminListJobAccept</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet-mapping>
         <servlet-name> AdminListJobAccept</servlet-name>
         <url-pattern>/listJobAccept</url-pattern>
@@ -366,7 +369,7 @@
     <servlet>
         <servlet-name> AdminListJobReject</servlet-name>
         <servlet-class>controller.AdminListJobReject</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet-mapping>
         <servlet-name> AdminListJobReject</servlet-name>
         <url-pattern>/listJobReject</url-pattern>
@@ -374,12 +377,13 @@
     <servlet>
         <servlet-name> AdminDashBoard</servlet-name>
         <servlet-class>controller.AdminDashBoard</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet-mapping>
         <servlet-name> AdminDashBoard</servlet-name>
         <url-pattern>/adminDashBoard</url-pattern>
     </servlet-mapping>
-    <servlet>
+
+                  <servlet>
         <servlet-name> AdminListBlog</servlet-name>
         <servlet-class>controller.AdminListBlog</servlet-class>
     </servlet>  
@@ -387,6 +391,13 @@
         <servlet-name> AdminListBlog</servlet-name>
         <url-pattern>/adminListBlog</url-pattern>
     </servlet-mapping>
-
+    <servlet-mapping>
+        <servlet-name>SearchJobApplied</servlet-name>
+        <url-pattern>/searchjobapplied</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WithdrawJob</servlet-name>
+        <url-pattern>/withdraw</url-pattern>
+    </servlet-mapping>
 
 </web-app>

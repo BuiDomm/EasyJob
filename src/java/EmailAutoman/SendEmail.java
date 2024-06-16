@@ -4,6 +4,7 @@
  */
 package EmailAutoman;
 
+import dao.JobDAO;
 import java.io.IOException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -18,6 +19,9 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
+import model.Apply;
+import model.Company;
+import model.Job;
 
 /**
  *
@@ -71,8 +75,8 @@ public class SendEmail {
         }
 
     }
-    
-        public void sendMailChangePass(String mail, String name, int token) {
+
+    public void sendMailChangePass(String mail, String name, int token) {
 
         final String username = "nhanbtdevfe23@gmail.com";
         final String password = "vutc kizj tmap aqlz";
@@ -118,7 +122,6 @@ public class SendEmail {
         }
 
     }
-    
 
     public void sendCheckPass(String mail, int token) {
 
@@ -197,6 +200,40 @@ public class SendEmail {
             e.printStackTrace();
         } catch (IOException ex) {
             Logger.getLogger(SendEmail.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    public void sendUpdateStatusCVApply(String mail, String name, Company com, Apply a) {
+
+        final String username = "nhanbtdevfe23@gmail.com";
+        final String password = "vutc kizj tmap aqlz";
+        String fromEmail = "nhanbtdevfe23@gmail.com";
+        String toEmail = mail;
+        Properties properties = new Properties();
+
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+        MimeMessage mgs = new MimeMessage(session);
+        try {
+
+            mgs.setFrom(new InternetAddress(fromEmail));
+            mgs.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+            mgs.setSubject("Hi " + name + ", " + "We send you notifications about your job application status updates.");
+
+            mgs.setText("\n" + "Job Title: " + a.getJob().getTitle() + "\n" + "Job Position: " + a.getJob().getCategory().getCategoryName() + "\n" + "Company Name: " + a.getJob().getCompany().getNameCompany() + "\n" + "Address: " + a.getJob().getCompany().getAdd() + "\n" + "Date Application: " + a.getApplicationDate() + "\n" + "Review status: " + a.getStatus() + "\n" + "View more in here: " + "http://localhost:8080/easyjob/jobdetails?id=" + a.getJob().getJobID() + "\n" + "------------------------------------------------------------------------------------" + "\n" + "Thank you for using our system, hope you find a job that's right for you." + "\n" + "EasyJob team.");
+
+            Transport.send(mgs);
+        } catch (MessagingException e) {
+            e.printStackTrace();
         }
 
     }

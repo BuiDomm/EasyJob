@@ -30,6 +30,9 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
         <link rel="stylesheet" href="assets/css/cvapplied.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
     </head>
     <jsp:include page="header.jsp"/>
@@ -45,15 +48,37 @@
 
     <body>
 
+        <%
+  Boolean isVerifiedd = (Boolean) request.getAttribute("successfully");
+  if (isVerifiedd == null) {
+      isVerifiedd = false;
+  }
+            
+        %>
+        <script>
+            var isVerifiedParam = <%= isVerifiedd %>;
+            console.log(isVerifiedParam);
+            if (isVerifiedParam) {
+                toastr.success("Successfully withdraw your CV and apply for a job!", "Easyjob Notice", {
+                    timeOut: 2000,
+                });
+
+            }
+
+        </script>
+
+
         <div class="container">
             <div style="height: 150px;width: 100%;"></div>
 
-            <h3>Cv Apllied</h3>
+            <h3>Job Apllied</h3>
             <hr>
             <div class="jobs-list-container">
                 <h2 style="margin-bottom: 25px">You have applied to ${fn:length(list)} jobs</h2>
 
-                <input class="job-search" type="text" placeholder="Search here..." />
+                <form method="get" action="searchjobapplied">
+                    <input class="job-search" type="text" name="keyword" placeholder="Search here..." />
+                </form>
 
 
                 <div class="jobs">

@@ -279,24 +279,27 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
         return null;
     }
 
-    public boolean updateUserFromCV(String email, String firstName, String lastName, String phoneNumber, String newEmail, String city) {
-        String sql = "Update Users\n"
-                + "		set FirstName = ?\n"
-                + "		, LastName = ?\n"
-                + "		, PhoneNumber = ?\n"
-                + "		, City = ?\n"
-                + "		, Email = ?\n"
-                + "		Where Email = ?";
-        //User u = findById(idUser);
+    public boolean updateUserFromCV(String email, String firstName, String lastName, String phoneNumber, String newEmail, String city, Date dob) {
+        String sql = "UPDATE Users\n"
+                + "SET FirstName = ?,\n"
+                + "    LastName = ?,\n"
+                + "    PhoneNumber = ?,\n"
+                + "    City = ?,\n"
+                + "    Email = ?,\n"
+                + "    DateOfBirth = ? \n"
+                + "WHERE Email = ? ;";
         PreparedStatement ps;
         try {
             ps = getConnection().prepareStatement(sql);
             ps.setString(1, firstName);
             ps.setString(2, lastName);
-            ps.setString(3, phoneNumber);
+            ps.setInt(3, Integer.parseInt(phoneNumber));
             ps.setString(4, city);
             ps.setString(5, newEmail);
-            ps.setString(6, email);
+           
+                ps.setDate(6, dob);
+            
+            ps.setString(7, email);
 
             int rowAffect = ps.executeUpdate();
             if (rowAffect > 0) {

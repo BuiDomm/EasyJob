@@ -77,7 +77,15 @@
                                     <div class="card-header text-bg-primary">Welcome, <c:out value="${user.email}" /> </div>
                                     <div class="card-body">
 
-                                        <h5 class="text-center mb-1"><c:out value="${user.firstName}" /> <c:out value="${user.lastName}" /></h5>
+                                        <!-- fix image -->    
+                                        <div class="d-flex flex-column align-items-center text-center">
+                                            <img src="assets/avatars/<c:out value="${cv.avatar}" />" alt="Admin" class="card-image p-1 bg-primary" style="width:130px; height:120px">
+                                            <div class="mt-3">
+                                                <h4><c:out value="${user.firstName}" /> <c:out value="${user.lastName}" /></h4>
+
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -96,6 +104,7 @@
                                                         <c:when test="${loop.index == 2}">bi-twitter-x</c:when>
                                                         <c:when test="${loop.index == 1}">bi-facebook</c:when>
                                                         <c:when test="${loop.index == 3}">bi-linkedin</c:when>
+                                                        <c:when test="${loop.index == 4}">bi-patch-check</c:when>
                                                         <c:otherwise>bi-link</c:otherwise> 
                                                     </c:choose>
                                                 </c:set>
@@ -146,7 +155,7 @@
                                             </c:forEach>
                                         </c:if>
                                     </div>
-                                    <a href="home.jsp" class="btn btn-primary btn-sm">Back Home</a>
+                                    <a href="listApplyCv" class="btn btn-primary btn-sm">Back Home</a>
                                 </div>
                             </div>
                         </div>
@@ -237,7 +246,15 @@
 
 
                                         <div class="container mt-3 d-flex flex-row justify-content-between">
-                                            <a href="./assets/pdf/<c:out value="${cv.linkPdf}" />" download="" class="btn btn-primary">Download CV</a>     
+                                            <div class="row align-items-center">
+                                                <div class="col-md-auto">
+                                                    <a href="./assets/pdf/<c:out value="${cv.linkPdf}" />" download="" class="btn btn-primary">Download CV</a>
+                                                </div>
+                                                
+                                                <div class="col-md-auto">
+                                                    <a href="viewPdf?fileName=<c:out value="${cv.linkPdf}" />" target="pdfViewer" class="btn btn-primary">Show CV</a>
+                                                </div>
+                                            </div>
 
                                             <div>
 
@@ -247,6 +264,9 @@
                                                                 'rejectApply?applyid=', '${user.firstName}', 'reject')"   class="btn btn-block btn-danger btn-md">Reject Talent</a>
                                             </div>
                                         </div>   
+                                        <div class="container mt-3">
+                                            <iframe name="pdfViewer" width="100%" height="600px" style="border: none;"></iframe>
+                                        </div>
 
                                     </div>
 

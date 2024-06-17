@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.Date;
 import model.CVProfile;
 import model.User;
 
@@ -38,8 +39,8 @@ public class CVJobSeekerServlet extends HttpServlet {
             if (cvProfile != null) {
                 String linkUrl = cvProfile.getLinkUrl();
                 int count = countOccurrences(linkUrl, '|');
-                if (count < 3) {
-                    int diff = 3 - count;
+                if (count < 4) {
+                    int diff = 4 - count;
                     for (int i = 0; i < diff; i++) {
                         linkUrl += "|";
                     }
@@ -77,8 +78,13 @@ public class CVJobSeekerServlet extends HttpServlet {
             String linkTwitter = request.getParameter("linkTwitter");
             String linkFacebook = request.getParameter("linkFacebook");
             String linkLinkedin = request.getParameter("linkLinkedin");
+            String dobDate = request.getParameter("date");
+            String avatarUrl = request.getParameter("linkAvt");
+            String linkCer = request.getParameter("linkCer");
+            Date dob  = Date.valueOf(dobDate);
+                
 
-            String linkUrl = linkYoutube + "|" + linkFacebook + "|" + linkTwitter + "|" + linkLinkedin;
+            String linkUrl = linkYoutube + "|" + linkFacebook + "|" + linkTwitter + "|" + linkLinkedin + "|" + linkCer;
 
             JobseekerDAO jsDAO = new JobseekerDAO();
             CVDAO cvDao = new CVDAO();
@@ -86,11 +92,16 @@ public class CVJobSeekerServlet extends HttpServlet {
             CVProfile cvProfile = cvDao.findByEmail(user.getEmail());
 
             if (cvProfile != null) {
-                if (linkPdf.equalsIgnoreCase("")) {
+                if (linkPdf == null || linkPdf.isEmpty()) {
                     linkPdf = cvProfile.getLinkPdf();
                 }
-                cvDao.updateCVProfileFromCV(linkPdf, education, skills, experience, certification, description, linkUrl, user.getEmail());
-                jsDAO.updateUserFromCV(user.getEmail(), firstName, lastName, phoneNumber, email, cityName);
+
+                if (avatarUrl == null || avatarUrl.isEmpty()) {
+                    avatarUrl = cvProfile.getAvatar();
+                }
+
+                cvDao.updateCVProfileFromCV(linkPdf, education, skills, experience, certification, description, linkUrl, avatarUrl, user.getEmail());
+                jsDAO.updateUserFromCV(user.getEmail(), firstName, lastName, phoneNumber, email, cityName, dob);
 
                 cvProfile.setEducation(education);
                 cvProfile.setCertification(certification);
@@ -99,12 +110,14 @@ public class CVJobSeekerServlet extends HttpServlet {
                 cvProfile.setDescription(description);
                 cvProfile.setLinkUrl(linkUrl);
                 cvProfile.setLinkPdf(linkPdf);
+                cvProfile.setAvatar(avatarUrl);
 
                 user.setFirstName(firstName);
                 user.setLastName(lastName);
                 user.setPhoneNumber(phoneNumber);
                 user.setCityName(cityName);
                 user.setEmail(email);
+                user.setDate(dob);
 
                 session.setAttribute("account", user);
 

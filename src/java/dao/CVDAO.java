@@ -180,7 +180,7 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
     @Override
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-
+    }
     public boolean updateCVProfileFromCV(String linkPdf, String education, String skills, String experience, String certification, String description, String linkUrl, String avatarUrl, String email) {
 
         String sql = "Update CVProfile\n"

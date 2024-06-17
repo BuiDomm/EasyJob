@@ -387,7 +387,7 @@
         <url-pattern>/adminDashBoard</url-pattern>
     </servlet-mapping>
 
-                  <servlet>
+    <servlet>
         <servlet-name> AdminListBlog</servlet-name>
         <servlet-class>controller.AdminListBlog</servlet-class>
     </servlet>  
@@ -403,21 +403,22 @@
         <servlet-name>WithdrawJob</servlet-name>
         <url-pattern>/withdraw</url-pattern>
     </servlet-mapping>
-  
-      <servlet-name>createskilltest</servlet-name>
+    <servlet>
+
+        <servlet-name>createskilltest</servlet-name>
         <servlet-class>controller.createskilltest</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>manageskilltest</servlet-name>
         <servlet-class>controller.manageskilltest</servlet-class>
-
-    <servlet-mapping>
-        <servlet-name>createskilltest</servlet-name>
-        <url-pattern>/createskilltest</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>manageskilltest</servlet-name>
-        <url-pattern>/manageskilltest</url-pattern>
-    </servlet-mapping>
+ </servlet>
+        <servlet-mapping>
+            <servlet-name>createskilltest</servlet-name>
+            <url-pattern>/createskilltest</url-pattern>
+        </servlet-mapping>
+        <servlet-mapping>
+            <servlet-name>manageskilltest</servlet-name>
+            <url-pattern>/manageskilltest</url-pattern>
+        </servlet-mapping>
 
 </web-app>

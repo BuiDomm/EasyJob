@@ -153,7 +153,7 @@
 
                         <div class="col-md-4">
                             <div class="product-item">
-                                <a href="jobdetails?id=${item.jobID}"><img style="width: 370px;height: 270px;object-fit: contain" src="${comItem.top3.get(counter).url}" alt=""></a>
+                                <a href="jobdetails?id=${item.jobID}"><img style="width: 350px;height: 270px;object-fit: cover" src="${comItem.top3.get(counter).url}" alt=""></a>
                                 <div class="down-content">
                                     <a href="job-details.jsp"><h4>${item.title}</h4></a>
 
@@ -265,9 +265,9 @@
                         <div class="col-lg-4 col-md-6">
                             <div class="service-item">
                                 <c:set var="cid" value="${item.companyID}" />
-                                <a href="#" class="services-item-image"><img src="${item.url}" class="img-fluid" alt=""></a>
+                                <a href="#" class="services-item-image"><img style="width: 350px; height: 293px; object-fit: cover" src="${item.url}" class="img-fluid" alt=""></a>
 
-                                <div class="down-content">
+                                <div class="down-content" style="height: 219px">
 
 
                                     <h4><i class="fa fa-briefcase"></i> <a href="${pageContext.request.contextPath}/companyList" style="color: #B22222">${item.nameCompany}</a></h4>

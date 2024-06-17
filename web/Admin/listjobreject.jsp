@@ -1,7 +1,7 @@
 
 <%-- 
     Document   : tables
-    Created on : 5 thg 6, 2024, 9:30:23
+    Created on : 21 thg 5, 2024, 15:25:45
     Author     : ducanh2192003
 --%>
 
@@ -29,7 +29,7 @@
 
     <body>
         <div class="dash">
-            <div class="dash-nav dash-nav-dark">
+     <div class="dash-nav dash-nav-dark">
                 <%@include file="header.jsp" %>
             </div>
             <div class="dash-app">
@@ -59,6 +59,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                                 <!--                                <a class="dropdown-item" href="#!">Profile</a>-->
+                                <a class="dropdown-item" href="changepass.jsp">Change Password</a>
                                 <a class="dropdown-item" href="login.jsp">Logout</a>
                             </div>
                         </div>
@@ -99,26 +100,26 @@
                                                     <td>${j.date}</td>                                                 
                                                     <td>
                                                         <div class="d-flex align-items-center">                                           
-                                                            <span class="badge stats-danger p-2 ">${j.status}</span>
-
+                                                                <span class="badge stats-danger p-2 ">${j.status}</span>
+                                                           
                                                         </div>
                                                     </td>
-
+                                                    
                                                     <td>
-                                                        <a href="#" onclick="showMess(${j.jobID}, 'Accept ', 'adminAcceptJob?jobId=')" >
-                                                            <button class="btn btn-outline-success btn-sm" data-bs-toggle="tooltip"
-                                                                    data-bs-placement="top" data-bs-custom-class="custom-tooltip-primary"
-                                                                    >
-                                                                <i class="fas fa-check" ></i>
-                                                            </button>
-                                                        </a>
-
+                                                            <a href="#" onclick="showMess(${j.jobID}, 'Accept ', 'adminAcceptJob?jobId=')" >
+                                                                <button class="btn btn-outline-success btn-sm" data-bs-toggle="tooltip"
+                                                                        data-bs-placement="top" data-bs-custom-class="custom-tooltip-primary"
+                                                                        >
+                                                                    <i class="fas fa-check" ></i>
+                                                                </button>
+                                                            </a>
+                                                         
 
                                                     </td>
                                                     <td>
-                                                        <div class="d-flex align-items-center">                                           
-                                                            <a class="bg-primary" style="color: white ; padding:  5px 10px" href="adminJobDetail?id=${j.jobID}&&hidenButton=rejectButton">Detail</a>
-
+                                                          <div class="d-flex align-items-center">                                           
+                                                              <a class="bg-primary" style="color: white ; padding:  5px 10px" href="adminJobDetail?id=${j.jobID}&&hidenButton=rejectButton">Detail</a>
+                                                           
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -154,8 +155,8 @@
             function showMess(id, text, url) {
                 var option = confirm('Are you sure to ' + text + ' Job ID = ' + id);
                 if (option === true) {
-                    console.log(url + id + "&&returnP=listActive");
-                    window.location.href = url + id + "&&returnP=listReject";
+                    console.log(url + id +"&&returnP=listActive");
+                    window.location.href = url + id +"&&returnP=listReject";
                 }
             }
 

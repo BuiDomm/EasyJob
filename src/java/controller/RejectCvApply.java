@@ -4,12 +4,19 @@
  */
 package controller;
 
+import EmailAutoman.SendEmail;
+import dao.ApplyDAO;
+import dao.CompanyDAO;
 import dao.JobApplyDAO;
+import dao.JobseekerDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import model.Apply;
+import model.Company;
+import model.User;
 
 /**
  *
@@ -22,6 +29,17 @@ public class RejectCvApply extends HttpServlet {
         
         JobApplyDAO dao = new JobApplyDAO();
         dao.rejectCv(applyid);
+        
+            // Gui mail khi accept 
+        SendEmail sm = new SendEmail();
+        ApplyDAO ad = new ApplyDAO();
+        CompanyDAO comdao = new CompanyDAO();
+        JobseekerDAO jd = new JobseekerDAO();
+        Apply a = ad.findById(Integer.parseInt(applyid));
+        Company com = comdao.findCompanyByIdJob(a.getJob().getJobID());
+        User u = jd.findById(a.getCvProfile().getUserID());
+        sm.sendUpdateStatusCVApply(u.getEmail(), u.getLastName()+" " + u.getFirstName(), com, a);
+        // Gui mail khi accept
         response.sendRedirect("listApplyCv");
     } 
 

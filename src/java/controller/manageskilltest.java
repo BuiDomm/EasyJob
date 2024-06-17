@@ -1,45 +1,36 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
 package controller;
 
-import EmailAutoman.SendEmail;
-import dao.ApplyDAO;
-import dao.CompanyDAO;
-import dao.JobApplyDAO;
-import dao.JobseekerDAO;
+import java.io.IOException;
+import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import java.io.IOException;
-import model.Apply;
-import model.Company;
-import model.User;
 
-public class AcceptCvApply extends HttpServlet {
+/**
+ *
+ * @author ADMIN
+ */
+public class manageskilltest extends HttpServlet {
 
+    /**
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
+     * methods.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String applyid = request.getParameter("applyid");
+      
+        request.getRequestDispatcher("manageskilltest.jsp").forward(request, response);
 
-        JobApplyDAO dao = new JobApplyDAO();
-        dao.accpetCv(applyid);
-        // Gui mail khi accept 
-        SendEmail sm = new SendEmail();
-        ApplyDAO ad = new ApplyDAO();
-        CompanyDAO comdao = new CompanyDAO();
-        JobseekerDAO jd = new JobseekerDAO();
-
-        Apply a = ad.findById(Integer.parseInt(applyid));
-        Company com = comdao.findCompanyByIdJob(a.getJob().getJobID());
-        User u = jd.findById(a.getCvProfile().getUserID());
-        
-        sm.sendUpdateStatusCVApply(u.getEmail(), u.getLastName()+" " + u.getFirstName(), com, a);
-        // Gui mail khi accept
-        response.sendRedirect("listApplyCv");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -80,4 +71,5 @@ public class AcceptCvApply extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

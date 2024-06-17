@@ -195,7 +195,7 @@
                                     <div class="product-item">
                                         <a href="jobdetails?id=${item.jobID}"><img style="height: 47%; object-fit: cover" src="${listCompanyByJob.get(counter).url}" alt=""></a>
                                         <div class="down-content">
-                                            <a href="jobdetails?id=${item.jobID}"><h4>${item.title}</h4></a>
+                                            <a href="jobdetails?id=${item.jobID}"><h4 style="font-size: 14px;">${item.title}</h4></a>
 
                                             <h6>Salary: ${item.salary}</h6>
 

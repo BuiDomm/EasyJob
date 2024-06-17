@@ -125,7 +125,7 @@ isVerified1 = false;
                                         <p>${cc.descrip}</p>
                         <br/>
                         <div class="form-group">
-                            <h5><i style="color: white">Job title: &nbsp;&nbsp;   </i><i>${cc.title}</i></h5>
+                            <h5 style="color: #aaa"><i style="color: #000">Job title: &nbsp;&nbsp;   </i><i>${cc.title}</i></h5>
                         </div>
 
                         <hr>
@@ -167,8 +167,8 @@ isVerified1 = false;
                             <c:if test="${cc.status == 'Pending'}">
                                 <div class="contact-form">
                                     <div class="form-group">
-
                                         <a style="text-align: center;" href="#!" data-toggle="modal" data-target="#confirmModal" class="filled-button btn-block shadow">Edit Job Information</a>
+                                        <a style="text-align: center;background-color: black" href="createskilltest?id=${cc.jobID}"class="filled-button btn-block shadow">Create Skill Test</a>
                                         <!-- Modal -->
                                         <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">

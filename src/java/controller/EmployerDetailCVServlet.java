@@ -49,8 +49,8 @@ public class EmployerDetailCVServlet extends HttpServlet {
                 if (cvProfile != null) {
                     String linkUrl = cvProfile.getLinkUrl();
                     int count = countOccurrences(linkUrl, '|');
-                    if (count < 3) {
-                        int diff = 3 - count;
+                    if (count < 4) {
+                        int diff = 4 - count;
                         for (int i = 0; i < diff; i++) {
                             linkUrl += "|";
                         }

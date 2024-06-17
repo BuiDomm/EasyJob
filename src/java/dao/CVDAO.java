@@ -116,7 +116,9 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
     @Override
     public CVProfile findById(int id) {
         String sql = "	SELECT * FROM CVProfile\n"
-                + "	 WHERE CVId =? ";
+
+                + "	 WHERE CVId=? ";
+
         try {
             PreparedStatement ps = getConnection().prepareStatement(sql);
             ps.setInt(1, id);
@@ -144,8 +146,8 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
 
     @Override
     public boolean insert(CVProfile newObject) {
-        String sql = "insert into CVProfile(UserID, Skills, Experience, Description, Education,Certifications,LinkUrl, LinkPdf)\n"
-                + "Values (?,?,?,?,?,?,?,?)";
+        String sql = "insert into CVProfile(UserID, Skills, Experience, Description, Education,Certifications,LinkUrl,Avatar, LinkPdf)\n"
+                + "Values (?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps;
         try {
             ps = getConnection().prepareStatement(sql);
@@ -156,7 +158,9 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
             ps.setString(5, newObject.getEducation());
             ps.setString(6, newObject.getCertification());
             ps.setString(7, newObject.getLinkUrl());
-            ps.setString(8, newObject.getLinkPdf());
+            ps.setString(8, newObject.getAvatar());
+            ps.setString(9, newObject.getLinkPdf());
+
 
             int rowAffect = ps.executeUpdate();
             if (rowAffect > 0) {
@@ -177,18 +181,18 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 
-    }
+    public boolean updateCVProfileFromCV(String linkPdf, String education, String skills, String experience, String certification, String description, String linkUrl, String avatarUrl, String email) {
 
-    public boolean updateCVProfileFromCV(String linkPdf, String education, String skills, String experience, String certification, String description, String linkUrl, String email) {
         String sql = "Update CVProfile\n"
-                + "		 set LinkPdf = ? , \n"
-                + "		 Education = ? , \n"
-                + "		 Skills = ? , \n"
-                + "		 Experience = ? , \n"
-                + "		 Certifications = ? , \n"
-                + "		 Description = ? , \n"
-                + "		 LinkUrl = ?  \n"
-                + "		Where CVId = (Select TOP 1 CVId from CVProfile where UserID = (select UserID from Users where Email = ? ) )";
+                + "set LinkPdf = ?, \n"
+                + "Education = ?, \n"
+                + "Skills = ?, \n"
+                + "Experience = ?, \n"
+                + "Certifications = ?, \n"
+                + "Description = ?, \n"
+                + "LinkUrl = ?, \n"
+                + "Avatar = ? \n"
+                + "Where CVId = (Select TOP 1 CVId from CVProfile where UserID = (select UserID from Users where Email = ?))";
         PreparedStatement ps;
         try {
             ps = getConnection().prepareStatement(sql);
@@ -199,7 +203,9 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
             ps.setString(5, certification);
             ps.setString(6, description);
             ps.setString(7, linkUrl);
-            ps.setString(8, email);
+            ps.setString(8, avatarUrl);
+            ps.setString(9, email);
+
 
             int rowAffect = ps.executeUpdate();
             if (rowAffect > 0) {
@@ -209,6 +215,19 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
             Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+    }
+
+
+    public void updateAvatar(int cvId, String avt) {
+        String sql = "Update CVProfile SET Avatar = ? where CVId = ?";
+        PreparedStatement ps;
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setString(1, avt);
+            ps.setInt(2, cvId);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
     }
 
 }

@@ -38,6 +38,7 @@ public class CreateCVServlet extends HttpServlet {
         if (user != null && user.getRoleId() == 2) {
             String linkYoutube = request.getParameter("linkYoutube");
             String linkPdf = request.getParameter("linkPdf");
+            String linkAvt = request.getParameter("linkAvt");
             String education = request.getParameter("education");
             String skills = request.getParameter("skills");
             String experience = request.getParameter("experience");
@@ -53,7 +54,7 @@ public class CreateCVServlet extends HttpServlet {
             CVProfile cvProfile = cvDao.findByEmail(user.getEmail());
 
             if (cvProfile == null) {
-                CVProfile newCv = new CVProfile(user.getIdUser(), skills, experience, description, education, certification, linkUrl, linkPdf);
+                CVProfile newCv = new CVProfile(user.getIdUser(), skills, experience, description, education, certification, linkUrl, linkAvt, linkPdf);
                 cvDao.insert(newCv);
                 response.sendRedirect("CVSeeker");
             } else {

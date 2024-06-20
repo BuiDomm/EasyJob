@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class Question {
 
-    private int questionID;
+    private String questionID;
     private Job job;
     private String content;
     private Date date;
@@ -20,18 +20,18 @@ public class Question {
     public Question() {
     }
 
-    public Question(int questionID, Job job, String content, Date date) {
+    public Question(String questionID, Job job, String content, Date date) {
         this.questionID = questionID;
         this.job = job;
         this.content = content;
         this.date = date;
     }
 
-    public int getQuestionID() {
+    public String getQuestionID() {
         return questionID;
     }
 
-    public void setQuestionID(int questionID) {
+    public void setQuestionID(String questionID) {
         this.questionID = questionID;
     }
 
@@ -63,9 +63,7 @@ public class Question {
     public String toString() {
         return "Question{" + "questionID=" + questionID + ", job=" + job + ", content=" + content + ", date=" + date + '}';
     }
-    
 
- 
     
 
 }

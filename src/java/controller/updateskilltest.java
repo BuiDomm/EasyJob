@@ -6,7 +6,6 @@ package controller;
 
 import dao.AnswerDAO;
 import dao.CompanyDAO;
-import dao.JobApplyDAO;
 import dao.JobDAO;
 import dao.QuestionDAO;
 import java.io.IOException;
@@ -16,24 +15,20 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import model.Answer;
-import model.Apply;
 import model.Company;
 import model.Job;
 import model.Question;
 import model.User;
-import org.apache.http.client.fluent.Response;
 
 /**
  *
  * @author ADMIN
  */
-public class createskilltest extends HttpServlet {
+public class updateskilltest extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -68,7 +63,7 @@ public class createskilltest extends HttpServlet {
         request.setAttribute("u", u);
         request.setAttribute("questions", questions);
         request.setAttribute("questionAnswersMap", questionAnswersMap);
-        request.getRequestDispatcher("createskilltest.jsp").forward(request, response);
+        request.getRequestDispatcher("updateskilltest.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -95,48 +90,57 @@ public class createskilltest extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         QuestionDAO qd = new QuestionDAO();
         AnswerDAO ad = new AnswerDAO();
         int jobID = Integer.parseInt(request.getParameter("id"));
         String[] questionTitles = request.getParameterValues("questionTitle[]");
-        String[] correctAnswers = request.getParameterValues("answer[]");
+        String[] questionIDs = request.getParameterValues("questionID[]");
+        String[] answerIDs = request.getParameterValues("answerID[]");
+        String[] incorrectanswerIDs = request.getParameterValues("incorrectanswerID[]");
+        String[] correctAnswers = request.getParameterValues("correctAnswer[]");
         String[] countIncorrectAnswers = request.getParameterValues("incorrectAnswersCount[]");
 
         JobDAO jd = new JobDAO();
         Job job = jd.findById(jobID);
 
         int incorrectAnswerIndex = 0;
-        int questionIdCounter = 1;
-
         for (int i = 0; i < questionTitles.length; i++) {
             String questionTitle = questionTitles[i];
             String answerText = correctAnswers[i];
-            String questionId = "QS" + jobID * 1000 + questionIdCounter++;
+            String questionID = questionIDs[i];
+            int answerID = Integer.parseInt( answerIDs[i]);
+            Question question = qd.findByQuestionId(questionID);
 
-            Question question = new Question(questionId, job, questionTitle, null);
+            question.setContent(questionTitle);
+            qd.update(question);
 
-            qd.insert(question);
-
-            Answer correctAnswer = new Answer(i, question, answerText, null, 1);
-
-            ad.insert(correctAnswer);
-
+            Answer correctAnswer = ad.findById(answerID);
+            correctAnswer.setAnswerText(answerText);
+            ad.update(correctAnswer);
             int countIncorrect = Integer.parseInt(countIncorrectAnswers[i]);
             for (int j = 0; j < countIncorrect; j++) {
 
                 String incorrectAnswerText = request.getParameterValues("incorrectanswer[]")[incorrectAnswerIndex++];
-                Answer incorrectAnswer = new Answer(i, question, incorrectAnswerText, null, 0);
+                int incorrectanswerID = Integer.parseInt(incorrectanswerIDs[incorrectAnswerIndex]);
+                Answer incorrectAnswer = ad.findById(incorrectanswerID);
+                incorrectAnswer.setAnswerText(incorrectAnswerText);
 
-                ad.insert(incorrectAnswer);
+                ad.update(incorrectAnswer);
             }
         }
-
         request.getRequestDispatcher("createskilltest.jsp").forward(request, response);
     }
 
+    /**
+     * Returns a short description of the servlet.
+     *
+     * @return a String containing servlet description
+     */
     @Override
     public String getServletInfo() {
         return "Short description";
-    }
+    }// </editor-fold>
+
 }

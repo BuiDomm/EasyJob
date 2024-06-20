@@ -99,16 +99,16 @@
         <servlet-class>controller.AdminRejectJob</servlet-class>
     </servlet>
     <servlet>
-
-    
-
         <servlet-name>SearchJobApplied</servlet-name>
         <servlet-class>controller.SearchJobApplied</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>WithdrawJob</servlet-name>
         <servlet-class>controller.WithdrawJob</servlet-class>
-
+    </servlet>
+    <servlet>
+        <servlet-name>updateskilltest</servlet-name>
+        <servlet-class>controller.updateskilltest</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name> AdminJobDetail</servlet-name>
@@ -386,11 +386,10 @@
         <servlet-name> AdminDashBoard</servlet-name>
         <url-pattern>/adminDashBoard</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name> AdminListBlog</servlet-name>
         <servlet-class>controller.AdminListBlog</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet-mapping>
         <servlet-name> AdminListBlog</servlet-name>
         <url-pattern>/adminListBlog</url-pattern>
@@ -404,21 +403,23 @@
         <url-pattern>/withdraw</url-pattern>
     </servlet-mapping>
     <servlet>
-
         <servlet-name>createskilltest</servlet-name>
         <servlet-class>controller.createskilltest</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>manageskilltest</servlet-name>
         <servlet-class>controller.manageskilltest</servlet-class>
- </servlet>
-        <servlet-mapping>
-            <servlet-name>createskilltest</servlet-name>
-            <url-pattern>/createskilltest</url-pattern>
-        </servlet-mapping>
-        <servlet-mapping>
-            <servlet-name>manageskilltest</servlet-name>
-            <url-pattern>/manageskilltest</url-pattern>
-        </servlet-mapping>
-
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>createskilltest</servlet-name>
+        <url-pattern>/createskilltest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>manageskilltest</servlet-name>
+        <url-pattern>/manageskilltest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>updateskilltest</servlet-name>
+        <url-pattern>/updateskilltest</url-pattern>
+    </servlet-mapping>
 </web-app>

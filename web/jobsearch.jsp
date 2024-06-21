@@ -65,16 +65,10 @@
                         <div class="contact-form">
                             <form action="searchAndFilter">
 
+                                <h5 style="margin: 15px 0">Title</h5>
                                 <div class="search-form">
                                     <label>
-                                        <input type="text" name="search"  >
-                                        <ul>
-                                            <li data-char="t">t</li>
-                                            <li data-char="i">i</li>
-                                            <li data-char="t2">t</li> 
-                                            <li data-char="l">l</li>
-                                            <li data-char="e">e</li>
-                                        </ul>
+                                        <input type="text" name="search" value="${txt}" >
                                     </label>
                                 </div>
 
@@ -82,44 +76,37 @@
 
                                 <h5 style="margin: 15px 0">Company</h5>
 
-                                <c:forEach var="c" items="${listCompany}" >
-                                    <div>
-                                        <label>
-                                            <input name="company" value="${c.companyID}" type="radio">
+                                <div class="search-form">
+                                    <label>
+                                        <input type="text" name="company" value="${company}"  >    
+                                    </label>
+                                </div>
 
-                                            <small va>${c.nameCompany}</small>
-                                        </label>
-                                    </div>
 
-                                </c:forEach>
 
 
 
                                 <br>
 
                                 <h5 style="margin-bottom: 15px">Category</h5>
-                                <c:forEach var="c" items="${listCategory}" >
-                                    <div>
-                                        <label>
-                                            <input name="category" value="${c.categoryID}" type="radio">
 
-                                            <small>${c.categoryName}</small>
-                                        </label>
-                                    </div>
-                                </c:forEach>
+                                <select name="category">
+                                    <option  value="0">Select Category</option>
+                                    <c:forEach var="c" items="${listCategory}" >
+                                        <option  value="${c.categoryID}" ${(c.categoryID == category) ? 'selected' : ''}>${c.categoryName}</option>
+                                    </c:forEach>
+                                </select>
 
                                 <br>
 
                                 <h5 style="margin-bottom: 15px">Location</h5>
-                                <c:forEach var="l" items="${listLocation}" >
-                                    <div>
-                                        <label>
-                                            <input name="location" value="${l.location}" type="radio">
 
-                                            <small>${l.location}</small>
-                                        </label>
-                                    </div>
-                                </c:forEach>
+                                <select name="location">
+                                    <option value="">Select Location</option>
+                                    <c:forEach var="l" items="${listLocation}">
+                                        <option value="${l.location}" ${(l.location == location) ? 'selected' : ''}>${l.location}</option>
+                                    </c:forEach>
+                                </select>
 
 
                                 <br>
@@ -130,7 +117,7 @@
 
                                 <div>
                                     <label>
-                                        <input name="salary" value="2000" type="radio">
+                                        <input name="salary" value="2000" type="radio" ${(salary == 2000) ? 'checked' : ''} >
 
                                         <small>< 2000</small>
                                     </label>
@@ -138,7 +125,7 @@
 
                                 <div>
                                     <label>
-                                        <input name="salary" value="3000" type="radio">
+                                        <input name="salary" value="3000" type="radio" ${(salary == 3000) ? 'checked' : ''}>
 
                                         <small>2000 - 4000</small>
                                     </label>
@@ -146,7 +133,7 @@
 
                                 <div>
                                     <label>
-                                        <input name="salary" value="4000" type="radio">
+                                        <input name="salary" value="4000" type="radio" ${(salary == 4000) ? 'checked' : ''}>
 
                                         <small>> 4000</small>
                                     </label>
@@ -160,7 +147,7 @@
 
                                 <div>
                                     <label>
-                                        <input name="year" value="1" type="radio">
+                                        <input name="year" value="1" type="radio" ${(year == 1) ? 'checked' : ''}>
 
                                         <small value="1">< 1 Year</small>
                                     </label>
@@ -168,7 +155,7 @@
 
                                 <div>
                                     <label>
-                                        <input  name="year" value="2" type="radio">
+                                        <input  name="year" value="2" type="radio" ${(year == 2) ? 'checked' : ''}>
 
                                         <small>1 - 2 Year</small>
                                     </label>
@@ -176,7 +163,7 @@
 
                                 <div>
                                     <label>
-                                        <input  name="year" value="3" type="radio">
+                                        <input  name="year" value="3" type="radio" ${(year == 3) ? 'checked' : ''}>
 
                                         <small>> 3 Year</small>
                                     </label>
@@ -189,20 +176,19 @@
 
                     <div class="col-md-9">
                         <div class="row">
-                            <c:set var="counter" value="0" />
                             <c:forEach var="item" items="${listjob}" >
                                 <div class="col-md-4">
                                     <div class="product-item">
-                                        <a href="jobdetails?id=${item.jobID}"><img style="height: 47%; object-fit: cover" src="${listCompanyByJob.get(counter).url}" alt=""></a>
+                                        <a href="jobdetails?id=${item.jobID}"><img src="./${dao.companyByJobId(item.jobID).url}" alt=""></a>
                                         <div class="down-content">
-                                            <a href="jobdetails?id=${item.jobID}"><h4>${item.title}</h4></a>
+                                            <a href="./jobdetails?id=${item.jobID}"><h4>${item.title}</h4></a>
 
                                             <h6>Salary: ${item.salary}</h6>
 
                                             <h4><small><i class="fa fa-briefcase"></i> ${item.category.categoryName}<br> <strong><i class="fa fa-building"></i>${item.company.nameCompany}</strong></small></h4>
 
                                             <small>
-                                                <strong title="Posted on">Years of Experience: ${item.yearEx}</strong> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <strong title="Posted on">Years of Experience: ${item.yearEx}</strong> 
                                                 <!--<strong title="Type"><i class="fa fa-file"></i> Contract</strong> &nbsp;&nbsp;&nbsp;&nbsp;-->
                                                 <br>
                                                 <strong title="Location"> <i class="fa fa-map-marker"></i>&nbsp; ${item.location}</strong>
@@ -211,21 +197,27 @@
                                     </div>
                                 </div>
 
-                                <c:set var="counter" value="${counter + 1}" />
+
                             </c:forEach>
 
                             <div class="col-md-12">
-                                <ul class="pages">
-
-                                    <jsp:useBean id="pagenum" class="dao.JobDAO" /> 
-
-                                    <c:forEach begin="1" end="${pagenum.pageNumber}" var="i"> 
-                                        <li class="active">
-                                            <a href="paging?id=${i}">${i}</a>
+                                <nav aria-label="Page navigation example ">
+                                    <ul class="pagination justify-content-end ">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
                                         </li>
-                                    </c:forEach>
-                                    <li><a href="#!"><i class="fa fa-angle-double-right"></i></a></li>
-                                </ul>
+                                        <c:forEach begin="1" end="${endP}" var="i">
+                                            <li class="page-item"><a class="page-link" onclick="pagingIndex(${i})">${i}</a></li>
+                                            </c:forEach>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
@@ -238,7 +230,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="inner-content">
-                            <p>Copyright © 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
+                            <p>Copyright Â© 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
                         </div>
                     </div>
                 </div>
@@ -316,7 +308,16 @@
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
+        <script>
 
+                                                pagingIndex = (id) => {
+                                                    let url = window.location.href;
+                                                    if (url.includes("&index=")) {
+                                                        url = url.split("&index=")[0];
+                                                    }
+                                                    window.location.href = url + "&index=" + id;
+                                                };
+        </script>
         <!-- Additional Scripts -->
         <script src="assets/js/custom.js"></script>
         <script src="assets/js/owl.js"></script>

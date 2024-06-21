@@ -27,13 +27,29 @@ public class ListCVApply extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("account");
         int useId = user.getIdUser();
-        System.out.println(useId);
-        JobApplyDAO dao = new JobApplyDAO();
-        List<Apply> listApply = dao.ListApplyByUserId(useId);
-        for (Apply apply : listApply) {
-            System.out.println(apply.getCvProfile().getUserID());
+        String status = request.getParameter("status");
+         String indexPage = request.getParameter("index");
+        if (status == null) {
+            status = "Pending";
         }
-         request.setAttribute("dao", dao);
+         if (indexPage == null) {
+            indexPage = "1";
+        }
+        int index = Integer.parseInt(indexPage);
+
+        JobApplyDAO dao = new JobApplyDAO();
+        int count = dao.getTotalApply(useId, status);
+        int endPage = count / 2;
+        if (count % 2 != 0) {
+            endPage++;
+        }
+     
+        List<Apply> listApply = dao.pagingCVList(useId, status, index);
+        for (Apply apply : listApply) {
+            System.out.println(apply);
+        }
+        request.setAttribute("endP", endPage);
+        request.setAttribute("dao", dao);
         request.setAttribute("listApply", listApply);
         request.getRequestDispatcher("listCvSeeker.jsp").forward(request, response);
     }

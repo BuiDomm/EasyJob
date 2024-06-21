@@ -79,7 +79,10 @@ public class PagingJob extends HttpServlet {
             List<Company> listCompany = dao.getAllCompany();
             List<Category> listCategory = dao.getAllCategory();
             List<Job> listLocation = dao.getAllLocation();
-
+            NotificationDAO notidao = new NotificationDAO();
+             
+             
+            request.setAttribute("notidao", notidao);
             request.setAttribute("listjob", list);
             request.setAttribute("listCompany", listCompany);
             request.setAttribute("listCategory", listCategory);

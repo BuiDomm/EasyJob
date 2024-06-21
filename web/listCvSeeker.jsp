@@ -1,8 +1,3 @@
-<%-- 
-    Document   : listCvSeeker
-    Created on : May 31, 2024, 11:21:03 PM
-    Author     : DELL
---%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -60,8 +55,13 @@
         <div class="content">
             <div class="container">
                 <h2 class="mb-5">List Cv Apply</h2>
+                <div class="statusButton">
+                    <a class="btn btn-info" href="listApplyCv?status=Pending">List Pending</a>
+                    <a class="btn btn-success"  href="listApplyCv?status=Accept">List Accept</a>
+                    <a class="btn btn-danger"  href="listApplyCv?status=Reject">List Reject</a>
+                </div>
                 <div class="table-responsive">
-                    <table style="margin-bottom: 150px; margin-top: 20px; overflow-y:scroll" class="table table-striped custom-table">
+                    <table style=" margin-top: 20px; overflow-y:scroll" class="table table-striped custom-table">
                         <thead>
                             <tr>                           
                                 <th scope="col">Name</th>
@@ -76,7 +76,8 @@
                         <tbody>
                         <c:forEach items="${listApply}" var="i">
                             <tr scope="row">
-                                <td class="pl-0">
+
+                                <td class="pl-0  ">
                                     <div class="d-flex align-items-center">
                                         
                                         <a href="#">${dao.getUserByCVid(i.cvProfile.CVId).firstName}</a>
@@ -86,42 +87,41 @@
                                 <td>${dao.getUserByCVid(i.cvProfile.CVId).phoneNumber}</td>                            
                                 <td>${i.job.title}</td>
                                 <td>${i.applicationDate}</td>
-                                <td>${i.status}</td>
-                                <td><a href="./detailCV?UserId=${dao.getUserByCVid(i.cvProfile.CVId).idUser}&ApplyId=${i.applicationID}" class="more">Details</a></td>
+                                <td class=${i.status == 'Accept' ? 'badge-success' : ((i.status == 'Reject')? 'badge-danger':'bg-info')} >${i.status}</td>
+                                <td><a href="detailCV?UserId=${dao.getUserByCVid(i.cvProfile.CVId).idUser}&ApplyId=${i.applicationID}" class="more">Details</a></td>
                             </tr>
                         </c:forEach>
 
                         </tbody>
+                        
                     </table>
+                    <div class="col-md-12" style="margin-bottom: 150px;">
+                                <nav aria-label="Page navigation example ">
+                                    <ul class="pagination justify-content-end ">
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Previous">
+                                                <span aria-hidden="true">&laquo;</span>
+                                            </a>
+                                        </li>
+                                        <c:forEach begin="1" end="${endP}" var="i">
+                                            <li class="page-item"><a class="page-link" onclick="pagingIndex(${i})">${i}</a></li>
+                                            </c:forEach>
+                                        <li class="page-item">
+                                            <a class="page-link" href="#" aria-label="Next">
+                                                <span aria-hidden="true">&raquo;</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                    
                 </div>
             </div>
+            
+            
         </div>
-
-  <!-- Popup Start -->
-    <div class="modal" tabindex="-1" role="dialog" id="rejectModal">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Reject Reason</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form id="rejectForm">
-                        <div class="form-group">
-                            <label for="rejectReason">Reason:</label>
-                            <textarea class="form-control" id="rejectReason" rows="3" required></textarea>
-                        </div>
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" id="saveBtn">Save changes</button>
-                    <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+        
+       
 
     <!-- Popup End -->
 
@@ -129,7 +129,16 @@
         <!-- Bootstrap core JavaScript -->
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script>
 
+                                            pagingIndex = (id) => {
+                                    let url = window.location.href;
+                                            if (url.includes("&index=")) {
+                                    url = url.split("&index=")[0];
+                                    }
+                                    window.location.href = url + "&index=" + id;
+                                    };
+        </script>
 
         <!-- Additional Scripts -->
         <script src="assets/js/custom.js"></script>

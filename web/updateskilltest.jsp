@@ -53,52 +53,51 @@
         <!-- header -->
         <!-- form -->
         <c:if test="${not empty questions}">
-    <form action="updateskilltest" method="post">
-        <input type="hidden" name="id" value="${cc.jobID}">
-        <div style="border-radius: 15px; margin-top: -46px; background-color: black" class="container p-5">
-            <div id="questions-container" class="col">
-                <c:forEach var="question" items="${questions}">
-                    <input type="hidden" name="questionID[]" value="${question.questionID}">
-                    <div style="border-radius: 15px; background-color: white" class="row p-4 mb-4 question-block">
-                        <div class="col">
-                            <div class="row px-3">
-                                <h3 class="mb-3">Question title:</h3>
-                                <input type="text" class="form-control h3" name="questionTitle[]" placeholder="Question title" value="${question.content}" style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+            <form action="updateskilltest" method="post">
+                <input type="hidden" name="id" value="${cc.jobID}">
+                <div style="border-radius: 15px; margin-top: -46px; background-color: black" class="container p-5">
+                    <div id="questions-container" class="col">
+                        <c:forEach var="question" items="${questions}">
+                            <input type="hidden" name="questionID[]" value="${question.questionID}">
+                            <div style="border-radius: 15px; background-color: white" class="row p-4 mb-4 question-block">
+                                <div class="col">
+                                    <div class="row px-3">
+                                        <h3 class="mb-3">Question title:</h3>
+                                        <textarea class="form-control h3" name="questionTitle[]" placeholder="Question title" style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${question.content}</textarea>
 
-                                <hr>
-                                <c:set var="incorrectCount" value="0"/>
-                                <c:forEach var="answer" items="${questionAnswersMap[question]}">
-                                    <c:choose>
-                                        <c:when test="${answer.isTrue == 1}">
-                                            <input type="text" class="form-control col-5 p-4 mt-3 mx-4" style="border-radius: 15px; background-color: #FBC540; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" name="correctAnswer[]" value="${answer.answerText}">
-                                            <input type="hidden" name="answerID[]" value="${answer.answerID}">
-                                        </c:when>
-                                        <c:otherwise>
-                                            <input type="text" class="col-5 p-4 mt-3 mx-4 bg-dark text-light form-control" style="border-radius: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" name="incorrectAnswer[]" value="${answer.answerText}">
-                                            <input type="hidden" name="incorrectanswerID[]" value="${answer.answerID}">
-                                            <c:set var="incorrectCount" value="${incorrectCount + 1}"/>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                                <input type="hidden" name="incorrectAnswersCount[]" value="${incorrectCount}">
-                            </div> 
-                            <c:if test="${incorrectCount < 3}">
-                                <div class="px-5">
-                                    <a href="#" style="border-radius: 15px; background-color: white" class="btn col mt-3 btn-outline-dark" onclick="addIncorrectAnswer(this); return false;">
-                                        <p style="margin: auto; color: black">Add incorrect Answer</p>
-                                    </a>
+                                        <hr>
+                                        <c:set var="incorrectCount" value="0"/>
+                                        <c:forEach var="answer" items="${questionAnswersMap[question]}">
+                                            <c:choose>
+                                                <c:when test="${answer.isTrue == 1}">
+                                                    <textarea class="form-control col-5 p-4 mt-3 mx-4" style="border-radius: 15px; background-color: #FBC540; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" name="correctAnswer[]">${answer.answerText}</textarea>
+                                                    <input type="hidden" name="answerID[]" value="${answer.answerID}">
+                                                </c:when>
+                                                <c:otherwise>
+                                                    <textarea class="col-5 p-4 mt-3 mx-4 bg-dark text-light form-control" style="border-radius: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" name="incorrectAnswer[]">${answer.answerText}</textarea>
+                                                    <input type="hidden" name="incorrectanswerID[]" value="${answer.answerID}">
+                                                    <c:set var="incorrectCount" value="${incorrectCount + 1}"/>
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </c:forEach>
+                                        <input type="hidden" name="incorrectAnswersCount[]" value="${incorrectCount}">
+                                        <c:if test="${incorrectCount < 3}">
+                                            <a href="#" style="border-radius: 15px; background-color: white" class="form-control col-5 p-4 mt-3 mx-4 btn-outline-dark" onclick="addIncorrectAnswer(this); return false;">
+                                                <p style="color: black" class="h4">Add incorrect Answer</p>
+                                            </a>
+                                        </c:if>
+                                    </div> 
                                 </div>
-                            </c:if>
-                        </div>
+                            </div>
+                        </c:forEach>
                     </div>
-                </c:forEach>
-            </div>
-            <button type="submit" style="border-radius: 15px; background-color: white" class="btn p-4 mt-4 container">
-                <h5 style="margin: auto; color: #FBC540">Update Skill Test</h5>  
-            </button>
-        </div>
-    </form>
-</c:if>
+                    <button type="submit" style="border-radius: 15px; background-color: white" class="btn p-4 mt-4 container">
+                        <h5 style="margin: auto; color: #FBC540">Update Skill Test</h5>  
+                    </button>
+                </div>
+            </form>
+        </c:if>
+
 
 
         <!-- form end -->

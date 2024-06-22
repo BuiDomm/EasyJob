@@ -110,6 +110,10 @@
         <servlet-name>updateskilltest</servlet-name>
         <servlet-class>controller.updateskilltest</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>loadskilltest</servlet-name>
+        <servlet-class>controller.loadskilltest</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name> AdminJobDetail</servlet-name>
         <url-pattern>/adminJobDetail</url-pattern>
@@ -421,5 +425,9 @@
     <servlet-mapping>
         <servlet-name>updateskilltest</servlet-name>
         <url-pattern>/updateskilltest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadskilltest</servlet-name>
+        <url-pattern>/loadskilltest</url-pattern>
     </servlet-mapping>
 </web-app>

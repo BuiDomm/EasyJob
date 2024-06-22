@@ -46,29 +46,7 @@ public class createskilltest extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("account");
-        int id = Integer.parseInt(request.getParameter("id"));
-        CompanyDAO cm = new CompanyDAO();
-        Company com = cm.findCompanyByIdJob(id);
-        JobDAO jd = new JobDAO();
-        Job b = jd.findById(id);
-        QuestionDAO qd = new QuestionDAO();
-        AnswerDAO ad = new AnswerDAO();
-        List<Question> questions = qd.getQuestionsByJobId(id);
-        Map<Question, List<Answer>> questionAnswersMap = new HashMap<>();
-
-        for (Question question : questions) {
-            List<Answer> answers = ad.getAnswerByQuestionID(question.getQuestionID());
-            questionAnswersMap.put(question, answers);
-        }
-
-        request.setAttribute("com", com);
-        request.setAttribute("cc", b);
-        request.setAttribute("u", u);
-        request.setAttribute("questions", questions);
-        request.setAttribute("questionAnswersMap", questionAnswersMap);
-        request.getRequestDispatcher("createskilltest.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -131,8 +109,9 @@ public class createskilltest extends HttpServlet {
                 ad.insert(incorrectAnswer);
             }
         }
-
-        request.getRequestDispatcher("createskilltest.jsp").forward(request, response);
+        
+        
+        request.getRequestDispatcher("loadskilltest?id="+job.getJobID()).forward(request, response);
     }
 
     @Override

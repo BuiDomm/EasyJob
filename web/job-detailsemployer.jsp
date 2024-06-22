@@ -168,7 +168,7 @@ isVerified1 = false;
                                 <div class="contact-form">
                                     <div class="form-group">
                                         <a style="text-align: center;" href="#!" data-toggle="modal" data-target="#confirmModal" class="filled-button btn-block shadow">Edit Job Information</a>
-                                        <a style="text-align: center;background-color: black" href="createskilltest?id=${cc.jobID}"class="filled-button btn-block shadow">Create Skill Test</a>
+                                        <a style="text-align: center;background-color: black" href="loadskilltest?id=${cc.jobID}"class="filled-button btn-block shadow">Create Skill Test</a>
                                         <!-- Modal -->
                                         <div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">

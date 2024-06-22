@@ -2,6 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller;
 
 import dao.AnswerDAO;
@@ -26,22 +27,20 @@ import model.User;
 
 /**
  *
- * @author ADMIN
+ * @author ACER
  */
-public class updateskilltest extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class loadskilltest extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        HttpSession session = request.getSession();
+    throws ServletException, IOException {
+       HttpSession session = request.getSession();
         User u = (User) session.getAttribute("account");
         int id = Integer.parseInt(request.getParameter("id"));
         CompanyDAO cm = new CompanyDAO();
@@ -63,13 +62,12 @@ public class updateskilltest extends HttpServlet {
         request.setAttribute("u", u);
         request.setAttribute("questions", questions);
         request.setAttribute("questionAnswersMap", questionAnswersMap);
-        request.getRequestDispatcher("updateskilltest.jsp").forward(request, response);
-    }
+        request.getRequestDispatcher("createskilltest.jsp").forward(request, response);
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -77,72 +75,25 @@ public class updateskilltest extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
-    }
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-   @Override
-protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-    QuestionDAO qd = new QuestionDAO();
-    AnswerDAO ad = new AnswerDAO();
-    int jobID = Integer.parseInt(request.getParameter("id"));
-    String[] questionTitles = request.getParameterValues("questionTitle[]");
-    String[] questionIDs = request.getParameterValues("questionID[]");
-    String[] answerIDs = request.getParameterValues("answerID[]");
-    String[] incorrectanswerIDs = request.getParameterValues("incorrectanswerID[]");
-    String[] correctAnswers = request.getParameterValues("correctAnswer[]");
-    String[] countIncorrectAnswers = request.getParameterValues("incorrectAnswersCount[]");
-
-    
-    JobDAO jd = new JobDAO();
-    Job job = jd.findById(jobID);
-
-    int incorrectAnswerIndex = 0;
-    for (int i = 0; i < questionTitles.length; i++) {
-        String questionTitle = questionTitles[i];
-        String answerText = correctAnswers[i];
-        String questionID = questionIDs[i];
-        int answerID = Integer.parseInt(answerIDs[i]);
-        Question question = qd.findByQuestionId(questionID);
-
-        question.setContent(questionTitle);
-        qd.update(question);
-
-        Answer correctAnswer = ad.findById(answerID);
-        correctAnswer.setAnswerText(answerText);
-        ad.update(correctAnswer);
-
-        int countIncorrect = Integer.parseInt(countIncorrectAnswers[i]);
-        String[] incorrectAnswers = request.getParameterValues("incorrectAnswer[]");
-        
-
-        for (int j = 0; j < countIncorrect; j++) {
-            
-            String incorrectAnswerText = incorrectAnswers[incorrectAnswerIndex];
-            int incorrectanswerID = Integer.parseInt(incorrectanswerIDs[incorrectAnswerIndex]);
-            Answer incorrectAnswer = ad.findById(incorrectanswerID);
-            incorrectAnswer.setAnswerText(incorrectAnswerText);
-
-            ad.update(incorrectAnswer);
-            incorrectAnswerIndex++;
-        }
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+        processRequest(request, response);
     }
-    request.getRequestDispatcher("loadskilltest?id="+job.getJobID()).forward(request, response);
-}
 
-
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

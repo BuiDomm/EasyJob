@@ -27,26 +27,27 @@ public class AnswerDAO extends DBContext implements BaseDAO<Answer> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
+     @Override
     public Answer findById(int id) {
-        String sql = "SELECT * FROM Answers where AnswerID=?";
-        try {
-            PreparedStatement st = getConnection().prepareStatement(sql);
+        String sql = "SELECT * FROM Answers WHERE AnswerID = ?";
+        try (PreparedStatement st = getConnection().prepareStatement(sql)) {
             st.setInt(1, id);
             ResultSet rs = st.executeQuery();
-            while (true) {
-                Question q = qd.findByQuestionId(rs.getString("QuestionID"));
-                int ansid = rs.getInt("AnswerID");
+            if (rs.next()) {
+                String questionID = rs.getString("QuestionID");
+                Question question = qd.findByQuestionId(questionID);
+                int ansID = rs.getInt("AnswerID");
                 String answerText = rs.getString("AnswerText");
                 Date answerDate = rs.getDate("AnswerDate");
                 int isTrue = rs.getInt("Is_true");
-                Answer a = new Answer(ansid, q, answerText, answerDate, isTrue);
-                return a;
+                Answer answer = new Answer(ansID, question, answerText, answerDate, isTrue);
+                return answer;
             }
         } catch (Exception e) {
+            Logger.getLogger(AnswerDAO.class.getName()).log(Level.SEVERE, null, e);
         }
 
-        return null;
+        return null; 
     }
 
     @Override
@@ -110,7 +111,7 @@ public class AnswerDAO extends DBContext implements BaseDAO<Answer> {
             PreparedStatement st = getConnection().prepareStatement(sql);
             st.setString(1, a.getAnswerText());
             st.setInt(2, a.getAnswerID());
-            
+
             int rowAffect = st.executeUpdate();
             if (rowAffect > 0) {
                 return true;
@@ -124,6 +125,23 @@ public class AnswerDAO extends DBContext implements BaseDAO<Answer> {
     @Override
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    public static void main(String[] args) {
+        // Khởi tạo AnswerDAO
+        AnswerDAO answerDAO = new AnswerDAO();
+        QuestionDAO questionDAO = new QuestionDAO();
+
+        // Test phương thức findById
+        System.out.println("\nTest phương thức findById:");
+        int answerId = 1; // Thay đổi ID tùy theo dữ liệu trong cơ sở dữ liệu của bạn
+        Answer answer = answerDAO.findById(answerId);
+        if (answer != null) {
+            System.out.println("Tìm thấy Answer với ID " + answerId + ": " + answer);
+        } else {
+            System.out.println("Không tìm thấy Answer với ID " + answerId);
+        }
+
     }
 
 }

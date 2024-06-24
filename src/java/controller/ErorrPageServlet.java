@@ -4,8 +4,6 @@
  */
 package controller;
 
-import constanct.GoogleLoginHandle;
-import dao.JobseekerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +11,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.GoogleAccount;
 import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class GoogleLoginServlet extends HttpServlet {
+public class ErorrPageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,15 +30,19 @@ public class GoogleLoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String code = request.getParameter("code");
-
-        GoogleLoginHandle gg = new GoogleLoginHandle();
-        String token = gg.getToken(code);
-        GoogleAccount gc = gg.getUserInfo(token);
-        JobseekerDAO jd = new JobseekerDAO();
-        User newU = new User(gc.getGiven_name(), gc.getFamily_name(), gc.getEmail(), "", 2, "", "Active");
-
-        System.out.println(newU);
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Servlet ErorrPageServlet</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<h1>Servlet ErorrPageServlet at " + request.getContextPath() + "</h1>");
+            out.println("</body>");
+            out.println("</html>");
+        }
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,35 +57,16 @@ public class GoogleLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String code = request.getParameter("code");
-
-        GoogleLoginHandle gg = new GoogleLoginHandle();
-        String token = gg.getToken(code);
-        GoogleAccount gc = gg.getUserInfo(token);
-        JobseekerDAO jd = new JobseekerDAO();
-        User newU = new User(gc.getGiven_name(), gc.getFamily_name(), gc.getEmail(), "", 2, "", "Active");
-        //dang ky
-        if (jd.insert(newU)) {
-            User userr = jd.fogortPass(newU.getEmail());
-            HttpSession session = request.getSession();
-            session.setAttribute("account", userr);
-            response.sendRedirect("home.jsp");
-        } //dang nhap
-        else if ((jd.fogortPass(newU.getEmail()) != null)) {
-            if ((jd.findByEmail(gc.getEmail()).getRoleId() == 2)) {
-
-                HttpSession session = request.getSession();
-                User user = jd.fogortPass(gc.getEmail());
-                session.setAttribute("account", user);
-                response.sendRedirect("home.jsp");
-            } else {
-                request.setAttribute("notice", "This email was registered to an account on behalf of a Employer.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-
-        }
-
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        if (u.getRoleId() == 2) {
+            request.setAttribute("hreff", "home.jsp");
+        } else if (u.getRoleId() == 3) {
+            request.setAttribute("hreff", "employerhomeservlet");
+        } else if (u.getRoleId() == 1) {
+            request.setAttribute("hreff", "adminDashBoard");
+        } else     request.setAttribute("hreff", "index.html");
+            request.getRequestDispatcher("404.jsp").forward(request, response);
     }
 
     /**

@@ -4,11 +4,11 @@
  */
 package controller;
 
-import dao.ApplyDAO;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import dao.CVDAO;
 import dao.CompanyDAO;
-import dao.JobDAO;
-import dao.JobseekerDAO;
 import dao.MessagessDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,18 +17,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import javax.mail.Session;
-import model.Apply;
+import java.util.ArrayList;
+import java.util.List;
 import model.CVProfile;
 import model.Company;
-import model.Job;
 import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class JobDetails extends HttpServlet {
+public class GetSorttedReceiverList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -47,10 +46,10 @@ public class JobDetails extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet JobDetails</title>");
+            out.println("<title>Servlet GetSorttedReceiverList</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet JobDetails at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet GetSorttedReceiverList at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -68,72 +67,48 @@ public class JobDetails extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int id = Integer.parseInt(request.getParameter("id"));
-        JobDAO jd = new JobDAO();
-        JobseekerDAO jdd = new JobseekerDAO();
-        //lay thong tin cua job tu id job
-        Job job = jd.findById(id);
-        // Lay ra thong tin company theo id job
-        CompanyDAO cm = new CompanyDAO();
-        Company com = cm.findCompanyByIdJob(id);
-
-        //lay thong tin nguoi dang bai tu id job
-        // thong tin nha tuyen dung
-        User u = jdd.getInfo(id);
-
-        //Chat DAO 
-        MessagessDAO dao = new MessagessDAO();
-
-        //CV ProfileDAO
-        CVDAO cvd = new CVDAO();
-
         HttpSession session = request.getSession();
-        //account của user
-        User user = (User) session.getAttribute("account");
+        User account = (User) session.getAttribute("account");
+        MessagessDAO dao = new MessagessDAO();
+        List<User> receiver = dao.getListAccountBySenderID(account.getIdUser());
 
-        if (user != null) {
+        JsonObject jsonResponse = new JsonObject();
+        JsonArray jsonReceiverArray = new JsonArray();
 
-            // Check thử cong viec nay da apply chua
-            ApplyDAO ap = new ApplyDAO();
-            CVDAO cvdd = new CVDAO();
-
-            try {
-                Apply a = ap.findByJobIDAndCvID(id, cvdd.findByIdUser(user.getIdUser()).getCVId());
-                CVProfile cvp = cvd.findByIdUser(user.getIdUser());
-                //thong tin nha tuyen dung
-                request.setAttribute("u", u);
-                //thong tin job
-                request.setAttribute("cc", job);
-                //
-                request.setAttribute("dao", dao);
-                request.setAttribute("profile", cvp);
-                request.setAttribute("cv", cvp);
-                request.setAttribute("user", user);
-                request.setAttribute("com", com);
-                request.setAttribute("apply", a);
-                request.getRequestDispatcher("job-details.jsp").forward(request, response);
-
-            } catch (Exception e) {
-                CVProfile cvp = cvd.findByIdUser(user.getIdUser());
-                request.setAttribute("u", u);
-                //thong tin job
-                request.setAttribute("cc", job);
-                request.setAttribute("dao", dao);
-                //
-                request.setAttribute("profile", cvp);
-                request.setAttribute("com", com);
-                request.getRequestDispatcher("job-details.jsp").forward(request, response);
-            }
-
-        } else {
-            // vẫn có thể xem được job khi không đăng nhập
-            request.setAttribute("cc", job);
-            request.setAttribute("u", u);
-            request.setAttribute("com", com);
-            request.getRequestDispatcher("job-details.jsp").forward(request, response);
-
+        for (User user : receiver) {
+            jsonReceiverArray.add(convertAccountToJson(user));
         }
 
+        jsonResponse.add("receiver", jsonReceiverArray);
+        jsonResponse.add("sender", convertAccountToJson(account));
+
+        response.setContentType("application/json");
+        try (PrintWriter out = response.getWriter()) {
+            out.print(jsonResponse.toString());
+            out.flush();
+        }
+    }
+
+    private JsonObject convertAccountToJson(User user) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("accountID", user.getIdUser());
+        jsonObject.addProperty("firstName", user.getFirstName());
+        jsonObject.addProperty("lastName", user.getLastName());
+        jsonObject.addProperty("roleId", user.getRoleId());
+
+        if (user.getRoleId() == 3) {
+            CompanyDAO comDAO = new CompanyDAO();
+            Company ca = comDAO.findCompanyByUserId(user.getIdUser());
+            jsonObject.addProperty("url", ca.getUrl());
+            jsonObject.addProperty("nameCompany", ca.getNameCompany());
+        } else {
+            CVDAO cd = new CVDAO();
+            CVProfile cp = cd.findByIdUser(user.getIdUser());
+            jsonObject.addProperty("url", "/easyjob/assets/avatars/" + cp.getAvatar());
+            jsonObject.addProperty("nameCompany", ""); // Để trống nếu không phải công ty
+        }
+
+        return jsonObject;
     }
 
     /**

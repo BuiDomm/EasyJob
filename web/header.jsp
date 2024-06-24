@@ -72,7 +72,9 @@
 
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="team.jsp">Team</a>
-                                        <a class="dropdown-item" href="testimonials.jsp">Testimonials</a>
+
+                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/companyList">Enterprise</a>
+
                                         <a class="dropdown-item" href="terms.jsp">Terms</a>
                                         <c:choose>
                                             <c:when test="${sessionScope.account != null}">
@@ -164,7 +166,7 @@
                                         </li>
                                         <li class="icon-content">
                                             <a
-                                                href="#!"
+                                                href="messageListAccount"
 
 
                                                 >

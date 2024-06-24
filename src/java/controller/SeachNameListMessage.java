@@ -4,8 +4,11 @@
  */
 package controller;
 
-import constanct.GoogleLoginHandle;
-import dao.JobseekerDAO;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import dao.CompanyDAO;
+import dao.MessagessDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,14 +16,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.GoogleAccount;
+import java.util.List;
+import model.Company;
 import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class GoogleLoginServlet extends HttpServlet {
+public class SeachNameListMessage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -33,15 +37,51 @@ public class GoogleLoginServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String code = request.getParameter("code");
+        String nameSearch = request.getParameter("namesearch");
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        MessagessDAO md = new MessagessDAO();
+        List<User> list = md.searchByName(u.getIdUser(), nameSearch);
 
-        GoogleLoginHandle gg = new GoogleLoginHandle();
-        String token = gg.getToken(code);
-        GoogleAccount gc = gg.getUserInfo(token);
-        JobseekerDAO jd = new JobseekerDAO();
-        User newU = new User(gc.getGiven_name(), gc.getFamily_name(), gc.getEmail(), "", 2, "", "Active");
+        Gson gson = new Gson();
+        //json tổng
+        JsonObject jsonObject = new JsonObject();
+        // tao json list
+        JsonArray listAfterSearch = new JsonArray();
+        for (User user : list) {
+            // chuyen doi sang json account va add vao json list
+            listAfterSearch.add(convertAccountToJson(user));
+        }
+        JsonObject sender = convertAccountToJson(u);
 
-        System.out.println(newU);
+        // add list user sau khi tin vao json tong
+        jsonObject.add("receiver", listAfterSearch);
+        jsonObject.add("sender", sender);
+
+        // chuyen doi thong tin nguoi gui tin nhan thanh json
+        String json = gson.toJson(jsonObject);
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        //ghi du lieu json vao trong body cua HTTP response -> chuyen data tu server ve client
+        out.print(json);
+        //dẩy đi
+        out.flush();
+    }
+
+    private JsonObject convertAccountToJson(User user) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("accountID", user.getIdUser());
+        jsonObject.addProperty("name", user.getFirstName());
+        jsonObject.addProperty("fullName", user.getFirstName() + " " + user.getLastName());
+
+        if (user.getRoleId() == 3) {
+            CompanyDAO comDAO = new CompanyDAO();
+            Company ca = comDAO.findCompanyByUserId(user.getIdUser());
+            jsonObject.addProperty("url", ca.getUrl());
+
+        }
+
+        return jsonObject;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -56,34 +96,7 @@ public class GoogleLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        String code = request.getParameter("code");
-
-        GoogleLoginHandle gg = new GoogleLoginHandle();
-        String token = gg.getToken(code);
-        GoogleAccount gc = gg.getUserInfo(token);
-        JobseekerDAO jd = new JobseekerDAO();
-        User newU = new User(gc.getGiven_name(), gc.getFamily_name(), gc.getEmail(), "", 2, "", "Active");
-        //dang ky
-        if (jd.insert(newU)) {
-            User userr = jd.fogortPass(newU.getEmail());
-            HttpSession session = request.getSession();
-            session.setAttribute("account", userr);
-            response.sendRedirect("home.jsp");
-        } //dang nhap
-        else if ((jd.fogortPass(newU.getEmail()) != null)) {
-            if ((jd.findByEmail(gc.getEmail()).getRoleId() == 2)) {
-
-                HttpSession session = request.getSession();
-                User user = jd.fogortPass(gc.getEmail());
-                session.setAttribute("account", user);
-                response.sendRedirect("home.jsp");
-            } else {
-                request.setAttribute("notice", "This email was registered to an account on behalf of a Employer.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
-            }
-
-        }
+        processRequest(request, response);
 
     }
 

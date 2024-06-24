@@ -65,62 +65,46 @@
                         <div class="contact-form">
                             <form action="searchAndFilter">
 
+                                 <h5 style="margin: 15px 0">Title</h5>
+                                 
                                 <div class="search-form">
                                     <label>
-                                        <input type="text" >
-                                        <ul>
-                                            <li data-char="t">t</li>
-                                            <li data-char="i">i</li>
-                                            <li data-char="t2">t</li> 
-                                            <li data-char="l">l</li>
-                                            <li data-char="e">e</li>
-                                        </ul>
+                                        <input type="text" name="search" >
                                     </label>
                                 </div>
+                                 
+                                 
+                                 <h5 style="margin: 15px 0">Company</h5>
 
-
-
-                                <h5 style="margin: 15px 0">Company</h5>
-
-                                <c:forEach var="c" items="${listCompany}" >
-                                    <div>
-                                        <label>
-                                            <input name="company" value="${c.companyID}" type="radio">
-
-                                            <small va>${c.nameCompany}</small>
-                                        </label>
-                                    </div>
-
-                                </c:forEach>
-
-
+                                <div class="search-form">
+                                    <label>
+                                        <input type="text" name="company" value="${company}"  >    
+                                    </label>
+                                </div>
 
                                 <br>
 
                                 <h5 style="margin-bottom: 15px">Category</h5>
-                                <c:forEach var="c" items="${listCategory}" >
-                                    <div>
-                                        <label>
-                                            <input name="category" value="${c.categoryID}" type="radio">
-
-                                            <small>${c.categoryName}</small>
-                                        </label>
-                                    </div>
-                                </c:forEach>
+                                
+                                 <select name="category">
+                                       <option  value="0">Select Category</option>
+                                     <c:forEach var="c" items="${listCategory}" >
+                                      <option  value="${c.categoryID}">${c.categoryName}</option>
+                                    </c:forEach>
+                                </select>
 
                                 <br>
 
                                 <h5 style="margin-bottom: 15px">Location</h5>
-                                <c:forEach var="l" items="${listLocation}" >
-                                    <div>
-                                        <label>
-                                            <input name="location" value="${l.location}" type="radio">
+                                
 
-                                            <small>${l.location}</small>
-                                        </label>
-                                    </div>
-                                </c:forEach>
-
+                                <select name="location">
+                                     <option  value=" ">Select Location</option>
+                                     ${location}
+                                    <c:forEach var="l" items="${listLocation}" >                       
+                                      <option  value="${l.location}" ${(l.location == location) ? selected : ""}>${l.location}</option>
+                                    </c:forEach>
+                                </select>
                               
                                 <br>
 
@@ -195,7 +179,7 @@
                                     <div class="product-item">
                                         <a href="jobdetails?id=${item.jobID}"><img style="height: 47%; object-fit: cover" src="${listCompanyByJob.get(counter).url}" alt=""></a>
                                         <div class="down-content">
-                                            <a href="jobdetails?id=${item.jobID}"><h4 style="font-size: 14px;">${item.title}</h4></a>
+                                            <a href="jobdetails?id=${item.jobID}"><h4>${item.title}</h4></a>
 
                                             <h6>Salary: ${item.salary}</h6>
 
@@ -238,7 +222,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="inner-content">
-                            <p>Copyright © 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
+                            <p>Copyright Â© 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
                         </div>
                     </div>
                 </div>

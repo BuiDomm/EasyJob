@@ -77,15 +77,7 @@
                                     <div class="card-header text-bg-primary">Welcome, <c:out value="${user.email}" /> </div>
                                     <div class="card-body">
 
-                                        <!-- fix image -->    
-                                        <div class="d-flex flex-column align-items-center text-center">
-                                            <img src="assets/avatars/<c:out value="${cv.avatar}" />" alt="Admin" class="card-image p-1 bg-primary" style="width:130px; height:120px">
-                                            <div class="mt-3">
-                                                <h4><c:out value="${user.firstName}" /> <c:out value="${user.lastName}" /></h4>
-
-
-                                            </div>
-                                        </div>
+                                        <h5 class="text-center mb-1"><c:out value="${user.firstName}" /> <c:out value="${user.lastName}" /></h5>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +96,6 @@
                                                         <c:when test="${loop.index == 2}">bi-twitter-x</c:when>
                                                         <c:when test="${loop.index == 1}">bi-facebook</c:when>
                                                         <c:when test="${loop.index == 3}">bi-linkedin</c:when>
-                                                        <c:when test="${loop.index == 4}">bi-patch-check</c:when>
                                                         <c:otherwise>bi-link</c:otherwise> 
                                                     </c:choose>
                                                 </c:set>
@@ -155,7 +146,7 @@
                                             </c:forEach>
                                         </c:if>
                                     </div>
-                                    <a href="listApplyCv" class="btn btn-primary btn-sm">Back Home</a>
+                                    <a href="home.jsp" class="btn btn-primary btn-sm">Back Home</a>
                                 </div>
                             </div>
                         </div>
@@ -246,15 +237,7 @@
 
 
                                         <div class="container mt-3 d-flex flex-row justify-content-between">
-                                            <div class="row align-items-center">
-                                                <div class="col-md-auto">
-                                                    <a href="./assets/pdf/<c:out value="${cv.linkPdf}" />" download="" class="btn btn-primary">Download CV</a>
-                                                </div>
-                                                
-                                                <div class="col-md-auto">
-                                                    <a href="viewPdf?fileName=<c:out value="${cv.linkPdf}" />" target="pdfViewer" class="btn btn-primary">Show CV</a>
-                                                </div>
-                                            </div>
+                                            <a href="./assets/pdf/<c:out value="${cv.linkPdf}" />" download="" class="btn btn-primary">Download CV</a>     
 
                                             <div>
 
@@ -264,9 +247,6 @@
                                                                 'rejectApply?applyid=', '${user.firstName}', 'reject')"   class="btn btn-block btn-danger btn-md">Reject Talent</a>
                                             </div>
                                         </div>   
-                                        <div class="container mt-3">
-                                            <iframe name="pdfViewer" width="100%" height="600px" style="border: none;"></iframe>
-                                        </div>
 
                                     </div>
 
@@ -277,13 +257,43 @@
                     </div>
                 </div>
             </div>
+
+
+
+            <!-- Popup Start -->
+            <div class="modal" tabindex="-1" role="dialog" id="rejectModal">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header d-flex justify-content-between">
+                            <h5 class="modal-title">Reject Reason</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="rejectForm">
+                                <div class="form-group">
+                                    <label for="rejectReason">Reason:</label>
+                                    <textarea class="form-control" id="rejectReason" rows="3" required></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="saveBtn">Save changes</button>
+                            <button type="button" class="btn btn-secondary close" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Popup End -->
         </section>
         <footer>
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="inner-content">
-                            <p>Copyright © 2024 - Summer 2024 FPTU SWP</p>
+                            <p>Copyright Â© 2024 - Summer 2024 FPTU SWP</p>
                         </div>
                     </div>
                 </div>
@@ -295,14 +305,41 @@
 
         <!-- Bootstrap core JavaScript -->
         <script src="https://unpkg.com/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
         <script>
 
-                                                    function showMess(id, url,name, key) {
+                                                    function showMess(id, url, name, key) {
                                                         if (key === "reject") {
                                                             var option = confirm('Are you sure you want to ' + key + ' CV of \n' +
                                                                     'Account name: ' + name + ' ?');
                                                             if (option === true) {
-                                                                window.location.href = url + id;
+                                                                // Show the modal
+                                                                $('#rejectModal').modal('show');
+                                                                $('.close').click(function () {
+                                                                    $('#rejectModal').modal('hide');
+                                                                });
+                                                                // When the save button is clicked
+                                                                $('#saveBtn').click(function () {
+                                                                    var reason = $('#rejectReason').val();
+                                                                    if (reason.trim() === "") {
+                                                                        alert("Must input reason to continue");
+                                                                        return;
+                                                                    }
+                                                                    $.ajax({
+                                                                        url: url + id,
+                                                                        type: 'GET',
+                                                                        data: {
+                                                                            'reason': reason
+                                                                        }, contentType: 'application/x-www-form-urlencoded',
+                                                                        success: function () {
+                                                                            // Close the modal
+                                                                            $('#rejectModal').modal('hide');
+                                                                            window.location.href = './listApplyCv?status=Reject';
+
+                                                                        }
+                                                                    });
+                                                                });
                                                             }
                                                         } else if (key === "accept") {
                                                             var option = confirm('Are you sure you want to ' + key + ' CV of \n' +

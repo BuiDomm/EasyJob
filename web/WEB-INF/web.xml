@@ -490,4 +490,21 @@
     <welcome-file>home</welcome-file>
 </welcome-file-list>
 
+    <servlet>
+        <servlet-name> NotificationReadAll</servlet-name>
+        <servlet-class>controller.NotificationReadAll</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> NotificationReadAll</servlet-name>
+        <url-pattern>/readAll</url-pattern>
+    </servlet-mapping>
+     <servlet>
+        <servlet-name> NotificationList</servlet-name>
+        <servlet-class>controller.NotificationList</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> NotificationList</servlet-name>
+        <url-pattern>/notifications</url-pattern>
+    </servlet-mapping>
+
 </web-app>

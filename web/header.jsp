@@ -5,6 +5,7 @@
 --%>
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -23,7 +24,7 @@
         <link rel="stylesheet" href="assets/css/button.css">
     </head>
     <body>
-        <header class="headerclass">
+        <header class="">
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
                     <c:choose>
@@ -71,7 +72,9 @@
 
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="team.jsp">Team</a>
+
                                         <a class="dropdown-item" href="${pageContext.request.contextPath}/companyList">Enterprise</a>
+
                                         <a class="dropdown-item" href="terms.jsp">Terms</a>
                                         <c:choose>
                                             <c:when test="${sessionScope.account != null}">
@@ -121,11 +124,44 @@
                                 </c:when >
                                 <c:otherwise >
                                     <ul class="example-2" style="display: flex;max-height: 45px;margin-left: 120px;margin-bottom: 15px;">
+                                        <div class="shadow-lg d-none" id="boxNotification" style="position: absolute; background: white; top: 80%;width: 400px">
+                                            <h5 class="fw-semibold px-3 py-2 m-0 d-flex justify-content-between">Notifications
+                                                <a href="readAll" class="btn btn-info float-end ">Read All</a></h5>
+                                                <c:set var="newNotification" value="${notidao.getNewNotificationsesByAccount(sessionScope.account.getIdUser())}" />
+                                                <c:forEach var="n" items="${newNotification}">
+                                                <a href="javascript:void(0)" class="dropdown-item ">
+                                                    <div class="d-flex align-items-start py-2 " style=" white-space: nowrap;
+                                                         overflow: hidden;
+                                                         text-overflow: ellipsis;
+                                                         ${n.readStatus == 1 ? '':'opacity:0.5;'} ">
+
+                                                        <div class="m-0 d-flex justify-content-between ">
+                                                            <span class="${n.readStatus == 1 ? ' bg-primary badge rounded-pill h-100 ':'' }"> </span>
+                                                            <h6 class="mb-1 fw-semibold">${fn:substring(n.time, 0, 10)}  
+                                                                &nbsp;&nbsp;&nbsp;&nbsp;</h6>
+                                                            <p class="mb-1">${n.message}</p>
+                                                           
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </c:forEach>
+                                            <div class="d-grid p-3 border-top w-100">
+                                                <a href="notifications" class="btn btn-outline-primary w-100">View all</a>
+                                            </div>
+                                        </div>
                                         <li class="icon-content">
-                                            <a href="#!" aria-label="Discord" >
+                                            <c:set value="${notidao.getNumberNewNotificationses(sessionScope.account.getIdUser())}" var="number"></c:set>
+                                            <c:if test="${number != 0}">
+                                                <span class="count rounded-circle bg-danger" style="position: absolute; z-index: 10;top: -15px;right: -10px;width: 25px;">${number}</span>
+                                            </c:if>
+
+                                            <a href="#!" aria-label="Discord" onclick="handleDisplayBox()" >
                                                 <div class="filled"></div>
                                                 <img width="24" height="24" src="https://img.icons8.com/material-outlined/24/appointment-reminders--v1.png" alt="appointment-reminders--v1"/>
+
                                             </a>
+
+
                                             <div class="tooltip">Notification</div>
                                         </li>
                                         <li class="icon-content">
@@ -216,4 +252,10 @@
             </nav>
         </header>
     </body>
+    <script>
+        handleDisplayBox = () => {
+            var element = document.getElementById("boxNotification");
+            element.classList.toggle("d-block");
+        };
+    </script>
 </html>

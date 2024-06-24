@@ -146,7 +146,15 @@ isVerified = false;
                                                     <div class="card-header text-bg-primary">Welcome, <c:out value="${user.email}" /> </div>
                                                     <div class="card-body">
 
-                                                        <h5 class="text-center mb-1"><c:out value="${user.firstName}" /> <c:out value="${user.lastName}" /></h5>
+                                                        <!-- fix image -->    
+                                                        <div class="d-flex flex-column align-items-center text-center">
+                                                            <img src="assets/avatars/<c:out value="${cv.avatar}" />" alt="Admin" class="card-image p-1 bg-primary" style="width:130px; height:130px; object-fit: cover; border-radius: 50%">
+                                                            <div class="mt-3">
+                                                                <h4><c:out value="${user.firstName}" /> <c:out value="${user.lastName}" /></h4>
+
+
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,7 +177,7 @@ isVerified = false;
                                                                     </c:choose>
                                                                 </c:set>
                                                                 <a  href="<c:out value="${socialAccount}" />" class="d-inline-block bg-dark link-light lh-1 p-2 rounded">
-                                                                    <i  class="bi <c:out value="${iconClass}" />"></i>
+                                                                    <i style="font-size: 16px" class="bi <c:out value="${iconClass}" />"></i>
                                                                 </a>
                                                             </c:forEach>
                                                         </c:if>
@@ -318,18 +326,27 @@ isVerified = false;
                                     </div>
                                 </div>
                             </div>
-                        </section>
-                        <footer>
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <div class="inner-content">
-                                            <p>Are you sure you will <b style="font-weight: 700">submit this your CV Profile</b> to the Employer ?</p>
+                            <footer style="margin-bottom: 150px;width: 100%;">
+                                <div class="">
+                                    <div class="">
+                                        <div class="">
+                                            <div class="inner-content" style="text-align: center" >
+                                                <p style="margin-left: 50%;
+                                                   transform: translateX(-30%);
+                                                   width: 560px;">Are you sure you will <b style="font-weight: 700">submit this your CV Profile</b> to the Employer ?</p>
+
+                                                <div class="buttons" style="margin-left: 50%;
+                                                     transform: translateX(-30%); margin-top: 25px;">
+                                                    <button style="background-color: red; border-radius: 6px" class="close-btn">No, Close</button>
+                                                    <button style="background-color: green; border-radius: 6px" class="yes-btn">Yes, Do it</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </footer>
+                            </footer>
+                        </section>
+
 
 
 
@@ -360,11 +377,6 @@ isVerified = false;
                 </html>
 
 
-
-                <div class="buttons">
-                    <button style="background-color: red; border-radius: 6px" class="close-btn">No, Close</button>
-                    <button style="background-color: green; border-radius: 6px" class="yes-btn">Yes, Do it</button>
-                </div>
             </div>
         </section>
 
@@ -563,7 +575,7 @@ isVerified = false;
                         </div>
                         <div class="contact-form">
                             <div class="form-group">
-                                <a style="text-align: center" href="#!" class="filled-button btn-block">Message with Employer</a>
+                                <a style="text-align: center" href="messageWith?friendId=${dao.getEmployIdByJobId(cc.jobID)}" class="filled-button btn-block">Message with Employer</a>
                             </div>
                         </div>
                     </div>

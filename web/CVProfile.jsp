@@ -86,7 +86,7 @@
 
                                         <!-- fix image -->    
                                         <div class="d-flex flex-column align-items-center text-center">
-                                            <img src="assets/avatars/<c:out value="${cv.avatar}" />" alt="Admin" class="card-image p-1 bg-primary" style="width:130px; height:120px">
+                                            <img src="assets/avatars/<c:out value="${cv.avatar}" />" alt="Admin" class="card-image p-1 bg-primary" style="width:130px; height:130px; object-fit: cover; border-radius: 50%">
                                             <div class="mt-3">
                                                 <h4><c:out value="${user.firstName}" /> <c:out value="${user.lastName}" /></h4>
 
@@ -312,7 +312,7 @@
                                                             <div class="col-md-6 mb-4 mb-xl-0">
                                                                 <div class="card">  <div class="card-header">Avatar Upload</div>  <div class="card-body">
                                                                         <p id="avatarImageAvatar"><c:out value="${cv.avatar}"/></p>
-                                                                        <div>  <input type="file" id="fileInputAvatar" style="display: none;" name="linkAvt" >
+                                                                        <div>  <input type="file" accept="image/*" id="fileInputAvatar" style="display: none;" name="linkAvt" >
                                                                             <a href="#!" id="uploadButtonAvatar" class="d-inline-block bg-primary link-light lh-1 p-2 rounded">
                                                                                 <i class="bi bi-upload"></i> Upload avatar
                                                                             </a>
@@ -435,7 +435,7 @@
                 var avatarFile = document.getElementById("fileInputAvatar").files[0];
 
                
-                var emailRegex = /^[^\s@]+@gmail\.com$/;
+               var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 var cvRegex = /^.*\.(pdf)$/i;
                 var avatarRegex = /^.*\.(jpg|jpeg|png)$/i;
 

@@ -99,16 +99,28 @@
         <servlet-class>controller.AdminRejectJob</servlet-class>
     </servlet>
     <servlet>
-
-    
-
         <servlet-name>SearchJobApplied</servlet-name>
         <servlet-class>controller.SearchJobApplied</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>WithdrawJob</servlet-name>
         <servlet-class>controller.WithdrawJob</servlet-class>
-
+    </servlet>
+    <servlet>
+        <servlet-name>GetSorttedReceiverList</servlet-name>
+        <servlet-class>controller.GetSorttedReceiverList</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ajaxServlet</servlet-name>
+        <servlet-class>controller.ajaxServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>HomeServlet</servlet-name>
+        <servlet-class>controller.HomeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ErorrPageServlet</servlet-name>
+        <servlet-class>controller.ErorrPageServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name> AdminJobDetail</servlet-name>
@@ -386,11 +398,10 @@
         <servlet-name> AdminDashBoard</servlet-name>
         <url-pattern>/adminDashBoard</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name> AdminListBlog</servlet-name>
         <servlet-class>controller.AdminListBlog</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet-mapping>
         <servlet-name> AdminListBlog</servlet-name>
         <url-pattern>/adminListBlog</url-pattern>
@@ -404,21 +415,79 @@
         <url-pattern>/withdraw</url-pattern>
     </servlet-mapping>
     <servlet>
-
         <servlet-name>createskilltest</servlet-name>
         <servlet-class>controller.createskilltest</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>manageskilltest</servlet-name>
         <servlet-class>controller.manageskilltest</servlet-class>
- </servlet>
-        <servlet-mapping>
-            <servlet-name>createskilltest</servlet-name>
-            <url-pattern>/createskilltest</url-pattern>
-        </servlet-mapping>
-        <servlet-mapping>
-            <servlet-name>manageskilltest</servlet-name>
-            <url-pattern>/manageskilltest</url-pattern>
-        </servlet-mapping>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>createskilltest</servlet-name>
+        <url-pattern>/createskilltest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>manageskilltest</servlet-name>
+        <url-pattern>/manageskilltest</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>CreateMessage</servlet-name>
+        <servlet-class>controller.CreateMessage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MessageDetail</servlet-name>
+        <servlet-class>controller.MessageDetail</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MessageListAccount</servlet-name>
+        <servlet-class>controller.MessageListAccount</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MessageAddWith</servlet-name>
+        <servlet-class>controller.MessageAddWith</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CreateMessage</servlet-name>
+        <url-pattern>/createMessage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MessageDetail</servlet-name>
+        <url-pattern>/messageDetail</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MessageListAccount</servlet-name>
+        <url-pattern>/messageListAccount</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MessageAddWith</servlet-name>
+        <url-pattern>/messageWith</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SeachNameListMessage</servlet-name>
+        <url-pattern>/searchnamelistmessage</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>SeachNameListMessage</servlet-name>
+        <servlet-class>controller.SeachNameListMessage</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GetSorttedReceiverList</servlet-name>
+        <url-pattern>/getSortedReceiverList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ajaxServlet</servlet-name>
+        <url-pattern>/vnpayajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ErorrPageServlet</servlet-name>
+        <url-pattern>/erorr</url-pattern>
+    </servlet-mapping>
+    <welcome-file-list>
+    <welcome-file>home</welcome-file>
+</welcome-file-list>
 
 </web-app>

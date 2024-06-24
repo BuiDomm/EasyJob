@@ -71,7 +71,7 @@
                     </div>
                     <div class="mt-3 input-group mb-3">
                         <span class="input-group-text" id="inputGroup-sizing-default">Upload Company Image</span>
-                        <input type="file"  class="form-control" name="image" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+                        <input type="file" accept="image/*" class="form-control" name="image" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
                        
                     </div>
                     <div class="mt-2 d-grid gap-2">

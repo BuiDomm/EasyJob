@@ -87,7 +87,7 @@
                     <div class="col-md-12">
                         <div class="text-content">
                             <h4>Dolore doloribus sint</h4>
-                            <h2>Testimonials</h2>
+                            <h2>Enterprise</h2>
                         </div>
                     </div>
                 </div>

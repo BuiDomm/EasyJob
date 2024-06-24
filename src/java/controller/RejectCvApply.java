@@ -4,18 +4,14 @@
  */
 package controller;
 
-import EmailAutoman.SendEmail;
-import dao.ApplyDAO;
 import dao.CompanyDAO;
 import dao.JobApplyDAO;
-import dao.JobseekerDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import model.Apply;
-import model.Company;
 import model.User;
 
 /**
@@ -25,21 +21,19 @@ import model.User;
 public class RejectCvApply extends HttpServlet {
         protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
+            HttpSession session = request.getSession();
          String applyid = request.getParameter("applyid");
-        
+         String reason = request.getParameter("reason");
+          User user = (User) session.getAttribute("account");
+        int useId = user.getIdUser();
         JobApplyDAO dao = new JobApplyDAO();
+        CompanyDAO companydao = new CompanyDAO();
+          int userApply = dao.getUserByapplyid(Integer.parseInt(applyid)).getIdUser();
+         String company = companydao.findByUserId(useId).getNameCompany();
+        String title = dao.findByApplyId(Integer.valueOf(applyid)).getTitle();
+        String mess = company + " rejected your Cv for Job : " +title+" Because: " + reason ;
         dao.rejectCv(applyid);
-        
-            // Gui mail khi accept 
-        SendEmail sm = new SendEmail();
-        ApplyDAO ad = new ApplyDAO();
-        CompanyDAO comdao = new CompanyDAO();
-        JobseekerDAO jd = new JobseekerDAO();
-        Apply a = ad.findById(Integer.parseInt(applyid));
-        Company com = comdao.findCompanyByIdJob(a.getJob().getJobID());
-        User u = jd.findById(a.getCvProfile().getUserID());
-        sm.sendUpdateStatusCVApply(u.getEmail(), u.getLastName()+" " + u.getFirstName(), com, a);
-        // Gui mail khi accept
+         dao.insertNotificationApprovel(userApply, mess, 1);
         response.sendRedirect("listApplyCv");
     } 
 

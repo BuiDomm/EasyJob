@@ -4,7 +4,6 @@
  */
 package controller;
 
-import dao.CompanyDAO;
 import dao.FilterDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
@@ -12,7 +11,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import model.Category;
 import model.Company;
@@ -36,36 +34,46 @@ public class SearchAndFilter extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String txt = request.getParameter("search");
-        int company = (request.getParameter("company") != null) ? Integer.parseInt(request.getParameter("company")) : 0;
-        int category = (request.getParameter("category") != null) ? Integer.parseInt(request.getParameter("category")) : 0;
+        if("".equals(txt)) txt = null;
+        String company = request.getParameter("company");
+         if("".equals(company)) company = null;
+        int category =  Integer.parseInt(request.getParameter("category"));
         String location = request.getParameter("location");
-        int salary = (request.getParameter("salary") != null) ? Integer.parseInt(request.getParameter("salary")) : 0;
-        int year = (request.getParameter("year") != null) ? Integer.parseInt(request.getParameter("year")) : 0;
+         if("".equals(location)) location = null;
+        int salary =(request.getParameter("salary") != null) ? Integer.parseInt(request.getParameter("salary")) : 0;
+        int year =(request.getParameter("year") != null) ? Integer.parseInt(request.getParameter("year")) : 0;
         int index = (request.getParameter("index") != null) ? Integer.parseInt(request.getParameter("index")) : 1;
-
+        
+        System.out.println(location);
         FilterDAO dao = new FilterDAO();
-
+ 
         List<Company> listCompany = dao.getAllCompany();
         List<Category> listCategory = dao.getAllCategory();
         List<Job> listLocation = dao.getAllLocation();
         List<Job> listJob = dao.getJobsByCriteria(txt, company, category, year, location, salary, index);
-        int count = dao.countJobsByCriteria(txt, company, category, index, location, salary);
+        int count = dao.countJobsByCriteria(txt, company, category,year, location, salary);
+        System.out.println(count);
         int endPage = count / 4;
         if (count % 4 != 0) {
             endPage++;
         }
-        CompanyDAO cd = new CompanyDAO();
-        List<Company> listCompanyByJob = new ArrayList<>();
-        for (Job j : listJob) {
-            Company c = cd.findCompanyByIdJob(j.getJobID());
-            listCompanyByJob.add(c);
-        }
-        request.setAttribute("listCompanyByJob", listCompanyByJob);
+        
+        request.setAttribute("txt", txt);
+        request.setAttribute("company", company);
+        request.setAttribute("category", category);
+        request.setAttribute("location", location);
+        request.setAttribute("salary", salary);
+        request.setAttribute("year", year);
+        request.setAttribute("dao", dao);
+        System.out.println(location);
+        System.out.println(txt);
+              
+        request.setAttribute("endP", endPage);
         request.setAttribute("listjob", listJob);
         request.setAttribute("listCompany", listCompany);
         request.setAttribute("listCategory", listCategory);
         request.setAttribute("listLocation", listLocation);
-        request.getRequestDispatcher("jobsearch.jsp").forward(request, response);
+        request.getRequestDispatcher("jobsearch.jsp").forward(request, response);       
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

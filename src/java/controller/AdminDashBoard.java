@@ -23,15 +23,24 @@ public class AdminDashBoard extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        String top = request.getParameter("top");
+        if(top == null) top = "year";
         AdminDAO dao = new AdminDAO();
         int totalAccount = dao.getTotalUser();
         int totalJobs = dao.getTotalJob();
         int totalCompany = dao.getTotalCompany();
+        int accountActive = dao.getAccountByStatus("Active");
+        int accountLock = dao.getAccountByStatus("Lock");
         List<Statistic> statistic = dao.getJobByMonth();
-        Map<Job, Integer> topJob = dao.getTopJobWithApplyCount();
+        Map<Job, Integer> topJob = dao.getTopJobWithApplyCount(top);
+        
+        
         request.setAttribute("statistic", statistic);
 
+        request.setAttribute("accountActive", accountActive);
+        request.setAttribute("accountLock", accountLock);
         request.setAttribute("topJob", topJob);
+        request.setAttribute("top", top);
         request.setAttribute("dao", dao);
         request.setAttribute("totalAccount", totalAccount);
         request.setAttribute("totalJobs", totalJobs);

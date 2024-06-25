@@ -15,34 +15,11 @@
 
 
         <link href="./assets/css/spur.css" rel="stylesheet" type="text/css"/>
-        <style>
-            .rank-circle {
-                width: 30px;
-                height: 30px;
-                border-radius: 50%;
-                color: white;
-                line-height: 30px;
-                text-align: center;
-                font-weight: bold;
-                background-color: #ddd; /* Màu mặc định */
-            }
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@latest"></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
-            .gold {
-                background-color: gold;
-            }        /* Vàng cho số 1 */
-            .silver {
-                background-color: silver;
-            }    /* Bạc cho số 2 */
-            .bronze {
-                background-color: #cd7f32;
-            }   /* Đồng cho số 3 */
-            .green {
-                background-color: #28a745;
-            }    /* Xanh lá cho số 4 */
-            .blue {
-                background-color: #007bff;
-            }     /* Xanh dương cho số 5 */
-        </style>
+       
 
         <title>Spur - A Bootstrap Admin Template</title>
     </head>
@@ -60,16 +37,16 @@
                     <a href="#!" class="searchbox-toggle">
                         <i class="fas fa-search"></i>
                     </a>
-<!--                                        <form class="searchbox" action="#!">
-                                            <a href="#!" class="searchbox-toggle"> <i class="fas fa-arrow-left"></i> </a>
-                                            <button type="submit" class="searchbox-submit"> <i class="fas fa-search"></i> </button>
-                                            <input type="text" class="searchbox-input" placeholder="type to search">
-                                        </form>-->
+                    <!--                                        <form class="searchbox" action="#!">
+                                                                <a href="#!" class="searchbox-toggle"> <i class="fas fa-arrow-left"></i> </a>
+                                                                <button type="submit" class="searchbox-submit"> <i class="fas fa-search"></i> </button>
+                                                                <input type="text" class="searchbox-input" placeholder="type to search">
+                                                            </form>-->
 
                     <div class="tools">
-<!--                                                <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="tools-item">
-                                                    <i class="fab fa-github"></i>
-                                                </a>-->
+                        <!--                                                <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="tools-item">
+                                                                            <i class="fab fa-github"></i>
+                                                                        </a>-->
                         <a href="#!" class="tools-item">
                             <i class="fas fa-bell"></i>
                             <i class="tools-item-count">4</i>
@@ -83,7 +60,7 @@
                                 <!--                                <a class="dropdown-item" href="#!">Profile</a>-->
 
                                 <a class="dropdown-item" href="changepass.jsp">Change Password</a>
-                             
+
 
                                 <a class="dropdown-item" href="loginjobseeker">Logout</a>
 
@@ -93,9 +70,9 @@
                 </header>
                 <main class="dash-content">
                     <div class="container-fluid">
-                        <div class="row dash-row">
+                        <div class="row dash-row" style="padding: 15px;margin-bottom: 0px">
                             <div class="col-xl-4">
-                                <div class="stats stats-primary">
+                                <div style="border-radius: 15px;" class="stats stats-primary shadow">
                                     <h3 class="stats-title"> Users </h3>
                                     <div class="stats-content">
                                         <div class="stats-icon">
@@ -108,7 +85,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-4">
-                                <div class="stats stats-success ">
+                                <div style="border-radius: 15px;" class="stats stats-success shadow">
                                     <h3 class="stats-title"> Jobs </h3>
                                     <div class="stats-content">
                                         <div class="stats-icon">
@@ -121,7 +98,7 @@
                                 </div>
                             </div>
                             <div class="col-xl-4">
-                                <div class="stats stats-danger">
+                                <div style="border-radius: 15px;" class="stats stats-danger shadow">
                                     <h3 class="stats-title"> Company </h3>
                                     <div class="stats-content">
                                         <div class="stats-icon">
@@ -134,15 +111,79 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="col-xl-12">
+                            <div class="card mb-2">
+                                <div class="card-header d-flex flex-row">
+                                    <h5 class="card-title text-center">Top 5 Job Hot By ${top == "year" ? "Year" : ((top == "month")?"Month":"Week")}</h5>
+                                     <div class="spur-card-menu">
+                                            <div class="dropdown show">
+                                                <a class="spur-card-menu-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                </a>
+                                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                                    <a class="dropdown-item" href="adminDashBoard?top=week">Week</a>
+                                                    <a class="dropdown-item" href="adminDashBoard?top=month">Month</a>
+                                                    <a class="dropdown-item" href="adminDashBoard?top=year">Year</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                </div>
+                                
+                                <div class="card-body">
+                                    <div class="border rounded-3">
+                                        <div class="table-responsive">
+                                            <table class="table align-middle custom-table m-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="text-center">#</th>
+                                                        <th class="text-center">Title</th>
+                                                        <th class="text-center">Location</th>
+                                                        <th class="text-center">Salary</th>
+                                                        <th class="text-center ">Number Apply</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    <c:forEach var="entry" items="${topJob}" varStatus="status">
+                                                        <tr>
+                                                            <td class="text-center">
+                                                                <div class="rank-circle ${status.index == 0 ? 'gold' : status.index == 1 ? 'silver' : status.index == 2 ? 'bronze' : status.index == 3 ? 'green' : status.index == 4 ? 'blue' : ''}">
+                                                                    ${status.index + 1}
+                                                                </div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div class="fw-semibold">${entry.key.getTitle()}</div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div class="fw-semibold">${entry.key.getLocation()}</div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <div class="fw-semibold">${entry.key.getSalary()}</div>
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <span class="badge bg-primary rounded-circle fs-4 text-white">${entry.value}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </c:forEach>
+
+
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding: 15px;">
                             <div class="col-xl-6">
-                                <div class="card spur-card">
-                                    <div class="card-header">
+                                <div style="border-radius: 15px" class="card spur-card bg-light shadow h-120 ">
+                                    <div style="border-radius: 15px 15px 0 0" class="card-header">
                                         <div class="spur-card-icon">
                                             <i class="fas fa-chart-bar"></i>
                                         </div>
-                                        <div class="spur-card-title"> Bar Chart </div>
-                                        <div class="spur-card-menu">
+                                        <div class="spur-card-title"> Total Job </div>
+<!--                                        <div class="spur-card-menu">
                                             <div class="dropdown show">
                                                 <a class="spur-card-menu-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 </a>
@@ -152,7 +193,7 @@
                                                     <a class="dropdown-item" href="#">Something else here</a>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div>-->
                                     </div>
                                     <div class="card-body spur-card-body-chart">
                                         <canvas id="spurChartjsBar"></canvas>
@@ -188,56 +229,43 @@
                                 </div>
 
                                 <div class="col-xl-6">
-                                    <div class="card mb-2">
-                                        <div class="card-header">
-                                            <h5 class="card-title text-center">Top 5 Job</h5>
+                                    <div style="border-radius: 15px" class="card shadow border-0 p-4">
+                                        <div class="d-flex justify-content-between align-items-center mb-3">
+                                            <h6 class="align-items-center mb-0">Account Status</h6>
+
                                         </div>
-                                        <div class="card-body">
-                                            <div class="border rounded-3">
-                                                <div class="table-responsive">
-                                                    <table class="table align-middle custom-table m-0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th class="text-center">#</th>
-                                                                <th class="text-center">Title</th>
-                                                                <th class="text-center">Location</th>
-                                                                <th class="text-center">Salary</th>
-                                                                <th class="text-center w-100">Number Apply</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
+                                        <div id="department" class="apex-chart"></div>
+                                        <script>
+                                            var options2 = {
+                                                series: [${accountActive}, ${accountLock}],
+                                                chart: {
+                                                    width: 450,
+                                                    type: 'pie',
+                                                },
+                                                labels: ['Active Account', 'Lock Account'],
+                                                colors: ['#33FF57', '#FF5733'],
+                                                responsive: [{
+                                                        breakpoint: 600,
+                                                        options: {
+                                                            chart: {
+                                                                width: 500
+                                                            },
+                                                            legend: {
+                                                                position: 'bottom'
+                                                            },
+                                                        }
+                                                    }]
+                                            };
 
-                                                        <c:forEach var="entry" items="${topJob}" varStatus="status">
-                                                            <tr>
-                                                                <td class="text-center">
-                                                                    <div class="rank-circle ${status.index == 0 ? 'gold' : status.index == 1 ? 'silver' : status.index == 2 ? 'bronze' : status.index == 3 ? 'green' : status.index == 4 ? 'blue' : ''}">
-                                                                        ${status.index + 1}
-                                                                    </div>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <div class="fw-semibold">${entry.key.getTitle()}</div>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <div class="fw-semibold">${entry.key.getLocation()}</div>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <div class="fw-semibold">${entry.key.getSalary()}</div>
-                                                                </td>
-                                                                <td class="text-center">
-                                                                    <span class="badge bg-primary rounded-circle fs-4 text-white">${entry.value}</span>
-                                                                </td>
-                                                            </tr>
-                                                        </c:forEach>
+                                            var chart2 = new ApexCharts(document.querySelector("#department"), options2);
+                                            chart2.render();
 
-
-
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    </script>
                                 </div>
                             </div>
+
+
+
                         </div>
                         <!--                        <div class="row">
                                                     <div class="col-xl-6">

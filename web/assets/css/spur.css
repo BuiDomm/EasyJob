@@ -17,7 +17,32 @@
  */
 
 
+.rank-circle {
+                width: 30px;
+                height: 30px;
+                border-radius: 50%;
+                color: white;
+                line-height: 30px;
+                text-align: center;
+                font-weight: bold;
+                background-color: #ddd; /* Màu mặc định */
+            }
 
+            .gold {
+                background-color: gold;
+            }        /* Vàng cho số 1 */
+            .silver {
+                background-color: silver;
+            }    /* Bạc cho số 2 */
+            .bronze {
+                background-color: #cd7f32;
+            }   /* Đồng cho số 3 */
+            .green {
+                background-color: #28a745;
+            }    /* Xanh lá cho số 4 */
+            .blue {
+                background-color: #007bff;
+            }     /* Xanh dương cho số 5 */
 :root {
   --blue: #007bff;
   --indigo: #6610f2;

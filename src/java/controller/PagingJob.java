@@ -7,6 +7,7 @@ package controller;
 import dao.CompanyDAO;
 import dao.FilterDAO;
 import dao.JobDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

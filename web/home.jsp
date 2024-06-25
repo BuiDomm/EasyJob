@@ -66,7 +66,7 @@
 
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="team.jsp">Team</a>
-                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/companyList">Testimonials</a>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/companyList">Enterprise</a>
                                     <a class="dropdown-item" href="terms.jsp">Terms</a>
                                     <a class="dropdown-item" href="./CVSeeker">CV Profile</a>
                                     <a class="dropdown-item" href="${pageContext.request.contextPath}/favoriteJobList">List saved job</a>
@@ -89,7 +89,7 @@
                             </li>
                             <li class="icon-content">
                                 <a
-                                    href="#!"
+                                    href="messageListAccount"
 
 
                                     >

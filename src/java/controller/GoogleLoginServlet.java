@@ -40,6 +40,7 @@ public class GoogleLoginServlet extends HttpServlet {
         GoogleAccount gc = gg.getUserInfo(token);
         JobseekerDAO jd = new JobseekerDAO();
         User newU = new User(gc.getGiven_name(), gc.getFamily_name(), gc.getEmail(), "", 2, "", "Active");
+
         System.out.println(newU);
     }
 
@@ -55,7 +56,7 @@ public class GoogleLoginServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         String code = request.getParameter("code");
 
         GoogleLoginHandle gg = new GoogleLoginHandle();
@@ -71,10 +72,17 @@ public class GoogleLoginServlet extends HttpServlet {
             response.sendRedirect("home.jsp");
         } //dang nhap
         else if ((jd.fogortPass(newU.getEmail()) != null)) {
-            HttpSession session = request.getSession();
-            User user = jd.fogortPass(gc.getEmail());
-            session.setAttribute("account", user);
-            response.sendRedirect("home.jsp");
+            if ((jd.findByEmail(gc.getEmail()).getRoleId() == 2)) {
+
+                HttpSession session = request.getSession();
+                User user = jd.fogortPass(gc.getEmail());
+                session.setAttribute("account", user);
+                response.sendRedirect("home.jsp");
+            } else {
+                request.setAttribute("notice", "This email was registered to an account on behalf of a Employer.");
+                request.getRequestDispatcher("login.jsp").forward(request, response);
+            }
+
         }
 
     }

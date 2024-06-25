@@ -10,6 +10,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.Category;
 import model.Company;
 import model.Job;
@@ -26,7 +28,7 @@ public class FilterDAO {
     ResultSet rs = null;
 
 //    filter job
-    public List<Job> getJobsByCriteria(String title, int company, int category, int experienceOption, String location, int salaryOption, int index) {
+    public List<Job> getJobsByCriteria(String title, String company, int category, int experienceOption, String location, int salaryOption, int index) {
         List<Job> filterJobs = new ArrayList<>();
 
         StringBuilder query = new StringBuilder("SELECT DISTINCT J.JobID, J.CompanyID, J.CategoryID, J.Title, J.[Description], J.ExperienceYears, J.[Location], J.Salary, J.[Status], J.[Date]\n"
@@ -39,8 +41,8 @@ public class FilterDAO {
             query.append(" AND J.Title LIKE ?");
         }
 
-        if (company > 0) {
-            query.append(" AND J.CompanyID = ?");
+        if (company != null) {
+            query.append(" AND C.CompanyName like ?");
         }
 
         if (category > 0) {
@@ -68,7 +70,7 @@ public class FilterDAO {
         }
 
         query.append(" ORDER BY J.JobID OFFSET ? ROWS FETCH NEXT 4 ROWS ONLY;");
-        System.out.println(query);
+
         try {
             conn = new DBContext().getConnection();//open connection to SQL
             ps = conn.prepareStatement(query.toString());
@@ -78,8 +80,8 @@ public class FilterDAO {
                 ps.setString(parameterIndex++, "%" + title + "%");
             }
 
-            if (company > 0) {
-                ps.setInt(parameterIndex++, company);
+            if (company != null) {
+                ps.setString(parameterIndex++, "%" + company + "%");
             }
 
             if (category > 0) {
@@ -115,25 +117,25 @@ public class FilterDAO {
             // Handle exceptions
             System.out.println(e);
         }
-
-        System.out.println(query);
+//
+//        System.out.println(query);
         return filterJobs;
     }
 
-    public int countJobsByCriteria(String title, int company, int category, int experienceOption, String location, int salaryOption) {
+    public int countJobsByCriteria(String title, String company, int category, int experienceOption, String location, int salaryOption) {
         int jobCount = 0;
 
         StringBuilder query = new StringBuilder("SELECT COUNT(DISTINCT J.JobID) as JobCount\n"
                 + "FROM Jobs J\n"
                 + "LEFT JOIN CompanyProfile C ON J.CompanyID = C.CompanyID\n"
                 + "LEFT JOIN Categories CAT ON J.CategoryID = CAT.CategoryID\n"
-                + "WHERE J.Status = 'Active'");
+                + "WHERE J.Status = 'Accept'");
 
         if (title != null) {
             query.append(" AND J.Title LIKE ?");
         }
 
-        if (company > 0) {
+        if (company != null) {
             query.append(" AND J.CompanyID = ?");
         }
 
@@ -170,8 +172,8 @@ public class FilterDAO {
                 ps.setString(parameterIndex++, "%" + title + "%");
             }
 
-            if (company > 0) {
-                ps.setInt(parameterIndex++, company);
+            if (company != null) {
+                ps.setString(parameterIndex++, "%" + company + "%");
             }
 
             if (category > 0) {
@@ -265,9 +267,39 @@ public class FilterDAO {
         return list;
     }
 
+    public Company companyByJobId(int id) {
+        String sql = "select * from CompanyProfile cp\n"
+                + "join Jobs j on cp.CompanyID = j.CompanyID\n"
+                + "where j.JobID = ? ";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                int idCompany = rs.getInt(1);
+                String nameCompany = rs.getString(2);
+                int idUser = rs.getInt(3);
+                String aboutUs = rs.getString(4);
+                String add = rs.getString(5);
+                String status = rs.getString(6);
+                String url = rs.getString(7);
+                JobseekerDAO jd = new JobseekerDAO();
+                User user = jd.findById(idUser);
+                Company c = new Company(idCompany, nameCompany, user, aboutUs, add, status, url);
+                return c;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    
+
     public static void main(String[] args) {
         FilterDAO dao = new FilterDAO();
-        List<Job> job = dao.getJobsByCriteria(null, 8, 0, 0, "New York", 0, 1);
+        List<Job> job = dao.getJobsByCriteria(null, "ABC", 0, 0, "New York", 0, 1);
         for (Job job1 : job) {
             System.out.println(job1);
         }

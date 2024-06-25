@@ -229,5 +229,9 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
         } catch (Exception e) {
         }
     }
+    public static void main(String[] args) {
+        CVDAO cd = new CVDAO();
+        System.out.println(cd.findByIdUser(1).getLinkUrl());
+    }
 
 }

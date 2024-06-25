@@ -90,7 +90,7 @@
                         <img src="${com.url}" id="oldimg" class="img-thumbnail row" alt="...">    
                         <div class="row">
                             <span class="mt-2 input-group-text col-sm-3 " id="inputGroup-sizing-default">Change Company Image</span>
-                            <input value="${com.url}"  type="file" class="form-control mt-2 col-9" name="image" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+                            <input value="${com.url}"  type="file"  accept="image/*" class="form-control mt-2 col-9" name="image" id="inputGroupFile03" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
                         </div>
                     </div>
 

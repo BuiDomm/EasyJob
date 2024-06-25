@@ -4,26 +4,27 @@
  */
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import dao.CompanyDAO;
-import dao.FilterDAO;
-import dao.JobDAO;
+import dao.MessagessDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
-import model.Category;
 import model.Company;
-import model.Job;
+import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class PagingJob extends HttpServlet {
+public class SeachNameListMessage extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,19 +37,51 @@ public class PagingJob extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet PagingJob</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet PagingJob at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
+        String nameSearch = request.getParameter("namesearch");
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        MessagessDAO md = new MessagessDAO();
+        List<User> list = md.searchByName(u.getIdUser(), nameSearch);
+
+        Gson gson = new Gson();
+        //json tổng
+        JsonObject jsonObject = new JsonObject();
+        // tao json list
+        JsonArray listAfterSearch = new JsonArray();
+        for (User user : list) {
+            // chuyen doi sang json account va add vao json list
+            listAfterSearch.add(convertAccountToJson(user));
         }
+        JsonObject sender = convertAccountToJson(u);
+
+        // add list user sau khi tin vao json tong
+        jsonObject.add("receiver", listAfterSearch);
+        jsonObject.add("sender", sender);
+
+        // chuyen doi thong tin nguoi gui tin nhan thanh json
+        String json = gson.toJson(jsonObject);
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        //ghi du lieu json vao trong body cua HTTP response -> chuyen data tu server ve client
+        out.print(json);
+        //dẩy đi
+        out.flush();
+    }
+
+    private JsonObject convertAccountToJson(User user) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("accountID", user.getIdUser());
+        jsonObject.addProperty("name", user.getFirstName());
+        jsonObject.addProperty("fullName", user.getFirstName() + " " + user.getLastName());
+
+        if (user.getRoleId() == 3) {
+            CompanyDAO comDAO = new CompanyDAO();
+            Company ca = comDAO.findCompanyByUserId(user.getIdUser());
+            jsonObject.addProperty("url", ca.getUrl());
+
+        }
+
+        return jsonObject;
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -63,33 +96,8 @@ public class PagingJob extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        if (id != null) {
-            int num = Integer.parseInt(id);
-            JobDAO bd = new JobDAO();
-            CompanyDAO cd = new CompanyDAO();
-            List<Job> list = bd.getAllFollowPage(num);
-            List<Company> listCompanyByJob = new ArrayList<>();
-            for (Job j : list) {
-                Company c = cd.findCompanyByIdJob(j.getJobID());
-                listCompanyByJob.add(c);
-            }
-            FilterDAO dao = new FilterDAO();
+        processRequest(request, response);
 
-            List<Company> listCompany = dao.getAllCompany();
-            List<Category> listCategory = dao.getAllCategory();
-            List<Job> listLocation = dao.getAllLocation();
-            NotificationDAO notidao = new NotificationDAO();
-             
-             
-            request.setAttribute("notidao", notidao);
-            request.setAttribute("listjob", list);
-            request.setAttribute("listCompany", listCompany);
-            request.setAttribute("listCategory", listCategory);
-            request.setAttribute("listLocation", listLocation);
-            request.setAttribute("listCompanyByJob", listCompanyByJob);
-            request.getRequestDispatcher("jobs.jsp").forward(request, response);
-        }
     }
 
     /**

@@ -64,7 +64,7 @@
 
                                 <div class="dropdown-menu">
                                     <a class="dropdown-item" href="team.jsp">Team</a>
-                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/companyList">Testimonials</a>
+                                    <a class="dropdown-item" href="${pageContext.request.contextPath}/companyList">Enterprise</a>
                                     <a class="dropdown-item" href="terms.jsp">Terms</a>
                                 </div>
                             </li>

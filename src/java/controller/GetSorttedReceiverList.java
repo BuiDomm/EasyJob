@@ -4,26 +4,30 @@
  */
 package controller;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import dao.CVDAO;
 import dao.CompanyDAO;
-import dao.FilterDAO;
-import dao.JobDAO;
+import dao.MessagessDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
-import model.Category;
+import model.CVProfile;
 import model.Company;
-import model.Job;
+import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class PagingJob extends HttpServlet {
+public class GetSorttedReceiverList extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +46,10 @@ public class PagingJob extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PagingJob</title>");
+            out.println("<title>Servlet GetSorttedReceiverList</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet PagingJob at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet GetSorttedReceiverList at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,33 +67,48 @@ public class PagingJob extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        if (id != null) {
-            int num = Integer.parseInt(id);
-            JobDAO bd = new JobDAO();
-            CompanyDAO cd = new CompanyDAO();
-            List<Job> list = bd.getAllFollowPage(num);
-            List<Company> listCompanyByJob = new ArrayList<>();
-            for (Job j : list) {
-                Company c = cd.findCompanyByIdJob(j.getJobID());
-                listCompanyByJob.add(c);
-            }
-            FilterDAO dao = new FilterDAO();
+        HttpSession session = request.getSession();
+        User account = (User) session.getAttribute("account");
+        MessagessDAO dao = new MessagessDAO();
+        List<User> receiver = dao.getListAccountBySenderID(account.getIdUser());
 
-            List<Company> listCompany = dao.getAllCompany();
-            List<Category> listCategory = dao.getAllCategory();
-            List<Job> listLocation = dao.getAllLocation();
-            NotificationDAO notidao = new NotificationDAO();
-             
-             
-            request.setAttribute("notidao", notidao);
-            request.setAttribute("listjob", list);
-            request.setAttribute("listCompany", listCompany);
-            request.setAttribute("listCategory", listCategory);
-            request.setAttribute("listLocation", listLocation);
-            request.setAttribute("listCompanyByJob", listCompanyByJob);
-            request.getRequestDispatcher("jobs.jsp").forward(request, response);
+        JsonObject jsonResponse = new JsonObject();
+        JsonArray jsonReceiverArray = new JsonArray();
+
+        for (User user : receiver) {
+            jsonReceiverArray.add(convertAccountToJson(user));
         }
+
+        jsonResponse.add("receiver", jsonReceiverArray);
+        jsonResponse.add("sender", convertAccountToJson(account));
+
+        response.setContentType("application/json");
+        try (PrintWriter out = response.getWriter()) {
+            out.print(jsonResponse.toString());
+            out.flush();
+        }
+    }
+
+    private JsonObject convertAccountToJson(User user) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("accountID", user.getIdUser());
+        jsonObject.addProperty("firstName", user.getFirstName());
+        jsonObject.addProperty("lastName", user.getLastName());
+        jsonObject.addProperty("roleId", user.getRoleId());
+
+        if (user.getRoleId() == 3) {
+            CompanyDAO comDAO = new CompanyDAO();
+            Company ca = comDAO.findCompanyByUserId(user.getIdUser());
+            jsonObject.addProperty("url", ca.getUrl());
+            jsonObject.addProperty("nameCompany", ca.getNameCompany());
+        } else {
+            CVDAO cd = new CVDAO();
+            CVProfile cp = cd.findByIdUser(user.getIdUser());
+            jsonObject.addProperty("url", "/easyjob/assets/avatars/" + cp.getAvatar());
+            jsonObject.addProperty("nameCompany", ""); // Để trống nếu không phải công ty
+        }
+
+        return jsonObject;
     }
 
     /**

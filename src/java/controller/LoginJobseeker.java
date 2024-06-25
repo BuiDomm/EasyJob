@@ -109,7 +109,7 @@ public class LoginJobseeker extends HttpServlet {
 
                     } else {
                         session.setAttribute("account", jd.loginAcount(email, pass));
-                        request.getRequestDispatcher("home.jsp").forward(request, response);
+                        response.sendRedirect("home");
                     }
 
                 } else {

@@ -9,6 +9,7 @@ import dao.CVDAO;
 import dao.CompanyDAO;
 import dao.JobDAO;
 import dao.JobseekerDAO;
+import dao.MessagessDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -80,6 +81,10 @@ public class JobDetails extends HttpServlet {
         // thong tin nha tuyen dung
         User u = jdd.getInfo(id);
 
+        //Chat DAO 
+        MessagessDAO dao = new MessagessDAO();
+
+        //CV ProfileDAO
         CVDAO cvd = new CVDAO();
 
         HttpSession session = request.getSession();
@@ -100,6 +105,7 @@ public class JobDetails extends HttpServlet {
                 //thong tin job
                 request.setAttribute("cc", job);
                 //
+                request.setAttribute("dao", dao);
                 request.setAttribute("profile", cvp);
                 request.setAttribute("cv", cvp);
                 request.setAttribute("user", user);
@@ -112,6 +118,7 @@ public class JobDetails extends HttpServlet {
                 request.setAttribute("u", u);
                 //thong tin job
                 request.setAttribute("cc", job);
+                request.setAttribute("dao", dao);
                 //
                 request.setAttribute("profile", cvp);
                 request.setAttribute("com", com);

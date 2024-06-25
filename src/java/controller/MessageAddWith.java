@@ -4,37 +4,40 @@
  */
 package controller;
 
-import dao.CompanyDAO;
-import dao.JobApplyDAO;
+import dao.JobseekerDAO;
+import dao.MessagessDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import model.User;
 
-/**
- *
- * @author DELL
- */
-public class RejectCvApply extends HttpServlet {
-        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+
+public class MessageAddWith extends HttpServlet {
+     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-            HttpSession session = request.getSession();
-         String applyid = request.getParameter("applyid");
-         String reason = request.getParameter("reason");
-          User user = (User) session.getAttribute("account");
-        int useId = user.getIdUser();
-        JobApplyDAO dao = new JobApplyDAO();
-        CompanyDAO companydao = new CompanyDAO();
-          int userApply = dao.getUserByapplyid(Integer.parseInt(applyid)).getIdUser();
-         String company = companydao.findByUserId(useId).getNameCompany();
-        String title = dao.findByApplyId(Integer.valueOf(applyid)).getTitle();
-        String mess = company + " rejected your Cv for Job : " +title+" Because: " + reason ;
-        dao.rejectCv(applyid);
-         dao.insertNotificationApprovel(userApply, mess, 1);
-        response.sendRedirect("listApplyCv");
+         try {
+             MessagessDAO dao = new MessagessDAO();
+             HttpSession session = request.getSession();
+             User account = (User) session.getAttribute("account");
+             int friendId = Integer.parseInt(request.getParameter("friendId"));
+             LocalDateTime currentTime = LocalDateTime.now();
+             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSS");
+             String formattedTime = currentTime.format(formatter);
+             JobseekerDAO jd = new JobseekerDAO();
+             User emp = jd.findById(friendId);
+             dao.InsertMessage(account.getIdUser(),friendId,formattedTime,AESUtil.AESUtil.encrypt("Hi "+emp.getFirstName()+" "+emp.getLastName()));
+             response.sendRedirect("messageListAccount");
+         } catch (Exception ex) {
+             Logger.getLogger(MessageAddWith.class.getName()).log(Level.SEVERE, null, ex);
+         }
+               
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -48,7 +51,7 @@ public class RejectCvApply extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-         processRequest(request, response);
+        processRequest(request, response);
     } 
 
     /** 
@@ -72,4 +75,5 @@ public class RejectCvApply extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

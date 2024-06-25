@@ -4,26 +4,20 @@
  */
 package controller;
 
-import dao.CompanyDAO;
-import dao.FilterDAO;
-import dao.JobDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.List;
-import model.Category;
-import model.Company;
-import model.Job;
+import jakarta.servlet.http.HttpSession;
+import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class PagingJob extends HttpServlet {
+public class ErorrPageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -42,10 +36,10 @@ public class PagingJob extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet PagingJob</title>");
+            out.println("<title>Servlet ErorrPageServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet PagingJob at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ErorrPageServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -63,33 +57,16 @@ public class PagingJob extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String id = request.getParameter("id");
-        if (id != null) {
-            int num = Integer.parseInt(id);
-            JobDAO bd = new JobDAO();
-            CompanyDAO cd = new CompanyDAO();
-            List<Job> list = bd.getAllFollowPage(num);
-            List<Company> listCompanyByJob = new ArrayList<>();
-            for (Job j : list) {
-                Company c = cd.findCompanyByIdJob(j.getJobID());
-                listCompanyByJob.add(c);
-            }
-            FilterDAO dao = new FilterDAO();
-
-            List<Company> listCompany = dao.getAllCompany();
-            List<Category> listCategory = dao.getAllCategory();
-            List<Job> listLocation = dao.getAllLocation();
-            NotificationDAO notidao = new NotificationDAO();
-             
-             
-            request.setAttribute("notidao", notidao);
-            request.setAttribute("listjob", list);
-            request.setAttribute("listCompany", listCompany);
-            request.setAttribute("listCategory", listCategory);
-            request.setAttribute("listLocation", listLocation);
-            request.setAttribute("listCompanyByJob", listCompanyByJob);
-            request.getRequestDispatcher("jobs.jsp").forward(request, response);
-        }
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        if (u.getRoleId() == 2) {
+            request.setAttribute("hreff", "home.jsp");
+        } else if (u.getRoleId() == 3) {
+            request.setAttribute("hreff", "employerhomeservlet");
+        } else if (u.getRoleId() == 1) {
+            request.setAttribute("hreff", "adminDashBoard");
+        } else     request.setAttribute("hreff", "index.html");
+            request.getRequestDispatcher("404.jsp").forward(request, response);
     }
 
     /**

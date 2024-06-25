@@ -5,53 +5,57 @@
 package controller;
 
 import dao.CVDAO;
-import dao.JobApplyDAO;
+import dao.CompanyDAO;
+import dao.MessagessDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
-import model.Apply;
+import model.CVProfile;
+import model.Company;
 import model.User;
 
 /**
  *
  * @author DELL
  */
-public class ListCVApply extends HttpServlet {
+public class MessageListAccount extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("account");
-        int useId = user.getIdUser();
-        String status = request.getParameter("status");
-         String indexPage = request.getParameter("index");
-        if (status == null) {
-            status = "Pending";
-        }
-         if (indexPage == null) {
-            indexPage = "1";
-        }
-        int index = Integer.parseInt(indexPage);
 
-        JobApplyDAO dao = new JobApplyDAO();
-        int count = dao.getTotalApply(useId, status);
-        int endPage = count / 2;
-        if (count % 2 != 0) {
-            endPage++;
+        HttpSession session = request.getSession();
+        User account = (User) session.getAttribute("account");
+        MessagessDAO dao = new MessagessDAO();
+        List<User> receiver = dao.getListAccountBySenderID(account.getIdUser());
+        User sender = dao.findById(account.getIdUser());
+        CompanyDAO cd = new CompanyDAO();
+        CVDAO cvd = new CVDAO();
+        if (account.getRoleId() == 2) {
+            List<Company> companyByUser = new ArrayList<>();
+            for (User u : receiver) {
+                Company com = cd.findCompanyByUserId(u.getIdUser());
+                companyByUser.add(com);
+            }
+            request.setAttribute("companyByUser", companyByUser);
+        } else   if (account.getRoleId() == 3) {
+            List<String> cvProfiles = new ArrayList<>();
+            for (User u : receiver) {
+                CVProfile cv = cvd.findByIdUser(u.getIdUser());
+                cvProfiles.add("/easyjob/assets/avatars/"+cv.getAvatar());
+            }
+            request.setAttribute("cvProfiles", cvProfiles);
         }
-     
-        List<Apply> listApply = dao.pagingCVList(useId, status, index);
-        for (Apply apply : listApply) {
-            System.out.println(apply);
-        }
-        request.setAttribute("endP", endPage);
+        request.setAttribute("receiver", receiver);
+        request.setAttribute("sender", sender);
         request.setAttribute("dao", dao);
-        request.setAttribute("listApply", listApply);
-        request.getRequestDispatcher("listCvSeeker.jsp").forward(request, response);
+
+        request.getRequestDispatcher("chat.jsp").forward(request, response);
+
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

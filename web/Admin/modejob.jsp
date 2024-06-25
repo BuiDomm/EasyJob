@@ -18,6 +18,7 @@
 
         <link href="./assets/css/spur.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+        <link rel="stylesheet" href="./assets/css/admincss.css">
         <title>Spur - A Bootstrap Admin Template</title>
     </head>
 
@@ -54,7 +55,7 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                                 <a class="dropdown-item" href="changepass.jsp">Change Password</a>
-                                <a class="dropdown-item" href="login.jsp">Logout</a>
+                                <a class="dropdown-item" href="loginjobseeker">Logout</a>
                             </div>
                         </div>
                     </div>
@@ -62,7 +63,7 @@
                 <main class="dash-content" style="padding-top: 0 !important;">
                     <div class="container-fluid" >
                         <div class="row">
-                            <c:set var="counter" value="0" />
+
                             <c:forEach var="item" items="${listJ}">
                                 <div class="col-md-4">
                                     <div class="product-item">
@@ -83,7 +84,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <c:set var="counter" value="${counter + 1}" />
+                              
                             </c:forEach>
 
 

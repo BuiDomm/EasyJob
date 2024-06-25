@@ -58,7 +58,7 @@
                                 <!--                                <a class="dropdown-item" href="#!">Profile</a>-->
                                 <a class="dropdown-item" href="changepass.jsp">Change Password</a>
 
-                                <a class="dropdown-item" href="login.jsp">Logout</a>
+                                 <a class="dropdown-item" href="loginjobseeker">Logout</a>
                             </div>
                         </div>
                     </div>

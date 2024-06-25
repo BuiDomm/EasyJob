@@ -59,7 +59,7 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
                                 <!--                                <a class="dropdown-item" href="#!">Profile</a>-->
                                 <a class="dropdown-item" href="changepass.jsp">Change Password</a>
-                                <a class="dropdown-item" href="login.jsp">Logout</a>
+                                 <a class="dropdown-item" href="loginjobseeker">Logout</a>
                             </div>
                         </div>
                     </div>
@@ -68,12 +68,18 @@
 
                     <div class="row">
                         <div class="col-lg-12">
-                            <div class="card spur-card">
-                                <div class="card-header">
+                            <div class="card spur-card ">
+                                <div class="card-header justify-content-between">
+                                    <div class="d-flex flex-row">
                                     <div class="spur-card-icon">
                                         <i class="fas fa-table"></i>
                                     </div>
-                                    <div class="spur-card-title">List Account</div>
+                                    <div class="spur-card-title">${roll == 2 ? "List Account Jobseeker" : "List Account Employee"}</div>
+                                    </div>
+                                    <div class="d-flex flex-row">
+                                        <a style="border-radius: 15px" class="nav-link active  btn-secondary  mr-2 " href="listaccount?roll=2" role="tab">Jobseeker</a>
+                                        <a style="border-radius: 15px" class="nav-link active btn-warning"  href="listaccount?roll=3" role="tab">Employee</a>
+                                    </div>
                                 </div>
                                 <div class="card-body ">
                                     <table class="table table-in-card ">
@@ -112,7 +118,7 @@
                                                             </div>
                                                         </td>
                                                         <td>
-                                                            <c:if test="${u.roleId != 1}">
+                                                            <c:if test="${u.roleId != 1 && u.roleId != 3}">
                                                                 <a href="#" onclick="showMess(${u.idUser}, 'Unlock', 'unlockaccount?aid=')">
                                                                     <button class="btn btn-outline-primary btn-sm" data-bs-toggle="tooltip"
                                                                             data-bs-placement="top" data-bs-custom-class="custom-tooltip-primary"
@@ -147,7 +153,7 @@
                                 </a>
                             </li>
                             <c:forEach begin="1" end="${endP}" var="i">
-                                <li class="page-item"><a class="page-link" href="listaccount?index=${i}">${i}</a></li>
+                                <li class="page-item"><a class="page-link" onclick="pagingIndex(${i})">${i}</a></li>
                                 </c:forEach>
                             <li class="page-item">
                                 <a class="page-link" href="#" aria-label="Next">
@@ -166,6 +172,17 @@
                     window.location.href = url + id;
                 }
             }
+            
+         
+
+            pagingIndex = (id) => {
+                                    let url = window.location.href;
+                                            if (url.includes("&index=")) {
+                                    url = url.split("&index=")[0];
+                                    }
+                                    window.location.href = url + "&index=" + id;
+                                    };
+        
 
 
         </script>

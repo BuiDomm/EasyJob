@@ -58,20 +58,25 @@ public class AdminListAccount extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String indexPage = request.getParameter("index");
+        String roll = request.getParameter("roll");
         if(indexPage == null) indexPage = "1";
+        if(roll == null) roll = "1";
+        int rollid = Integer.parseInt(roll);
         int index = Integer.parseInt(indexPage);
+        
         AdminDAO dao = new AdminDAO();
-        int count = dao.getTotalUser();
+        int count = dao.getTotalUserByRoll(rollid);
         int endPage = count/4;
         if(count % 4 != 0){
           endPage++;
         }
-        List<User> list = dao.pagingAccount(index);  
+        List<User> list = dao.pagingAccount(index,rollid);  
    
         
         request.setAttribute("user", list);
         request.setAttribute("endP", endPage);
         request.setAttribute("dao", dao);
+        request.setAttribute("roll", rollid);
         request.getRequestDispatcher("./Admin/listaccount.jsp").forward(request, response);  
       
     }

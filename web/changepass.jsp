@@ -18,7 +18,7 @@
         <link rel="icon" href="assets/images/favicon.ico">
         <link rel="stylesheet" href="assets/css/icontop.css">
         <link rel="stylesheet" href="assets/css/login.css">
-        <link rel="stylesheet" href="assets/css/style.css">
+        <!--<link rel="stylesheet" href="assets/css/style.css">-->
 
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -208,7 +208,7 @@
                     </c:when>
                     <c:when test="${sessionScope.account.roleId == 2}">
                         <style>
-                            .headerclass {margin-top: 46px;}
+                            header {top: 0}
                         </style>
                         <jsp:include page="header.jsp"/>
 

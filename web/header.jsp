@@ -32,7 +32,7 @@
                             <a style="width: 55px;height: 55px;display: inline-block" class="navbar-brand" href="index.jsp">
                             </c:when>
                             <c:otherwise> 
-                                <a style="width: 55px;height: 55px;display: inline-block" class="navbar-brand" href="home.jsp">
+                                <a style="width: 55px;height: 55px;display: inline-block" class="navbar-brand" href="home">
 
                                 </c:otherwise>
 
@@ -53,7 +53,7 @@
                                             <a class="nav-link" href="index.jsp">Home
                                             </c:when>
                                             <c:otherwise> 
-                                                <a class="nav-link" href="home.jsp">Home
+                                                <a class="nav-link" href="home">Home
 
                                                 </c:otherwise>
 

@@ -4,9 +4,11 @@
  */
 package controller;
 
+import dao.AnswerDAO;
 import dao.CompanyDAO;
 import dao.JobApplyDAO;
 import dao.JobDAO;
+import dao.QuestionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,7 +18,9 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import model.Answer;
 import model.Apply;
 import model.Company;
@@ -42,24 +46,7 @@ public class createskilltest extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        User u = (User) session.getAttribute("account");
-        int id = Integer.parseInt(request.getParameter("id"));
-        CompanyDAO cm = new CompanyDAO();
-        Company com = cm.findCompanyByIdJob(id);
-        JobDAO jd = new JobDAO();
-        Job b = jd.findById(id);
-        JobApplyDAO dao = new JobApplyDAO();
-        List<Apply> listApply = dao.ListApplyByUserIdAndJobID(u.getIdUser(), id);
-        for (Apply apply : listApply) {
-            System.out.println(apply.getCvProfile().getUserID());
-        }
-        request.setAttribute("dao", dao);
-        request.setAttribute("listApply", listApply);
-        request.setAttribute("com", com);
-        request.setAttribute("cc", b);
-        request.setAttribute("u", u);
-        request.getRequestDispatcher("createskilltest.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -86,47 +73,45 @@ public class createskilltest extends HttpServlet {
      * @throws IOException if an I/O error occurs
      */
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        QuestionDAO qd = new QuestionDAO();
+        AnswerDAO ad = new AnswerDAO();
+        int jobID = Integer.parseInt(request.getParameter("id"));
         String[] questionTitles = request.getParameterValues("questionTitle[]");
-        String[] answers = request.getParameterValues("answer[]");
-        String[] incorrectAnswers = request.getParameterValues("incorrectAnswer[]");
-
-        int id = Integer.parseInt(request.getParameter("id"));
+        String[] correctAnswers = request.getParameterValues("answer[]");
+        String[] countIncorrectAnswers = request.getParameterValues("incorrectAnswersCount[]");
 
         JobDAO jd = new JobDAO();
-        Job job = jd.findById(id);
-        List<Question> questions = new ArrayList<>();
-        List<Answer> allAnswers = new ArrayList<>();
+        Job job = jd.findById(jobID);
+
+        int incorrectAnswerIndex = 0;
+        int questionIdCounter = 1;
 
         for (int i = 0; i < questionTitles.length; i++) {
             String questionTitle = questionTitles[i];
-            String answerText = answers[i];
+            String answerText = correctAnswers[i];
+            String questionId = "QS" + jobID * 1000 + questionIdCounter++;
 
-            Question question = new Question((int) Math.random(), job, questionTitle, null);
-            questions.add(question);
+            Question question = new Question(questionId, job, questionTitle, null);
 
-            Answer correctAnswer = new Answer(job.getJobID(), question, answerText, null, 1);
-            allAnswers.add(correctAnswer);
-            if (incorrectAnswers != null) {
-                int questionIndex = 0;
-                int incorrectAnswersPerQuestion = incorrectAnswers.length / questionTitles.length;
+            qd.insert(question);
 
-                for (int j = 0; j < incorrectAnswers.length; j++) {
-                    String incorrectAnswerText = incorrectAnswers[i];
-                    Answer incorrectAnswer = new Answer(job.getJobID(), question, incorrectAnswerText, null, 0);
-                    allAnswers.add(incorrectAnswer);
-                }
+            Answer correctAnswer = new Answer(i, question, answerText, null, 1);
+
+            ad.insert(correctAnswer);
+
+            int countIncorrect = Integer.parseInt(countIncorrectAnswers[i]);
+            for (int j = 0; j < countIncorrect; j++) {
+
+                String incorrectAnswerText = request.getParameterValues("incorrectanswer[]")[incorrectAnswerIndex++];
+                Answer incorrectAnswer = new Answer(i, question, incorrectAnswerText, null, 0);
+
+                ad.insert(incorrectAnswer);
             }
-
         }
-
-        request.setAttribute("job", job);
-        request.setAttribute("questions", questions);
-        request.setAttribute("allAnswers", allAnswers);
-
-        request.getRequestDispatcher("test.jsp").forward(request, response);
+        
+        
+        request.getRequestDispatcher("loadskilltest?id="+job.getJobID()).forward(request, response);
     }
 
     @Override

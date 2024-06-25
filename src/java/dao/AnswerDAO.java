@@ -124,24 +124,23 @@ public class AnswerDAO extends DBContext implements BaseDAO<Answer> {
 
     @Override
     public boolean delete(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+       String sql = "DELETE FROM [dbo].[Answers]\n" +
+"      WHERE AnswerID = ?";
+        PreparedStatement ps;
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            int rowAffect = ps.executeUpdate();
+            if (rowAffect > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
 
-    public static void main(String[] args) {
-        // Khởi tạo AnswerDAO
-        AnswerDAO answerDAO = new AnswerDAO();
-        QuestionDAO questionDAO = new QuestionDAO();
-
-        // Test phương thức findById
-        System.out.println("\nTest phương thức findById:");
-        int answerId = 1; // Thay đổi ID tùy theo dữ liệu trong cơ sở dữ liệu của bạn
-        Answer answer = answerDAO.findById(answerId);
-        if (answer != null) {
-            System.out.println("Tìm thấy Answer với ID " + answerId + ": " + answer);
-        } else {
-            System.out.println("Không tìm thấy Answer với ID " + answerId);
         }
 
+        return false;
+       
     }
 
 }

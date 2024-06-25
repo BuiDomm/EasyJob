@@ -135,5 +135,45 @@ public class QuestionDAO extends DBContext implements BaseDAO<Question> {
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+    public boolean deleteFullQuestion(String id) {
+       String Answersql = "DELETE FROM [dbo].[Answers]\n" +
+"      WHERE QuestionID = ?";
+       String Questionsql = "DELETE FROM [dbo].[Questions]\n" +
+"      WHERE QuestionID = ?";
+        PreparedStatement ps;
+        try {
+            PreparedStatement deleteAns = getConnection().prepareStatement(Answersql);
+            PreparedStatement deleteQues = getConnection().prepareStatement(Questionsql);
+            deleteAns.setString(1, id);
+            deleteAns.executeUpdate();
+           
+            deleteQues.setString(1, id);
+            int rowAffect = deleteQues.executeUpdate();
+            if (rowAffect > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
 
+        }
+
+        return false;
+       
+    }
+   
+ public static void main(String[] args) {
+        QuestionDAO questionDAO = new QuestionDAO();
+
+        // ID của câu hỏi bạn muốn xóa
+        String questionId = "QS10040003";  // Thay thế bằng ID thực tế của câu hỏi
+
+        // Gọi phương thức deleteFullQuestion để xóa câu hỏi và các câu trả lời liên quan
+        boolean isDeleted = questionDAO.deleteFullQuestion(questionId);
+
+        if (isDeleted) {
+            System.out.println("Câu hỏi và các câu trả lời liên quan đã được xóa thành công.");
+        } else {
+            System.out.println("Không thể xóa câu hỏi hoặc câu hỏi không tồn tại.");
+        }
+    }
 }

@@ -114,6 +114,14 @@
         <servlet-name>loadskilltest</servlet-name>
         <servlet-class>controller.loadskilltest</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>deleteanswer</servlet-name>
+        <servlet-class>controller.deleteanswer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deletequestion</servlet-name>
+        <servlet-class>controller.deletequestion</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name> AdminJobDetail</servlet-name>
         <url-pattern>/adminJobDetail</url-pattern>
@@ -429,5 +437,13 @@
     <servlet-mapping>
         <servlet-name>loadskilltest</servlet-name>
         <url-pattern>/loadskilltest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteanswer</servlet-name>
+        <url-pattern>/deleteanswer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deletequestion</servlet-name>
+        <url-pattern>/deletequestion</url-pattern>
     </servlet-mapping>
 </web-app>

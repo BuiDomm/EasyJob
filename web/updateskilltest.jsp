@@ -39,7 +39,7 @@
                                 <li>Year Experience: <b>${cc.yearEx}</b></li>
                                 <li>Salary <b>${cc.salary}</b></li>
                                 <li>Location: <b>${cc.location}</b></li>
-                            </ul>
+                            </ul><h1>${mess}</h1>
                         </div>    
                         <%-- Job info--%>
                     </div>
@@ -52,62 +52,210 @@
         </div>
         <!-- header -->
         <!-- form -->
+        <c:if test="${empty questions}">
+            <c:redirect url="loadskilltest?id=${cc.jobID}"></c:redirect>
+        </c:if>
         <c:if test="${not empty questions}">
+
             <form action="updateskilltest" method="post">
-                <input type="hidden" name="id" value="${cc.jobID}">
+                <input type="hidden" name="id" value="${cc.jobID}" varStatus="status">
                 <div style="border-radius: 15px; margin-top: -46px; background-color: black" class="container p-5">
                     <div id="questions-container" class="col">
                         <c:forEach var="question" items="${questions}">
                             <input type="hidden" name="questionID[]" value="${question.questionID}">
-                            <div style="border-radius: 15px; background-color: white" class="row p-4 mb-4 question-block">
+                            <div  id="question-${question.questionID}" style="border-radius: 15px; background-color: white" class="row p-4 mb-4 question-block">
+
                                 <div class="col">
-                                    <div class="row px-3">
+                                    <a onclick="handledeletequestion('${question.questionID}',${cc.jobID})" style="color: red; z-index: 10;font-size: 46px;margin-right: -30px;margin-top: -24px" class="close btn">&times;</a>  
+                                    <div class="row mt-3 px-3">
                                         <h3 class="mb-3">Question title:</h3>
-                                        <textarea class="form-control h3" name="questionTitle[]" placeholder="Question title" style="width: 100%; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${question.content}</textarea>
+                                        <textarea style="border-radius: 24px; border-color: black; border: solid 1px; background-color: white;width: 100%" class="form-control p-4 h3" name="questionTitle[]" placeholder="Question title" wrap="soft" required="">${question.content}</textarea>
 
                                         <hr>
                                         <c:set var="incorrectCount" value="0"/>
                                         <c:forEach var="answer" items="${questionAnswersMap[question]}">
                                             <c:choose>
                                                 <c:when test="${answer.isTrue == 1}">
-                                                    <textarea class="form-control col-5 p-4 mt-3 mx-4" style="border-radius: 15px; background-color: #FBC540; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" name="correctAnswer[]">${answer.answerText}</textarea>
+                                                    <textarea class="form-control col-5 p-4 mt-3 mx-4" style="border-radius: 15px; background-color: #FBC540;" name="correctAnswer[]" wrap="soft" required="">${answer.answerText}</textarea>
                                                     <input type="hidden" name="answerID[]" value="${answer.answerID}">
                                                 </c:when>
                                                 <c:otherwise>
-                                                    <textarea class="col-5 p-4 mt-3 mx-4 bg-dark text-light form-control" style="border-radius: 15px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" name="incorrectAnswer[]">${answer.answerText}</textarea>
-                                                    <input type="hidden" name="incorrectanswerID[]" value="${answer.answerID}">
+                                                    <div id="answer-${answer.answerID}" class="textarea-container col-5 p-4 mt-3 mx-4 bg-dark text-light" style="border-radius: 15px; position:relative;">
+                                                        <textarea class="form-control" style="height: 100%; padding: 10px; border: none; background-color: transparent; color: #FFF;" name="incorrectAnswer[]" wrap="soft" required="">${answer.answerText}</textarea>
+                                                        <c:if test="${incorrectCount >= 1}">
+                                                            <a onclick="handledeleteanswer(${answer.answerID},${cc.jobID})" style="color: white; position: absolute; top: 5px; right: 5px; z-index: 10" class="close btn ">&times;</a>
+                                                        </c:if>
+                                                        <input type="hidden" name="incorrectanswerID[]" value="${answer.answerID}">
+                                                    </div>
+
                                                     <c:set var="incorrectCount" value="${incorrectCount + 1}"/>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
                                         <input type="hidden" name="incorrectAnswersCount[]" value="${incorrectCount}">
+
                                         <c:if test="${incorrectCount < 3}">
-                                            <a href="#" style="border-radius: 15px; background-color: white" class="form-control col-5 p-4 mt-3 mx-4 btn-outline-dark" onclick="addIncorrectAnswer(this); return false;">
-                                                <p style="color: black" class="h4">Add incorrect Answer</p>
+                                            <a href="#" style="border-radius: 15px; border-color: black; border: solid 2px; background-color: white;" class="col-5 p-4 mt-3 mx-4 btn-lg text-center text-dark" onclick="addIncorrectAnswer(this); return false;">
+                                                Add Incorrect Answer
                                             </a>
+
                                         </c:if>
+                                        <div style="padding: 0" class="add-incorrect-answers-container" data-add-incorrect-count="0" ></div>
+                                        <input type="hidden" name="addincorrectAnswersCount[]" value="0" placeholder="Correct Answer">
                                     </div> 
                                 </div>
+
                             </div>
                         </c:forEach>
+                    </div> 
+
+                    <div class="container px-5">
+                        <div class=" px-5">
+                            <a href="#" style="border-radius: 15px; background-color: white" class="btn d-block p-3 mt-4" onclick="addQuestion(); return false;">
+                                <h5 style="margin: auto; color: black">Add Question</h5>  
+                            </a>
+                        </div>
                     </div>
-                    <button type="submit" style="border-radius: 15px; background-color: white" class="btn p-4 mt-4 container">
-                        <h5 style="margin: auto; color: #FBC540">Update Skill Test</h5>  
-                    </button>
+                    <div class="container px-5">
+                        <button type="submit" style="border-radius: 15px; background-color: #FBC540" class="btn p-4 mt-4 container">
+                            <h5 style="margin: auto; color: white">Update Skill Test</h5>  
+                        </button>
+                    </div>
+
                 </div>
             </form>
         </c:if>
-
-
-
         <!-- form end -->
 
         <!-- jQuery and Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
         <script>
+                                function addIncorrectAnswer(button) {
+                                    const container = button.parentElement.querySelector('.add-incorrect-answers-container');
+                                    let addincorrectcount = parseInt(container.getAttribute('data-add-incorrect-count'));
+                                    var elements = document.getElementsByName('incorrectAnswersCount[]');
+                                    const allQuestionBlocks = document.querySelectorAll('.question-block');
+                                    const currentQuestionBlock = button.closest('.question-block');
+                                    var questionIndex = Array.from(allQuestionBlocks).indexOf(currentQuestionBlock);
+                                    var oldincorrect = parseInt(elements[questionIndex].value);
+
+                                    if ((oldincorrect + addincorrectcount) >= 3) {
+                                        alert('Maximum 3 incorrect answers');
+                                        return;
+                                    }
+
+                                    addincorrectcount++;
+                                    const textareaDiv = document.createElement('div');
+                                    textareaDiv.className = 'textarea-container col-5 p-4 mt-3 mx-4 bg-dark text-light';
+                                    textareaDiv.style.borderRadius = '15px';
+                                    textareaDiv.style.position = 'relative';
+                                    textareaDiv.innerHTML = `
+            <textarea class="form-control" style="height: 100%; padding: 10px; border: none; background-color: transparent; color: #FFF;" name="addincorrectAnswer[]" wrap="soft" required></textarea>
+            <a style="color: white; position: absolute; top: 5px; right: 5px; z-index: 10" class="close btn">&times;</a>
+        `;
+
+                                    const closeButton = textareaDiv.querySelector('.close');
+                                    closeButton.onclick = function () {
+                                        textareaDiv.remove();
+                                        updateIncorrectCount(container, -1);
+                                    };
+
+                                    button.before(textareaDiv);
+                                    updateIncorrectCount(container, 1);
+                                }
+
+                                function updateIncorrectCount(container, delta) {
+                                    let addincorrectcount = parseInt(container.getAttribute('data-add-incorrect-count'));
+                                    addincorrectcount += delta;
+                                    container.setAttribute('data-add-incorrect-count', addincorrectcount);
+
+                                    const addincorrectCountInput = container.parentElement.querySelector('input[name="addincorrectAnswersCount[]"]');
+                                    addincorrectCountInput.value = addincorrectcount;
+                                }
+
+                                function handledeleteanswer(idAns, jobid) {
+                                    if (confirm("Do you really want to delete this Answer?")) {
+                                        $.ajax({
+                                            url: "deleteanswer?ansid=" + idAns + "&id=" + jobid,
+                                            type: 'GET',
+                                            success: function (response) {
+                                                
+                                                console.log('Answer deleted successfully');
+                                                $('#answer-' + idAns).remove();  
+                                                alert('Answer deleted successfully');
+
+                                            },
+                                            error: function (jqXHR) {
+
+                                            }
+
+                                        });
+                                    }
+                                }
+                                function handledeletequestion(idQues, jobid) {
+                                    if (confirm("Do you really want to delete this Question?")) {
+
+                                        $.ajax({
+                                            url: "deletequestion?quesid=" + idQues + "&id=" + jobid,
+                                            type: 'GET',
+                                            success: function (response) {
+                                                console.log('Question deleted successfully');
+                                                $('#question-' + idQues).remove();
+                                                alert('Question deleted successfully');
+
+                                            },
+                                            error: function (jqXHR) {
+
+                                            }
+
+                                        });
+                                    }
+                                }
+
+                                function addQuestion() {
+                                    const questionContainer = document.getElementById('questions-container');
+                                    const questionBlock = document.createElement('div');
+                                    questionBlock.className = 'question-block row p-3 mb-4';
+                                    questionBlock.style.borderRadius = '15px';
+                                    questionBlock.style.backgroundColor = 'white';
+
+                                    questionBlock.innerHTML = `
+            <div class="col">
+                <a style="color: red; z-index: 10;font-size: 46px;margin-right: -30px;margin-top: -24px" class="close closeq btn">&times;</a>
+                <div class="row px-3 mt-3">
+                    <h3 class="mb-3">Question title:</h3>
+                    <textarea style="border-radius: 24px; border-color: black; border: solid 1px; background-color: white;width: 100%" class="form-control p-4 h3" name="addquestionTitle[]" placeholder="Question title" wrap="soft" required=""></textarea>
+                    <hr>
+                    <textarea class="form-control col-5 p-4 mt-3 mx-4" style="border-radius: 15px; background-color: #FBC540;" name="addcorrectAnswer[]" placeholder="Correct Answer" wrap="soft" required=""></textarea>
+                    
+                    <div class="textarea-container col-5 p-4 mt-3 mx-4 bg-dark text-light" style="border-radius: 15px; position:relative;">
+                        <textarea class="form-control" style="height: 100%; padding: 10px; border: none; background-color: transparent; color: #FFF;" name="addincorrectAnswer[]"placeholder="Incorrect Answer" wrap="soft" required=""></textarea>
+                        
+                    </div>
+                    <input type="hidden" name="incorrectAnswersCount[]" value="0">
+                    <a href="#" style="border-radius: 15px; border-color: black; border: solid 2px; background-color: white;" class="col-5 p-4 mt-3 mx-4 btn-lg text-center text-dark" onclick="addIncorrectAnswer(this); return false;">
+                                                Add Incorrect Answer
+                     </a>
+                    <div style="padding: 0" class="add-incorrect-answers-container" data-add-incorrect-count="1" ></div>
+                                        <input type="hidden" name="addincorrectAnswersCount[]" value="1">
+                </div>
+            </div>
+        `;
+
+                                    const closebutton = questionBlock.querySelector('.closeq');
+                                    closebutton.onclick = function () {
+                                        questionBlock.remove();
+                                    };
+                                    questionContainer.appendChild(questionBlock);
+
+                                }
+
+
 
         </script>
+
 
     </body>
 </html>

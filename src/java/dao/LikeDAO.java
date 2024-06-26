@@ -1,0 +1,116 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package dao;
+
+import model.Like;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author This PC
+ */
+public class LikeDAO extends DBContext implements BaseDAO<Like> {
+
+    public boolean deleteLike(int uId, int bId) {
+        String sql = "delete from Likes where UserID = ? and BlogID = ?";
+        try {
+            PreparedStatement st = getConnection().prepareStatement(sql);
+            st.setInt(1, uId);
+            st.setInt(2, bId);
+
+            int rowAffect = st.executeUpdate();
+            if (rowAffect > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public Like getLikeByBlogIdAndUserId(int blogId, int userId) {
+
+        String sql = "select * FROM Likes WHERE BlogID = ? and UserID = ? ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, blogId);
+            ps.setInt(2, userId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int likeId = rs.getInt(1);
+                int user = rs.getInt(2);
+                int blog = rs.getInt(3);
+
+                return new Like(likeId, userId, blogId);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(LikeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public int getCountByBlog(int blogId) {
+        int result = 0;
+        String sql = "SELECT COUNT(*) FROM Likes WHERE BlogID = ? ";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, blogId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                result = rs.getInt(1);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(LikeDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Like> getAll() {
+        return null;
+    }
+
+    @Override
+    public Like findById(int id) {
+        return null;
+    }
+
+    @Override
+    public boolean insert(Like like) {
+        String sql = "INSERT INTO [dbo].[Likes]\n"
+                + "           ([UserID]\n"
+                + "           ,[BlogID]) \n"
+                + "     VALUES \n"
+                + "           (?,?)";
+        try {
+            PreparedStatement st = getConnection().prepareStatement(sql);
+            st.setInt(1, like.getUserId());
+            st.setInt(2, like.getBlogId());
+
+            int rowAffect = st.executeUpdate();
+            if (rowAffect > 0) {
+                return true;
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    @Override
+    public boolean update(Like newObject) {
+        return false;
+    }
+
+    @Override
+    public boolean delete(int id) {
+        return false;
+    }
+
+}

@@ -20,6 +20,7 @@
         <link rel="stylesheet" href="assets/css/style.css">
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
     </head>
 
     <body>
@@ -57,7 +58,7 @@
 
                             <li class="nav-item"><a class="nav-link" href="about-us.jsp">About us</a></li>
 
-                            <li class="nav-item"><a class="nav-link" href="blog.jsp">Blog</a></li>
+                            <li class="nav-item"><a class="nav-link" href="blogs">Blog</a></li>
 
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
@@ -210,43 +211,26 @@
                         <div class="section-heading">
                             <h2>Latest blog posts</h2>
 
-                            <a href="blog.jsp">read more <i class="fa fa-angle-right"></i></a>
+                            <a href="blogs">View All<i class="fa fa-angle-right"></i></a>
                         </div>
                     </div>
 
+                    <jsp:useBean id="blogItem" class="dao.BlogDAO" /> 
+                     <c:forEach  items="${blogItem.top3Blogs}" var="blogs">
                     <div class="col-lg-4 col-md-6">
                         <div class="service-item">
-                            <a href="#" class="services-item-image"><img src="assets/images/blog-1-370x270.jpg" class="img-fluid" alt=""></a>
+                            <a href="#" class="services-item-image"><img src="assets/blog/${blogs.image}" style="width: 350px; height: 293px; object-fit: cover" class="img-fluid" alt=""></a>
 
                             <div class="down-content">
-                                <h4><a href="#">Lorem ipsum dolor sit amet, consectetur adipisicing elit hic</a></h4>
+                                <h4><a href="#">${blogs.title}</a></h4>
 
-                                <p style="margin: 0;"> John Doe &nbsp;&nbsp;|&nbsp;&nbsp; 12/06/2020 10:30 &nbsp;&nbsp;|&nbsp;&nbsp; 114</p>
+                                <p style="margin: 0;"><i class="zmdi zmdi-favorite"></i> ${blogs.nLike} Likes &nbsp;&nbsp;|&nbsp;&nbsp;<i class="zmdi zmdi-border-color"></i> ${blogs.nCmt} Comments &nbsp;&nbsp;|&nbsp;&nbsp;</p>
+                                <p style="margin: 0;"><i class="zmdi zmdi-calendar-alt"></i> ${blogs.date} Publish Date</p>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-item">
-                            <a href="#" class="services-item-image"><img src="assets/images/blog-2-370x270.jpg" class="img-fluid" alt=""></a>
-
-                            <div class="down-content">
-                                <h4><a href="#">Lorem ipsum dolor sit amet consectetur adipisicing elit</a></h4>
-
-                                <p style="margin: 0;"> John Doe &nbsp;&nbsp;|&nbsp;&nbsp; 12/06/2020 10:30 &nbsp;&nbsp;|&nbsp;&nbsp; 114</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 col-md-6">
-                        <div class="service-item">
-                            <a href="#" class="services-item-image"><img src="assets/images/blog-3-370x270.jpg" class="img-fluid" alt=""></a>
-
-                            <div class="down-content">
-                                <h4><a href="#">Aperiam modi voluptatum fuga officiis cumque</a></h4>
-
-                                <p style="margin: 0;"> John Doe &nbsp;&nbsp;|&nbsp;&nbsp; 12/06/2020 10:30 &nbsp;&nbsp;|&nbsp;&nbsp; 114</p>
-                            </div>
-                        </div>
-                    </div>
+                   </c:forEach>
+                    
                 </div>
             </div>
         </div>

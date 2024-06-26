@@ -26,7 +26,7 @@
                     <img style="height: 100%;width: 100%;object-fit: cover" src="./assets/images/easyjobwithouttext.png" alt="alt"/>
                 </div>
                 <div class="title_container">
-                    <p class="title">Register employer account</p>
+                    <p class="title">Sign up to become a recruiter</p>
                     <span class="subtitle">Get started with our platform, just create an account and enjoy the experience.</span>
                 </div>
                 <br>

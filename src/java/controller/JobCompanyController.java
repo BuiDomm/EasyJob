@@ -5,6 +5,7 @@
 package controller;
 
 import dao.JobDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -55,6 +56,8 @@ public class JobCompanyController extends HttpServlet {
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);
         request.setAttribute("cid", cid);
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
         request.getRequestDispatcher("job-company.jsp").forward(request, response);
     }
 }

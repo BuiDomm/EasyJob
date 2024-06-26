@@ -233,7 +233,7 @@
         <div class="container">
             <div style="display:flex;justify-content: center;">
                 <div class="login-box" style="margin-top: 230px;">
-                    <form class="form_container" method="post" action="changepass?role=2">
+                    <form class="form_container" method="post" action="changepass">
 
                         <div style="display: flex; "> 
 

@@ -1,29 +1,89 @@
-<%-- 
-    Document   : header
-    Created on : May 24, 2024, 9:44:29 AM
-    Author     : ASUS
---%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
     <head>
+
+        <!-- Mobile Specific Meta -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <!-- Favicon-->
+        <link rel="shortcut icon" href="img/fav.png">
+        <!-- Author Meta -->
+        <meta name="author" content="codepixer">
+        <!-- Meta Description -->
+        <meta name="description" content="">
+        <!-- Meta Keyword -->
+        <meta name="keywords" content="">
+        <!-- meta character set -->
+        <meta charset="UTF-8">
+        <!-- Site Title -->
+        <title>Job Listing</title>
+
+        <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+        <!--
+            CSS
+            ============================================= -->
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="assets/css/main.css">
+        <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+        <link rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="icon" href="assets/images/favicon.ico">
         <link rel="stylesheet" href="assets/css/icontop.css">
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-        <title>Easyjob | Free Job For Everyone</title>
-        <!-- Bootstrap core CSS -->
-        <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!-- Additional CSS Files -->
-        <link rel="stylesheet" href="assets/css/fontawesome.css">
+
+
+
         <link rel="stylesheet" href="assets/css/style.css">
-        <link rel="stylesheet" href="assets/css/owl.css">
+
         <link rel="stylesheet" href="assets/css/button.css">
+
+        <style>
+            .bottom-meta .list-inline-item a {
+                font-size: 16px;
+            }
+
+            .bottom-meta .list-inline-item a span {
+                font-size: 20px;
+                margin-right: 5px;
+            }
+        </style>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                const titles = document.querySelectorAll('.influence-post-title');
+                titles.forEach(title => {
+                    const maxLength = 30;
+                    if (title.textContent.length > maxLength) {
+                        const words = title.textContent.split(' ');
+                        if (words.length > 3) {
+                            title.textContent = words.slice(0, 3).join(' ') + '...';
+                        } else {
+                            title.textContent = title.textContent.slice(0, maxLength) + '...';
+                        }
+                    }
+                });
+            });
+
+        </script>
     </head>
+
+
+
     <body>
+
+        <!-- ***** Preloader Start ***** -->
+        <div id="preloader">
+            <div class="jumper">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>  
+        <!-- ***** Preloader End ***** -->
+
         <header class="">
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
@@ -32,7 +92,7 @@
                             <a style="width: 55px;height: 55px;display: inline-block" class="navbar-brand" href="index.jsp">
                             </c:when>
                             <c:otherwise> 
-                                <a style="width: 55px;height: 55px;display: inline-block" class="navbar-brand" href="home">
+                                <a style="width: 55px;height: 55px;display: inline-block" class="navbar-brand" href="home.jsp">
 
                                 </c:otherwise>
 
@@ -53,7 +113,7 @@
                                             <a class="nav-link" href="index.jsp">Home
                                             </c:when>
                                             <c:otherwise> 
-                                                <a class="nav-link" href="home">Home
+                                                <a class="nav-link" href="home.jsp">Home
 
                                                 </c:otherwise>
 
@@ -65,27 +125,25 @@
 
                                 <li class="nav-item active"><a class="nav-link" href="about-us.jsp">About us</a></li>
 
-                                <li class="nav-item"><a class="nav-link" href="blogs">Blog</a></li>
+                                <li class="nav-item"><a class="nav-link" href="blog.jsp">Blog</a></li>
 
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">More</a>
 
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item" href="team.jsp">Team</a>
-
-                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/companyList">Enterprise</a>
-
+                                        <a class="dropdown-item" href="${pageContext.request.contextPath}/companyList">Testimonials</a>
                                         <a class="dropdown-item" href="terms.jsp">Terms</a>
                                         <c:choose>
                                             <c:when test="${sessionScope.account != null}">
                                                 <a class="dropdown-item" href="./CVSeeker">CV Profile</a>
                                                 <a class="dropdown-item" href="${pageContext.request.contextPath}/favoriteJobList">List saved job</a>
                                             </c:when>
-                                        </c:choose>
+                                        </c:choose>    
                                     </div>
                                 </li>
 
-                                <li class="nav-item"><a class="nav-link" href="managerblog">Manager Blog</a></li>
+                                <li class="nav-item"><a class="nav-link" href="contact.jsp">Contact Us</a></li>
                             </ul>
                             <c:choose>
                                 <c:when test="${sessionScope.account == null}">
@@ -124,49 +182,16 @@
                                 </c:when >
                                 <c:otherwise >
                                     <ul class="example-2" style="display: flex;max-height: 45px;margin-left: 120px;margin-bottom: 15px;">
-                                        <div class="shadow-lg d-none" id="boxNotification" style="position: absolute; background: white; top: 80%;width: 400px">
-                                            <h5 class="fw-semibold px-3 py-2 m-0 d-flex justify-content-between">Notifications
-                                                <a href="readAll" class="btn btn-info float-end ">Read All</a></h5>
-                                                <c:set var="newNotification" value="${notidao.getNewNotificationsesByAccount(sessionScope.account.getIdUser())}" />
-                                                <c:forEach var="n" items="${newNotification}">
-                                                <a href="javascript:void(0)" class="dropdown-item ">
-                                                    <div class="d-flex align-items-start py-2 " style=" white-space: nowrap;
-                                                         overflow: hidden;
-                                                         text-overflow: ellipsis;
-                                                         ${n.readStatus == 1 ? '':'opacity:0.5;'} ">
-
-                                                        <div class="m-0 d-flex justify-content-between ">
-                                                            <span class="${n.readStatus == 1 ? ' bg-primary badge rounded-pill h-100 ':'' }"> </span>
-                                                            <h6 class="mb-1 fw-semibold">${fn:substring(n.time, 0, 10)}  
-                                                                &nbsp;&nbsp;&nbsp;&nbsp;</h6>
-                                                            <p class="mb-1">${n.message}</p>
-                                                           
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </c:forEach>
-                                            <div class="d-grid p-3 border-top w-100">
-                                                <a href="notifications" class="btn btn-outline-primary w-100">View all</a>
-                                            </div>
-                                        </div>
                                         <li class="icon-content">
-                                            <c:set value="${notidao.getNumberNewNotificationses(sessionScope.account.getIdUser())}" var="number"></c:set>
-                                            <c:if test="${number != 0}">
-                                                <span class="count rounded-circle bg-danger" style="position: absolute; z-index: 10;top: -15px;right: -10px;width: 25px;">${number}</span>
-                                            </c:if>
-
-                                            <a href="#!" aria-label="Discord" onclick="handleDisplayBox()" >
+                                            <a href="#!" aria-label="Discord" >
                                                 <div class="filled"></div>
                                                 <img width="24" height="24" src="https://img.icons8.com/material-outlined/24/appointment-reminders--v1.png" alt="appointment-reminders--v1"/>
-
                                             </a>
-
-
                                             <div class="tooltip">Notification</div>
                                         </li>
                                         <li class="icon-content">
                                             <a
-                                                href="messageListAccount"
+                                                href="#!"
 
 
                                                 >
@@ -251,11 +276,103 @@
                 </div>
             </nav>
         </header>
+
+        <!-- Page Content -->
+        <div class="page-heading about-heading header-text" style="background-image: url(assets/images/heading-6-1920x500.jpg);">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-content">
+                            <h4>Lorem ipsum dolor sit amet</h4>
+                            <h2>Blog</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Start blog-posts Area -->
+        <section class="blog-posts-area section-gap">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8 post-list blog-post-list">
+                        <c:forEach var="b" items="${blogs}">
+                            <div class="single-post">
+                                <img class="img-fluid" src="assets/blog/${b.image}" alt="" style="width: 690px; height: 294px;">
+                                <a href="${pageContext.request.contextPath}/blogDetails?bid=${b.blogId}">
+                                    <h1>${b.title}</h1>
+                                </a>
+                                <div class="bottom-meta">
+                                    <div class="user-details row align-items-center">
+                                        <div class="comment-wrap col-lg-12">
+                                            <ul class="list-inline">
+                                                <li class="list-inline-item"><a href="#"><span class="lnr lnr-heart"></span> ${b.nLike} likes</a></li>
+                                                <li class="list-inline-item"><a href="#"><span class="lnr lnr-bubble"></span> ${b.nCmt} Comments</a></li>
+                                                <li class="list-inline-item"><a href="#"><span class="lnr lnr-history"></span> ${b.date}</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </div>
+                    <div class="col-lg-4 sidebar">
+                        <div class="single-widget search-widget">
+                            <form class="example" action="${pageContext.request.contextPath}/search" method="GET" style="margin:auto;max-width:300px">
+                                <input type="text" placeholder="Search Posts" name="keyword" value="${keyword}">
+                                <button type="submit" style="background-color: black;"><span class="lnr lnr-magnifier"></span></button>
+                            </form>
+                        </div>
+
+                        <div class="single-widget recent-posts-widget">
+                            <h4 class="title">Influence Posts</h4>
+                            <div class="blog-list">
+                                <c:forEach var="influencePost" items="${influencePosts}">
+                                    <div class="single-recent-post d-flex flex-row" style="margin-bottom: 10px">
+                                        <div class="recent-thumb">
+                                            <img class="img-fluid" src="assets/blog/${influencePost.image}" alt="" style="width: 80px; height: 80px; border-radius: 5px; border: 1px solid grey;">
+                                        </div>
+                                        <div class="recent-details">
+                                            <a href="${pageContext.request.contextPath}/blogDetails?bid=${influencePost.blogId}">
+                                                <h4 class="influence-post-title">${influencePost.title}</h4>
+                                            </a>
+                                            <p style="margin-top: 20px"><span class="lnr lnr-heart"></span> ${influencePost.nLike} likes</p>
+                                        </div>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- End blog-posts Area -->
+
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="inner-content">
+                            <p>Copyright © 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+
+
+
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+
+        <!-- Additional Scripts -->
+        <script src="assets/js/custom.js"></script>
+        <script src="assets/js/owl.js"></script>
     </body>
-    <script>
-        handleDisplayBox = () => {
-            var element = document.getElementById("boxNotification");
-            element.classList.toggle("d-block");
-        };
-    </script>
+
 </html>

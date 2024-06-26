@@ -5,6 +5,7 @@
 package controller;
 
 import dao.JobDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -28,39 +29,40 @@ import model.User;
 public class FavoriteJobListServlet extends HttpServlet {
 
     private JobDAO jobDao = new JobDAO();
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User us = (User) session.getAttribute("account");
-        
+
         String favoriteJobs = "";
         Cookie[] cookies = request.getCookies();
-        if(cookies != null) {
-            for(Cookie cookie: cookies) {
-                if(cookie.getName().equals("favoriteJobs"+us.getIdUser())) {
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if (cookie.getName().equals("favoriteJobs" + us.getIdUser())) {
                     favoriteJobs = cookie.getValue();
                     break;
                 }
             }
         }
-        
+
         String[] favoriteJobIdsString = favoriteJobs.split("\\|");
         List<Integer> favoriteJobIds = new ArrayList<>();
-        for(String jbId: favoriteJobIdsString) {
+        for (String jbId : favoriteJobIdsString) {
             try {
                 favoriteJobIds.add(Integer.parseInt(jbId));
             } catch (Exception e) {
                 System.out.println("err: " + e.getMessage());
             }
         }
-        
+
         List<FavoriteJobDTO> res = convertToFJobDto(favoriteJobIds);
-        
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
         request.setAttribute("jobsFavorite", res);
         request.getRequestDispatcher("job-favorite.jsp").forward(request, response);
-        
+
     }
 
     @Override
@@ -69,14 +71,14 @@ public class FavoriteJobListServlet extends HttpServlet {
     }
 
     private List<FavoriteJobDTO> convertToFJobDto(List<Integer> jobIds) {
-    List<FavoriteJobDTO> res = new ArrayList<>();
-    for (int id : jobIds) {
-        FavoriteJobDTO job = jobDao.findJobFavoriteById(id);
-        if (job != null) {
-            res.add(job);
+        List<FavoriteJobDTO> res = new ArrayList<>();
+        for (int id : jobIds) {
+            FavoriteJobDTO job = jobDao.findJobFavoriteById(id);
+            if (job != null) {
+                res.add(job);
+            }
         }
+        return res;
     }
-    return res;
-}
 
 }

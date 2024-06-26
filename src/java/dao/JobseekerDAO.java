@@ -38,7 +38,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
                 String phoneNumber = rs.getString(9);
                 Date dob = rs.getDate(10);
                 String status = rs.getString(11);
-                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, "0" + phoneNumber, dob);
+                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, phoneNumber, dob);
                 list.add(u);
 
             }
@@ -71,7 +71,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
                 int userID = rs.getInt("RoleID");
                 String phoneNumber = rs.getString("PhoneNumber");
                 String status = rs.getString(11);
-                User u = new User(firstName, lastName, email, userID, status, "0" + phoneNumber);
+                User u = new User(firstName, lastName, email, userID, status, phoneNumber);
                 return u;
             }
         } catch (Exception ex) {

@@ -6,6 +6,7 @@ package controller;
 
 import dao.ApplyDAO;
 import dao.CVDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -71,6 +72,8 @@ public class SearchJobApplied extends HttpServlet {
         ApplyDAO ad = new ApplyDAO();
         List<Apply> list = ad.searchCVAppliApply(cp.getCVId(), keyword);
         request.setAttribute("list", list);
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
         request.getRequestDispatcher("listcvapplied.jsp").forward(request, response);
 
     }

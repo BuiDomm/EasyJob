@@ -7,6 +7,7 @@ package controller;
 import dao.CVDAO;
 import dao.CompanyDAO;
 import dao.MessagessDAO;
+import dao.NotificationDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -42,14 +43,16 @@ public class MessageListAccount extends HttpServlet {
                 companyByUser.add(com);
             }
             request.setAttribute("companyByUser", companyByUser);
-        } else   if (account.getRoleId() == 3) {
+        } else if (account.getRoleId() == 3) {
             List<String> cvProfiles = new ArrayList<>();
             for (User u : receiver) {
                 CVProfile cv = cvd.findByIdUser(u.getIdUser());
-                cvProfiles.add("/easyjob/assets/avatars/"+cv.getAvatar());
+                cvProfiles.add("/easyjob/assets/avatars/" + cv.getAvatar());
             }
             request.setAttribute("cvProfiles", cvProfiles);
         }
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
         request.setAttribute("receiver", receiver);
         request.setAttribute("sender", sender);
         request.setAttribute("dao", dao);

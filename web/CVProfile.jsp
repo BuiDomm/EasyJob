@@ -162,7 +162,7 @@
                                             </c:forEach>
                                         </c:if>
                                     </div>
-                                    <a href="home.jsp" class="btn btn-primary btn-sm">Back Home</a>
+                                    <a href="home" class="btn btn-primary btn-sm">Back Home</a>
 
                                 </div>
                             </div>

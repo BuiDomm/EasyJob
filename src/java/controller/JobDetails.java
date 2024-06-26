@@ -10,6 +10,7 @@ import dao.CompanyDAO;
 import dao.JobDAO;
 import dao.JobseekerDAO;
 import dao.MessagessDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -111,6 +112,8 @@ public class JobDetails extends HttpServlet {
                 request.setAttribute("user", user);
                 request.setAttribute("com", com);
                 request.setAttribute("apply", a);
+                NotificationDAO notidao = new NotificationDAO();
+                request.setAttribute("notidao", notidao);
                 request.getRequestDispatcher("job-details.jsp").forward(request, response);
 
             } catch (Exception e) {
@@ -122,6 +125,8 @@ public class JobDetails extends HttpServlet {
                 //
                 request.setAttribute("profile", cvp);
                 request.setAttribute("com", com);
+                NotificationDAO notidao = new NotificationDAO();
+                request.setAttribute("notidao", notidao);
                 request.getRequestDispatcher("job-details.jsp").forward(request, response);
             }
 

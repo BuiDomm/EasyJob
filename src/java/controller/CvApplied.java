@@ -6,6 +6,7 @@ package controller;
 
 import dao.ApplyDAO;
 import dao.CVDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -66,11 +67,12 @@ public class CvApplied extends HttpServlet {
         User u = (User) session.getAttribute("account");
         ApplyDAO ad = new ApplyDAO();
         CVDAO cd = new CVDAO();
-        
-        
-           List<Apply> list = ad.findListByIdCV(cd.findByIdUser(u.getIdUser()).getCVId());
-           request.setAttribute("list", list);
-           request.getRequestDispatcher("listcvapplied.jsp").forward(request, response);
+
+        List<Apply> list = ad.findListByIdCV(cd.findByIdUser(u.getIdUser()).getCVId());
+        request.setAttribute("list", list);
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
+        request.getRequestDispatcher("listcvapplied.jsp").forward(request, response);
     }
 
     /**

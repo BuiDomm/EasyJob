@@ -34,7 +34,7 @@
 
         <!-- Additional CSS Files -->
         <link rel="stylesheet" href="assets/css/fontawesome.css">
-    
+
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
         <link rel="stylesheet" href="assets/css/icontop.css">
@@ -56,8 +56,9 @@
                 toastr.success("Your request has been processed successfully", "Easyjob Notice", {
                     timeOut: 2000,
                 });
-
             }
+
+          
 
         </script>
 
@@ -74,9 +75,9 @@
 
         <c:if test="${sessionScope.account.roleId ==2}">
             <jsp:include page="header.jsp"/>
-                <link rel="stylesheet" href="assets/css/style.css">
+            <link rel="stylesheet" href="assets/css/style.css">
         </c:if>
-        
+
         <c:if test="${sessionScope.account.roleId ==3}">
             <jsp:include page="headeremp.jsp"/>
         </c:if>
@@ -85,7 +86,7 @@
         <div class="container">
             <div style="display:flex;">
                 <div class="login-box" style="margin-top: 150px">
-                    <form style="" class="form_container" method="get" action="updateprofilejb">
+                    <form style="" class="form_container" method="post" action="updateprofilejb">
 
                         <div style="display: flex;"> 
 

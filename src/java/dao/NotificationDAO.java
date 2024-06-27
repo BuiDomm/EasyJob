@@ -156,4 +156,20 @@ public class NotificationDAO {
         }
 
     }
+    
+    public void insertNotificationApprovel(int useId, String mess, int status) {
+        String query = "INSERT INTO Notifications( UserID, [Message],ReadStatus)\n"
+                + "VALUES (?,?,?);";
+
+        try {
+            conn = new DBContext().getConnection();//mo ket noi vs sql
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, useId);
+            ps.setString(2, mess);
+            ps.setInt(3, status);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
 }

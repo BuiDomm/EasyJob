@@ -5,6 +5,7 @@
 package controller;
 
 import dao.JobseekerDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -59,7 +60,9 @@ public class Changepass extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
+        request.getRequestDispatcher("changepass.jsp").forward(request, response);
     }
 
     /**
@@ -79,37 +82,42 @@ public class Changepass extends HttpServlet {
         String newPass = request.getParameter("newpass");
         String confirmPass = request.getParameter("confirmnewpass");
         JobseekerDAO jd = new JobseekerDAO();
-        int role = Integer.parseInt(request.getParameter("role"));
+
         Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
 
-        if (role == 2) {
-            if (u.getPassword().equals(currentPass)) {
+        if (u.getPassword().equals(currentPass)) {
 
-                if (newPass.equals(confirmPass)) {
-                    if (p.matcher(newPass).find()) {
+            if (newPass.equals(confirmPass)) {
+                if (p.matcher(newPass).find()) {
 
-                        jd.changePass(u.getIdUser(), newPass);
-                        u.setPassword(newPass);
-                        session.setAttribute("account", u);
-                        request.setAttribute("successfully", true);
-                        request.getRequestDispatcher("changepass.jsp").forward(request, response);
-                    } else {
-                        request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
-                        request.getRequestDispatcher("changepass.jsp").forward(request, response);
-
-                    }
-
+                    jd.changePass(u.getIdUser(), newPass);
+                    u.setPassword(newPass);
+                    session.setAttribute("account", u);
+                    NotificationDAO notidao = new NotificationDAO();
+                    request.setAttribute("notidao", notidao);
+                    request.setAttribute("successfully", true);
+                    request.getRequestDispatcher("changepass.jsp").forward(request, response);
                 } else {
-                    request.setAttribute("notice", "The new password and confirm is not same!!!");
+                    NotificationDAO notidao = new NotificationDAO();
+                    request.setAttribute("notidao", notidao);
+                    request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
                     request.getRequestDispatcher("changepass.jsp").forward(request, response);
 
                 }
 
             } else {
-                request.setAttribute("notice", "The current password is wrong!!!");
+                NotificationDAO notidao = new NotificationDAO();
+                request.setAttribute("notidao", notidao);
+                request.setAttribute("notice", "The new password and confirm is not same!!!");
                 request.getRequestDispatcher("changepass.jsp").forward(request, response);
+
             }
 
+        } else {
+            NotificationDAO notidao = new NotificationDAO();
+            request.setAttribute("notidao", notidao);
+            request.setAttribute("notice", "The current password is wrong!!!");
+            request.getRequestDispatcher("changepass.jsp").forward(request, response);
         }
 
     }

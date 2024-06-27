@@ -5,6 +5,7 @@
 package controller;
 
 import dao.CompanyDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -23,21 +24,22 @@ import model.Company;
 public class CompanyListController extends HttpServlet {
 
     private CompanyDAO companyDao = new CompanyDAO();
-    
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         int page = 1;
-        if(request.getParameter("page") != null) {
+        if (request.getParameter("page") != null) {
             page = Integer.parseInt(request.getParameter("page"));
         }
-        
+
         List<Company> companies = companyDao.getCompanyWithPagging(page);
-        
+
         int noOfCompanies = companyDao.getNoOfCompanies();
         int noOfPages = (int) Math.ceil(noOfCompanies * 1.0 / 9);
-        
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
         request.setAttribute("companies", companies);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", page);

@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -61,7 +62,9 @@ public class HomeServlet extends HttpServlet {
         try {
             User u = (User) session.getAttribute("account");
             if (u.getRoleId() == 2) {
-                response.sendRedirect("home.jsp");
+                NotificationDAO notidao = new NotificationDAO();
+                request.setAttribute("notidao", notidao);
+                request.getRequestDispatcher("home.jsp").forward(request, response);
             } else if (u.getRoleId() == 3) {
                 response.sendRedirect("employerhomeservlet");
             } else if (u.getRoleId() == 1) {

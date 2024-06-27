@@ -5,6 +5,7 @@
 package controller;
 
 import dao.JobseekerDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +16,8 @@ import jakarta.servlet.http.HttpSession;
 import java.util.regex.Pattern;
 import model.User;
 import java.sql.Date;
+import java.time.LocalDate;
+import java.time.Period;
 
 /**
  *
@@ -60,43 +63,22 @@ public class UpdateProfileJobseeker extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String firstName = request.getParameter("firstname");
-        String lastName = request.getParameter("lastname");
-        String password = request.getParameter("pass");
-        String cityName = request.getParameter("cityname");
-        String phoneNumber = request.getParameter("phone");
-        String dobDate = request.getParameter("date");
-        Date dob = Date.valueOf(dobDate);
-
         HttpSession session = request.getSession();
         User u = (User) session.getAttribute("account");
-        JobseekerDAO jd = new JobseekerDAO();
-        Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-        if (password.length() == 0) {
-            User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), u.getPassword(), u.getRoleId(), u.getMessage(), u.getStatus(), cityName, "0"+phoneNumber, dob);
-            jd.update(uu);
-            session.setAttribute("account", uu);
-            request.setAttribute("successfully", true);
-            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+        request.setAttribute("acc", u);
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
+        request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+    }
 
-        } else if (password.length() != 0) {
-            if (!p.matcher(password).find()) {
-                request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
-                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-            } else {
-                User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), password, u.getRoleId(), u.getMessage(), u.getStatus(), cityName, "0"+phoneNumber, dob);
-                jd.update(uu);
-                session.setAttribute("account", uu);
-                request.setAttribute("successfully", true);
-                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-            }
-        }
-//        else if ((password.length() != 0 && confirmpasss.length() == 0) || password.length() == 0 && confirmpasss.length() != 0) {
-//
-//            request.setAttribute("notice", "Please fill in all information!!!");
-//            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-//
-//        }
+    public static boolean is18OrOlder(Date birthDate) {
+        LocalDate birthLocalDate = birthDate.toLocalDate();
+
+        LocalDate currentDate = LocalDate.now();
+
+        Period age = Period.between(birthLocalDate, currentDate);
+
+        return age.getYears() >= 18;
     }
 
     /**
@@ -110,7 +92,56 @@ public class UpdateProfileJobseeker extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        String firstName = request.getParameter("firstname");
+        String lastName = request.getParameter("lastname");
+        String password = request.getParameter("pass");
+        String cityName = request.getParameter("cityname");
+        String phoneNumber = request.getParameter("phone");
+        String dobDate = request.getParameter("date");
+        Date dob = Date.valueOf(dobDate);
+        if (!is18OrOlder(dob)) {
+            request.setAttribute("notice", "User must be over 18 years old.");
+            NotificationDAO notidao = new NotificationDAO();
+            request.setAttribute("notidao", notidao);
+            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+
+        } else {
+
+            User u = (User) session.getAttribute("account");
+            JobseekerDAO jd = new JobseekerDAO();
+            Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+            if (password.length() == 0) {
+                User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), u.getPassword(), u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
+                jd.update(uu);
+                session.setAttribute("account", uu);
+                request.setAttribute("successfully", true);
+                NotificationDAO notidao = new NotificationDAO();
+                request.setAttribute("notidao", notidao);
+
+                request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+
+            } else if (password.length() != 0) {
+                if (!p.matcher(password).find()) {
+                    request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
+                    request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+                } else {
+                    User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), password, u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
+                    jd.update(uu);
+                    session.setAttribute("account", uu);
+                    request.setAttribute("successfully", true);
+                    NotificationDAO notidao = new NotificationDAO();
+                    request.setAttribute("notidao", notidao);
+                    request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+                }
+            }
+//        else if ((password.length() != 0 && confirmpasss.length() == 0) || password.length() == 0 && confirmpasss.length() != 0) {
+//
+//            request.setAttribute("notice", "Please fill in all information!!!");
+//            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+//
+//        }
+        }
     }
 
     /**

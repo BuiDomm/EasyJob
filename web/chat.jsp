@@ -33,7 +33,7 @@
 
         <link rel="stylesheet" href="assets/css/chat.css">
         <link rel="stylesheet" href="assets/css/fontawesome.css">
-        <link rel="stylesheet" href="assets/css/style.css">
+        <!--<link rel="stylesheet" href="assets/css/style.css">-->
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
 
@@ -237,6 +237,7 @@
         };
 
         var userId = 0;
+        // click vô thì hiện tin nahwns cũ
         function show(receiverID, senderID) {
             // Lấy tất cả các phần tử contact-item
             const contactItems = document.querySelectorAll('.contact-item');
@@ -252,7 +253,7 @@
                     contactItem.classList.add('active-chat');
                 });
             });
-
+                  // click vô thì hiện tin nahwns cũ
             $.ajax({
                 url: 'messageDetail',
                 type: 'GET',
@@ -309,13 +310,14 @@
                     // Display the messages
                     for (var i = 0; i < allMessages.length; i++) {
                         var mess = allMessages[i];
-
+               // so sánh thông tin nếu id trong session hiên tại trùng với id của người đã gửi tin nhắn tin thì sẽ nằm phía phải
                         if (receiver === mess.receiverid) {
 
                             var messageDiv = $(' <div class="d-flex justify-content-end mb-4"></div>');
                             var imgDiv = $('<div class="img_cont_msg"></div>');
                             var contentDiv = $('  <div class="msg_cotainer_send">' + mess.content + '<span style="min-width:100px;" class="msg_time_send">' + formatDate(mess.timestamp) + '</span></div>');
-                        } else {
+                            // ngược lại như trên
+        } else {
                             var messageDiv = $('<div class="d-flex justify-content-start mb-4"></div>');
                             var imgDiv = $('<div class="img_cont_msg"><img src="' + response.receiver.url + '" class="rounded-circle user_img_msg"></div>');
                             var contentDiv = $('<div class="msg_cotainer">' + mess.content + '<span style="min-width:100px;" class="msg_time_send">' + formatDate(mess.timestamp) + '</span></div>');
@@ -449,7 +451,7 @@
 
                     document.getElementById('content').value = ''; // Xóa nội dung tin nhắn đã gửi
 
-                    // Cập nhật lại danh sách người nhận
+                    // Cập nhật lại danh sách người gửi
                     updateReceiverList();
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -457,6 +459,7 @@
                 }
             });
         }
+        // update lai danh sach khi insert new message 
         function updateReceiverList() {
             $.ajax({
                 url: "getSortedReceiverList",
@@ -508,7 +511,7 @@
 
 
 
-
+// search name nguoi nhận tin nhắn ( nguoi mình gửi tin nhắn trước đó được sort theo thứ tự là thời gian nahwns tin gần nahast nữa 
         function searchName(e) {
             var namesearch = e.target.value;
             console.log(namesearch);

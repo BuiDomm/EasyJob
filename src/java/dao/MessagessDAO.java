@@ -251,17 +251,20 @@ public class MessagessDAO {
         List<User> list = new ArrayList<>();
         JobseekerDAO jd = new JobseekerDAO();
         String sql = "WITH SentMessages AS (\n"
+                    //Truy vấn này chọn các tin nhắn mà ReceiverID là giá trị tham số truyền vào và sắp xếp theo thời gian
                 + "    SELECT DISTINCT M.SenderID AS AccountID, MAX(M.SentTime) AS LatestMessageTime\n"
                 + "    FROM Messagess M\n"
                 + "    WHERE M.ReceiverID = ?\n"
                 + "    GROUP BY M.SenderID\n"
                 + "),\n"
+                   //Truy vấn này chọn các tin nhắn mà SenderID là giá trị tham số truyền vào và sắp xếp theo thời gian ( last messege)
                 + "ReceivedMessages AS (\n"
                 + "    SELECT DISTINCT M.ReceiverID AS AccountID, MAX(M.SentTime) AS LatestMessageTime\n"
                 + "    FROM Messagess M\n"
                 + "    WHERE M.SenderID = ?\n"
                 + "    GROUP BY M.ReceiverID\n"
                 + "),\n"
+                //Truy vấn kết hợp SentMessages và ReceivedMessages chọn ra max last time nhóm lại bằng account id
                 + "Combined AS (\n"
                 + "    SELECT AccountID, MAX(LatestMessageTime) AS LatestMessageTime\n"
                 + "    FROM (\n"
@@ -271,6 +274,7 @@ public class MessagessDAO {
                 + "    ) AS SubQuery\n"
                 + "    GROUP BY AccountID\n"
                 + "),\n"
+                // search thêm điều kiện name
                 + "UsersMessaged AS (\n"
                 + "    SELECT DISTINCT\n"
                 + "        U.UserID,\n"

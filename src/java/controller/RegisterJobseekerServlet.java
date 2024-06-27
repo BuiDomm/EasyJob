@@ -5,6 +5,7 @@
 package controller;
 
 import EmailAutoman.SendEmail;
+import dao.JobseekerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -82,7 +83,7 @@ public class RegisterJobseekerServlet extends HttpServlet {
             String email = request.getParameter("email");
             String password = request.getParameter("password");
             Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-            Pattern pText = Pattern.compile("^[a-zA-Z]+$");
+            Pattern pText = Pattern.compile("^[a-zA-Z\\s]+$");
 
             String regex = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}$";
             String pattern = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
@@ -104,18 +105,28 @@ public class RegisterJobseekerServlet extends HttpServlet {
                 request.setAttribute("notice", "Please complete all information.");
                 request.getRequestDispatcher("register.jsp").forward(request, response);
             }
-            SendEmail se = new SendEmail();
-            Random random = new Random();
-            int token = random.nextInt(1000000);
-            se.sendMailVeri(email, lastName + " " + firstName, token);
+
+            JobseekerDAO jd = new JobseekerDAO();
+            User u = jd.findByEmail(email);
+            if (u == null) {
+                SendEmail se = new SendEmail();
+                Random random = new Random();
+                int token = random.nextInt(1000000);
+                se.sendMailVeri(email, lastName + " " + firstName, token);
+                request.setAttribute("reqToken", token);
+            } else {
+
+                request.setAttribute("notice", "Email already exists on the system.");
+                request.getRequestDispatcher("register.jsp").forward(request, response);
+
+            }
 
             request.setAttribute("jobseekerFirstName", firstName);
             request.setAttribute("jobseekerLastName", lastName);
             request.setAttribute("jobseekerEmail", email);
             request.setAttribute("jobseekerPassword", password);
-            request.setAttribute("reqToken", token);
-            //
 
+            //
             request.getRequestDispatcher("otpchecker.jsp").forward(request, response);
 
         } else if (role == 3) {

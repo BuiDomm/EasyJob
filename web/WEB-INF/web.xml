@@ -107,7 +107,8 @@
         <servlet-class>controller.WithdrawJob</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>GetSorttedReceiverList</servlet-name>
+      
+       <servlet-name>GetSorttedReceiverList</servlet-name>
         <servlet-class>controller.GetSorttedReceiverList</servlet-class>
     </servlet>
     <servlet>
@@ -121,6 +122,7 @@
     <servlet>
         <servlet-name>ErorrPageServlet</servlet-name>
         <servlet-class>controller.ErorrPageServlet</servlet-class>
+      
     </servlet>
     <servlet-mapping>
         <servlet-name> AdminJobDetail</servlet-name>
@@ -430,6 +432,7 @@
         <servlet-name>manageskilltest</servlet-name>
         <url-pattern>/manageskilltest</url-pattern>
     </servlet-mapping>
+
     <servlet>
         <servlet-name>CreateMessage</servlet-name>
         <servlet-class>controller.CreateMessage</servlet-class>
@@ -507,6 +510,40 @@
         <url-pattern>/notifications</url-pattern>
     </servlet-mapping>
 
+      <servlet-mapping>
+        <servlet-name>updateskilltest</servlet-name>
+        <url-pattern>/updateskilltest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>loadskilltest</servlet-name>
+        <url-pattern>/loadskilltest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deleteanswer</servlet-name>
+        <url-pattern>/deleteanswer</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>deletequestion</servlet-name>
+        <url-pattern>/deletequestion</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>updateskilltest</servlet-name>
+        <servlet-class>controller.updateskilltest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>loadskilltest</servlet-name>
+        <servlet-class>controller.loadskilltest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deleteanswer</servlet-name>
+        <servlet-class>controller.deleteanswer</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>deletequestion</servlet-name>
+        <servlet-class>controller.deletequestion</servlet-class>
+     </servlet>
  
       <servlet>
         <servlet-name> AdminAddPackage</servlet-name>

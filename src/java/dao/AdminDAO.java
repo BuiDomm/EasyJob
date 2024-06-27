@@ -19,6 +19,7 @@ import java.util.logging.Logger;
 import model.Category;
 import model.Company;
 import model.Job;
+import model.Packages;
 import model.Statistic;
 import model.User;
 
@@ -363,45 +364,50 @@ public class AdminDAO {
         }
         return list;
     }
-public Map<Job, Integer> getTopJobWithApplyCount(String period) {
-    Map<Job, Integer> accountPurchaseCountMap = new LinkedHashMap<>();
-    String dateFilter = "";
 
-    switch (period.toLowerCase()) {
-        case "week" -> dateFilter = "AND DATEPART(week, A.ApplicationDate) = DATEPART(week, GETDATE())";
-        case "month" -> dateFilter = "AND DATEPART(month, A.ApplicationDate) = DATEPART(month, GETDATE())";
-        case "year" -> dateFilter = "AND DATEPART(year, A.ApplicationDate) = DATEPART(year, GETDATE())";
-        default -> throw new IllegalArgumentException("Invalid period specified. Use 'week', 'month', or 'year'.");
-    }
+    public Map<Job, Integer> getTopJobWithApplyCount(String period) {
+        Map<Job, Integer> accountPurchaseCountMap = new LinkedHashMap<>();
+        String dateFilter = "";
 
-    String query = "SELECT TOP 5 J.Title, J.[Location], J.Salary, COUNT(*) AS ApplyCount\n"
-            + " FROM Jobs J JOIN Applications A ON J.JobID = A.JobID\n"
-            + " WHERE J.Status = 'Accept' " + dateFilter + "\n"
-            + " GROUP BY J.Title, J.[Location], J.Salary\n"
-            + " ORDER BY ApplyCount DESC";
-
-    try {
-        conn = new DBContext().getConnection(); // Open connection to SQL
-        ps = conn.prepareStatement(query);
-        rs = ps.executeQuery();
-
-        while (rs.next()) {
-            String title = rs.getString("Title");
-            String location = rs.getString("Location");
-            int salary = rs.getInt("Salary");
-            int applyCount = rs.getInt("ApplyCount");
-
-            // Debugging statements
-            System.out.println("Title: " + title + ", Location: " + location + ", Salary: " + salary + ", ApplyCount: " + applyCount);
-
-            Job job = new Job(title, location, salary);
-            accountPurchaseCountMap.put(job, applyCount);
+        switch (period.toLowerCase()) {
+            case "week" ->
+                dateFilter = "AND DATEPART(week, A.ApplicationDate) = DATEPART(week, GETDATE())";
+            case "month" ->
+                dateFilter = "AND DATEPART(month, A.ApplicationDate) = DATEPART(month, GETDATE())";
+            case "year" ->
+                dateFilter = "AND DATEPART(year, A.ApplicationDate) = DATEPART(year, GETDATE())";
+            default ->
+                throw new IllegalArgumentException("Invalid period specified. Use 'week', 'month', or 'year'.");
         }
-    } catch (Exception e) {
-        e.printStackTrace();
+
+        String query = "SELECT TOP 5 J.Title, J.[Location], J.Salary, COUNT(*) AS ApplyCount\n"
+                + " FROM Jobs J JOIN Applications A ON J.JobID = A.JobID\n"
+                + " WHERE J.Status = 'Accept' " + dateFilter + "\n"
+                + " GROUP BY J.Title, J.[Location], J.Salary\n"
+                + " ORDER BY ApplyCount DESC";
+
+        try {
+            conn = new DBContext().getConnection(); // Open connection to SQL
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String title = rs.getString("Title");
+                String location = rs.getString("Location");
+                int salary = rs.getInt("Salary");
+                int applyCount = rs.getInt("ApplyCount");
+
+                // Debugging statements
+                System.out.println("Title: " + title + ", Location: " + location + ", Salary: " + salary + ", ApplyCount: " + applyCount);
+
+                Job job = new Job(title, location, salary);
+                accountPurchaseCountMap.put(job, applyCount);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return accountPurchaseCountMap;
     }
-    return accountPurchaseCountMap;
-}
 
 //    public Map<Job, Integer> getTopJobWithApplyCount() {
 //        Map<Job, Integer> accountPurchaseCountMap = new LinkedHashMap<>();
@@ -432,6 +438,99 @@ public Map<Job, Integer> getTopJobWithApplyCount(String period) {
 //        }
 //        return accountPurchaseCountMap;
 //    }
+    //package
+    public void InsertPackage(String name, String description, int price) {
+
+        String query = "INSERT INTO Packages(PackageName, Description, Price)\n"
+                + "VALUES (?,?,?)";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, name);
+            ps.setString(2, description);
+            ps.setInt(3, price);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+        }
+
+    }
+
+    public void updatePackage(int pid, String name, String description, int price) {
+        String query = "UPDATE Packages\n"
+                + " SET PackageName = ? ,Description = ? ,Price = ?\n"
+                + " WHERE PackageID = ?";
+
+        try {
+            conn = new DBContext().getConnection();//mo ket noi vs sql
+            ps = conn.prepareStatement(query);
+            ps.setString(1, name);
+            ps.setString(2, description);
+            ps.setInt(3, price);
+            ps.setInt(4, pid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+
+    }
+
+    public List<Packages> getAllPackage() {
+        List<Packages> listG = new ArrayList<>();
+        String query = "select * from Packages";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                listG.add(new Packages(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4)));
+
+            }
+        } catch (Exception e) {
+        }
+
+        return listG;
+
+    }
+
+    public Packages getPackageById(String pid) {
+        String query = "select * from Packages\n"
+                + "where PackageID = ?";
+        try {
+            conn = new DBContext().getConnection();//mo ket noi vs sql
+            ps = conn.prepareStatement(query);
+            ps.setString(1, pid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                return new Packages(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4));
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
+
+    public void deletePackage(String id) {
+        String query = " delete from Packages\n"
+                + "where PackageID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id); 
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+        }
+    }
 
     //blog
     public int getNumberBlogStatus(String statusString) {

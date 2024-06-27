@@ -510,7 +510,6 @@
         <url-pattern>/notifications</url-pattern>
     </servlet-mapping>
 
-
       <servlet-mapping>
         <servlet-name>updateskilltest</servlet-name>
         <url-pattern>/updateskilltest</url-pattern>
@@ -545,4 +544,31 @@
         <servlet-name>deletequestion</servlet-name>
         <servlet-class>controller.deletequestion</servlet-class>
      </servlet>
+ 
+      <servlet>
+        <servlet-name> AdminAddPackage</servlet-name>
+        <servlet-class>controller.AdminAddPackage</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminAddPackage</servlet-name>
+        <url-pattern>/addPackage</url-pattern>
+    </servlet-mapping>
+    
+     <servlet>
+        <servlet-name> AdminUpdatePackage</servlet-name>
+        <servlet-class>controller.AdminUpdatePackage</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminUpdatePackage</servlet-name>
+        <url-pattern>/updatePackage</url-pattern>
+    </servlet-mapping>
+    
+      <servlet>
+        <servlet-name> AdminDeletePackage</servlet-name>
+        <servlet-class>controller.AdminDeletePackage</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminDeletePackage</servlet-name>
+        <url-pattern>/deletePackage</url-pattern>
+    </servlet-mapping>
 </web-app>

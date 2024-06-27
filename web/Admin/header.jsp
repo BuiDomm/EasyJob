@@ -46,14 +46,10 @@
 
         </div>
     </div>
-    <!--                    <div class="dash-nav-dropdown">-->
-    <!--    <a href="listaccountpackage.jsp" class="dash-nav-item">
-            <i class="fas fa-chevron-up"></i> Account Package </a>-->
-    <!--                        <div class="dash-nav-dropdown-menu">
-                                <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="dash-nav-dropdown-item">GitHub</a>
-                                <a href="http://hackerthemes.com" target="_blank" class="dash-nav-dropdown-item">HackerThemes</a>
-                            </div>-->
-    <!--                    </div>-->
+    <div class="dash-nav-dropdown">
+        <a href="addPackage" class="dash-nav-item">
+            <i class="fas fa-chevron-up"></i>Package </a>
+    </div>
     <a href="listaccount?roll=2" class="dash-nav-item">
         <i class="far fa-address-card"></i> Acounts </a>
 </nav>

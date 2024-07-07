@@ -12,35 +12,27 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
-import model.User;
+import model.Blog;
+import model.Comment;
 
 /**
  *
  * @author DELL
  */
-public class AdminListAccount extends HttpServlet {
-      /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class AdminBlogAndComment extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ModerationTalentControl</title>");  
+            out.println("<title>Servlet ModerationTalentControl</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ModerationTalentControl at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ModerationTalentControl at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,29 +50,19 @@ public class AdminListAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String indexPage = request.getParameter("index");
-        String roll = request.getParameter("roll");
-        if(indexPage == null) indexPage = "1";
-        if(roll == null) roll = "1";
-        int rollid = Integer.parseInt(roll);
-        int index = Integer.parseInt(indexPage);
-        
+        String bid = request.getParameter("id");
+        String cid = request.getParameter("cid");
+        System.out.println(cid);
         AdminDAO dao = new AdminDAO();
-        int count = dao.getTotalUserByRoll(rollid);
-        int endPage = count/4;
-        if(count % 4 != 0){
-          endPage++;
-        }
-        List<User> list = dao.pagingAccount(index,rollid);  
-   
-         NotificationDAO notidao = new NotificationDAO();
-                request.setAttribute("notidao", notidao);
-        request.setAttribute("user", list);
-        request.setAttribute("endP", endPage);
+        Blog b = dao.getBlogById(bid);
+        Comment c = dao.getCommentByID(cid);
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
+        request.setAttribute("b", b);
+        request.setAttribute("c", c);
         request.setAttribute("dao", dao);
-        request.setAttribute("roll", rollid);
-        request.getRequestDispatcher("./Admin/listaccount.jsp").forward(request, response);  
-      
+        request.getRequestDispatcher("./Admin/adminblogcomment.jsp").forward(request, response);
+
     }
 
     /**

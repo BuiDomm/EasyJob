@@ -58,7 +58,9 @@ public class AdminUnlockAccount extends HttpServlet  {
         //pass sid to dao
         AdminDAO dao = new AdminDAO();
         dao.unlockAccount(id);
-        response.sendRedirect("listaccount");
+         int roll = dao.getUserById(id).getRoleId();
+        response.sendRedirect("listaccount?roll="+roll);
+      
     } 
 
     /** 

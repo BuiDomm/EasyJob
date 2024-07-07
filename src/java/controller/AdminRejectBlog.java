@@ -16,32 +16,29 @@ import java.io.IOException;
  *
  * @author DELL
  */
-public class AdminAcceptJob extends HttpServlet {
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String jobid = request.getParameter("jobId");
-        String returnPage = request.getParameter("returnP");
-
+public class AdminRejectBlog extends HttpServlet {
+        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+         String blogId = request.getParameter("blogId");
+         String reason = request.getParameter("reason");
         AdminDAO dao = new AdminDAO();
-        JobApplyDAO jobdao = new JobApplyDAO();
-        int user = dao.getUserByJobId(jobid).getIdUser();
-        String title = dao.getByjobId(jobid).getTitle();
-        String mess = "Admin accept your Job : " +title;
-        dao.accpetJob(jobid);
-        jobdao.insertNotificationApprovel(user, mess, 1);
+         JobApplyDAO jobdao = new JobApplyDAO();
+         dao.rejectBlog(blogId);
+          String title = dao.getBlogById(blogId).getTitle();
+          int user = dao.getUserByBlogId(blogId).getIdUser();
+          String mess = "Admin rejected your Blog : " +title+" Because: " + reason ;
+          jobdao.insertNotificationApprovel(user, mess, 1);
+        
 
-        if ("listReject".equals(returnPage)) {
-            response.sendRedirect("listJobReject");
-        } else {
-            response.sendRedirect("requestList");
-        }
-    }
+       
+
+           response.sendRedirect("adminListBlog");
+
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -49,13 +46,12 @@ public class AdminAcceptJob extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+    throws ServletException, IOException {
+         processRequest(request, response);
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -63,13 +59,12 @@ public class AdminAcceptJob extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

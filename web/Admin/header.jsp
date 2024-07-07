@@ -1,59 +1,57 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<link href="../assets/css/spur.css" rel="stylesheet" type="text/css"/>
-<link href="../assets/css/demo.css" rel="stylesheet" type="text/css"/>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
-
-<header>
+<header class="dash-toolbar">
     <a href="#!" class="menu-toggle">
         <i class="fas fa-bars"></i>
     </a>
-    <a href="adminDashBoard" style="display: inline-block; text-decoration: none;">
-        <img src="./assets/images/easyjobb.png" alt="alt" style="width: 50px; height: 50px; vertical-align: middle;">
-        <span style="vertical-align: middle; color: #ff6d00; font-size: 28px">Admin</span>
+    <a href="#!" class="searchbox-toggle">
+        <i class="fas fa-search"></i>
     </a>
+    <div class="tools">
+        <div class="dropdown tools-item">
+            <a href="#" class="" id="dropdownMenuBell" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" onclick="handleDisplayBox()">
+                <i class="fas fa-bell"></i>
+                <i class="tools-item-count">${notidao.getNumberNewNotificationses(sessionScope.account.getIdUser())}</i>
+            </a>
+            <div class="shadow-lg d-none" id="boxNotification" style="position: absolute; background: white; top: 80%; right: 0; width: 400px;">
+                <h5 class="fw-semibold px-3 py-2 m-0 d-flex justify-content-between">Notifications
+                    <a href="readAll" class="btn btn-primary float-end text-white">Read All</a>
+                </h5>
+                <c:set var="newNotification" value="${notidao.getNewNotificationsesByAccount(sessionScope.account.getIdUser())}" />
+                <c:forEach var="n" items="${newNotification}">
+                    <a href="javascript:void(0)" class="dropdown-item">
+                        <div class="d-flex align-items-start py-2" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; ${n.readStatus == 1 ? '' : 'opacity:0.5;'}">
+                            <div class="m-0 d-flex justify-content-between">
+                                <span class="${n.readStatus == 1 ? 'bg-primary badge rounded-pill h-100' : ''}"></span>
+                                <h6 class="mb-1 fw-semibold">${fn:substring(n.time, 0, 10)}    </h6>
+                                <p class="mb-1">${n.message}</p>
+                            </div>
+                        </div>
+                    </a>
+                </c:forEach>
+                <div class="d-grid p-3 border-top w-100">
+                    <a href="adminViewNotification" class="btn btn-outline-primary w-100">View all</a>
+                </div>
+            </div>
+        </div>
+        <div class="dropdown tools-item">
+            <a href="#" class="" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-user"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
+                <a class="dropdown-item" href="changepass.jsp">Change Password</a>
+                <a class="dropdown-item" href="loginjobseeker">Logout</a>
+            </div>
+        </div>
+    </div>
 </header>
-<nav class="dash-nav-list">
-    <a href="adminDashBoard" class="dash-nav-item"  >
-        <i class="fas fa-home" ></i> Dashboard </a>
-    <!--                    <div class="dash-nav-dropdown">-->
-    <div class="dash-nav-dropdown ">
-        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle" >
-            <i class="fas fa-chart-bar"></i> Jobs
-        </a>
 
-        <div class="dash-nav-dropdown-menu">
-            <a href="listJobAccept" class="dash-nav-dropdown-item">Job Accepted</a>
-            <a href="listJobReject" class="dash-nav-dropdown-item">Job Rejected</a>
-        </div>
-    </div>
-    <div class="dash-nav-dropdown ">
-        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle" >
-            <i class="fas fa-bullhorn"></i> Moderation
-        </a>
 
-        <div class="dash-nav-dropdown-menu">
-            <a href="requestList" class="dash-nav-dropdown-item">Job Recruitment</a>
-            <a href="adminListBlog" class="dash-nav-dropdown-item">Blog</a>
-        </div>
-    </div>
-    <div class="dash-nav-dropdown">
-        <a href="#!" class="dash-nav-item dash-nav-dropdown-toggle">
-            <i class="fas fa-clipboard-check"></i> Handle Report </a>
-        <div class="dash-nav-dropdown-menu">
-            <a href="reportjob.jsp" class="dash-nav-dropdown-item">Job Recruitment</a>
-            <a href="reportblog.jsp" class="dash-nav-dropdown-item">Blog</a>
+<script>
+    function handleDisplayBox() {
+        var box = document.getElementById('boxNotification');
+        box.classList.toggle('d-none');
+    }
+</script>
 
-        </div>
-    </div>
-    <!--                    <div class="dash-nav-dropdown">-->
-    <!--    <a href="listaccountpackage.jsp" class="dash-nav-item">
-            <i class="fas fa-chevron-up"></i> Account Package </a>-->
-    <!--                        <div class="dash-nav-dropdown-menu">
-                                <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="dash-nav-dropdown-item">GitHub</a>
-                                <a href="http://hackerthemes.com" target="_blank" class="dash-nav-dropdown-item">HackerThemes</a>
-                            </div>-->
-    <!--                    </div>-->
-    <a href="listaccount?roll=2" class="dash-nav-item">
-        <i class="far fa-address-card"></i> Acounts </a>
-</nav>

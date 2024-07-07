@@ -5,37 +5,30 @@
 package controller;
 
 import dao.AdminDAO;
-import dao.NotificationDAO;
+import dao.JobApplyDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.List;
-import model.Job;
 
-/**
- *
- * @author DELL
- */
-public class AdminListJobAccept extends HttpServlet {
+
+public class AdminDeleteComment extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ModerationTalentControl</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ModerationTalentControl at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+
+        AdminDAO dao = new AdminDAO();
+        String id = request.getParameter("cid");
+        String reason = request.getParameter("reason");
+        JobApplyDAO jobdao = new JobApplyDAO();
+        String conentString = dao.getCommentByID(id).getContent();
+        int user = dao.getUserByCommentId(id).getIdUser();
+        dao.deleteComment(id);
+        String mess = "Admin delete your comment : " + conentString + " Because: " + reason;
+        jobdao.insertNotificationApprovel(user, mess, 1);
+
+        response.sendRedirect("adminListComment");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -50,25 +43,7 @@ public class AdminListJobAccept extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String indexPage = request.getParameter("index");
-        if (indexPage == null) {
-            indexPage = "1";
-        }
-        int index = Integer.parseInt(indexPage);
-        AdminDAO dao = new AdminDAO();
-        int count = dao.getNumberJobStatus("Accept");
-        int endPage = count / 4;
-        if (count % 4 != 0) {
-            endPage++;
-        }
-        List<Job> listJ = dao.pagingJobsByStatus(index, "Accept");
-        NotificationDAO notidao = new NotificationDAO();
-        request.setAttribute("notidao", notidao);
-        request.setAttribute("endP", endPage);
-        request.setAttribute("dao", dao);
-        request.setAttribute("listJ", listJ);
-        request.getRequestDispatcher("./Admin/listjobactive.jsp").forward(request, response);
-
+        processRequest(request, response);
     }
 
     /**
@@ -83,6 +58,7 @@ public class AdminListJobAccept extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**

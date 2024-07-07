@@ -5,6 +5,7 @@
 package controller;
 
 import dao.AdminDAO;
+import dao.JobApplyDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,9 +20,15 @@ public class AdminRejectJob extends HttpServlet {
         protected void processRequest(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
          String jobid = request.getParameter("jobId");
-          String returnPage = request.getParameter("returnP");
+         String reason = request.getParameter("reason");
+         String returnPage = request.getParameter("returnP");
         AdminDAO dao = new AdminDAO();
-        dao.rejectJob(jobid);
+        JobApplyDAO jobdao = new JobApplyDAO();
+         dao.rejectJob(jobid);
+         String title = dao.getByjobId(jobid).getTitle();
+          int user = dao.getUserByJobId(jobid).getIdUser();
+          String mess = "Admin rejected your Job : " +title+" Because: " + reason ;
+          jobdao.insertNotificationApprovel(user, mess, 1);
         
          if("listActive".equals(returnPage)){
            response.sendRedirect("listJobAccept");

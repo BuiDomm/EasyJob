@@ -89,7 +89,7 @@
                             </ul>
                             <c:choose>
                                 <c:when test="${sessionScope.account == null}">
-                                    <div style="display: flex;align-items: center;margin-left: 100px;">
+                                    <div style="display: flex;align-items: center;margin-left: 75px;">
                                         <div style="display: flex;max-height: 45px;margin-bottom: 15px;">
                                             <a style="--clr:#ff6600" class="button" href="login.jsp">
                                                 <span class="button__icon-wrapper">

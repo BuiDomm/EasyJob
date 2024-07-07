@@ -23,47 +23,16 @@
         <script src="./assets/js/chart-js-config.js"></script>
 
 
-        <title>Spur - A Bootstrap Admin Template</title>
+
     </head>
 
     <body>
         <div class="dash">
             <div class="dash-nav dash-nav-dark">
-                <%@include file="header.jsp" %>
+                <%@include file="sidebar.jsp" %>
             </div>
             <div class="dash-app">
-                <header class="dash-toolbar">
-                    <a href="#!" class="menu-toggle">
-                        <i class="fas fa-bars"></i>
-                    </a>
-                    <a href="#!" class="searchbox-toggle">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <!--                    <form class="searchbox" action="#!">
-                                            <a href="#!" class="searchbox-toggle"> <i class="fas fa-arrow-left"></i> </a>
-                                            <button type="submit" class="searchbox-submit"> <i class="fas fa-search"></i> </button>
-                                            <input type="text" class="searchbox-input" placeholder="type to search">
-                                        </form>-->
-                    <div class="tools">
-                        <!--                        <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="tools-item">
-                                                    <i class="fab fa-github"></i>
-                                                </a>-->
-                        <a href="#!" class="tools-item">
-                            <i class="fas fa-bell"></i>
-                            <i class="tools-item-count">4</i>
-                        </a>
-                        <div class="dropdown tools-item">
-                            <a href="#" class="" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                                <!--                                <a class="dropdown-item" href="#!">Profile</a>-->
-                                <a class="dropdown-item" href="changepass.jsp">Change Password</a>
-                                 <a class="dropdown-item" href="loginjobseeker">Logout</a>
-                            </div>
-                        </div>
-                    </div>
-                </header>
+                <%@include file="header.jsp" %>
                 <main class="dash-content">
 
                     <div class="row">
@@ -71,10 +40,10 @@
                             <div class="card spur-card ">
                                 <div class="card-header justify-content-between">
                                     <div class="d-flex flex-row">
-                                    <div class="spur-card-icon">
-                                        <i class="fas fa-table"></i>
-                                    </div>
-                                    <div class="spur-card-title">${roll == 2 ? "List Account Jobseeker" : "List Account Employee"}</div>
+                                        <div class="spur-card-icon">
+                                            <i class="fas fa-table"></i>
+                                        </div>
+                                        <div class="spur-card-title">${roll == 2 ? "List Account Jobseeker" : "List Account Employee"}</div>
                                     </div>
                                     <div class="d-flex flex-row">
                                         <a style="border-radius: 15px" class="nav-link active  btn-secondary  mr-2 " href="listaccount?roll=2" role="tab">Jobseeker</a>
@@ -172,17 +141,17 @@
                     window.location.href = url + id;
                 }
             }
-            
-         
+
+
 
             pagingIndex = (id) => {
-                                    let url = window.location.href;
-                                            if (url.includes("&index=")) {
-                                    url = url.split("&index=")[0];
-                                    }
-                                    window.location.href = url + "&index=" + id;
-                                    };
-        
+                let url = window.location.href;
+                if (url.includes("&index=")) {
+                    url = url.split("&index=")[0];
+                }
+                window.location.href = url + "&index=" + id;
+            };
+
 
 
         </script>

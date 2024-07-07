@@ -11,16 +11,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
-import model.User;
+import model.Packages;
 
 /**
  *
  * @author DELL
  */
-public class AdminListAccount extends HttpServlet {
-      /**
+public class AdminUpdatePackage extends HttpServlet {
+
+    /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
      *
@@ -31,19 +31,17 @@ public class AdminListAccount extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet ModerationTalentControl</title>");  
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet ModerationTalentControl at " + request.getContextPath () + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+        response.setContentType("text/html;charset=UTF-8");
+        String packagetxt = request.getParameter("pid");
+        AdminDAO dao = new AdminDAO();
+
+        List<Packages> listP = dao.getAllPackage();
+        Packages p = dao.getPackageById(packagetxt);
+         NotificationDAO notidao = new NotificationDAO();
+                request.setAttribute("notidao", notidao);
+        request.setAttribute("listP", listP);
+        request.setAttribute("mv", p);
+        request.getRequestDispatcher("./Admin/addpackage.jsp").forward(request, response);
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -58,29 +56,7 @@ public class AdminListAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String indexPage = request.getParameter("index");
-        String roll = request.getParameter("roll");
-        if(indexPage == null) indexPage = "1";
-        if(roll == null) roll = "1";
-        int rollid = Integer.parseInt(roll);
-        int index = Integer.parseInt(indexPage);
-        
-        AdminDAO dao = new AdminDAO();
-        int count = dao.getTotalUserByRoll(rollid);
-        int endPage = count/4;
-        if(count % 4 != 0){
-          endPage++;
-        }
-        List<User> list = dao.pagingAccount(index,rollid);  
-   
-         NotificationDAO notidao = new NotificationDAO();
-                request.setAttribute("notidao", notidao);
-        request.setAttribute("user", list);
-        request.setAttribute("endP", endPage);
-        request.setAttribute("dao", dao);
-        request.setAttribute("roll", rollid);
-        request.getRequestDispatcher("./Admin/listaccount.jsp").forward(request, response);  
-      
+        processRequest(request, response);
     }
 
     /**
@@ -94,7 +70,16 @@ public class AdminListAccount extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        int pid = Integer.parseInt(request.getParameter("pidtxt"));
+        String nametxt = request.getParameter("nametxt");
+        String descriptiontxt = request.getParameter("descriptiontxt");
+        int price = Integer.parseInt(request.getParameter("pricetxt"));
+
+        AdminDAO dao = new AdminDAO();
+        dao.updatePackage(pid,nametxt, descriptiontxt, price);
+        
+        response.sendRedirect("addPackage");
+
     }
 
     /**
@@ -106,4 +91,5 @@ public class AdminListAccount extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 }

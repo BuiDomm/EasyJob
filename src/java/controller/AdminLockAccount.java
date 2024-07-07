@@ -58,7 +58,8 @@ public class AdminLockAccount extends HttpServlet {
         //pass sid to dao
         AdminDAO dao = new AdminDAO();
         dao.lockAccount(id);
-        response.sendRedirect("listaccount");
+        int roll = dao.getUserById(id).getRoleId();
+        response.sendRedirect("listaccount?roll="+roll);
     } 
 
     /** 

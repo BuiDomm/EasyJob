@@ -5,43 +5,30 @@
 package controller;
 
 import dao.AdminDAO;
-import dao.NotificationDAO;
+import dao.JobApplyDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import model.Packages;
 
-/**
- *
- * @author DELL
- */
-public class AdminUpdatePackage extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+public class AdminDeleteComment extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        String packagetxt = request.getParameter("pid");
-        AdminDAO dao = new AdminDAO();
 
-        List<Packages> listP = dao.getAllPackage();
-        Packages p = dao.getPackageById(packagetxt);
-         NotificationDAO notidao = new NotificationDAO();
-                request.setAttribute("notidao", notidao);
-        request.setAttribute("listP", listP);
-        request.setAttribute("mv", p);
-        request.getRequestDispatcher("./Admin/addpackage.jsp").forward(request, response);
+        AdminDAO dao = new AdminDAO();
+        String id = request.getParameter("cid");
+        String reason = request.getParameter("reason");
+        JobApplyDAO jobdao = new JobApplyDAO();
+        String conentString = dao.getCommentByID(id).getContent();
+        int user = dao.getUserByCommentId(id).getIdUser();
+        dao.deleteComment(id);
+        String mess = "Admin delete your comment : " + conentString + " Because: " + reason;
+        jobdao.insertNotificationApprovel(user, mess, 1);
+
+        response.sendRedirect("adminListComment");
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -70,15 +57,7 @@ public class AdminUpdatePackage extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int pid = Integer.parseInt(request.getParameter("pidtxt"));
-        String nametxt = request.getParameter("nametxt");
-        String descriptiontxt = request.getParameter("descriptiontxt");
-        int price = Integer.parseInt(request.getParameter("pricetxt"));
-
-        AdminDAO dao = new AdminDAO();
-        dao.updatePackage(pid,nametxt, descriptiontxt, price);
-        
-        response.sendRedirect("addPackage");
+        processRequest(request, response);
 
     }
 
@@ -91,5 +70,4 @@ public class AdminUpdatePackage extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }

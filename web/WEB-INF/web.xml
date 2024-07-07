@@ -571,4 +571,78 @@
         <servlet-name> AdminDeletePackage</servlet-name>
         <url-pattern>/deletePackage</url-pattern>
     </servlet-mapping>
+    
+    <servlet>
+        <servlet-name> AdminBlogDetail</servlet-name>
+        <servlet-class>controller.AdminBlogDetail</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminBlogDetail</servlet-name>
+        <url-pattern>/adminBlogDetail</url-pattern>
+    </servlet-mapping>
+    
+     <servlet>
+        <servlet-name> AdminAcceptBlog</servlet-name>
+        <servlet-class>controller.AdminAcceptBlog</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminAcceptBlog</servlet-name>
+        <url-pattern>/adminBlogAccept</url-pattern>
+    </servlet-mapping>
+    
+     <servlet>
+        <servlet-name> AdminRejectBlog</servlet-name>
+        <servlet-class>controller.AdminRejectBlog</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminRejectBlog</servlet-name>
+        <url-pattern>/adminBlogReject</url-pattern>
+    </servlet-mapping>
+    
+      <servlet>
+        <servlet-name> AdminReportComment</servlet-name>
+        <servlet-class>controller.AdminReportComment</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminReportComment</servlet-name>
+        <url-pattern>/adminListComment</url-pattern>
+    </servlet-mapping>
+    
+      <servlet>
+        <servlet-name> AdminDeleteComment</servlet-name>
+        <servlet-class>controller.AdminDeleteComment</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminDeleteComment</servlet-name>
+        <url-pattern>/adminDeleteComment</url-pattern>
+    </servlet-mapping>
+    
+    
+       <servlet>
+        <servlet-name> AdminBlogAndComment</servlet-name>
+        <servlet-class>controller.AdminBlogAndComment</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminBlogAndComment</servlet-name>
+        <url-pattern>/adminBlogAndComment</url-pattern>
+    </servlet-mapping>
+    
+     
+       <servlet>
+        <servlet-name> AdminViewNotification</servlet-name>
+        <servlet-class>controller.AdminViewNotification</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminViewNotification</servlet-name>
+        <url-pattern>/adminViewNotification</url-pattern>
+    </servlet-mapping>
+    
+    <servlet>
+        <servlet-name> AdminBanAndDeleteComment</servlet-name>
+        <servlet-class>controller.AdminBanAndDeleteComment</servlet-class>
+    </servlet>  
+    <servlet-mapping>
+        <servlet-name> AdminBanAndDeleteComment</servlet-name>
+        <url-pattern>/adminBanAndDelete</url-pattern>
+    </servlet-mapping>
 </web-app>

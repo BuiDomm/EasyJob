@@ -5,39 +5,40 @@
 package controller;
 
 import dao.AdminDAO;
-import dao.NotificationDAO;
+import dao.JobApplyDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
-import model.Packages;
 
 /**
  *
  * @author DELL
  */
-public class AdminAddPackage extends HttpServlet {
-
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+public class AdminRejectBlog extends HttpServlet {
+        protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+         String blogId = request.getParameter("blogId");
+         String reason = request.getParameter("reason");
         AdminDAO dao = new AdminDAO();
+         JobApplyDAO jobdao = new JobApplyDAO();
+         dao.rejectBlog(blogId);
+          String title = dao.getBlogById(blogId).getTitle();
+          int user = dao.getUserByBlogId(blogId).getIdUser();
+          String mess = "Admin rejected your Blog : " +title+" Because: " + reason ;
+          jobdao.insertNotificationApprovel(user, mess, 1);
+        
 
-        List<Packages> listP = dao.getAllPackage();
-        //b2:set data to jsp
-        NotificationDAO notidao = new NotificationDAO();
-        request.setAttribute("notidao", notidao);
-        request.setAttribute("listP", listP);
-        request.setAttribute("dao", dao);
-        request.getRequestDispatcher("./Admin/addpackage.jsp").forward(request, response);
-    }
+       
+
+           response.sendRedirect("adminListBlog");
+
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -45,13 +46,12 @@ public class AdminAddPackage extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
+    throws ServletException, IOException {
+         processRequest(request, response);
+    } 
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -59,20 +59,12 @@ public class AdminAddPackage extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        String nametxt = request.getParameter("nametxt");
-        String descriptiontxt = request.getParameter("descriptiontxt");
-        int price = Integer.parseInt(request.getParameter("pricetxt"));
-        AdminDAO dao = new AdminDAO();
-        dao.InsertPackage(nametxt, descriptiontxt, price);
-
-        response.sendRedirect("addPackage");
-
+    throws ServletException, IOException {
+        processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

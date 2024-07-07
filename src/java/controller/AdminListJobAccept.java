@@ -5,6 +5,7 @@
 package controller;
 
 import dao.AdminDAO;
+import dao.NotificationDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -19,18 +20,19 @@ import model.Job;
  * @author DELL
  */
 public class AdminListJobAccept extends HttpServlet {
+
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ModerationTalentControl</title>");  
+            out.println("<title>Servlet ModerationTalentControl</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ModerationTalentControl at " + request.getContextPath () + "</h1>");
+            out.println("<h1>Servlet ModerationTalentControl at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -48,7 +50,7 @@ public class AdminListJobAccept extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String indexPage = request.getParameter("index");
+        String indexPage = request.getParameter("index");
         if (indexPage == null) {
             indexPage = "1";
         }
@@ -59,16 +61,14 @@ public class AdminListJobAccept extends HttpServlet {
         if (count % 4 != 0) {
             endPage++;
         }
-         List<Job> listJ = dao.pagingJobsByStatus(index,"Accept");  
-//        for (Job job : listJ) {
-//            System.out.println(job);
-//        }
-//        
-         request.setAttribute("endP", endPage);
+        List<Job> listJ = dao.pagingJobsByStatus(index, "Accept");
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
+        request.setAttribute("endP", endPage);
         request.setAttribute("dao", dao);
         request.setAttribute("listJ", listJ);
         request.getRequestDispatcher("./Admin/listjobactive.jsp").forward(request, response);
-      
+
     }
 
     /**
@@ -95,6 +95,3 @@ public class AdminListJobAccept extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 }
-
-
-

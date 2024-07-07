@@ -25,10 +25,9 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
 
     CompanyDAO com = new CompanyDAO();
     CategoryDAO cd = new CategoryDAO();
-    
-    
+
     private static final int RECORDS_PER_PAGE = 6;
-    
+
     @Override
     public List<Job> getAll() {
         List<Job> list = new ArrayList<>();
@@ -528,23 +527,32 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
 
     @Override
     public boolean delete(int id) {
-        String sql = "DELETE Jobs \n"
-                + "Where JobID =?";
+        String deleteAnswersSql = "DELETE FROM Answers WHERE QuestionID IN (SELECT QuestionID FROM Questions WHERE JobID = ?)";
+        String deleteQuestionsSql = "DELETE FROM Questions WHERE JobID = ?";
+        String deleteJobSql = "DELETE FROM Jobs WHERE JobID = ?";
         PreparedStatement ps;
         try {
-            ps = getConnection().prepareStatement(sql);
-            ps.setInt(1, id);
-            int rowAffect = ps.executeUpdate();
+
+            PreparedStatement deleteAns = getConnection().prepareStatement(deleteAnswersSql);
+            deleteAns.setInt(1, id);
+            deleteAns.executeUpdate();
+
+            PreparedStatement deleteQues = getConnection().prepareStatement(deleteQuestionsSql);
+            deleteQues.setInt(1, id);
+            deleteQues.executeUpdate();
+
+            PreparedStatement deleteJob = getConnection().prepareStatement(deleteJobSql);
+            deleteJob.setInt(1, id);
+            int rowAffect = deleteJob.executeUpdate();
+
             if (rowAffect > 0) {
                 return true;
             }
         } catch (Exception ex) {
             Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
-
         }
 
         return false;
-
     }
 
     public String getJobTitleById(int id) {
@@ -616,7 +624,7 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return null;
     }
-    
+
     public List<Job> getJobsCompany(int cid, int page) {
         List<Job> list = new ArrayList<>();
         int start = (page - 1) * RECORDS_PER_PAGE;
@@ -648,7 +656,7 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         }
         return list;
     }
-    
+
     public int getNoOfJobCom(int cid) {
         int noOfJCom = 0;
         String sql = "SELECT COUNT(*) FROM Jobs WHERE CompanyID = ? AND Status = 'Accept' ";
@@ -656,7 +664,7 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
             PreparedStatement ps = getConnection().prepareStatement(sql);
             ps.setInt(1, cid);
             ResultSet rs = ps.executeQuery();
-            if(rs.next()) {
+            if (rs.next()) {
                 noOfJCom = rs.getInt(1);
             }
         } catch (Exception e) {
@@ -664,5 +672,109 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         return noOfJCom;
     }
 
-    
+    public List<Job> findPendingJobsWithQuestionsByIdUser(int id) {
+        List<Job> list = new ArrayList<>();
+        String sql = "SELECT jobs.*, CM.*, q.* FROM Jobs jobs "
+                + "JOIN CompanyProfile CM on CM.CompanyID = jobs.CompanyID "
+                + "JOIN Users u on u.UserID = CM.UserID "
+                + "LEFT JOIN Questions q on q.JobID = jobs.JobID "
+                + "WHERE u.UserID = ? AND jobs.Status = 'Pending' AND q.Content IS NOT NULL "
+                + "ORDER BY jobs.Date DESC";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idJob = rs.getInt("JobID");
+                int idCompany = rs.getInt("CompanyID");
+                int idCategory = rs.getInt("CategoryID");
+                String title = rs.getString("Title");
+                String desc = rs.getString("Description");
+                int expY = rs.getInt("ExperienceYears");
+                String location = rs.getString("Location");
+                int salary = rs.getInt("Salary");
+                String status = rs.getString("Status");
+                Date date = rs.getDate("Date");
+
+                CompanyDAO com = new CompanyDAO();
+                Company company = com.findById(idCompany);
+                CategoryDAO cd = new CategoryDAO();
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+
+                list.add(j);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobApplyDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+    public List<Job> findPendingJobsWithNoQuestionsByIdUser(int id) {
+        List<Job> list = new ArrayList<>();
+        String sql = "SELECT jobs.*, CM.* FROM Jobs jobs "
+                + "JOIN CompanyProfile CM on CM.CompanyID = jobs.CompanyID "
+                + "JOIN Users u on u.UserID = CM.UserID "
+                + "LEFT JOIN Questions q on q.JobID = jobs.JobID "
+                + "WHERE u.UserID = ? AND jobs.Status = 'Pending' AND q.Content IS NULL "
+                + "ORDER BY jobs.Date DESC";
+        try {
+            PreparedStatement ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int idJob = rs.getInt("JobID");
+                int idCompany = rs.getInt("CompanyID");
+                int idCategory = rs.getInt("CategoryID");
+                String title = rs.getString("Title");
+                String desc = rs.getString("Description");
+                int expY = rs.getInt("ExperienceYears");
+                String location = rs.getString("Location");
+                int salary = rs.getInt("Salary");
+                String status = rs.getString("Status");
+                Date date = rs.getDate("Date");
+
+                CompanyDAO com = new CompanyDAO();
+                Company company = com.findById(idCompany);
+                CategoryDAO cd = new CategoryDAO();
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+
+                list.add(j);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobApplyDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+
+   public static void main(String[] args) {
+        JobDAO jobDAO = new JobDAO();
+
+        // Replace with the actual user ID you want to test
+        int testUserId = 2; // Example user ID
+
+        // Get pending jobs with no questions by user ID
+        List<Job> jobs = jobDAO.findPendingJobsWithNoQuestionsByIdUser(testUserId);
+
+        // Print the retrieved jobs
+        for (Job job : jobs) {
+            System.out.println("Job ID: " + job.getJobID());
+            System.out.println("Company: " + job.getCompany().getNameCompany());
+            System.out.println("Category: " + job.getCategory().getCategoryName());
+            System.out.println("Title: " + job.getTitle());
+            System.out.println("Description: " + job.getDescrip());
+            System.out.println("Experience Years: " + job.getYearEx());
+            System.out.println("Location: " + job.getLocation());
+            System.out.println("Salary: " + job.getSalary());
+            System.out.println("Status: " + job.getStatus());
+            System.out.println("Date: " + job.getDate());
+            System.out.println("-----------------------------");
+        }
+
+        // If no jobs found, print a message
+        if (jobs.isEmpty()) {
+            System.out.println("No pending jobs without questions found for the given user ID.");
+        }
+    }
 }

@@ -4,8 +4,12 @@
  */
 package controller;
 
+import dao.AnswerDAO;
+import dao.ChooseAnswerDAO;
 import dao.CompanyDAO;
 import dao.JobDAO;
+import dao.NotificationDAO;
+import dao.QuestionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,16 +17,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import model.Answer;
+import model.ChooseAnswer;
 import model.Company;
 import model.Job;
+import model.Question;
 import model.User;
 
 /**
  *
  * @author ADMIN
  */
-public class manageskilltest extends HttpServlet {
+public class dotest extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,18 +45,35 @@ public class manageskilltest extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       HttpSession session = request.getSession();
-        User epl = (User) session.getAttribute("account");
-        CompanyDAO comdao = new CompanyDAO();
-        Company com = comdao.findByUserId(epl.getIdUser());
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        int id = Integer.parseInt(request.getParameter("id"));
+        CompanyDAO cm = new CompanyDAO();
+        Company com = cm.findCompanyByIdJob(id);
         JobDAO jd = new JobDAO();
-        List<Job> containques = jd.findPendingJobsWithQuestionsByIdUser(epl.getIdUser());
-        List<Job> nocontainques = jd.findPendingJobsWithNoQuestionsByIdUser(epl.getIdUser());
-        request.setAttribute("com", com);
-        request.setAttribute("havques", containques);
-        request.setAttribute("noques", nocontainques);
-        request.getRequestDispatcher("manageskilltest.jsp").forward(request, response);
+        Job b = jd.findById(id);
+        QuestionDAO qd = new QuestionDAO();
+        AnswerDAO ad = new AnswerDAO();
+        List<Question> questions = qd.getQuestionsByJobId(id);
+        Map<Question, List<Answer>> questionAnswersMap = new HashMap<>();
 
+        for (Question question : questions) {
+            List<Answer> answers = ad.getAnswerByQuestionID(question.getQuestionID());
+            Collections.shuffle(answers);
+            questionAnswersMap.put(question, answers);
+        }
+
+        ChooseAnswerDAO chd = new ChooseAnswerDAO();
+        List<ChooseAnswer> chooseanswer = chd.getChooseAnswerJobIDAndUserID(id, u.getIdUser());
+
+        request.setAttribute("checktest", chooseanswer);
+        request.setAttribute("com", com);
+        request.setAttribute("cc", b);
+        request.setAttribute("u", u);
+        request.setAttribute("questions", questions);
+        request.setAttribute("questionAnswersMap", questionAnswersMap);
+        request.getRequestDispatcher("dotest.jsp").forward(request, response);
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
@@ -75,7 +102,24 @@ public class manageskilltest extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        int id = Integer.parseInt(request.getParameter("id"));
+
+        String[] chooseanswer = request.getParameterValues("chooseanswer[]");
+        if (chooseanswer == null) {
+            response.sendRedirect("skilltestcancel?id=" + id);
+        } else {
+            AnswerDAO ad = new AnswerDAO();
+            ChooseAnswerDAO cdao = new ChooseAnswerDAO();
+            for (int i = 0; i < chooseanswer.length; i++) {
+                int input = Integer.parseInt(chooseanswer[i]);
+                ChooseAnswer choose = new ChooseAnswer(0, u, ad.findById(input), "completed");
+                cdao.insert(choose);
+            }
+            response.sendRedirect("jobdetails?id=" + id);
+        }
+
     }
 
     /**

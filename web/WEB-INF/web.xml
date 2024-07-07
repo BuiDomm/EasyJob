@@ -107,8 +107,7 @@
         <servlet-class>controller.WithdrawJob</servlet-class>
     </servlet>
     <servlet>
-      
-       <servlet-name>GetSorttedReceiverList</servlet-name>
+        <servlet-name>GetSorttedReceiverList</servlet-name>
         <servlet-class>controller.GetSorttedReceiverList</servlet-class>
     </servlet>
     <servlet>
@@ -122,7 +121,18 @@
     <servlet>
         <servlet-name>ErorrPageServlet</servlet-name>
         <servlet-class>controller.ErorrPageServlet</servlet-class>
-      
+    </servlet>
+    <servlet>
+        <servlet-name>dotest</servlet-name>
+        <servlet-class>controller.dotest</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>skilltestcancel</servlet-name>
+        <servlet-class>controller.skilltestcancel</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>skilltestmark</servlet-name>
+        <servlet-class>controller.skilltestmark</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name> AdminJobDetail</servlet-name>
@@ -432,7 +442,6 @@
         <servlet-name>manageskilltest</servlet-name>
         <url-pattern>/manageskilltest</url-pattern>
     </servlet-mapping>
-
     <servlet>
         <servlet-name>CreateMessage</servlet-name>
         <servlet-class>controller.CreateMessage</servlet-class>
@@ -489,27 +498,37 @@
         <servlet-name>ErorrPageServlet</servlet-name>
         <url-pattern>/erorr</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dotest</servlet-name>
+        <url-pattern>/dotest</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>skilltestcancel</servlet-name>
+        <url-pattern>/skilltestcancel</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>skilltestmark</servlet-name>
+        <url-pattern>/skilltestmark</url-pattern>
+    </servlet-mapping>
     <welcome-file-list>
-    <welcome-file>home</welcome-file>
-</welcome-file-list>
-
+        <welcome-file>home</welcome-file>
+    </welcome-file-list>
     <servlet>
         <servlet-name> NotificationReadAll</servlet-name>
         <servlet-class>controller.NotificationReadAll</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet-mapping>
         <servlet-name> NotificationReadAll</servlet-name>
         <url-pattern>/readAll</url-pattern>
     </servlet-mapping>
-     <servlet>
+    <servlet>
         <servlet-name> NotificationList</servlet-name>
         <servlet-class>controller.NotificationList</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet-mapping>
         <servlet-name> NotificationList</servlet-name>
         <url-pattern>/notifications</url-pattern>
     </servlet-mapping>
-
       <servlet-mapping>
         <servlet-name>updateskilltest</servlet-name>
         <url-pattern>/updateskilltest</url-pattern>
@@ -526,8 +545,6 @@
         <servlet-name>deletequestion</servlet-name>
         <url-pattern>/deletequestion</url-pattern>
     </servlet-mapping>
-
-
     <servlet>
         <servlet-name>updateskilltest</servlet-name>
         <servlet-class>controller.updateskilltest</servlet-class>

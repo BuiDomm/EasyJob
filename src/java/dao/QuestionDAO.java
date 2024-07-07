@@ -160,6 +160,27 @@ public class QuestionDAO extends DBContext implements BaseDAO<Question> {
         return false;
        
     }
+     public int getTotalQuestionsByJobID(int jobID) {
+        String sql = "SELECT COUNT(*) AS TotalQuestions " +
+                     "FROM Questions " +
+                     "WHERE JobID = ?";
+        int totalQuestions = 0;
+
+        try (
+             PreparedStatement st = getConnection().prepareStatement(sql)) {
+            
+            st.setInt(1, jobID);
+            ResultSet rs = st.executeQuery();
+            
+            if (rs.next()) {
+                totalQuestions = rs.getInt("TotalQuestions");
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(QuestionDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return totalQuestions;
+    }
    
  public static void main(String[] args) {
         QuestionDAO questionDAO = new QuestionDAO();

@@ -27,7 +27,7 @@ public class AnswerDAO extends DBContext implements BaseDAO<Answer> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-     @Override
+    @Override
     public Answer findById(int id) {
         String sql = "SELECT * FROM Answers WHERE AnswerID = ?";
         try (PreparedStatement st = getConnection().prepareStatement(sql)) {
@@ -47,7 +47,7 @@ public class AnswerDAO extends DBContext implements BaseDAO<Answer> {
             Logger.getLogger(AnswerDAO.class.getName()).log(Level.SEVERE, null, e);
         }
 
-        return null; 
+        return null;
     }
 
     @Override
@@ -124,23 +124,53 @@ public class AnswerDAO extends DBContext implements BaseDAO<Answer> {
 
     @Override
     public boolean delete(int id) {
-       String sql = "DELETE FROM [dbo].[Answers]\n" +
-"      WHERE AnswerID = ?";
-        PreparedStatement ps;
+        String deleteChooseAnsSql = "DELETE FROM [dbo].[ChooseAns] WHERE ChooseAnsID = ?";
+        String deleteAnswersSql = "DELETE FROM [dbo].[Answers] WHERE AnswerID = ?";
+
         try {
-            ps = getConnection().prepareStatement(sql);
-            ps.setInt(1, id);
-            int rowAffect = ps.executeUpdate();
+
+            PreparedStatement deleteChooseAns = getConnection().prepareStatement(deleteChooseAnsSql);
+            deleteChooseAns.setInt(1, id);
+            deleteChooseAns.executeUpdate();
+
+            PreparedStatement deleteAnswers = getConnection().prepareStatement(deleteAnswersSql);
+            deleteAnswers.setInt(1, id);
+            int rowAffect = deleteAnswers.executeUpdate();
+
             if (rowAffect > 0) {
                 return true;
             }
         } catch (Exception ex) {
             Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);
-
         }
 
         return false;
-       
     }
+     public Answer randomAnswerByJobID(int jobID) {
+        String sql = "SELECT TOP 1 a.AnswerID, a.QuestionID, a.Is_true, a.AnswerText, a.AnswerDate "
+                   + "FROM Answers a "
+                   + "JOIN Questions q ON a.QuestionID = q.QuestionID "
+                   + "WHERE q.JobID = ? "
+                   + "ORDER BY a.AnswerDate DESC";
+        Answer answer = null;
+        try {
+            PreparedStatement st = getConnection().prepareStatement(sql);
+            st.setInt(1, jobID);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                int answerID = rs.getInt("AnswerID");
+                String questionID = rs.getString("QuestionID");
+                Question question = qd.findByQuestionId(questionID);
+                int isTrue = rs.getInt("Is_true");
+                String answerText = rs.getString("AnswerText");
+                Date answerDate = rs.getTimestamp("AnswerDate");
+                answer = new Answer(answerID, question, answerText, answerDate, isTrue);
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(AnswerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return answer;
+    }
+     
 
 }

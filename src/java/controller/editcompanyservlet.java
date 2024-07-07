@@ -37,13 +37,12 @@ public class editcompanyservlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        // Lấy thông tin tài khoản từ session
         HttpSession session = request.getSession();
         User acc = (User) session.getAttribute("account");
         CompanyDAO dao = new CompanyDAO();
         Company company = dao.findCompanyByUserId(acc.getIdUser());
         
-        // Lấy các tham số từ yêu cầu
+        
         String ecompany_name = request.getParameter("name");
         String edescription = request.getParameter("aboutus");
         String eaddress = request.getParameter("address");
@@ -60,7 +59,6 @@ public class editcompanyservlet extends HttpServlet {
             fileUploadDir.mkdirs();
         }
          // Tạo tên tệp duy nhất để tránh ghi đè
-         
         String uniqueFileName = UUID.randomUUID().toString() + "_" + imageFileName;
         String filePath = uploadFilePath + File.separator + uniqueFileName;
         
@@ -82,7 +80,6 @@ public class editcompanyservlet extends HttpServlet {
         String errorMessage = null;
 boolean hasError = false;
 
-// Kiểm tra các trường bắt buộc
 if (ecompany_name == null || ecompany_name.isEmpty()) {
     errorMessage = "Company name is required.";
     hasError = true;
@@ -94,7 +91,7 @@ if (ecompany_name == null || ecompany_name.isEmpty()) {
     hasError = true;
 }
 
-// Kiểm tra sự tồn tại của tên công ty
+
 if (!hasError && dao.isCompanyNameExists(ecompany_name)) {
     if (!company.getNameCompany().equalsIgnoreCase(ecompany_name)) {
         errorMessage = "Company name already exists.";
@@ -102,7 +99,7 @@ if (!hasError && dao.isCompanyNameExists(ecompany_name)) {
     }
 }
 
-// Kiểm tra định dạng tệp hình ảnh
+
 if (!hasError && imageFileName != null && !imageFileName.isEmpty()) {
     String fileExtension = imageFileName.substring(imageFileName.lastIndexOf(".") + 1);
     if (!fileExtension.equalsIgnoreCase("png") && !fileExtension.equalsIgnoreCase("jpg")) {
@@ -111,7 +108,7 @@ if (!hasError && imageFileName != null && !imageFileName.isEmpty()) {
     }
 }
 
-// Xử lý nếu có lỗi
+
 if (hasError) {
     Company c = new Company(0, ecompany_name, null, edescription, eaddress, estatus, null);
     request.setAttribute("com", c);
@@ -120,7 +117,7 @@ if (hasError) {
     return;
 }
 
-// Cập nhật thông tin công ty
+
 company.setNameCompany(ecompany_name);
 company.setAboutUS(edescription);
 company.setAdd(eaddress);

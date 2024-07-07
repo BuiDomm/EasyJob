@@ -91,92 +91,113 @@ public class updateskilltest extends HttpServlet {
    @Override
 protected void doPost(HttpServletRequest request, HttpServletResponse response)
         throws ServletException, IOException {
-    
-  
+    QuestionDAO qd = new QuestionDAO();
+    AnswerDAO ad = new AnswerDAO();
     int jobID = Integer.parseInt(request.getParameter("id"));
+    String[] questionTitles = request.getParameterValues("questionTitle[]");
+    String[] questionIDs = request.getParameterValues("questionID[]");
+    String[] answerIDs = request.getParameterValues("answerID[]");
+    String[] incorrectanswerIDs = request.getParameterValues("incorrectanswerID[]");
+    String[] correctAnswers = request.getParameterValues("correctAnswer[]");
+    String[] addquestionTitles = request.getParameterValues("addquestionTitle[]");
+    String[] addcorrectAnswers = request.getParameterValues("addcorrectAnswer[]");
+    String[] countIncorrectAnswers = request.getParameterValues("incorrectAnswersCount[]");
     
-        QuestionDAO qd = new QuestionDAO();
-        AnswerDAO ad = new AnswerDAO();
-        JobDAO jd = new JobDAO();
-        Job job = jd.findById(jobID);
-        
-        String[] questionTitles = request.getParameterValues("questionTitle[]");
-        String[] questionIDs = request.getParameterValues("questionID[]");
-        String[] answerIDs = request.getParameterValues("answerID[]");
-        String[] incorrectanswerIDs = request.getParameterValues("incorrectanswerID[]");
-        String[] correctAnswers = request.getParameterValues("correctAnswer[]");
-        String[] addquestionTitles = request.getParameterValues("addquestionTitle[]");
-        String[] addcorrectAnswers = request.getParameterValues("addcorrectAnswer[]");
-        String[] countIncorrectAnswers = request.getParameterValues("incorrectAnswersCount[]");
-        String[] addcountIncorrectAnswer = request.getParameterValues("addincorrectAnswersCount[]");
-        
-        int incorrectAnswerIndex = 0;
-        int addincorrectAnswerIndex = 0;
-        int questionIdCounter = 0; 
-        
-        
-        try {
-            for (int i = 0; i < questionTitles.length; i++) {
-                if (questionTitles[i] != null && !questionTitles[i].isEmpty()) {
-                    Question question = qd.findByQuestionId(questionIDs[i]);
-                    if (question != null) {
-                        question.setContent(questionTitles[i]);
-                        qd.update(question);
-                    }
+    String[] addcountIncorrectAnswer = request.getParameterValues("addincorrectAnswersCount[]");
+
     
-                    if (correctAnswers[i] != null && !correctAnswers[i].isEmpty()) {
-                        Answer correctAnswer = ad.findById(Integer.parseInt(answerIDs[i]));
-                        correctAnswer.setAnswerText(correctAnswers[i]);
-                        ad.update(correctAnswer);
-                    }
-    
-                    int countIncorrect = Integer.parseInt(countIncorrectAnswers[i]);
-                    for (int j = 0; j < countIncorrect; j++) {
-                        Answer incorrectAnswer = ad.findById(Integer.parseInt(incorrectanswerIDs[incorrectAnswerIndex]));
-                        incorrectAnswer.setAnswerText(request.getParameterValues("incorrectAnswer[]")[incorrectAnswerIndex]);
-                        ad.update(incorrectAnswer);
-                        incorrectAnswerIndex++;
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
+    JobDAO jd = new JobDAO();
+    Job job = jd.findById(jobID);
+
+    int incorrectAnswerIndex = 0;
+    int addincorrectAnswerIndex = 0;
+    int addincorrectAnswerCountIndex = 0;
+       try {
+       
+           for (int i = 0; i < questionTitles.length; i++) {
+        String questionTitle = questionTitles[i];
+        String answerText = correctAnswers[i];
+        String questionID = questionIDs[i];
+        int answerID = Integer.parseInt(answerIDs[i]);
+        Question question = qd.findByQuestionId(questionID);
+
+        question.setContent(questionTitle);
+        qd.update(question);
+
+        Answer correctAnswer = ad.findById(answerID);
+        correctAnswer.setAnswerText(answerText);
+        ad.update(correctAnswer);
+
+        int countIncorrect = Integer.parseInt(countIncorrectAnswers[i]);
+        String[] incorrectAnswers = request.getParameterValues("incorrectAnswer[]");
+        
+
+        for (int j = 0; j < countIncorrect; j++) {
+            
+            String incorrectAnswerText = incorrectAnswers[incorrectAnswerIndex];
+            int incorrectanswerID = Integer.parseInt(incorrectanswerIDs[incorrectAnswerIndex]);
+            Answer incorrectAnswer = ad.findById(incorrectanswerID);
+            incorrectAnswer.setAnswerText(incorrectAnswerText);
+
+            ad.update(incorrectAnswer);
+            incorrectAnswerIndex++;
         }
-        
-        if (questionTitles != null){
+        if (addcountIncorrectAnswer != null){
+        int addcountIncorrectAnswers = Integer.parseInt(addcountIncorrectAnswer[i]);
+            addincorrectAnswerCountIndex++;
+            for (int k = 0; k < addcountIncorrectAnswers; k++) {
+
+                String addincorrectAnswers = request.getParameterValues("addincorrectAnswer[]")[addincorrectAnswerIndex++];
+                Answer addincorrectAnswer = new Answer(i, question, addincorrectAnswers, null, 0);
+
+                ad.insert(addincorrectAnswer);
+            }
+        }
+    }
+           
+       } catch (Exception e) {
+       }
+       
+       
+    int questionIdCounter = 0;
+       try {
+           if (questionTitles != null){
             questionIdCounter=questionTitles.length+1;
         }else{
             questionIdCounter=1;
         }
-        try {
-            if (addquestionTitles != null) {
-                for (int i = 0; i < addquestionTitles.length; i++) {
-                    String addquestionTitleText = addquestionTitles[i];
-                    if (addquestionTitleText != null && !addquestionTitleText.isEmpty()) {
-                        String questionId = "QS" + jobID * 1000 + questionIdCounter++;
-                        Question newQuestion = new Question(questionId, job, addquestionTitleText, null);
-                        qd.insert(newQuestion);
-    
-                        Answer newCorrectAnswer = new Answer(i, newQuestion, addcorrectAnswers[i], null, 1);
-                        ad.insert(newCorrectAnswer);
-    
-                        int addcountIncorrectAnswers = Integer.parseInt(addcountIncorrectAnswer[i]);
-                        for (int j = 0; j < addcountIncorrectAnswers; j++) {
-                            Answer newIncorrectAnswer = new Answer(i, newQuestion, request.getParameterValues("addincorrectAnswer[]")[addincorrectAnswerIndex], null, 0);
-                            ad.insert(newIncorrectAnswer);
-                            addincorrectAnswerIndex++;
-                        }
-                        
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        // Chuyển hướng người dùng về trang tải lại dữ liệu của kiểm tra kỹ năng
-        request.getRequestDispatcher("loadskilltest?id=" + job.getJobID()).forward(request, response);
+           if(addquestionTitles != null){
+            for (int i = 0; i < addquestionTitles.length; i++) {
+            String addquestionTitleText = addquestionTitles[i];
+            String addanswerText = addcorrectAnswers[i];
+            String questionId = "QS" + jobID * 1000 + questionIdCounter++;
 
+            Question question = new Question(questionId, job, addquestionTitleText, null);
+
+            qd.insert(question);
+
+            Answer correctAnswer = new Answer(i, question, addanswerText, null, 1);
+
+            ad.insert(correctAnswer);
+
+            int addcountIncorrectAnswers = Integer.parseInt(addcountIncorrectAnswer[addincorrectAnswerCountIndex]);
+            for (int j = 0; j < addcountIncorrectAnswers; j++) {
+
+                String addincorrectAnswers = request.getParameterValues("addincorrectAnswer[]")[addincorrectAnswerIndex++];
+                Answer incorrectAnswer = new Answer(i, question, addincorrectAnswers, null, 0);
+
+                ad.insert(incorrectAnswer);
+            }
+            addincorrectAnswerCountIndex++;
+        }
+        }
+           
+       } catch (Exception e) {
+       }
+        
+    job.setStatus("Pending");
+    jd.update(job);
+    request.getRequestDispatcher("loadskilltest?id="+job.getJobID()).forward(request, response);
 }
 
 

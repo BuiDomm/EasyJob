@@ -4,8 +4,14 @@
  */
 package controller;
 
+import com.oracle.wls.shaded.org.apache.bcel.generic.AALOAD;
+import dao.AnswerDAO;
+import dao.ChooseAnswerDAO;
 import dao.CompanyDAO;
+import dao.JobApplyDAO;
 import dao.JobDAO;
+import dao.JobseekerDAO;
+import dao.QuestionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -13,16 +19,22 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import model.Answer;
+import model.ChooseAnswer;
 import model.Company;
 import model.Job;
+import model.Question;
 import model.User;
 
 /**
  *
  * @author ADMIN
  */
-public class manageskilltest extends HttpServlet {
+public class skilltestmark extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,17 +47,47 @@ public class manageskilltest extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       HttpSession session = request.getSession();
-        User epl = (User) session.getAttribute("account");
-        CompanyDAO comdao = new CompanyDAO();
-        Company com = comdao.findByUserId(epl.getIdUser());
+        HttpSession session = request.getSession();
+        int id = Integer.parseInt(request.getParameter("id"));
+        int userid = Integer.parseInt(request.getParameter("userid"));
+        JobseekerDAO jsd = new JobseekerDAO();
+        User u = jsd.findById(userid);
+        CompanyDAO cm = new CompanyDAO();
+        Company com = cm.findCompanyByIdJob(id);
         JobDAO jd = new JobDAO();
-        List<Job> containques = jd.findPendingJobsWithQuestionsByIdUser(epl.getIdUser());
-        List<Job> nocontainques = jd.findPendingJobsWithNoQuestionsByIdUser(epl.getIdUser());
+        Job b = jd.findById(id);
+        QuestionDAO qd = new QuestionDAO();
+        ChooseAnswerDAO chd = new ChooseAnswerDAO();
+        List<ChooseAnswer> chooseanswer = chd.getChooseAnswerJobIDAndUserID(id, userid);
+
+        AnswerDAO ad = new AnswerDAO();
+        List<Question> questions = qd.getQuestionsByJobId(id);
+        Map<Question, List<Answer>> questionAnswersMap = new HashMap<>();
+        Map<Question, List<ChooseAnswer>> questionChooseAnswersMap = new HashMap<>();
+
+        for (Question question : questions) {
+            List<Answer> answers = ad.getAnswerByQuestionID(question.getQuestionID());
+            questionAnswersMap.put(question, answers);
+
+            List<ChooseAnswer> chooseAnswersForQuestion = new ArrayList<>();
+            for (ChooseAnswer ca : chooseanswer) {
+                if (ca.getAnswer().getQuestion().getQuestionID().equals(question.getQuestionID())) {
+                    chooseAnswersForQuestion.add(ca);
+                }
+            }
+            questionChooseAnswersMap.put(question, chooseAnswersForQuestion);
+            
+        }
+        JobApplyDAO jadao = new JobApplyDAO();
+        request.setAttribute("apply", jadao.getApplicationByUserIdAndJobId(userid, id));
+        request.setAttribute("point", chd.getTotalPointsByJobIDAndUserID(id, userid));
         request.setAttribute("com", com);
-        request.setAttribute("havques", containques);
-        request.setAttribute("noques", nocontainques);
-        request.getRequestDispatcher("manageskilltest.jsp").forward(request, response);
+        request.setAttribute("cc", b);
+        request.setAttribute("u", u);
+        request.setAttribute("questions", questions);
+        request.setAttribute("questionAnswersMap", questionAnswersMap);
+        request.setAttribute("questionChooseAnswersMap", questionChooseAnswersMap);
+        request.getRequestDispatcher("skilltestmark.jsp").forward(request, response);
 
     }
 

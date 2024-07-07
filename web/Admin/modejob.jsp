@@ -11,7 +11,7 @@
 <html lang="en">
 
     <head>
-        <meta charset="utf-8">x
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
         <link href="https://fonts.googleapis.com/css?family=Nunito:400,600|Open+Sans:400,600,700" rel="stylesheet">
@@ -19,47 +19,17 @@
         <link href="./assets/css/spur.css" rel="stylesheet" type="text/css"/>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
         <link rel="stylesheet" href="./assets/css/admincss.css">
-        <title>Spur - A Bootstrap Admin Template</title>
+
     </head>
 
     <body>
 
         <div class="dash">
             <div class="dash-nav dash-nav-dark">
-                <%@include file="header.jsp" %>
+                <%@include file="sidebar.jsp" %>
             </div>
             <div class="dash-app">
-                <header class="dash-toolbar">
-                    <a href="#!" class="menu-toggle">
-                        <i class="fas fa-bars"></i>
-                    </a>
-                    <a href="#!" class="searchbox-toggle">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <!--                    <form class="searchbox" action="#!">
-                                            <a href="#!" class="searchbox-toggle"> <i class="fas fa-arrow-left"></i> </a>
-                                            <button type="submit" class="searchbox-submit"> <i class="fas fa-search"></i> </button>
-                                            <input type="text" class="searchbox-input" placeholder="type to search">
-                                        </form>-->
-                    <div class="tools">
-                        <!--                        <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="tools-item">
-                                                    <i class="fab fa-github"></i>
-                                                </a>-->
-                        <a href="#!" class="tools-item">
-                            <i class="fas fa-bell"></i>
-                            <i class="tools-item-count">4</i>
-                        </a>
-                        <div class="dropdown tools-item">
-                            <a href="#" class="" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                                <a class="dropdown-item" href="changepass.jsp">Change Password</a>
-                                <a class="dropdown-item" href="loginjobseeker">Logout</a>
-                            </div>
-                        </div>
-                    </div>
-                </header>
+                <%@include file="header.jsp" %>
                 <main class="dash-content" style="padding-top: 0 !important;">
                     <div class="container-fluid" >
                         <div class="row">
@@ -84,7 +54,7 @@
                                         </div>
                                     </div>
                                 </div>
-                              
+
                             </c:forEach>
 
 

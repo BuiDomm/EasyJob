@@ -24,7 +24,7 @@ public class AdminDeletePackage extends HttpServlet {
 
         AdminDAO dao = new AdminDAO();
         String id = request.getParameter("pid");
-     
+
         dao.deletePackage(id);
         response.sendRedirect("addPackage");
     }

@@ -195,8 +195,8 @@ protected void doPost(HttpServletRequest request, HttpServletResponse response)
        } catch (Exception e) {
        }
         
-//    request.setAttribute("mess", addincorrectAnswerCountIndex);
-//    request.getRequestDispatcher("test.jsp").forward(request, response);
+    job.setStatus("Pending");
+    jd.update(job);
     request.getRequestDispatcher("loadskilltest?id="+job.getJobID()).forward(request, response);
 }
 

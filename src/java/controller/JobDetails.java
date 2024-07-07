@@ -4,13 +4,16 @@
  */
 package controller;
 
+import dao.AnswerDAO;
 import dao.ApplyDAO;
 import dao.CVDAO;
+import dao.ChooseAnswerDAO;
 import dao.CompanyDAO;
 import dao.JobDAO;
 import dao.JobseekerDAO;
 import dao.MessagessDAO;
 import dao.NotificationDAO;
+import dao.QuestionDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,11 +21,17 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.mail.Session;
+import model.Answer;
 import model.Apply;
 import model.CVProfile;
+import model.ChooseAnswer;
 import model.Company;
 import model.Job;
+import model.Question;
 import model.User;
 
 /**
@@ -112,8 +121,16 @@ public class JobDetails extends HttpServlet {
                 request.setAttribute("user", user);
                 request.setAttribute("com", com);
                 request.setAttribute("apply", a);
+
+                QuestionDAO qd = new QuestionDAO();
+                ChooseAnswerDAO chd = new ChooseAnswerDAO();
+                List<Question> questions = qd.getQuestionsByJobId(id);
+                List<ChooseAnswer> chooseanswer = chd.getChooseAnswerJobIDAndUserID(id, user.getIdUser());
+
                 NotificationDAO notidao = new NotificationDAO();
                 request.setAttribute("notidao", notidao);
+                request.setAttribute("questions", questions);
+                request.setAttribute("checktest", chooseanswer);
                 request.getRequestDispatcher("job-details.jsp").forward(request, response);
 
             } catch (Exception e) {

@@ -451,9 +451,19 @@ isVerified = false;
                                         <a style="text-align: center; background-color: #ff6600" onclick="handlerStatuss('${profile.CVId}', '${cc.jobID}')"  href="#!" class="filled-button btn-block show-modal">Applied to this job.</a>
                                     </c:when>
                                     <c:when test="${apply.status == 'Pending'}">
+                                        <c:if test="${questions != null && (empty checktest || checktest == null)}">
+                                        <a class="filled-button btn-block hover" style="text-align: center; background-color: black" href="dotest?id=${cc.jobID}" >
+                                            Do Skill Test
+                                        </a>
+                                        </c:if>
+                                        <c:if test="${not empty checktest}">
+                                        <div style="border-radius: 15px;" class="bg-secondary p-2 text-center m-2" >
+                                            <h6 class="text-light">You Have Finished Test</h6>
+                                        </div>
+                                        </c:if>
                                         <a class="filled-button btn-block hover" style="text-align: center; background-color: #ff4444" onclick="withdrawJob('${cc.category.categoryName}', '${cc.jobID}')" href="#!" class="filled-button btn-block">
                                             Withdraw job application.
-                                        </a>
+                                        </a> 
                                     </c:when>
                                     <c:when test="${apply.status == 'Reject'}">
                                         <a style="text-align: center;background-color: red;pointer-events:none" href="#!" class="filled-button btn-block"><i class="fas fa-times"></i> &nbsp; Your CV has been reject.</a>

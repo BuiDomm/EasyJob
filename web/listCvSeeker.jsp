@@ -70,7 +70,9 @@
                                 <th scope="col">Job Apply</th>
                                 <th scope="col">Apply Date</th>
                                 <th scope="col">Status</th>
-                                <th scope="col"></th>
+                                <th scope="col">More</th>
+                                <th scope="col">Test Status</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -89,6 +91,15 @@
                                 <td>${i.applicationDate}</td>
                                 <td class=${i.status == 'Accept' ? 'badge-success' : ((i.status == 'Reject')? 'badge-danger':'bg-info')} >${i.status}</td>
                                 <td><a href="detailCV?UserId=${dao.getUserByCVid(i.cvProfile.CVId).idUser}&ApplyId=${i.applicationID}" class="more">Details</a></td>
+                                <c:if test="${not empty status.getFirstChooseAnswerStatus(i.job.jobID, dao.getUserByCVid(i.cvProfile.CVId).idUser)}">
+                                    <c:if test="${status.getFirstChooseAnswerStatus(i.job.jobID, dao.getUserByCVid(i.cvProfile.CVId).idUser) eq'completed'}">
+                                        <td><a href="skilltestmark?id=${i.job.jobID}&userid=${dao.getUserByCVid(i.cvProfile.CVId).idUser}" class="more text-success">Completed Test</a></td>
+                                    </c:if>
+                                    <c:if test="${status.getFirstChooseAnswerStatus(i.job.jobID, dao.getUserByCVid(i.cvProfile.CVId).idUser) eq'cancel'}">
+                                        <td class="text-danger">Cancel Test</td>
+                                    </c:if>    
+                                
+                                </c:if>
                             </tr>
                         </c:forEach>
 

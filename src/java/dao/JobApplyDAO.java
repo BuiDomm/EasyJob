@@ -294,6 +294,38 @@ public class JobApplyDAO {
         return list;
     }
 
+    public Apply getApplicationByUserIdAndJobId(int applicantUserId, int jobId) {
+        Apply application = null;
+        String sql = "select * from Applications a "
+                + "join CVProfile cv on cv.CVId = a.CVId "
+                + "join Jobs j on a.JobID = j.JobID "
+                + "where cv.UserID = ? and a.JobID = ? "
+                + "order by a.ApplicationDate DESC";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setInt(1, applicantUserId);
+            ps.setInt(2, jobId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                int idApp = rs.getInt(1);
+                int jobID = rs.getInt(2);
+                int CVid = rs.getInt(3);
+                Date date = rs.getDate(4);
+                String status = rs.getString(5);
+
+                JobDAO jd = new JobDAO();
+                Job j = jd.findById(jobID);
+                CVDAO cv = new CVDAO();
+                CVProfile cp = cv.findByID(CVid);
+                application = new Apply(idApp, j, cp, date, status);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return application;
+    }
+
     public static void main(String[] args) {
         JobApplyDAO dao = new JobApplyDAO();
         List<Apply> j = dao.pagingCVList(2, "Pending", 1);

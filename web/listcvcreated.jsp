@@ -100,6 +100,27 @@
         <div class="container">
             <div class="jobs-list-container">
                 <c:if test="${job !=null}">
+                    <!-- Modal -->
+                    <div class="modal show-modal" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="confirmModalLabel">Dear Employer,</h4>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-center">
+
+                                    <h6 class="text-dark">Do You Want to Create Skill Test For JobSeeker ? </h6>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                    <a href="loadskilltest?id=${job.jobID}" class="btn btn-dark">Yes</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <h3 class="mb-3 text-warning">A new job has been created!</h3>
                     <div style="border-color: green; position: relative" class="job">
                         <!--<img src="images/software-engineer.svg">de anh o day -->
@@ -120,23 +141,22 @@
 
                             <a onclick="handlerDeleteJob(${job.jobID})" href="#!"><i style="color: red; font-size: 20px;position: absolute;top: 10px;right: 10px" class="fas fa-window-close"></i></a>
 
-                            </c:if>
+                        </c:if>
                     </div>
                 </c:if>
             </div>
         </div>
 
 
-
         <c:if test="${not empty list && hasNonExpiredJob}">
             <div style="padding-left: 120px;padding-right: 120px" class="container mt-3">
                 <div  class="container p-5">
-                    
+
                     <a href="manageskilltest">  
-                        
+
                         <div style="border-radius: 24px" class="bg-dark text-center mx-5 py-3">
                             <h2 class="text-light text-uppercase">Skill Test Manage</h2>
-                           
+
                             <p class="text-light">For Employer here</p>
                         </div>
                     </a> 
@@ -331,6 +351,11 @@
                     window.location.href = "deletejob?id=" + idjob;
                 }
             }
+            $(document).ready(function () {
+                setTimeout(function () {
+                    $('#confirmModal').modal('show');
+                }, 3000); // 3000 milliseconds = 3 seconds
+            });
 
 
         </script>

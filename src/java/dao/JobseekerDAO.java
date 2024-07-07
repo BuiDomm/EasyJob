@@ -180,7 +180,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
 
     public User loginAcount(String email, String pass) {
 
-        String sql = "Select * from Users Where Email =? AND Password = ?";
+        String sql = "Select Top 1 * from Users Where Email =? AND Password = ?";
         try {
             PreparedStatement ps = getConnection().prepareStatement(sql);
             ps.setString(1, email);
@@ -313,7 +313,7 @@ public class JobseekerDAO extends DBContext implements BaseDAO<User> {
     
     public static void main(String[] args) {
         JobseekerDAO jd = new JobseekerDAO();
-        System.out.println(jd.findById(1));
+        System.out.println(jd.loginAcount("nhanbtde170234@fpt.edu.vn", "Nhandaiminh252003?"));
     }
 
 }

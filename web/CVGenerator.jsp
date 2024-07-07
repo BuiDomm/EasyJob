@@ -152,6 +152,7 @@
         <button class="download-button" onclick="downloadPDF()">Download CV</button>  
     </body>
 
+
     <script>
         // Function to add a new education item
         function addEducationItem(event) {

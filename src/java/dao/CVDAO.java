@@ -116,7 +116,6 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
     @Override
     public CVProfile findById(int id) {
         String sql = "	SELECT * FROM CVProfile\n"
-
                 + "	 WHERE CVId=? ";
 
         try {
@@ -146,8 +145,8 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
 
     @Override
     public boolean insert(CVProfile newObject) {
-        String sql = "insert into CVProfile(UserID, Skills, Experience, Description, Education,Certifications,LinkUrl,Avatar, LinkPdf)\n"
-                + "Values (?,?,?,?,?,?,?,?,?)";
+        String sql = "insert into CVProfile(UserID, Skills, Experience, Description, Education,Certifications,LinkUrl,Avatar, Number, LinkPdf)\n"
+                + "Values (?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps;
         try {
             ps = getConnection().prepareStatement(sql);
@@ -159,8 +158,8 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
             ps.setString(6, newObject.getCertification());
             ps.setString(7, newObject.getLinkUrl());
             ps.setString(8, newObject.getAvatar());
-            ps.setString(9, newObject.getLinkPdf());
-
+            ps.setInt(9, newObject.getNumber());
+            ps.setString(10, newObject.getLinkPdf());
 
             int rowAffect = ps.executeUpdate();
             if (rowAffect > 0) {
@@ -181,6 +180,7 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
     public boolean delete(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
+
     public boolean updateCVProfileFromCV(String linkPdf, String education, String skills, String experience, String certification, String description, String linkUrl, String avatarUrl, String email) {
 
         String sql = "Update CVProfile\n"
@@ -206,7 +206,6 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
             ps.setString(8, avatarUrl);
             ps.setString(9, email);
 
-
             int rowAffect = ps.executeUpdate();
             if (rowAffect > 0) {
                 return true;
@@ -216,7 +215,6 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
         }
         return false;
     }
-
 
     public void updateAvatar(int cvId, String avt) {
         String sql = "Update CVProfile SET Avatar = ? where CVId = ?";
@@ -229,6 +227,20 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
         } catch (Exception e) {
         }
     }
+    
+    
+        public void updateNumber(int userID, int num) {
+        String sql = "Update CVProfile SET Number = ? where UserID = ?";
+        PreparedStatement ps;
+        try {
+            ps = getConnection().prepareStatement(sql);
+            ps.setInt(1, num);
+            ps.setInt(2, userID);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
     public static void main(String[] args) {
         CVDAO cd = new CVDAO();
         System.out.println(cd.findByIdUser(1).getLinkUrl());

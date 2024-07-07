@@ -32,7 +32,7 @@
                     <h1>Oops!</h1>
                     <h2>404 - The Page can't be found</h2>
                 </div>
-                <a href="${requestScope.hreff}">Go TO Homepage</a>
+                <a href="home">Go TO Homepage</a>
             </div>
         </div>
 

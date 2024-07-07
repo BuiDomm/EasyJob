@@ -35,7 +35,7 @@ public class CommentAndLikeFilter implements Filter {
             chain.doFilter(request, response);
         } else {
             // khong phai jobseeker hoac chua dang nhap, tu choi truy cap
-            res.sendRedirect(req.getContextPath() + "/login.jsp");
+            res.sendRedirect(req.getContextPath() + "/404.jsp");
 
         }
     }

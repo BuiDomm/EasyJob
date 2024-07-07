@@ -14,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 import model.Apply;
 import model.User;
@@ -67,8 +69,12 @@ public class CvApplied extends HttpServlet {
         User u = (User) session.getAttribute("account");
         ApplyDAO ad = new ApplyDAO();
         CVDAO cd = new CVDAO();
-
-        List<Apply> list = ad.findListByIdCV(cd.findByIdUser(u.getIdUser()).getCVId());
+        List<Apply> list = new ArrayList<>();
+        try {
+            list = ad.findListByIdCV(cd.findByIdUser(u.getIdUser()).getCVId());
+        } catch (Exception e) {
+            request.setAttribute("list", list);
+        }
         request.setAttribute("list", list);
         NotificationDAO notidao = new NotificationDAO();
         request.setAttribute("notidao", notidao);

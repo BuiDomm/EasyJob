@@ -41,7 +41,20 @@
 
     <body>
 
-        <jsp:include page="header.jsp"/>
+
+        <c:choose>
+            <c:when test="${sessionScope.account.roleId == 2}">
+                <jsp:include page="header.jsp"/>
+
+            </c:when>
+            <c:when test="${sessionScope.account.roleId == 3}">
+                <jsp:include page="headeremp.jsp"/>
+            </c:when>
+            <c:otherwise>
+            </c:otherwise>
+        </c:choose>
+
+
         <div class="banner header-text"></div>
         <div class="app-body" style="height: 100vh;display: flex; align-items: start;">
 
@@ -58,7 +71,7 @@
                                 <div class="notification-container mt-3">
                                     <div class="notification-list">
                                         <c:forEach var="n" items="${listN}">
-                                          
+
                                             <div class="px-3 border-bottom py-2 d-flex align-items-center gap-3 notify-block " style="${n.readStatus == 1 ? '':'opacity:0.5;' }">
 
                                                 <div class="flex-1 flex flex-col w-100">
@@ -96,8 +109,8 @@
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                            <c:forEach begin="1" end="${endP}" var="i">
-                                <li class="page-item"><a class="page-link" href="notifications?index=${i}">${i}</a></li>
+                        <c:forEach begin="1" end="${endP}" var="i">
+                            <li class="page-item"><a class="page-link" href="notifications?index=${i}">${i}</a></li>
                             </c:forEach>
                         <li class="page-item">
                             <a class="page-link" href="#" aria-label="Next">

@@ -123,6 +123,18 @@
         <servlet-class>controller.ErorrPageServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ListUserPackageServlet</servlet-name>
+        <servlet-class>controller.ListUserPackageServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpgradePackage</servlet-name>
+        <servlet-class>controller.UpgradePackage</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>getSortedSenderList</servlet-name>
+        <servlet-class>controller.getSortedSenderList</servlet-class>
+       </servlet>
+       <servlet>
         <servlet-name>dotest</servlet-name>
         <servlet-class>controller.dotest</servlet-class>
     </servlet>
@@ -499,6 +511,19 @@
         <url-pattern>/erorr</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ListUserPackageServlet</servlet-name>
+        <url-pattern>/listUserPackage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpgradePackage</servlet-name>
+        <url-pattern>/upgrage</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>getSortedSenderList</servlet-name>
+        <url-pattern>/getSortedSenderList</url-pattern>
+    </servlet-mapping>
+
+         <servlet-mapping>
         <servlet-name>dotest</servlet-name>
         <url-pattern>/dotest</url-pattern>
     </servlet-mapping>
@@ -509,6 +534,7 @@
     <servlet-mapping>
         <servlet-name>skilltestmark</servlet-name>
         <url-pattern>/skilltestmark</url-pattern>
+
     </servlet-mapping>
     <welcome-file-list>
         <welcome-file>home</welcome-file>
@@ -560,30 +586,27 @@
     <servlet>
         <servlet-name>deletequestion</servlet-name>
         <servlet-class>controller.deletequestion</servlet-class>
-     </servlet>
- 
-      <servlet>
+    </servlet>
+    <servlet>
         <servlet-name> AdminAddPackage</servlet-name>
         <servlet-class>controller.AdminAddPackage</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet-mapping>
         <servlet-name> AdminAddPackage</servlet-name>
         <url-pattern>/addPackage</url-pattern>
     </servlet-mapping>
-    
-     <servlet>
+    <servlet>
         <servlet-name> AdminUpdatePackage</servlet-name>
         <servlet-class>controller.AdminUpdatePackage</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet-mapping>
         <servlet-name> AdminUpdatePackage</servlet-name>
         <url-pattern>/updatePackage</url-pattern>
     </servlet-mapping>
-    
-      <servlet>
+    <servlet>
         <servlet-name> AdminDeletePackage</servlet-name>
         <servlet-class>controller.AdminDeletePackage</servlet-class>
-    </servlet>  
+    </servlet>
     <servlet-mapping>
         <servlet-name> AdminDeletePackage</servlet-name>
         <url-pattern>/deletePackage</url-pattern>

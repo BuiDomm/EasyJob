@@ -24,6 +24,7 @@ import model.Job;
 import model.Packages;
 import model.Statistic;
 import model.User;
+import model.UserPackages;
 
 /**
  *
@@ -734,6 +735,7 @@ public class AdminDAO {
         return 0;
     }
 
+
     public List<Blog> pagingBlogByStatus(int index, String statusString) {
         List<Blog> list = new ArrayList<>();
         String sql = " select * from Blogs b\n"
@@ -864,8 +866,119 @@ public class AdminDAO {
         return null;
     }
 
+//    public List<Blog> pagingBlogByStatus(int index, String statusString) {
+//        List<Blog> list = new ArrayList<>();
+//        String sql = " select * from Blogs b\n"
+//                + " where b.Status =  ? \n"
+//                + "order by b.BlogID \n"
+//                + "OFFSET ? rows fetch next 4 rows only";
+//        try {
+//            conn = new DBContext().getConnection();
+//            ps = conn.prepareStatement(sql);
+//            ps.setString(1, statusString);
+//            ps.setInt(2, (index - 1) * 4);
+//            rs = ps.executeQuery();
+//            while (rs.next()) {
+//                list.add(new Blog(
+//                        rs.getInt(1),
+//                        rs.getInt(2),
+//                        rs.getString(3),
+//                        rs.getString(4),
+//                        rs.getDate(5),
+//                        rs.getString(6),
+//                        rs.getString(7)));
+//            }
+//        } catch (Exception ex) {
+//
+//        }
+//        return list;
+//    }
+//    public UserPackages getUserPackageByIdUser(int id) {
+//        String query = "select * from UserPackages\n"
+//                + "where UserPackageID = ?";
+//        try {
+//            conn = new DBContext().getConnection();//mo ket noi vs sql
+//            ps = conn.prepareStatement(query);
+//            ps.setInt(1, id);
+//            rs = ps.executeQuery();
+//
+//            while (rs.next()) {
+//                int idUserPackage = rs.getInt(1);
+//                int packageID = rs.getInt(2);
+//                int idUser = rs.getInt(3);
+//                UserPackages up = new UserPackages(idUserPackage, packageID, idUser);
+//                return up;
+//            }
+//        } catch (Exception e) {
+//        }
+//
+//        return null;
+//    }
+    public Packages findpackageByIdUser(int id) {
+        String query = "SELECT * FROM \n"
+                + "UserPackages \n"
+                + "Join Packages as Pack On Pack.PackageID = UserPackages.PackageID\n"
+                + "Where UserID = ?";
+        try {
+            conn = new DBContext().getConnection();//mo ket noi vs sql
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int packageID = rs.getInt(2);
+                String packageName = rs.getString(5);
+                String descrip = rs.getString(6);
+                int price = rs.getInt(7);
+                Packages p = new Packages(packageID, packageName, descrip, price);
+                return p;
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
+
+    public boolean InsertUserPackage(int idPackage, int userID) {
+
+        String query = "INSERT INTO UserPackages(PackageID, UserID)\n"
+                + "VALUES (?,?)";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, idPackage);
+            ps.setInt(2, userID);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    public boolean UpdatePackageByIdUser(int idPackage, int userID) {
+
+        String query = "Update UserPackages\n"
+                + "Set PackageID = ?\n"
+                + "Where UserID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, idPackage);
+            ps.setInt(2, userID);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+
+
     public static void main(String[] args) {
         AdminDAO dao = new AdminDAO();
+        JobseekerDAO jd = new JobseekerDAO();
+        System.out.println(jd.findByEmail("chr30571@ilebi.com").getIdUser());
+        System.out.println(dao.InsertUserPackage(1,jd.findByEmail("chr30571@ilebi.com").getIdUser() ));
 
 //        List<Comment> c = dao.pagingCommentsByStatus(1, "Report");
 //        for (Comment comment : c) {
@@ -893,6 +1006,7 @@ public class AdminDAO {
 //        for (Statistic users : s) {
 //            System.out.println(users);
 //        }
+//        System.out.println(dao.getPackageById("2").getPrice());
     }
 
 }

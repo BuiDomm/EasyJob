@@ -2,62 +2,59 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
  */
+
 package controller;
 
-import dao.ApplyDAO;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import dao.CVDAO;
 import dao.CompanyDAO;
-import dao.JobDAO;
-import dao.NotificationDAO;
+import dao.JobseekerDAO;
+import dao.MessagessDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
-import model.Apply;
+import java.util.List;
 import model.CVProfile;
 import model.Company;
-import model.Job;
 import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class CVApply extends HttpServlet {
-
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
+public class getSortedSenderList extends HttpServlet {
+   
+    /** 
+     * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CVApply</title>");
+            out.println("<title>Servlet getSortedSenderList</title>");  
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CVApply at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet getSortedSenderList at " + request.getContextPath () + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
-    }
+    } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
+    /** 
      * Handles the HTTP <code>GET</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -65,45 +62,53 @@ public class CVApply extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        NotificationDAO notiDAO = new NotificationDAO();
-        int idProfile = Integer.parseInt(request.getParameter("idprofile"));
-        int idjob = Integer.parseInt(request.getParameter("idjob"));
-        HttpSession session =request.getSession();
-        User user = (User)session.getAttribute("account") ;
-        
-        JobDAO jd = new JobDAO();
-        CVDAO cd = new CVDAO();
-        Job jb = jd.findById(idjob);
-        CVProfile cv = cd.findById(idProfile);
-        ApplyDAO ap = new ApplyDAO();
-        
-        // Tim thong tin nguoi tao JOB
-        
-        CompanyDAO comDAO = new CompanyDAO();
-        Company com = comDAO.findCompanyByIdJob(idjob);
-        // thong tin company chua thong tin nguoi dang tuyen
-        
-        Apply a = new Apply(jb, cv, "Pending");
-        if (cv.getNumber() <= 0) {
-            request.setAttribute("upgrade", "upgrade");
-            request.setAttribute("noticeUpgrade", "Your free application period has ended, please upgrade your service package to continue using the system.");
-            request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
-        } else {
-            if (ap.findByJobIDAndCvID(idjob, idProfile) == null) {
-                ap.insert(a);
-                notiDAO.insertNotificationApprovel(com.getUser().getIdUser(),user.getFirstName()+" " + user.getLastName() +" " + "submitted their CVProfile to apply for \"" + jb.getTitle()+"\"",1);
-                request.setAttribute("successfully", true);
-                request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
-            } else {
-                request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
-            }
+    throws ServletException, IOException {
+             JobseekerDAO jd = new JobseekerDAO();
+           int friendID = Integer.parseInt(request.getParameter("friendId"));
+        User account = jd.findById(friendID);
+        MessagessDAO dao = new MessagessDAO();
+        List<User> receiver = dao.getListAccountBySenderID(account.getIdUser());
+
+        JsonObject jsonResponse = new JsonObject();
+        JsonArray jsonReceiverArray = new JsonArray();
+
+        for (User user : receiver) {
+            jsonReceiverArray.add(convertAccountToJson(user));
         }
+
+        jsonResponse.add("receiver", jsonReceiverArray);
+        jsonResponse.add("sender", convertAccountToJson(account));
+
+        response.setContentType("application/json");
+        try (PrintWriter out = response.getWriter()) {
+            out.print(jsonResponse.toString());
+            out.flush();
+        }
+    } 
+        private JsonObject convertAccountToJson(User user) {
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("accountID", user.getIdUser());
+        jsonObject.addProperty("firstName", user.getFirstName());
+        jsonObject.addProperty("lastName", user.getLastName());
+        jsonObject.addProperty("roleId", user.getRoleId());
+
+        if (user.getRoleId() == 3) {
+            CompanyDAO comDAO = new CompanyDAO();
+            Company ca = comDAO.findCompanyByUserId(user.getIdUser());
+            jsonObject.addProperty("url", ca.getUrl());
+            jsonObject.addProperty("nameCompany", ca.getNameCompany());
+        } else {
+            CVDAO cd = new CVDAO();
+            CVProfile cp = cd.findByIdUser(user.getIdUser());
+            jsonObject.addProperty("url", "/easyjob/assets/avatars/" + cp.getAvatar());
+            jsonObject.addProperty("nameCompany", ""); // Để trống nếu không phải công ty
+        }
+
+        return jsonObject;
     }
 
-    /**
+    /** 
      * Handles the HTTP <code>POST</code> method.
-     *
      * @param request servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
@@ -111,13 +116,12 @@ public class CVApply extends HttpServlet {
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
+    throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
+    /** 
      * Returns a short description of the servlet.
-     *
      * @return a String containing servlet description
      */
     @Override

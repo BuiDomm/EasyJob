@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.AdminDAO;
 import dao.CVDAO;
 import dao.JobseekerDAO;
 import java.io.IOException;
@@ -33,6 +34,8 @@ public class CreateCVServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        AdminDAO ad = new AdminDAO();
+
         User user = (User) session.getAttribute("account");
 
         if (user != null && user.getRoleId() == 2) {
@@ -52,11 +55,16 @@ public class CreateCVServlet extends HttpServlet {
             CVDAO cvDao = new CVDAO();
 
             CVProfile cvProfile = cvDao.findByEmail(user.getEmail());
-
             if (cvProfile == null) {
-                CVProfile newCv = new CVProfile(user.getIdUser(), skills, experience, description, education, certification, linkUrl, linkAvt, linkPdf);
-                cvDao.insert(newCv);
-                response.sendRedirect("CVSeeker");
+                if (ad.findpackageByIdUser(user.getIdUser()) == null || ad.findpackageByIdUser(user.getIdUser()).getPackageID() == 1) {
+                    CVProfile newCv = new CVProfile(user.getIdUser(), skills, experience, description, education, certification, linkUrl, linkAvt, linkPdf, 10);
+                    cvDao.insert(newCv);
+                    response.sendRedirect("CVSeeker");
+                } else if (ad.findpackageByIdUser(user.getIdUser()).getPackageID() == 2) {
+                    CVProfile newCv = new CVProfile(user.getIdUser(), skills, experience, description, education, certification, linkUrl, linkAvt, linkPdf, 99999999);
+                    cvDao.insert(newCv);
+                    response.sendRedirect("CVSeeker");
+                }
             } else {
                 response.sendRedirect("CVSeeker");
             }

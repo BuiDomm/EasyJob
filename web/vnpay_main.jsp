@@ -97,8 +97,8 @@
             <div class="table-responsive">
                 <form action="vnpayajax" id="frmCreateOrder" method="post">        
                     <div class="form-group">
-                        <label for="amount">Amount of money</label>
-                        <input class="form-control" data-val="true" data-val-number="The field Amount must be a number." data-val-required="The Amount field is required." id="amount" max="100000000" min="1" name="amount" type="number" value="10000" />
+                        <label for="amount">The amount you need to pay is:</label>
+                        <input style="pointer-events: none" class="form-control" data-val="true" data-val-number="The field Amount must be a number." data-val-required="The Amount field is required." id="amount" max="100000000" min="1" name="amount" type="number" value="${price}" />
                     </div>
                     <h4>
                         Select a payment method</h4>

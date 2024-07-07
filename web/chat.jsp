@@ -64,7 +64,7 @@
                                             searchName(e);
 
                                         };
-                                        
+
                                     };
                                 </script>
                                 <div class="input-group-prepend">
@@ -253,7 +253,7 @@
                     contactItem.classList.add('active-chat');
                 });
             });
-                  // click vô thì hiện tin nahwns cũ
+            // click vô thì hiện tin nahwns cũ
             $.ajax({
                 url: 'messageDetail',
                 type: 'GET',
@@ -289,14 +289,21 @@
 //                         <input type="text" id="content" class="form-control" placeholder="Type your message" name="content" required>
 //                        <button id="button-value-sender" class="btn btn-primary" value="` + response.receiver.accountID + `" onclick="postMessage(` + response.receiver.accountID + `);">Send</button>
 //                         `);
-                    var formMessage = $(`  <div class="input-group-append">
+                    var formMessage = $(` <div class="input-group-append">
                                                                     <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
                                                                 </div>
-                                                                <textarea id="content" name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                                                                <input id="content" name="" class="form-control type_msg" placeholder="Type your message..."/>
                                                                 <div class="input-group-append">
-                                                                    <span   class="input-group-text send_btn" value="` + response.receiver.accountID + `" onclick="postMessage(` + response.receiver.accountID + `);"><i class="fas fa-location-arrow"></i></span>
+                                                                    <span   class="input-group-text send_btn" value="` + response.receiver.accountID + `" onclick="postMessage(` + response.receiver.accountID + `);" ><i class="fas fa-location-arrow"></i></span>
                                                                 </div>`);
                     formSendDiv.append(formMessage);
+
+                    // sự kiện enter với keycode =13    
+                    $('#content').on('keypress', function (e) {
+                        if (e.which === 13) { // 13 is the key code for Enter
+                            postMessage(response.receiver.accountID);
+                        }
+                    });
 
                     // Combine and sort the messages
                     var allMessages = response.listMessSend.concat(response.listMessReceive);
@@ -310,14 +317,14 @@
                     // Display the messages
                     for (var i = 0; i < allMessages.length; i++) {
                         var mess = allMessages[i];
-               // so sánh thông tin nếu id trong session hiên tại trùng với id của người đã gửi tin nhắn tin thì sẽ nằm phía phải
+                        // so sánh thông tin nếu id trong session hiên tại trùng với id của người đã gửi tin nhắn tin thì sẽ nằm phía phải
                         if (receiver === mess.receiverid) {
 
                             var messageDiv = $(' <div class="d-flex justify-content-end mb-4"></div>');
                             var imgDiv = $('<div class="img_cont_msg"></div>');
                             var contentDiv = $('  <div class="msg_cotainer_send">' + mess.content + '<span style="min-width:100px;" class="msg_time_send">' + formatDate(mess.timestamp) + '</span></div>');
                             // ngược lại như trên
-        } else {
+                        } else {
                             var messageDiv = $('<div class="d-flex justify-content-start mb-4"></div>');
                             var imgDiv = $('<div class="img_cont_msg"><img src="' + response.receiver.url + '" class="rounded-circle user_img_msg"></div>');
                             var contentDiv = $('<div class="msg_cotainer">' + mess.content + '<span style="min-width:100px;" class="msg_time_send">' + formatDate(mess.timestamp) + '</span></div>');
@@ -452,7 +459,8 @@
                     document.getElementById('content').value = ''; // Xóa nội dung tin nhắn đã gửi
 
                     // Cập nhật lại danh sách người gửi
-                    updateReceiverList();
+                    updateReceiverListSender();
+//                    updateSenderListReceiver(receiverId);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     console.log(textStatus, errorThrown);
@@ -460,7 +468,7 @@
             });
         }
         // update lai danh sach khi insert new message 
-        function updateReceiverList() {
+        function updateReceiverListSender() {
             $.ajax({
                 url: "getSortedReceiverList",
                 type: "GET",
@@ -510,7 +518,6 @@
         }
 
 
-
 // search name nguoi nhận tin nhắn ( nguoi mình gửi tin nhắn trước đó được sort theo thứ tự là thời gian nahwns tin gần nahast nữa 
         function searchName(e) {
             var namesearch = e.target.value;
@@ -528,7 +535,7 @@
                     contactsDiv.empty();
                     console.log(response.sender.accountID);
                     response.receiver.forEach(function (receiver) {
-                        var contact = '<li class="contact-item " onclick="show(' + receiver.accountID + ', ' + response.sender.accountID + ');updateReceiverList()" class="active">' +
+                        var contact = '<li class="contact-item " onclick="show(' + receiver.accountID + ', ' + response.sender.accountID + ');updateReceiverListSender()" class="active">' +
                                 '<div class="d-flex bd-highlight">' +
                                 '<div class="img_cont">' +
                                 '<img src="' + receiver.url + '" class="rounded-circle user_img">' +
@@ -560,6 +567,13 @@
         }
 
 
+        // bắt sự enter
+
+
+
+
+
+
 
 
 
@@ -580,6 +594,7 @@
                 // Connection is closed
             };
         }
+
 
     </script>
 </html>

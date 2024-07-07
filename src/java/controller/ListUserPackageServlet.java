@@ -4,10 +4,7 @@
  */
 package controller;
 
-import dao.ApplyDAO;
-import dao.CVDAO;
-import dao.CompanyDAO;
-import dao.JobDAO;
+import dao.AdminDAO;
 import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -16,17 +13,15 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import model.Apply;
-import model.CVProfile;
-import model.Company;
-import model.Job;
+import java.util.List;
+import model.Packages;
 import model.User;
 
 /**
  *
  * @author ASUS
  */
-public class CVApply extends HttpServlet {
+public class ListUserPackageServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -45,10 +40,10 @@ public class CVApply extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CVApply</title>");
+            out.println("<title>Servlet ListUserPackageServlet</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet CVApply at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ListUserPackageServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,39 +61,23 @@ public class CVApply extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        NotificationDAO notiDAO = new NotificationDAO();
-        int idProfile = Integer.parseInt(request.getParameter("idprofile"));
-        int idjob = Integer.parseInt(request.getParameter("idjob"));
-        HttpSession session =request.getSession();
-        User user = (User)session.getAttribute("account") ;
-        
-        JobDAO jd = new JobDAO();
-        CVDAO cd = new CVDAO();
-        Job jb = jd.findById(idjob);
-        CVProfile cv = cd.findById(idProfile);
-        ApplyDAO ap = new ApplyDAO();
-        
-        // Tim thong tin nguoi tao JOB
-        
-        CompanyDAO comDAO = new CompanyDAO();
-        Company com = comDAO.findCompanyByIdJob(idjob);
-        // thong tin company chua thong tin nguoi dang tuyen
-        
-        Apply a = new Apply(jb, cv, "Pending");
-        if (cv.getNumber() <= 0) {
-            request.setAttribute("upgrade", "upgrade");
-            request.setAttribute("noticeUpgrade", "Your free application period has ended, please upgrade your service package to continue using the system.");
-            request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
-        } else {
-            if (ap.findByJobIDAndCvID(idjob, idProfile) == null) {
-                ap.insert(a);
-                notiDAO.insertNotificationApprovel(com.getUser().getIdUser(),user.getFirstName()+" " + user.getLastName() +" " + "submitted their CVProfile to apply for \"" + jb.getTitle()+"\"",1);
-                request.setAttribute("successfully", true);
-                request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
-            } else {
-                request.getRequestDispatcher("jobdetails?id=" + idjob).forward(request, response);
-            }
-        }
+        AdminDAO dao = new AdminDAO();
+        HttpSession session = request.getSession();
+        User u = (User) session.getAttribute("account");
+        // List Package có trong hệ thống
+        List<Packages> listP = dao.getAllPackage();
+        //b2:set data to jsp
+
+        // Package mà người dùng đã chọn trước đó.
+        Packages p = dao.findpackageByIdUser(u.getIdUser());
+        request.setAttribute("pack", p);
+        request.setAttribute("listP", listP);
+        request.setAttribute("user", u);
+        request.setAttribute("dao", dao);
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
+        request.getRequestDispatcher("listUserPackage.jsp").forward(request, response);
+
     }
 
     /**

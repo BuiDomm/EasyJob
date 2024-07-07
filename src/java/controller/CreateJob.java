@@ -15,6 +15,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import java.util.regex.Pattern;
 import model.Category;
 import model.Company;
 import model.Job;
@@ -64,25 +65,25 @@ public class CreateJob extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         int idUser = Integer.parseInt(request.getParameter("id"));
         CompanyDAO cd = new CompanyDAO();
         Company com = cd.findCompanyByUserId(idUser);
         request.setAttribute("com", com);
-        String errorMessage ;
-        if(com == null){
-          errorMessage ="You must create your company first !";
-          request.setAttribute("errormess", errorMessage);
+        String errorMessage;
+        if (com == null) {
+            errorMessage = "You must create your company first !";
+            request.setAttribute("errormess", errorMessage);
             request.getRequestDispatcher("companydetail.jsp").forward(request, response);
-        }else if("Disabled".equals(com.getStatus())){
-            errorMessage ="You must active your company first !";
-          request.setAttribute("errormess", errorMessage);
+        } else if ("Disabled".equals(com.getStatus())) {
+            errorMessage = "You must active your company first !";
+            request.setAttribute("errormess", errorMessage);
             request.getRequestDispatcher("loadcompanyservlet").forward(request, response);
-        }else{
-        
-        request.getRequestDispatcher("createjob.jsp").forward(request, response);
+        } else {
+
+            request.getRequestDispatcher("createjob.jsp").forward(request, response);
         }
-        
+
     }
 
     /**
@@ -100,19 +101,46 @@ public class CreateJob extends HttpServlet {
         User epl = (User) session.getAttribute("account");
         CompanyDAO comdao = new CompanyDAO();
         Company com = comdao.findByUserId(epl.getIdUser());
-        
+
         String nameCompnay = request.getParameter("name");
         String nameWork = request.getParameter("namework");
-        int idCate = Integer.parseInt(request.getParameter("cateID"));
-        int yearExpr = Integer.parseInt(request.getParameter("experiences"));
-        int salary = Integer.parseInt(request.getParameter("salary"));
-        String location = request.getParameter("location");
+        int idCate = 0;
+        int yearExpr = 0;
+        int salary = 0;
+        try {
+            idCate = Integer.parseInt(request.getParameter("cateID"));
+        } catch (Exception e) {
+            request.setAttribute("notice", "Please select the appropriate Category");
+            request.getRequestDispatcher("createjob.jsp").forward(request, response);
+        }
+
+        try {
+            yearExpr = Integer.parseInt(request.getParameter("experiences"));
+        } catch (Exception e) {
+            request.setAttribute("notice", "Please update all information.");
+            request.getRequestDispatcher("createjob.jsp").forward(request, response);
+        }
+
+        try {
+            salary = Integer.parseInt(request.getParameter("salary"));
+        } catch (Exception e) {
+            request.setAttribute("notice", "Please update all information.");
+            request.getRequestDispatcher("createjob.jsp").forward(request, response);
+        }
+        Pattern p = Pattern.compile("[^\\d\\W]+|\\s");
+        String location = request.getParameter("location"); 
+        if (!p.matcher(location).find()) {
+            request.setAttribute("notice", "Location do not contain numbers or special characters");
+            request.getRequestDispatcher("createjob.jsp").forward(request, response);
+
+        }
+        else {
         String desc = request.getParameter("description");
         CategoryDAO cd = new CategoryDAO();
         Category c = cd.findById(idCate);
-        
+
         Job j = new Job(com, c, nameWork, desc, yearExpr, location, salary, "Pending");
-        
+
         JobDAO jd = new JobDAO();
         jd.insert(j);
         List<Job> list = jd.findByIdUser(epl.getIdUser());
@@ -122,7 +150,7 @@ public class CreateJob extends HttpServlet {
         request.setAttribute("job", currentJob);
         request.getRequestDispatcher("listjobcreated").forward(request, response);
     }
-
+    }
     /**
      * Returns a short description of the servlet.
      *

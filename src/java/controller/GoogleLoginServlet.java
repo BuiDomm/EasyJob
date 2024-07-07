@@ -69,7 +69,7 @@ public class GoogleLoginServlet extends HttpServlet {
             User userr = jd.fogortPass(newU.getEmail());
             HttpSession session = request.getSession();
             session.setAttribute("account", userr);
-            response.sendRedirect("home.jsp");
+            response.sendRedirect("home");
         } //dang nhap
         else if ((jd.fogortPass(newU.getEmail()) != null)) {
             if ((jd.findByEmail(gc.getEmail()).getRoleId() == 2)) {
@@ -77,7 +77,7 @@ public class GoogleLoginServlet extends HttpServlet {
                 HttpSession session = request.getSession();
                 User user = jd.fogortPass(gc.getEmail());
                 session.setAttribute("account", user);
-                response.sendRedirect("home.jsp");
+                response.sendRedirect("home");
             } else {
                 request.setAttribute("notice", "This email was registered to an account on behalf of a Employer.");
                 request.getRequestDispatcher("login.jsp").forward(request, response);

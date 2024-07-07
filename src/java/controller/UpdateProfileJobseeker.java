@@ -100,47 +100,68 @@ public class UpdateProfileJobseeker extends HttpServlet {
         String phoneNumber = request.getParameter("phone");
         String dobDate = request.getParameter("date");
         Date dob = Date.valueOf(dobDate);
-        if (!is18OrOlder(dob)) {
-            request.setAttribute("notice", "User must be over 18 years old.");
-            NotificationDAO notidao = new NotificationDAO();
-            request.setAttribute("notidao", notidao);
+        Pattern padd = Pattern.compile("^[a-zA-Z\\s]+$");
+        Pattern numB = Pattern.compile("^\\d+$");
+        if (!numB.matcher(phoneNumber).find()) {
+            // ktra dien thaoi
+            request.setAttribute("notice", "Phone numbers cannot contain characters other than numbers.");
             request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-
-        } else {
-
-            User u = (User) session.getAttribute("account");
-            JobseekerDAO jd = new JobseekerDAO();
-            Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
-            if (password.length() == 0) {
-                User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), u.getPassword(), u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
-                jd.update(uu);
-                session.setAttribute("account", uu);
-                request.setAttribute("successfully", true);
-                NotificationDAO notidao = new NotificationDAO();
-                request.setAttribute("notidao", notidao);
-
+        } else { 
+            // thong qua kiem tra sdt
+            // ktra dia chi
+            if (!padd.matcher(cityName).find()) {
+                request.setAttribute("notice", "The city name does not include address numbers and does not include special characters.");
                 request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-
-            } else if (password.length() != 0) {
-                if (!p.matcher(password).find()) {
-                    request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
-                    request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-                } else {
-                    User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), password, u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
-                    jd.update(uu);
-                    session.setAttribute("account", uu);
-                    request.setAttribute("successfully", true);
+            } else {
+                // thong qua ktra dia chi
+                //check date hien tai để kiểm tra có đủ 18 tuổi k
+                if (!is18OrOlder(dob)) { 
+                    request.setAttribute("notice", "User must be over 18 years old.");
                     NotificationDAO notidao = new NotificationDAO();
                     request.setAttribute("notidao", notidao);
                     request.getRequestDispatcher("profilejb.jsp").forward(request, response);
-                }
-            }
+                } else {
+                        // thong qua cái ktra tuổi
+
+                    User u = (User) session.getAttribute("account");
+                    JobseekerDAO jd = new JobseekerDAO();
+                    Pattern p = Pattern.compile("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$");
+                    if (password.length() == 0) {
+                        // Google muón thì cập nhật mk
+                        User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), u.getPassword(), u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
+                        jd.update(uu);
+                        session.setAttribute("account", uu);
+                        request.setAttribute("successfully", true);
+                        NotificationDAO notidao = new NotificationDAO();
+                        request.setAttribute("notidao", notidao);
+
+                        request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+
+                    } else if (password.length() != 0) {
+                        // còn không thì phải khác 0 ( mật khẩu dài hơn 0)
+                        if (!p.matcher(password).find()) {
+                            request.setAttribute("notice", "New password have [0-9],[a-z],[A-Z],[!-&]");
+                            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+                        } else {
+                             //( mật khẩu dài hơn 0)
+                            User uu = new User(u.getIdUser(), firstName, lastName, u.getEmail(), password, u.getRoleId(), u.getMessage(), u.getStatus(), cityName, phoneNumber, dob);
+                            jd.update(uu);
+                            session.setAttribute("account", uu);
+                            request.setAttribute("successfully", true);
+                            NotificationDAO notidao = new NotificationDAO();
+                            request.setAttribute("notidao", notidao);
+                            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
+                            //done
+                        }
+                    }
 //        else if ((password.length() != 0 && confirmpasss.length() == 0) || password.length() == 0 && confirmpasss.length() != 0) {
 //
 //            request.setAttribute("notice", "Please fill in all information!!!");
 //            request.getRequestDispatcher("profilejb.jsp").forward(request, response);
 //
 //        }
+                }
+            }
         }
     }
 

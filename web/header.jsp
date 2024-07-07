@@ -124,7 +124,7 @@
                                 </c:when >
                                 <c:otherwise >
                                     <ul class="example-2" style="display: flex;max-height: 45px;margin-left: 120px;margin-bottom: 15px;">
-                                        <div class="shadow-lg d-none" id="boxNotification" style="position: absolute; background: white; top: 80%;width: 400px">
+                                        <div class="shadow-lg d-none" id="boxNotification" style="position: absolute; background: white; top: 80%;width: 400px;right: 15px;">
                                             <h5 class="fw-semibold px-3 py-2 m-0 d-flex justify-content-between">Notifications
                                                 <a href="readAll" class="btn btn-info float-end ">Read All</a></h5>
                                                 <c:set var="newNotification" value="${notidao.getNewNotificationsesByAccount(sessionScope.account.getIdUser())}" />
@@ -221,7 +221,7 @@
 
                                                         <hr>
                                                         <li>
-                                                            <a class="a-new" href="#!">
+                                                            <a class="a-new" href="listUserPackage">
                                                                 <img width="30" height="30" src="https://img.icons8.com/material/30/buy-upgrade--v1.png" alt="buy-upgrade--v1"/>
                                                                 <span>Upgrade Package</span>
                                                             </a>

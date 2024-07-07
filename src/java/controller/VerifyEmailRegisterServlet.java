@@ -5,6 +5,7 @@
 package controller;
 
 import EmailAutoman.SendEmail;
+import dao.AdminDAO;
 import dao.JobseekerDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -148,6 +149,8 @@ public class VerifyEmailRegisterServlet extends HttpServlet {
                     JobseekerDAO jd = new JobseekerDAO();
                     User u = new User(jobseekerFirstName, jobseekerLastName, jobseekerEmail, jobseekerPassword, 2, "", "Active");
                     if (jd.insert(u)) {
+                        AdminDAO ad = new AdminDAO();
+                        ad.InsertUserPackage(1, jd.findByEmail(jobseekerEmail).getIdUser());
                         request.setAttribute("successfully", true);
                         request.getRequestDispatcher("login.jsp").forward(request, response);
                     } else {

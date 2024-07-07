@@ -39,7 +39,7 @@
         <header class="">
             <nav class="navbar navbar-expand-lg">
                 <div class="container">
-                    <a class="navbar-brand" href="index.jsp">
+                    <a class="navbar-brand" href="home">
                         <figure style="width: 55px;height: 55px;">
                             <img style="height: 100%;width: 100%;object-fit: cover;" src="./assets/images/easyjobb.png" alt="alt"/>
                         </figure>
@@ -50,7 +50,7 @@
                     <div class="collapse navbar-collapse" id="navbarResponsive">
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item active">
-                                <a class="nav-link" href="index.jsp">Home
+                                <a class="nav-link" href="home">Home
                                     <span class="sr-only">(current)</span>
                                 </a>
                             </li> 

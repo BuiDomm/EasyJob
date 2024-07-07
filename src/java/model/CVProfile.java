@@ -41,6 +41,21 @@ public class CVProfile {
         this.LinkPdf = LinkPdf;
     }
 
+    public CVProfile( int UserID, String Skills, String Experience, String Description, String Education, String Certification, String LinkUrl, String Avatar, String LinkPdf, int number) {
+        this.UserID = UserID;
+        this.Skills = Skills;
+        this.Experience = Experience;
+        this.Description = Description;
+        this.Education = Education;
+        this.Certification = Certification;
+        this.LinkUrl = LinkUrl;
+        this.Avatar = Avatar;
+        this.LinkPdf = LinkPdf;
+        this.Number = number;
+    }
+    
+    
+
     public String getLinkPdf() {
         return LinkPdf;
     }

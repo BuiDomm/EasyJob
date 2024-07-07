@@ -22,6 +22,7 @@ import model.Job;
 import model.Packages;
 import model.Statistic;
 import model.User;
+import model.UserPackages;
 
 /**
  *
@@ -525,7 +526,7 @@ public class AdminDAO {
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
-            ps.setString(1, id); 
+            ps.setString(1, id);
             ps.executeUpdate();
 
         } catch (Exception e) {
@@ -576,8 +577,90 @@ public class AdminDAO {
 //        }
 //        return list;
 //    }
+//    public UserPackages getUserPackageByIdUser(int id) {
+//        String query = "select * from UserPackages\n"
+//                + "where UserPackageID = ?";
+//        try {
+//            conn = new DBContext().getConnection();//mo ket noi vs sql
+//            ps = conn.prepareStatement(query);
+//            ps.setInt(1, id);
+//            rs = ps.executeQuery();
+//
+//            while (rs.next()) {
+//                int idUserPackage = rs.getInt(1);
+//                int packageID = rs.getInt(2);
+//                int idUser = rs.getInt(3);
+//                UserPackages up = new UserPackages(idUserPackage, packageID, idUser);
+//                return up;
+//            }
+//        } catch (Exception e) {
+//        }
+//
+//        return null;
+//    }
+    public Packages findpackageByIdUser(int id) {
+        String query = "SELECT * FROM \n"
+                + "UserPackages \n"
+                + "Join Packages as Pack On Pack.PackageID = UserPackages.PackageID\n"
+                + "Where UserID = ?";
+        try {
+            conn = new DBContext().getConnection();//mo ket noi vs sql
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, id);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int packageID = rs.getInt(2);
+                String packageName = rs.getString(5);
+                String descrip = rs.getString(6);
+                int price = rs.getInt(7);
+                Packages p = new Packages(packageID, packageName, descrip, price);
+                return p;
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
+
+    public boolean InsertUserPackage(int idPackage, int userID) {
+
+        String query = "INSERT INTO UserPackages(PackageID, UserID)\n"
+                + "VALUES (?,?)";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, idPackage);
+            ps.setInt(2, userID);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
+    public boolean UpdatePackageByIdUser(int idPackage, int userID) {
+
+        String query = "Update UserPackages\n"
+                + "Set PackageID = ?\n"
+                + "Where UserID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setInt(1, idPackage);
+            ps.setInt(2, userID);
+            ps.executeUpdate();
+            return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         AdminDAO dao = new AdminDAO();
+        JobseekerDAO jd = new JobseekerDAO();
+        System.out.println(jd.findByEmail("chr30571@ilebi.com").getIdUser());
+        System.out.println(dao.InsertUserPackage(1,jd.findByEmail("chr30571@ilebi.com").getIdUser() ));
 
 //        List<Blog> a = dao.pagingBlogByStatus(1, "Pending");
 //        for (Blog blog : a) {
@@ -587,18 +670,19 @@ public class AdminDAO {
 //        Company b = dao.companyByJobId(1);
 //        System.out.println(b);
 //        List<Job> a = dao.getJobByStatus("Pending");
-        Map<Job, Integer> e = dao.getTopJobWithApplyCount("year");
-        for (Map.Entry<Job, Integer> entry : e.entrySet()) {
-            Job job = entry.getKey();
-            Integer applyCount = entry.getValue();
-
-            System.out.println("Title: " + job.getTitle() + " - Purchase Count: " + applyCount);
-        }
+//        Map<Job, Integer> e = dao.getTopJobWithApplyCount("year");
+//        for (Map.Entry<Job, Integer> entry : e.entrySet()) {
+//            Job job = entry.getKey();
+//            Integer applyCount = entry.getValue();
+//
+//            System.out.println("Title: " + job.getTitle() + " - Purchase Count: " + applyCount);
+//        }
 //        
 //        List<Statistic> s = dao.getJobByMonth();
 //        for (Statistic users : s) {
 //            System.out.println(users);
 //        }
+//        System.out.println(dao.getPackageById("2").getPrice());
     }
 
 }

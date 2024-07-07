@@ -82,6 +82,8 @@
 
 
                 <div class="jobs">
+                        
+                        
                     <c:forEach items="${list}" var="i">
 
                         <div class="job">

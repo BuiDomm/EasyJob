@@ -65,6 +65,25 @@ isVerified = false;
 
     </script>
 
+    <%
+        Boolean check = false;
+String upgrade = (String) request.getAttribute("upgrade");
+if (upgrade == "upgrade") {
+    check = true;
+}
+    %>
+    <script>
+
+        var isVerifiedParam = <%= check %>;
+        console.log(isVerifiedParam);
+        if (isVerifiedParam) {
+            if (confirm("${noticeUpgrade}")) {
+                window.location.href = "listUserPackage";
+            } 
+        }
+
+    </script>
+
     <body>
 
         <section>

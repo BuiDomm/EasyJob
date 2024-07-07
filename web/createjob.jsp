@@ -74,8 +74,8 @@
                                     <input type="number" name="experiences" id="experiences" required/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="salary">Salary: </label>
-                                    <input placeholder="1000$" type="text" name="salary" id="salary" required/>
+                                    <label for="salary">Salary: ($) </label>
+                                    <input placeholder="1000$" type="number" name="salary" id="salary" required/>
                                 </div>
                             </div>
 
@@ -89,6 +89,7 @@
                                 <textarea id="description" name="description" rows="6" cols="70">
                                 </textarea>
                             </div>
+                                    <h3 style="color: red">${notice}</h3>
 
                             <div class="form-submit">
                                 <a href="homeemployeer.jsp">  <input type="" value="Back Home" class="submit" name="reset" id="reset" /></a>

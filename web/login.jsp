@@ -39,7 +39,7 @@
             }
 
         </script>
-        <a class="navbar-brand" href="index.jsp">
+        <a class="navbar-brand" href="home">
             <figure style="width: 55px;height: 55px;">
                 <img style="height: 100%;width: 100%;object-fit: cover;" src="./assets/images/easyjobb.png" alt="alt"/>
             </figure>

@@ -118,6 +118,7 @@ public class ApplyDAO extends DBContext implements BaseDAO<Apply> {
 
         String sql = "INSERT INTO Applications(JobID,CVId,ApplicationDate,Status)\n"
                 + "Values(?,?,GETDATE(),?)";
+        String updateNumberJobApply = "UPDATE CVProfile SET Number = Number - 1 WHERE CVId = ?";
         PreparedStatement ps;
         try {
             ps = getConnection().prepareStatement(sql);
@@ -126,6 +127,9 @@ public class ApplyDAO extends DBContext implements BaseDAO<Apply> {
             ps.setString(3, newObject.getStatus());
             int rowAffect = ps.executeUpdate();
             if (rowAffect > 0) {
+                ps = getConnection().prepareStatement(updateNumberJobApply);
+                ps.setInt(1, newObject.getCvProfile().getCVId());
+                ps.executeUpdate();
                 return true;
             }
         } catch (Exception ex) {

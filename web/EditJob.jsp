@@ -66,7 +66,7 @@
                         <span style="padding:0" class="input-group-text" id="inputGroup-sizing-default">
                             <i style="font-size: 32px; margin-bottom:16px" class="fa fa-map-marker"></i>
                         </span>
-                        <input name="location" value="${job.location}" style="height: 53px" type="text" class="form-control col-md-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                        <input required="" name="location" value="${job.location}" style="height: 53px" type="text" class="form-control col-md-3" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
                     </div>
 
                 </div>
@@ -75,7 +75,7 @@
                     <h3><i>Job Title :</i></h3>
                 </div>
                 <div class="input-group input-group-lg">
-                    <input name="title" value="${job.title}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                    <input required="" name="title" value="${job.title}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
                 </div>
 
                 <hr>
@@ -98,14 +98,14 @@
                     <li>Year Experience: 
                         <b style="color: #ff6600">
                             <div class="input-group input-group-sm mb-3">
-                                <input name="exp" value="${job.yearEx}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                <input required="" name="exp" value="${job.yearEx}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                             </div>
                         </b>
                     </li>
                     <li>Salary 
                         <b style="color: #ff6600">
                             <div class="input-group input-group-sm mb-3">
-                                <input name="salary" value="${job.salary}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
+                                <input required="" name="salary" value="${job.salary}" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-sm">
                             </div>
                         </b>
                     </li>
@@ -134,7 +134,7 @@
                     <div class="section-heading">
                         <h2>About Job Description</h2>
                     </div>
-                    <textarea class="form-control" name="description" rows="5">${job.descrip}</textarea>
+                    <textarea class="form-control" name="description" rows="5" required="">${job.descrip}</textarea>
                     <button style="background-color: #ff6600; color: white" type="submit" class="mt-5 btn btn-block">Update Job Post</button>
                 </div>
 

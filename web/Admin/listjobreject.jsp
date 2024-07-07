@@ -24,47 +24,16 @@
         <script src="./assets/js/chart-js-config.js"></script>
 
 
-        <title>Spur - A Bootstrap Admin Template</title>
+
     </head>
 
     <body>
         <div class="dash">
-     <div class="dash-nav dash-nav-dark">
-                <%@include file="header.jsp" %>
+            <div class="dash-nav dash-nav-dark">
+                <%@include file="sidebar.jsp" %>
             </div>
             <div class="dash-app">
-                <header class="dash-toolbar">
-                    <a href="#!" class="menu-toggle">
-                        <i class="fas fa-bars"></i>
-                    </a>
-                    <a href="#!" class="searchbox-toggle">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <!--                    <form class="searchbox" action="#!">
-                                            <a href="#!" class="searchbox-toggle"> <i class="fas fa-arrow-left"></i> </a>
-                                            <button type="submit" class="searchbox-submit"> <i class="fas fa-search"></i> </button>
-                                            <input type="text" class="searchbox-input" placeholder="type to search">
-                                        </form>-->
-                    <div class="tools">
-                        <!--                        <a href="https://github.com/HackerThemes/spur-template" target="_blank" class="tools-item">
-                                                    <i class="fab fa-github"></i>
-                                                </a>-->
-                        <a href="#!" class="tools-item">
-                            <i class="fas fa-bell"></i>
-                            <i class="tools-item-count">4</i>
-                        </a>
-                        <div class="dropdown tools-item">
-                            <a href="#" class="" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user"></i>
-                            </a>
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu1">
-                                <!--                                <a class="dropdown-item" href="#!">Profile</a>-->
-                                <a class="dropdown-item" href="changepass.jsp">Change Password</a>
-                                 <a class="dropdown-item" href="loginjobseeker">Logout</a>
-                            </div>
-                        </div>
-                    </div>
-                </header>
+                <%@include file="header.jsp" %>
                 <main class="dash-content">
 
                     <div class="row">
@@ -100,26 +69,26 @@
                                                     <td>${j.date}</td>                                                 
                                                     <td>
                                                         <div class="d-flex align-items-center">                                           
-                                                                <span class="badge stats-danger p-2 ">${j.status}</span>
-                                                           
+                                                            <span class="badge stats-danger p-2 ">${j.status}</span>
+
                                                         </div>
                                                     </td>
-                                                    
+
                                                     <td>
-                                                            <a href="#" onclick="showMess(${j.jobID}, 'Accept ', 'adminAcceptJob?jobId=')" >
-                                                                <button class="btn btn-outline-success btn-sm" data-bs-toggle="tooltip"
-                                                                        data-bs-placement="top" data-bs-custom-class="custom-tooltip-primary"
-                                                                        >
-                                                                    <i class="fas fa-check" ></i>
-                                                                </button>
-                                                            </a>
-                                                         
+                                                        <a href="#" onclick="showMess(${j.jobID}, 'Accept ', 'adminAcceptJob?jobId=')" >
+                                                            <button class="btn btn-outline-success btn-sm" data-bs-toggle="tooltip"
+                                                                    data-bs-placement="top" data-bs-custom-class="custom-tooltip-primary"
+                                                                    >
+                                                                <i class="fas fa-check" ></i>
+                                                            </button>
+                                                        </a>
+
 
                                                     </td>
                                                     <td>
-                                                          <div class="d-flex align-items-center">                                           
-                                                              <a class="bg-primary" style="color: white ; padding:  5px 10px" href="adminJobDetail?id=${j.jobID}&&hidenButton=rejectButton">Detail</a>
-                                                           
+                                                        <div class="d-flex align-items-center">                                           
+                                                            <a class="bg-primary" style="color: white ; padding:  5px 10px" href="adminJobDetail?id=${j.jobID}&&hidenButton=rejectButton">Detail</a>
+
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -155,8 +124,8 @@
             function showMess(id, text, url) {
                 var option = confirm('Are you sure to ' + text + ' Job ID = ' + id);
                 if (option === true) {
-                    console.log(url + id +"&&returnP=listActive");
-                    window.location.href = url + id +"&&returnP=listReject";
+                    console.log(url + id + "&&returnP=listActive");
+                    window.location.href = url + id + "&&returnP=listReject";
                 }
             }
 

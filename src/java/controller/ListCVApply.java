@@ -5,7 +5,9 @@
 package controller;
 
 import dao.CVDAO;
+import dao.ChooseAnswerDAO;
 import dao.JobApplyDAO;
+import dao.QuestionDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -14,6 +16,8 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import model.Apply;
+import model.ChooseAnswer;
+import model.Question;
 import model.User;
 
 /**
@@ -48,6 +52,8 @@ public class ListCVApply extends HttpServlet {
         for (Apply apply : listApply) {
             System.out.println(apply);
         }
+        ChooseAnswerDAO chd = new ChooseAnswerDAO();
+        request.setAttribute("status", chd);
         request.setAttribute("endP", endPage);
         request.setAttribute("dao", dao);
         request.setAttribute("listApply", listApply);

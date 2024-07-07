@@ -9,6 +9,7 @@ import dao.CVDAO;
 import dao.CompanyDAO;
 import dao.JobDAO;
 import dao.JobseekerDAO;
+import dao.NotificationDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -40,7 +41,7 @@ public class AdminJobDetail extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
+        try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -86,15 +87,16 @@ public class AdminJobDetail extends HttpServlet {
         User user = (User) session.getAttribute("account");
 
         CVProfile cvp = cvd.findByIdUser(user.getIdUser());
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
         request.setAttribute("u", u);
         //thong tin job
         request.setAttribute("cc", job);
-       request.setAttribute("hidenButton", hidenButton);
+        request.setAttribute("hidenButton", hidenButton);
         request.setAttribute("jobid", id);
         request.setAttribute("check", "success");
         request.setAttribute("profile", cvp);
         request.setAttribute("com", com);
-        
 
         request.getRequestDispatcher("./Admin/jobdetail.jsp").forward(request, response);
 

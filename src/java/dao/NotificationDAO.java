@@ -109,11 +109,12 @@ public class NotificationDAO {
 
     }
 
-    public int getTotalNotification() {
+    public int getTotalNotification(int uid) {
         String query = "SELECT count(*) FROM Notifications";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
+            ps.setInt(1, uid);
             rs = ps.executeQuery();
             while (rs.next()) {
                 return rs.getInt(1);
@@ -156,7 +157,7 @@ public class NotificationDAO {
         }
 
     }
-    
+
     public void insertNotificationApprovel(int useId, String mess, int status) {
         String query = "INSERT INTO Notifications( UserID, [Message],ReadStatus)\n"
                 + "VALUES (?,?,?);";

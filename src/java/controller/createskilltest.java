@@ -110,7 +110,8 @@ public class createskilltest extends HttpServlet {
             }
         }
         
-        
+        job.setStatus("Pending");
+        jd.update(job);
         request.getRequestDispatcher("loadskilltest?id="+job.getJobID()).forward(request, response);
     }
 

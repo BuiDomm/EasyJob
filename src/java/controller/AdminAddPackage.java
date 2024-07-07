@@ -5,6 +5,7 @@
 package controller;
 
 import dao.AdminDAO;
+import dao.NotificationDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -26,6 +27,8 @@ public class AdminAddPackage extends HttpServlet {
 
         List<Packages> listP = dao.getAllPackage();
         //b2:set data to jsp
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
         request.setAttribute("listP", listP);
         request.setAttribute("dao", dao);
         request.getRequestDispatcher("./Admin/addpackage.jsp").forward(request, response);

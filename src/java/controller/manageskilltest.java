@@ -4,12 +4,19 @@
  */
 package controller;
 
+import dao.CompanyDAO;
+import dao.JobDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import java.util.List;
+import model.Company;
+import model.Job;
+import model.User;
 
 /**
  *
@@ -28,7 +35,16 @@ public class manageskilltest extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-      
+       HttpSession session = request.getSession();
+        User epl = (User) session.getAttribute("account");
+        CompanyDAO comdao = new CompanyDAO();
+        Company com = comdao.findByUserId(epl.getIdUser());
+        JobDAO jd = new JobDAO();
+        List<Job> containques = jd.findPendingJobsWithQuestionsByIdUser(epl.getIdUser());
+        List<Job> nocontainques = jd.findPendingJobsWithNoQuestionsByIdUser(epl.getIdUser());
+        request.setAttribute("com", com);
+        request.setAttribute("havques", containques);
+        request.setAttribute("noques", nocontainques);
         request.getRequestDispatcher("manageskilltest.jsp").forward(request, response);
 
     }

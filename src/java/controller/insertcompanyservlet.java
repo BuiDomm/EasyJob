@@ -37,7 +37,7 @@ public class insertcompanyservlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
          CompanyDAO dao = new CompanyDAO();
-        // Lấy các tham số từ yêu cầu
+        
         String company_name = request.getParameter("name");
         String description = request.getParameter("aboutus");
         String address = request.getParameter("address");
@@ -50,12 +50,12 @@ public class insertcompanyservlet extends HttpServlet {
         String applicationPath = request.getServletContext().getRealPath("");
         String uploadFilePath = applicationPath + File.separator + UPLOAD_DIR;
         
-        // Tạo thư mục nếu nó không tồn tại
+        
         File fileUploadDir = new File(uploadFilePath);
         if (!fileUploadDir.exists()) {
             fileUploadDir.mkdirs();
         }
-         // Tạo tên tệp duy nhất để tránh ghi đè
+        
         String uniqueFileName = UUID.randomUUID().toString() + "_" + imageFileName;
         String filePath = uploadFilePath + File.separator + uniqueFileName;
         
@@ -68,11 +68,11 @@ public class insertcompanyservlet extends HttpServlet {
             e.printStackTrace();
         }
 
-        // Đường dẫn tương đối cho cơ sở dữ liệu
+        
         String relativeFilePath = UPLOAD_DIR + uniqueFileName;
        
 
-        // Lấy thông tin tài khoản từ session
+       
         HttpSession session = request.getSession();
         User acc = (User) session.getAttribute("account");
         String status = "Active";
@@ -83,7 +83,7 @@ public class insertcompanyservlet extends HttpServlet {
                 || imageFileName == null || imageFileName.isEmpty()) {
             errorMessage = "All fields are required. Please fill out all fields.";
         }else if (dao.isCompanyNameExists(company_name)) {
-            // Nếu tên công ty đã tồn tại, gửi thông báo lỗi
+            
             errorMessage = "Company name already exists.";
             
         } else {
@@ -104,7 +104,7 @@ public class insertcompanyservlet extends HttpServlet {
         Company c = new Company(0, company_name, acc, description, address, status, relativeFilePath);
         
         
-        // Lưu thông tin công ty vào cơ sở dữ liệu
+        
        
         dao.insert(c);
         response.sendRedirect("companycontrolservlet");

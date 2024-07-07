@@ -63,7 +63,7 @@
                             <div class="col">
                                 
                                 <div class="row mt-5 px-3">
-                                    <div class="input-group col">
+                                    <div class="input-group col mt-3">
                                         <textarea style="border-radius: 24px; border-color: black; border: solid 1px; background-color: white; width: 100%; height: 150px" class="form-control p-4 h3" name="questionTitle[]" placeholder="Question title" wrap="soft" required=""></textarea>
                                     </div>
                                     <div class="input-group col">

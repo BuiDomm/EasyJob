@@ -15,8 +15,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import model.Blog;
 
 import model.Category;
+import model.Comment;
 import model.Company;
 import model.Job;
 import model.Packages;
@@ -37,6 +39,130 @@ public class AdminDAO {
     CategoryDAO cd = new CategoryDAO();
 
     //user
+    public User getUserById(String uid) {
+        String query = " select * from Users u\n"
+                + "where u.UserID = ?";
+        try {
+            conn = new DBContext().getConnection();//mo ket noi vs sql
+            ps = conn.prepareStatement(query);
+            ps.setString(1, uid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int idUser = rs.getInt(1);
+                String firstName = rs.getString(2);
+                String lastName = rs.getString(3);
+                String email = rs.getString(4);
+                String password = rs.getString(5);
+                int roleID = rs.getInt(6);
+                String message = rs.getString(7);
+                String city = rs.getString(8);
+                String phoneNumber = rs.getString(9);
+                Date dob = rs.getDate(10);
+                String status = rs.getString(11);
+                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, "0" + phoneNumber, dob);
+                return u;
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
+
+    public User getUserByJobId(String jid) {
+        String query = " select * from Users u\n"
+                + "join  CompanyProfile cp on u.UserID = cp.UserID\n"
+                + "join Jobs j on cp.CompanyID = j.CompanyID\n"
+                + "where j.JobID = ?";
+        try {
+            conn = new DBContext().getConnection();//mo ket noi vs sql
+            ps = conn.prepareStatement(query);
+            ps.setString(1, jid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int idUser = rs.getInt(1);
+                String firstName = rs.getString(2);
+                String lastName = rs.getString(3);
+                String email = rs.getString(4);
+                String password = rs.getString(5);
+                int roleID = rs.getInt(6);
+                String message = rs.getString(7);
+                String city = rs.getString(8);
+                String phoneNumber = rs.getString(9);
+                Date dob = rs.getDate(10);
+                String status = rs.getString(11);
+                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, "0" + phoneNumber, dob);
+                return u;
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
+
+    public User getUserByBlogId(String bid) {
+        String query = " select * from Users u\n"
+                + "join Blogs b on u.UserID = b.UserID\n"
+                + "where  b.BlogID = ?";
+        try {
+            conn = new DBContext().getConnection();//mo ket noi vs sql
+            ps = conn.prepareStatement(query);
+            ps.setString(1, bid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int idUser = rs.getInt(1);
+                String firstName = rs.getString(2);
+                String lastName = rs.getString(3);
+                String email = rs.getString(4);
+                String password = rs.getString(5);
+                int roleID = rs.getInt(6);
+                String message = rs.getString(7);
+                String city = rs.getString(8);
+                String phoneNumber = rs.getString(9);
+                Date dob = rs.getDate(10);
+                String status = rs.getString(11);
+                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, "0" + phoneNumber, dob);
+                return u;
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
+
+    public User getUserByCommentId(String cid) {
+        String query = " select * from Users u\n"
+                + "join Comments c on u.UserID = c.UserID\n"
+                + "where  c.CommentID = ?";
+        try {
+            conn = new DBContext().getConnection();//mo ket noi vs sql
+            ps = conn.prepareStatement(query);
+            ps.setString(1, cid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                int idUser = rs.getInt(1);
+                String firstName = rs.getString(2);
+                String lastName = rs.getString(3);
+                String email = rs.getString(4);
+                String password = rs.getString(5);
+                int roleID = rs.getInt(6);
+                String message = rs.getString(7);
+                String city = rs.getString(8);
+                String phoneNumber = rs.getString(9);
+                Date dob = rs.getDate(10);
+                String status = rs.getString(11);
+                User u = new User(idUser, firstName, lastName, email, password, roleID, message, status, city, "0" + phoneNumber, dob);
+                return u;
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
+
     public int getTotalUser() {
         String query = "select count(*) from Users WHERE RoleID <> 1\n";
         try {
@@ -69,7 +195,7 @@ public class AdminDAO {
 
     public int getAccountByStatus(String status) {
         String query = "select count(*) from Users\n"
-                + "WHERE Status = ?";
+                + "WHERE Status = ?  ";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -265,6 +391,40 @@ public class AdminDAO {
             Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
+    }
+
+    public Job getByjobId(String jobid) {
+        String sql = "select * from jobs j \n"
+                + "where j.JobID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, jobid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                CompanyDAO com = new CompanyDAO();
+                CategoryDAO cd = new CategoryDAO();
+                int idJob = rs.getInt(1);
+                int idCompany = rs.getInt(2);
+                int idCategory = rs.getInt(3);
+                String title = rs.getString(4);
+                String desc = rs.getString(5);
+                int expY = rs.getInt(6);
+                String location = rs.getString(7);
+                int salary = rs.getInt(8);
+                String status = rs.getString(9);
+                Date date = rs.getDate(10);
+                Company company = com.findById(idCompany);
+                Category category = cd.findById(idCategory);
+                Job j = new Job(idJob, company, category, title, desc, expY, location, salary, status, date);
+                return j;
+
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(JobseekerDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     //company
@@ -534,6 +694,31 @@ public class AdminDAO {
     }
 
     //blog
+    public Blog getBlogById(String bid) {
+        String query = " select * from Blogs b\n"
+                + "where b.BlogID = ?";
+        try {
+            conn = new DBContext().getConnection();//mo ket noi vs sql
+            ps = conn.prepareStatement(query);
+            ps.setString(1, bid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                return new Blog(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDate(5),
+                        rs.getString(6),
+                        rs.getString(7));
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
+    }
+
     public int getNumberBlogStatus(String statusString) {
         String query = "SELECT count(*) FROM Blogs b\n"
                 + "where b.[Status] =  ?";
@@ -548,6 +733,137 @@ public class AdminDAO {
         } catch (Exception e) {
         }
         return 0;
+    }
+
+
+    public List<Blog> pagingBlogByStatus(int index, String statusString) {
+        List<Blog> list = new ArrayList<>();
+        String sql = " select * from Blogs b\n"
+                + " where b.Status =  ? \n"
+                + "order by b.BlogID \n"
+                + "OFFSET ? rows fetch next 4 rows only";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, statusString);
+            ps.setInt(2, (index - 1) * 4);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Blog(
+                        rs.getInt(1),
+                        rs.getInt(2),
+                        rs.getString(3),
+                        rs.getString(4),
+                        rs.getDate(5),
+                        rs.getString(6),
+                        rs.getString(7)));
+            }
+        } catch (Exception ex) {
+
+        }
+        return list;
+    }
+
+    public void accpetBlog(String blogid) {
+        String query = "Update Blogs SET Status = 'Accept'\n"
+                + "where BlogID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, blogid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+    public void rejectBlog(String blogid) {
+        String query = "Update Blogs SET Status = 'Reject' where BlogID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, blogid);
+            ps.executeUpdate();
+        } catch (Exception e) {
+        }
+    }
+
+//    comment
+    public int getNumberCommentStatus(String statusString) {
+        String query = "select count(*) from Comments\n"
+                + "where Status = ? ";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, statusString);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+
+    public List<Comment> pagingCommentsByStatus(int index, String statusString) {
+        List<Comment> list = new ArrayList<>();
+        String sql = " select * from Comments c\n"
+                + " where c.Status =  ?\n"
+                + "order by c.CommentID\n"
+                + "OFFSET ? rows fetch next 4 rows only";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(sql);
+            ps.setString(1, statusString);
+            ps.setInt(2, (index - 1) * 4);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                list.add(new Comment(
+                        rs.getInt("CommentID"),
+                        rs.getInt("UserID"),
+                        rs.getInt("BlogID"),
+                        rs.getString("CommentText"),
+                        rs.getString("CommentDate")
+                ));
+            }
+        } catch (Exception ex) {
+
+        }
+        return list;
+    }
+
+    public void deleteComment(String id) {
+        String query = "delete from Comments\n"
+                + "where CommentID = ?";
+        try {
+            conn = new DBContext().getConnection();
+            ps = conn.prepareStatement(query);
+            ps.setString(1, id);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+        }
+    }
+
+    public Comment getCommentByID(String cid) {
+        String query = "select * from Comments\n"
+                + "where CommentID = ?";
+        try {
+            conn = new DBContext().getConnection();//mo ket noi vs sql
+            ps = conn.prepareStatement(query);
+            ps.setString(1, cid);
+            rs = ps.executeQuery();
+
+            while (rs.next()) {
+                return new Comment(rs.getInt("CommentID"),
+                        rs.getInt("UserID"),
+                        rs.getInt("BlogID"),
+                        rs.getString("CommentText"),
+                        rs.getString("CommentDate"));
+            }
+        } catch (Exception e) {
+        }
+
+        return null;
     }
 
 //    public List<Blog> pagingBlogByStatus(int index, String statusString) {
@@ -656,12 +972,18 @@ public class AdminDAO {
         return false;
     }
 
+
+
     public static void main(String[] args) {
         AdminDAO dao = new AdminDAO();
         JobseekerDAO jd = new JobseekerDAO();
         System.out.println(jd.findByEmail("chr30571@ilebi.com").getIdUser());
         System.out.println(dao.InsertUserPackage(1,jd.findByEmail("chr30571@ilebi.com").getIdUser() ));
 
+//        List<Comment> c = dao.pagingCommentsByStatus(1, "Report");
+//        for (Comment comment : c) {
+//            System.out.println(comment);
+//        }
 //        List<Blog> a = dao.pagingBlogByStatus(1, "Pending");
 //        for (Blog blog : a) {
 //            System.out.println(blog);
@@ -677,6 +999,8 @@ public class AdminDAO {
 //
 //            System.out.println("Title: " + job.getTitle() + " - Purchase Count: " + applyCount);
 //        }
+        Comment b = dao.getCommentByID("2");
+        System.out.println(b);
 //        
 //        List<Statistic> s = dao.getJobByMonth();
 //        for (Statistic users : s) {

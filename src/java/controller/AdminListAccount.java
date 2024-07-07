@@ -5,6 +5,7 @@
 package controller;
 
 import dao.AdminDAO;
+import dao.NotificationDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -72,7 +73,8 @@ public class AdminListAccount extends HttpServlet {
         }
         List<User> list = dao.pagingAccount(index,rollid);  
    
-        
+         NotificationDAO notidao = new NotificationDAO();
+                request.setAttribute("notidao", notidao);
         request.setAttribute("user", list);
         request.setAttribute("endP", endPage);
         request.setAttribute("dao", dao);

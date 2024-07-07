@@ -5,6 +5,7 @@
 package controller;
 
 import dao.AdminDAO;
+import dao.NotificationDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +35,8 @@ public class AdminDashBoard extends HttpServlet {
         List<Statistic> statistic = dao.getJobByMonth();
         Map<Job, Integer> topJob = dao.getTopJobWithApplyCount(top);
         
-        
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
         request.setAttribute("statistic", statistic);
 
         request.setAttribute("accountActive", accountActive);

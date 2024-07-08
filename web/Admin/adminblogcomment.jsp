@@ -71,7 +71,7 @@
                                 <h1 style="font-weight: bolder">${b.title}</h1>
                                 <p>Posted on <span style="font-style: italic">${b.date}</span> create by <span style="font-weight: 600">${dao.getUserByBlogId(b.blogId).getFirstName()}</span> </p>
                                 <div>
-                                    <img style="object-fit: cover;height:600px" src=" ${b.image}" alt="" >
+                                    <img style="object-fit: cover;height:600px" src="assets/blog/${b.image}" alt="" >
                                 </div>
 
                                 <p>${b.content}</p>
@@ -79,7 +79,7 @@
                                 <div class="card-body" style="border-top: 1px solid gainsboro">
                                     <div class="d-flex mb-4">
                                         <!-- Parent comment-->
-                                        <div class="flex-shrink-0"><img class="rounded-circle" src="https://dummyimage.com/50x50/ced4da/6c757d.jpg" alt="..."></div>
+                                        <div class="flex-shrink-0"><img style="height: 50px; width: 50px; border-radius: 50%;" class="rounded-circle" src="assets/avatars/${author.avatar}" alt="..."></div>
                                         <div class="ms-3">
                                             <div class="fw-bold" style="font-weight: bolder">${dao.getUserByCommentId(c.commentId).getFirstName()} ${dao.getUserByCommentId(c.commentId).getLastName()}</div>
                                             ${c.content}

@@ -144,10 +144,10 @@
 
                                             pagingIndex = (id) => {
                                     let url = window.location.href;
-                                            if (url.includes("&index=")) {
-                                    url = url.split("&index=")[0];
+                                            if (url.includes("?index=")) {
+                                    url = url.split("?index=")[0];
                                     }
-                                    window.location.href = url + "&index=" + id;
+                                    window.location.href = url + "?index=" + id;
                                     };
         </script>
 

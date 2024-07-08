@@ -4,29 +4,34 @@
  */
 package controller;
 
+import EmailAutoman.SendEmail;
 import dao.AdminDAO;
+import dao.JobseekerDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import model.User;
 
 /**
  *
  * @author DELL
  */
-public class AdminBanAndDeleteComment  extends HttpServlet {
+public class AdminBanAndDeleteComment extends HttpServlet {
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        JobseekerDAO jd = new JobseekerDAO();
         AdminDAO dao = new AdminDAO();
         String id = request.getParameter("cid");
         int user = dao.getUserByCommentId(id).getIdUser();
         String userId = Integer.toString(user);
+        SendEmail se = new SendEmail();
+        User u = jd.findById(user);
+        se.BlockUserMail(u.getFirstName() + " " + u.getLastName(), u.getEmail());
         dao.deleteComment(id);
         dao.lockAccount(userId);
-
         response.sendRedirect("adminListComment");
     }
 

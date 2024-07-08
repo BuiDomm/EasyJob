@@ -6,6 +6,7 @@ package controller;
 
 import dao.AdminDAO;
 import dao.NotificationDAO;
+import dao.UserDAO;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,13 +14,19 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import model.Blog;
+import model.BlogDetailDTO;
 import model.Comment;
+import model.UserDTO;
+import services.BlogService;
 
 /**
  *
  * @author DELL
  */
 public class AdminBlogAndComment extends HttpServlet {
+
+    private BlogService blogService = new BlogService();
+    private UserDAO userDAO = new UserDAO();
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -56,8 +63,13 @@ public class AdminBlogAndComment extends HttpServlet {
         AdminDAO dao = new AdminDAO();
         Blog b = dao.getBlogById(bid);
         Comment c = dao.getCommentByID(cid);
+        //
+        BlogDetailDTO blog = blogService.getBlogDetails(Integer.parseInt(bid));
+        UserDTO author = userDAO.getUserById(blog.getUserId());
+        // Lay thong tin cua tac gia tu bai viet.
         NotificationDAO notidao = new NotificationDAO();
         request.setAttribute("notidao", notidao);
+        request.setAttribute("author", author);
         request.setAttribute("b", b);
         request.setAttribute("c", c);
         request.setAttribute("dao", dao);

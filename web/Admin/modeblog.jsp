@@ -39,7 +39,7 @@
 
                                 <div class="col-md-4">
                                     <div class="product-item">
-                                        <a href="adminBlogDetail?id=${item.blogId}"><img style="height: 47%; object-fit: cover" src="${item.image}" alt=""></a>
+                                        <a href="adminBlogDetail?id=${item.blogId}"><img style="height: 47%; object-fit: cover" src="assets/blog/${item.image}" alt=""></a>
                                         <div class="down-content">
                                             <a href="adminBlogDetail?id=${item.blogId}"><h4>${item.title}</h4></a>
                                             <h4><small>${item.date}<br> </small></h4>

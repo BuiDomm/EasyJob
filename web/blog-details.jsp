@@ -561,7 +561,7 @@
                                     <div class="comment-wrap col-lg-12" >
                                         <ul class="list-inline">
                                             <li class="list-inline-item">
-                                                <a href="#" class="like-button" data-uid="${sessionScope.account.idUser}" data-bid="${blog.blogId}">
+                                                <a style="display: inline-block; width: 77px;" href="#" class="like-button" data-uid="${sessionScope.account.idUser}" data-bid="${blog.blogId}">
                                                     <i id="likeIcon" class="far fa-heart"></i>
                                                     <span id="likeCount">${blog.nLike}</span> likes
                                                 </a>

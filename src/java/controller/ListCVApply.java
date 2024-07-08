@@ -43,8 +43,8 @@ public class ListCVApply extends HttpServlet {
 
         JobApplyDAO dao = new JobApplyDAO();
         int count = dao.getTotalApply(useId, status);
-        int endPage = count / 2;
-        if (count % 2 != 0) {
+        int endPage = count / 6;
+        if (count % 6 != 0) {
             endPage++;
         }
      

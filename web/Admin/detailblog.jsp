@@ -70,7 +70,7 @@
                                 <h1 style="font-weight: bolder">${b.title}</h1>
                                 <p>Posted on <span style="font-style: italic">${b.date}</span> create by <span style="font-weight: 600">${dao.getUserByBlogId(b.blogId).getFirstName()}</span> </p>
                                 <div>
-                                    <img style="object-fit: cover;height:600px" src=" ${b.image}" alt="" >
+                                    <img style="object-fit: cover;height:600px" src="assets/blog/${b.image}" alt="" >
                                 </div>
                                 
                                 <p>${b.content}</p>

@@ -238,4 +238,75 @@ public class SendEmail {
 
     }
 
+    public void BlockUserMail(String name, String mail) {
+
+        final String username = "nhanbtdevfe23@gmail.com";
+        final String password = "vutc kizj tmap aqlz";
+        String fromEmail = "nhanbtdevfe23@gmail.com";
+        String toEmail = mail;
+        Properties properties = new Properties();
+
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+        MimeMessage mgs = new MimeMessage(session);
+        try {
+
+            mgs.setFrom(new InternetAddress(fromEmail));
+            mgs.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+            mgs.setSubject("Hi " + name + ", " + "We send you notifications about your account status at EasyJob as follows:");
+
+            mgs.setText("Your account has been locked for violating community standards, behavior and ethics. Your comment affects organizations, individuals or the state causing hostility and division. \n"
+                    + "If you have any questions, please reply to this email so it can be processed if you feel unsatisfied. Best regards.");
+
+            Transport.send(mgs);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+    }
+    
+    
+    
+     public void UnBlockUserMail(String name, String mail) {
+
+        final String username = "nhanbtdevfe23@gmail.com";
+        final String password = "vutc kizj tmap aqlz";
+        String fromEmail = "nhanbtdevfe23@gmail.com";
+        String toEmail = mail;
+        Properties properties = new Properties();
+
+        properties.put("mail.smtp.auth", "true");
+        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.host", "smtp.gmail.com");
+        properties.put("mail.smtp.port", "587");
+
+        Session session = Session.getInstance(properties, new javax.mail.Authenticator() {
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication(username, password);
+            }
+        });
+        MimeMessage mgs = new MimeMessage(session);
+        try {
+
+            mgs.setFrom(new InternetAddress(fromEmail));
+            mgs.addRecipient(Message.RecipientType.TO, new InternetAddress(toEmail));
+            mgs.setSubject("Hi " + name + ", " + "We send you notifications about your account status at EasyJob as follows:");
+
+            mgs.setText("Your account has been unlocked. You can log back into the EasyJob system. Wish you have a good experience at EasyJob. Best regards.");
+
+            Transport.send(mgs);
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }

@@ -92,7 +92,7 @@ public class JobApplyDAO {
                 + "join CompanyProfile c on j.CompanyID = c.CompanyID\n"
                 + "where c.UserID = ? and a.Status = ?\n"
                 + "order by a.ApplicationID\n"
-                + "OFFSET ? rows fetch next 2 rows only";
+                + "OFFSET ? rows fetch next 6 rows only";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);

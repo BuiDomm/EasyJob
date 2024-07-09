@@ -201,7 +201,7 @@ public class FilterDAO {
     //Company
     public List<Company> getAllCompany() {
         List<Company> list = new ArrayList<>();
-        String query = "SELECT * FROM CompanyProfile";
+        String query = "SELECT DISTINCT * FROM CompanyProfile";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -230,7 +230,7 @@ public class FilterDAO {
     public List<Category> getAllCategory() {
 
         List<Category> list = new ArrayList<>();
-        String sql = "SELECT * FROM Categories c\n"
+        String sql = "SELECT DISTINCT * FROM Categories c\n"
                 + "join  Jobs j on c.CategoryID = j.CategoryID\n"
                 + "where j.Status = 'Accept'";
         try {

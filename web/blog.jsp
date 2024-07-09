@@ -212,7 +212,7 @@
                                         <li class="icon-content">
                                             <c:set value="${notidao.getNumberNewNotificationses(sessionScope.account.getIdUser())}" var="number"></c:set>
                                             <c:if test="${number != 0}">
-                                                <span class="count rounded-circle bg-danger" style="position: absolute; z-index: 10;top: -15px;right: -10px;width: 25px;">${number}</span>
+                                                <span class="count rounded-circle bg-danger" style="position: absolute; z-index: 10;top: -15px;right: -10px;width: 25px;color: white;">${number}</span>
                                             </c:if>
 
                                             <a href="#!" aria-label="Discord" onclick="handleDisplayBox()" >
@@ -400,7 +400,7 @@
                         <ul class="pagination">
                             <li class="page-item <c:if test="${currentPage == 1}">disabled</c:if>">
                                 <a href="${pageContext.request.contextPath}/blogs?page=${currentPage - 1}" class="page-link" aria-label="Previous">
-                                    <span aria-hidden="true">«</span>
+                                    <span aria-hidden="true">Â«</span>
                                 </a>
                             </li>
                             <c:forEach var="i" begin="1" end="${noOfPages}">
@@ -410,7 +410,7 @@
                             </c:forEach>
                             <li class="page-item <c:if test="${currentPage == noOfPages}">disabled</c:if>">
                                 <a href="${pageContext.request.contextPath}/blogs?page=${currentPage + 1}" class="page-link" aria-label="Next">
-                                    <span aria-hidden="true">»</span>
+                                    <span aria-hidden="true">Â»</span>
                                 </a>
                             </li>
                         </ul>
@@ -444,7 +444,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="inner-content">
-                        <p>Copyright © 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
+                        <p>Copyright Â© 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
                     </div>
                 </div>
             </div>

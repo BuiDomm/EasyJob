@@ -47,11 +47,11 @@
                 <div class="row ">
                     <c:forEach items="${noques}" var="i">
 
-                        <a href="loadskilltest?id=${i.jobID}" style="border-radius: 36px" class="btn btn-light col-3 mb-4 mx-3">
+                        <a href="loadskilltest?id=${i.jobID}" style="border-radius: 36px;max-width: 300px" class="btn btn-light col-3 mb-4 mx-3">
                             <div style="border-radius: 36px"  class="card bg-light border-light rounded p-3">
                                 <img src="${com.url}" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title">${i.category.categoryName}</h5>
+                                    <h6 class="card-title">${i.category.categoryName}</h6>
                                     <p class="card-text">${i.title}</p>
                                 </div>
                                 <hr>
@@ -76,7 +76,7 @@
                             <div style="border-radius: 36px"  class="card bg-light border-light rounded p-3">
                                 <img src="${com.url}" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <h5 class="card-title">${c.category.categoryName}</h5>
+                                    <h6 class="card-title">${c.category.categoryName}</h6>
                                     <p class="card-text">${c.title}</p>
                                 </div>
                                 <hr>

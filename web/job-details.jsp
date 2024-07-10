@@ -470,7 +470,7 @@ if (upgrade == "upgrade") {
                                         <a style="text-align: center; background-color: #ff6600" onclick="handlerStatuss('${profile.CVId}', '${cc.jobID}')"  href="#!" class="filled-button btn-block show-modal">Applied to this job.</a>
                                     </c:when>
                                     <c:when test="${apply.status == 'Pending'}">
-                                        <c:if test="${questions != null && (empty checktest || checktest == null)}">
+                                        <c:if test="${(not empty questions) && (empty checktest)}">
                                         <a class="filled-button btn-block hover" style="text-align: center; background-color: black" href="dotest?id=${cc.jobID}" >
                                             Do Skill Test
                                         </a>

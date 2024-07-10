@@ -51,9 +51,7 @@ public class employerhomeservlet extends HttpServlet {
                 cvapplied = appdao.countApplicationsByCompanyId(com.getCompanyID());
             }
         } catch (Exception e) {
-            e.printStackTrace();
-            // Nếu cần, bạn có thể thêm một thông báo lỗi vào request để hiển thị ở trang JSP
-            request.setAttribute("errorMessage", "An error occurred while retrieving company or job information.");
+            
         }
 
         request.setAttribute("applicationsByMonth", applicationsByMonth);

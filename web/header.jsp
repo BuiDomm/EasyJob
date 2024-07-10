@@ -89,7 +89,7 @@
                             </ul>
                             <c:choose>
                                 <c:when test="${sessionScope.account == null}">
-                                    <div style="display: flex;align-items: center;margin-left: 75px;">
+                                    <div style="display: flex;align-items: center;margin-left: 100px;">
                                         <div style="display: flex;max-height: 45px;margin-bottom: 15px;">
                                             <a style="--clr:#ff6600" class="button" href="login.jsp">
                                                 <span class="button__icon-wrapper">
@@ -150,9 +150,9 @@
                                             </div>
                                         </div>
                                         <li class="icon-content">
-                                            <c:set value="${notidao.getNumberNewNotificationses(sessionScope.account.getIdUser())}" var="number"></c:set>
+                                             <c:set value="${notidao.getNumberNewNotificationses(sessionScope.account.getIdUser())}" var="number" ></c:set>
                                             <c:if test="${number != 0}">
-                                                <span class="count rounded-circle bg-danger" style="position: absolute; z-index: 10;top: -15px;right: -10px;width: 25px;">${number}</span>
+                                                <span class="count rounded-circle bg-danger" style="position: absolute; z-index: 10;top: -15px;right: -10px;width: 25px;color: white;">${number}</span>
                                             </c:if>
 
                                             <a href="#!" aria-label="Discord" onclick="handleDisplayBox()" >

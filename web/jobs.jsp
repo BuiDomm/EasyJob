@@ -25,8 +25,13 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
         <link rel="stylesheet" href="assets/css/icontop.css">
-          <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <style>
 
+            .contact-form select, .contact-form .form-control {
+                border: 1px solid black !important;
+            }
+        </style>
     </head>
 
     <body>
@@ -61,20 +66,20 @@
         <div class="products">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3" style="background-color: #ea682a; height: 900px;">
                         <div class="contact-form">
                             <form action="searchAndFilter">
 
-                                 <h5 style="margin: 15px 0">Title</h5>
-                                 
+                                <h5 style="margin: 15px 0">Title</h5>
+
                                 <div class="search-form">
                                     <label>
                                         <input type="text" name="search" >
                                     </label>
                                 </div>
-                                 
-                                 
-                                 <h5 style="margin: 15px 0">Company</h5>
+
+
+                                <h5 style="margin: 15px 0">Company</h5>
 
                                 <div class="search-form">
                                     <label>
@@ -85,32 +90,38 @@
                                 <br>
 
                                 <h5 style="margin-bottom: 15px">Category</h5>
-                                
-                                 <select name="category">
-                                       <option  value="0">Select Category</option>
-                                     <c:forEach var="c" items="${listCategory}" >
-                                      <option  value="${c.categoryID}">${c.categoryName}</option>
+
+                                <select name="category">
+                                    <option  value="0">Select Category</option>
+                                    <c:forEach var="c" items="${listCategory}" >
+                                        <option  value="${c.categoryID}">${c.categoryName}</option>
                                     </c:forEach>
                                 </select>
 
                                 <br>
 
                                 <h5 style="margin-bottom: 15px">Location</h5>
-                                
+
 
                                 <select name="location">
-                                     <option  value=" ">Select Location</option>
-                                     ${location}
+                                    <option  value=" ">Select Location</option>
+                                    ${location}
                                     <c:forEach var="l" items="${listLocation}" >                       
-                                      <option  value="${l.location}" ${(l.location == location) ? selected : ""}>${l.location}</option>
+                                        <option  value="${l.location}" ${(l.location == location) ? selected : ""}>${l.location}</option>
                                     </c:forEach>
                                 </select>
-                              
+
                                 <br>
 
 
                                 <h5 style="margin-bottom: 15px">Salary</h5>
+                                <div>
+                                    <label>
+                                        <input name="salary" value="0" type="radio">
 
+                                        <small value="1">All</small>
+                                    </label>
+                                </div>
 
                                 <div>
                                     <label>
@@ -141,6 +152,13 @@
 
 
                                 <h5 style="margin-bottom: 15px">Years of experience</h5>
+                                <div>
+                                    <label>
+                                        <input name="year" value="0" type="radio">
+
+                                        <small value="1">All</small>
+                                    </label>
+                                </div>
 
                                 <div>
                                     <label>
@@ -166,7 +184,7 @@
                                     </label>
                                 </div>
 
-                                <button type="submit" class="text-white w-100 p-lg-1" style="background-color: #ff6600; border: none">submit</button>
+                                <button type="submit" class="text-black w-100 p-lg-1 " style="background-color: #FFF; border: none;">submit</button>
                             </form>
                         </div>
                     </div>
@@ -222,7 +240,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="inner-content">
-                            <p>Copyright Â© 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
+                            <p>Copyright ÃÂ© 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
                         </div>
                     </div>
                 </div>

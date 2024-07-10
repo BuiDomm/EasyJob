@@ -49,12 +49,12 @@ public class FilterDAO {
             query.append(" AND J.CategoryID = ?");
         }
 
-        if (experienceOption == 1) {
-            query.append(" AND J.ExperienceYears >= 0 AND J.ExperienceYears <= 1");
-        } else if (experienceOption == 2) {
-            query.append(" AND J.ExperienceYears > 1 AND J.ExperienceYears <= 2");
-        } else if (experienceOption == 3) {
-            query.append(" AND J.ExperienceYears > 2");
+        if (experienceOption == 2) {
+            query.append(" AND J.ExperienceYears >= 0 AND J.ExperienceYears <= 2");
+        } else if (experienceOption == 4) {
+            query.append(" AND J.ExperienceYears > 2 AND J.ExperienceYears <= 5");
+        } else if (experienceOption == 6) {
+            query.append(" AND J.ExperienceYears > 5");
         }
 
         if (location != null) {
@@ -118,7 +118,7 @@ public class FilterDAO {
             System.out.println(e);
         }
 //
-//        System.out.println(query);
+        System.out.println(query);
         return filterJobs;
     }
 
@@ -136,7 +136,7 @@ public class FilterDAO {
         }
 
         if (company != null) {
-            query.append(" AND J.CompanyID = ?");
+            query.append(" AND C.CompanyName LIKE ?");
         }
 
         if (category > 0) {
@@ -201,7 +201,7 @@ public class FilterDAO {
     //Company
     public List<Company> getAllCompany() {
         List<Company> list = new ArrayList<>();
-        String query = "SELECT * FROM CompanyProfile";
+        String query = "SELECT DISTINCT * FROM CompanyProfile";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);
@@ -230,7 +230,9 @@ public class FilterDAO {
     public List<Category> getAllCategory() {
 
         List<Category> list = new ArrayList<>();
-        String sql = "SELECT * FROM Categories";
+        String sql = "SELECT DISTINCT * FROM Categories c\n"
+                + "join  Jobs j on c.CategoryID = j.CategoryID\n"
+                + "where j.Status = 'Accept'";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -251,7 +253,8 @@ public class FilterDAO {
     //Location
     public List<Job> getAllLocation() {
         List<Job> list = new ArrayList<>();
-        String sql = "SELECT distinct Location FROM Jobs";
+        String sql = "SELECT distinct Location FROM Jobs j\n"
+                + "where  j.Status = 'Accept' ";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(sql);
@@ -295,11 +298,9 @@ public class FilterDAO {
         return null;
     }
 
-    
-
     public static void main(String[] args) {
         FilterDAO dao = new FilterDAO();
-        List<Job> job = dao.getJobsByCriteria(null, "ABC", 0, 0, "New York", 0, 1);
+        List<Job> job = dao.getAllLocation();
         for (Job job1 : job) {
             System.out.println(job1);
         }

@@ -57,32 +57,44 @@ public class GoogleLoginServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String code = request.getParameter("code");
+        try {
 
-        GoogleLoginHandle gg = new GoogleLoginHandle();
-        String token = gg.getToken(code);
-        GoogleAccount gc = gg.getUserInfo(token);
-        JobseekerDAO jd = new JobseekerDAO();
-        User newU = new User(gc.getGiven_name(), gc.getFamily_name(), gc.getEmail(), "", 2, "", "Active");
-        //dang ky
-        if (jd.insert(newU)) {
-            User userr = jd.fogortPass(newU.getEmail());
-            HttpSession session = request.getSession();
-            session.setAttribute("account", userr);
-            response.sendRedirect("home");
-        } //dang nhap
-        else if ((jd.fogortPass(newU.getEmail()) != null)) {
-            if ((jd.findByEmail(gc.getEmail()).getRoleId() == 2)) {
-
-                HttpSession session = request.getSession();
-                User user = jd.fogortPass(gc.getEmail());
-                session.setAttribute("account", user);
-                response.sendRedirect("home");
+            String errorStatus = request.getParameter("error");
+            if (errorStatus != null) {
+                response.sendRedirect("login.jsp");
             } else {
-                request.setAttribute("notice", "This email was registered to an account on behalf of a Employer.");
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                String code = request.getParameter("code");
+
+                GoogleLoginHandle gg = new GoogleLoginHandle();
+                String token = gg.getToken(code);
+                GoogleAccount gc = gg.getUserInfo(token);
+                JobseekerDAO jd = new JobseekerDAO();
+                User newU = new User(gc.getGiven_name(), gc.getFamily_name(), gc.getEmail(), "", 2, "", "Active");
+                //dang ky
+                if (jd.insert(newU)) {
+                    User userr = jd.fogortPass(newU.getEmail());
+                    HttpSession session = request.getSession();
+                    session.setAttribute("account", userr);
+                    response.sendRedirect("home");
+                } //dang nhap
+                else if ((jd.fogortPass(newU.getEmail()) != null)) {
+                    if ((jd.findByEmail(gc.getEmail()).getRoleId() == 2)) {
+
+                        HttpSession session = request.getSession();
+                        User user = jd.fogortPass(gc.getEmail());
+                        session.setAttribute("account", user);
+                        response.sendRedirect("home");
+                    } else {
+                        request.setAttribute("notice", "This email was registered to an account on behalf of a Employer.");
+                        request.getRequestDispatcher("login.jsp").forward(request, response);
+                    }
+
+                }
+
             }
 
+        } catch (Exception e) {
+            
         }
 
     }

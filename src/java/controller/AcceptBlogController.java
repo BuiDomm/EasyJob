@@ -1,6 +1,7 @@
 package controller;
 
 import dao.BlogDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.util.List;
 import jakarta.servlet.ServletException;
@@ -32,6 +33,8 @@ public class AcceptBlogController extends HttpServlet {
         List<Blog> blogs = blogDAO.getAcceptedBlogsByUserId(userId);
 
         request.setAttribute("listP", blogs);
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
         request.getRequestDispatcher("ManageBlog.jsp").forward(request, response);
     }
 

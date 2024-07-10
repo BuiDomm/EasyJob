@@ -51,6 +51,12 @@
                 font-size: 20px;
                 margin-right: 5px;
             }
+            .shadow-box {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        border: 1px solid #d3d3d3;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #fff;
         </style>
         <script>
             document.addEventListener('DOMContentLoaded', function () {
@@ -333,8 +339,8 @@
                 <div class="row">
                     <div class="col-lg-8 post-list blog-post-list">
                         <c:forEach var="b" items="${blogs}" >
-                            <div class="single-post">
-                                <img class="img-fluid" src="assets/blog/${b.image}" alt="" style="width: 690px; height: 294px;">
+                            <div class="single-post shadow-box"style="background-color: #E8E8E8">
+                                <img class="img-fluid" src="assets/blog/${b.image}" alt="" style="width: 690px; height: 294px; margin-top: 20px">
 
                                 <a href="${pageContext.request.contextPath}/blogDetails?bid=${b.blogId}">
                                     <h1>
@@ -342,7 +348,7 @@
                                     </h1>
                                 </a>
 
-                                <div class="bottom-meta">
+                                <div class="bottom-meta" style="margin-bottom: 20px">
                                     <div class="user-details row align-items-center">
                                         <div class="comment-wrap col-lg-12">
                                             <ul class="list-inline">

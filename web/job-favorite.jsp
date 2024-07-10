@@ -33,7 +33,7 @@
 
         <!-- Toastr Notification Styles -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        
+
     </head>
 
     <body>
@@ -93,9 +93,19 @@
                                         </ul>
                                     </div>
                                 </div>
+                                <!-- ... -->
                                 <div class="job-right my-4 flex-shrink-0">
-                                    <a href="jobdetails?id=${item.id}" class="btn d-block w-100 d-sm-inline-block btn-light">Detail now</a>
+                                    <c:choose>
+                                        <c:when test="${item.status ne 'Expire'}">
+                                            <a href="jobdetails?id=${item.id}" class="btn d-block w-100 d-sm-inline-block btn-light">Detail now</a>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <span class="btn d-block w-100 d-sm-inline-block btn-light disabled">Detail now</span>
+                                            <div class="text-danger">This job has expired.</div>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </div>
+                                <!-- ... -->
                                 <div class="job-right my-4 flex-shrink-0">
                                     <button class="btn d-block w-100 d-sm-inline-block btn-light delete-favorite-btn" data-uid="${sessionScope.account.idUser}" data-jid="${item.id}">Delete</button>
                                 </div>
@@ -132,8 +142,8 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 
         <script>
-            $(document).ready(function() {
-                $(".delete-favorite-btn").click(function(event) {
+            $(document).ready(function () {
+                $(".delete-favorite-btn").click(function (event) {
                     event.preventDefault();
                     var userId = $(this).data("uid");
                     var jobId = $(this).data("jid");
@@ -142,9 +152,9 @@
                     $.ajax({
                         url: "${pageContext.request.contextPath}/deleteFavoriteJobServlet",
                         type: "POST",
-                        data: { uid: userId, jid: jobId },
-                        success: function(response) {
-                            if(response.success) {
+                        data: {uid: userId, jid: jobId},
+                        success: function (response) {
+                            if (response.success) {
                                 toastr.success("Deleted Job Successfully!", "Easyjob Notice", {
                                     timeOut: 2000,
                                 });
@@ -155,7 +165,7 @@
                                 });
                             }
                         },
-                        error: function() {
+                        error: function () {
                             toastr.error("Failed to Delete Job.", "Easyjob Notice", {
                                 timeOut: 2000,
                             });

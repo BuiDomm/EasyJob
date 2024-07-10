@@ -74,7 +74,7 @@
                                                     </td>
 
                                                     <td>
-                                                        <a href="#" onclick="showMess(${j.jobID}, 'Delete ', 'adminRejectJob?jobId=')" >
+                                                        <a href="#" onclick="showMess(${j.jobID}, 'Reject ', 'adminRejectJob?jobId=')" >
                                                             <button class="btn btn-outline-danger btn-sm" data-bs-toggle="tooltip"
                                                                     data-bs-placement="top" data-bs-custom-class="custom-tooltip-primary"
                                                                     >
@@ -123,7 +123,7 @@
             function showMess(id, text, url) {
                 var option = confirm('Are you sure to ' + text + ' Job ID = ' + id);
                 if (option === true) {
-                    console.log(url + id + "&&returnP=listActive");
+//                    console.log(url + id + "&&returnP=listActive");
                     window.location.href = url + id + "&&returnP=listActive";
                 }
             }

@@ -124,7 +124,7 @@
             function showMess(id, text, url) {
                 var option = confirm('Are you sure to ' + text + ' Job ID = ' + id);
                 if (option === true) {
-                    console.log(url + id + "&&returnP=listActive");
+//                    console.log(url + id + "&&returnP=listActive");
                     window.location.href = url + id + "&&returnP=listReject";
                 }
             }

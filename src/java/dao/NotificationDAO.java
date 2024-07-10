@@ -110,7 +110,7 @@ public class NotificationDAO {
     }
 
     public int getTotalNotification(int uid) {
-        String query = "SELECT count(*) FROM Notifications";
+        String query = "SELECT count(*) FROM Notifications where UserID = ?";
         try {
             conn = new DBContext().getConnection();
             ps = conn.prepareStatement(query);

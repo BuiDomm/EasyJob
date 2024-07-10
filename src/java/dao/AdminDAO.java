@@ -16,7 +16,6 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Blog;
-
 import model.Category;
 import model.Comment;
 import model.Company;
@@ -735,7 +734,6 @@ public class AdminDAO {
         return 0;
     }
 
-
     public List<Blog> pagingBlogByStatus(int index, String statusString) {
         List<Blog> list = new ArrayList<>();
         String sql = " select * from Blogs b\n"
@@ -972,13 +970,11 @@ public class AdminDAO {
         return false;
     }
 
-
-
     public static void main(String[] args) {
         AdminDAO dao = new AdminDAO();
         JobseekerDAO jd = new JobseekerDAO();
         System.out.println(jd.findByEmail("chr30571@ilebi.com").getIdUser());
-        System.out.println(dao.InsertUserPackage(1,jd.findByEmail("chr30571@ilebi.com").getIdUser() ));
+        System.out.println(dao.InsertUserPackage(1, jd.findByEmail("chr30571@ilebi.com").getIdUser()));
 
 //        List<Comment> c = dao.pagingCommentsByStatus(1, "Report");
 //        for (Comment comment : c) {

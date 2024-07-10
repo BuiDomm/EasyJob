@@ -674,7 +674,9 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
 
     public List<Job> findPendingJobsWithQuestionsByIdUser(int id) {
         List<Job> list = new ArrayList<>();
-        String sql = "SELECT jobs.*, CM.*, q.* FROM Jobs jobs "
+        String sql = "SELECT DISTINCT jobs.JobID, jobs.CompanyID, jobs.CategoryID, jobs.Title, jobs.Description, "
+                + "jobs.ExperienceYears, jobs.Location, jobs.Salary, jobs.Status, jobs.Date "
+                + "FROM Jobs jobs "
                 + "JOIN CompanyProfile CM on CM.CompanyID = jobs.CompanyID "
                 + "JOIN Users u on u.UserID = CM.UserID "
                 + "LEFT JOIN Questions q on q.JobID = jobs.JobID "
@@ -748,14 +750,14 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
         return list;
     }
 
-   public static void main(String[] args) {
+    public static void main(String[] args) {
         JobDAO jobDAO = new JobDAO();
 
         // Replace with the actual user ID you want to test
         int testUserId = 2; // Example user ID
 
         // Get pending jobs with no questions by user ID
-        List<Job> jobs = jobDAO.findPendingJobsWithNoQuestionsByIdUser(testUserId);
+        List<Job> jobs = jobDAO.findPendingJobsWithQuestionsByIdUser(testUserId);
 
         // Print the retrieved jobs
         for (Job job : jobs) {

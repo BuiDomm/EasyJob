@@ -47,7 +47,7 @@
                 <div class="row ">
                     <c:forEach items="${noques}" var="i">
 
-                        <a href="loadskilltest?id=${i.jobID}" style="border-radius: 36px" class="btn btn-light col-3 mb-4 mx-3">
+                        <a href="loadskilltest?id=${i.jobID}" style="border-radius: 36px;max-width: 300px" class="btn btn-light col-3 mb-4 mx-3">
                             <div style="border-radius: 36px"  class="card bg-light border-light rounded p-3">
                                 <img src="${com.url}" class="card-img-top" alt="...">
                                 <div class="card-body">

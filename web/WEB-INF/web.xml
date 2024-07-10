@@ -48,7 +48,7 @@
         <servlet-name>FileUploadServlet</servlet-name>
         <servlet-class>controller.FileUploadServlet</servlet-class>
         <multipart-config>
-            <location>/tmp</location>
+            <location>${java.io.tmpdir}/tmp</location>
             <max-file-size>20848820</max-file-size>
             <max-request-size>418018841</max-request-size>
             <file-size-threshold>1048576</file-size-threshold>

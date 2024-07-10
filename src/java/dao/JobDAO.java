@@ -574,7 +574,10 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
     }
 
     public FavoriteJobDTO findJobFavoriteById(int id) {
-        String sql = "SELECT j.JobID, j.Title, j.ExperienceYears, j.Location, j.Salary, c.CompanyName FROM jobs j JOIN CompanyProfile c ON j.CompanyID = c.CompanyID WHERE j.JobID = ?";
+        String sql = "SELECT j.JobID, j.Title, j.ExperienceYears, j.Location, j.Salary, c.CompanyName, j.Status "
+                + "FROM jobs j "
+                + "JOIN CompanyProfile c ON j.CompanyID = c.CompanyID "
+                + "WHERE j.JobID = ?";
         try {
             PreparedStatement ps = getConnection().prepareStatement(sql);
             ps.setInt(1, id);
@@ -586,8 +589,9 @@ public class JobDAO extends DBContext implements BaseDAO<Job> {
                 String location = rs.getString(4);
                 int salary = rs.getInt(5);
                 String companyName = rs.getString(6);
+                String status = rs.getString(7); // Retrieve status from ResultSet
 
-                return new FavoriteJobDTO(idJob, title, expY, location, salary, companyName);
+                return new FavoriteJobDTO(idJob, title, expY, location, salary, companyName, status);
             }
         } catch (Exception ex) {
             Logger.getLogger(JobDAO.class.getName()).log(Level.SEVERE, null, ex);

@@ -15,6 +15,27 @@ public class FavoriteJobDTO {
     private String location;
     private int salary;
     private String companyName;
+    private String Status;
+
+    public String getStatus() {
+        return Status;
+    }
+
+    public void setStatus(String Status) {
+        this.Status = Status;
+    }
+
+    public FavoriteJobDTO(int id, String title, int yearEx, String location, int salary, String companyName, String Status) {
+        this.id = id;
+        this.title = title;
+        this.yearEx = yearEx;
+        this.location = location;
+        this.salary = salary;
+        this.companyName = companyName;
+        this.Status = Status;
+    }
+    
+    
 
     public String getCompanyName() {
         return companyName;

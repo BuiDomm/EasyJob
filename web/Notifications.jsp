@@ -35,7 +35,6 @@
         <link rel="stylesheet" href="assets/css/owl.css">
         <link rel="stylesheet" href="assets/css/button.css">
         <link rel="stylesheet" href="assets/css/icontop.css">
-        <link rel="stylesheet" href="assets/css/style.css">
 
     </head>
 
@@ -44,6 +43,8 @@
 
         <c:choose>
             <c:when test="${sessionScope.account.roleId == 2}">
+                <link rel="stylesheet" href="assets/css/style.css">
+
                 <jsp:include page="header.jsp"/>
 
             </c:when>

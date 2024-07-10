@@ -98,7 +98,7 @@ public class JobApplyDAO {
             ps = conn.prepareStatement(sql);
             ps.setInt(1, uid);
             ps.setString(2, statusApplication);
-            ps.setInt(3, (index - 1) * 2);
+            ps.setInt(3, (index - 1) * 6);
             rs = ps.executeQuery();
             while (rs.next()) {
                 int idApp = rs.getInt(1);

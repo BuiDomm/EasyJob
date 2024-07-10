@@ -154,7 +154,7 @@
                                     </div>
                                 </div>
 
-                                <div class="job-right my-4 flex-shrink-0 d-flex flex-column">
+                                <div class="job-right my-4 flex-shrink-0 d-flex flex-column bloggg">
                                     <c:choose>
                                         <c:when test="${p.status eq 'Pending'}">
                                             <button class="btn d-block w-100 d-sm-inline-block btn-light mb-2" disabled>

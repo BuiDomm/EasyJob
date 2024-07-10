@@ -142,9 +142,9 @@
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 <script>
 
-                                            pagingIndex = (id) => {
+                                      pagingIndex = (id) => {
                                     let url = window.location.href;
-                                            if (url.includes("?index=")) {
+                                            if (url.includes("index=")) {
                                     url = url.split("?index=")[0];
                                     }
                                     window.location.href = url + "?index=" + id;

@@ -1,6 +1,7 @@
 package controller;
 
 import dao.BlogDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -40,6 +41,8 @@ public class ManagerBlogController extends HttpServlet {
         request.setAttribute("listP", blogs);
         request.setAttribute("noOfPages", noOfPages);
         request.setAttribute("currentPage", currentPage);
+        NotificationDAO notidao = new NotificationDAO();
+        request.setAttribute("notidao", notidao);
         request.getRequestDispatcher("ManageBlog.jsp").forward(request, response);
     }
 

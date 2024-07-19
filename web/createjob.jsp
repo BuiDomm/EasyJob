@@ -6,7 +6,8 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Sign Up Form by Colorlib</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Free Job For Everyone</title>
 
         <!-- Font Icon -->
         <link rel="stylesheet" href="fonts/material-icon/css/material-design-iconic-font.min.css">
@@ -28,9 +29,9 @@
                     </div> 
                     <div class="signup-form">
                         <form method="post" class="register-form" id="register-form" method="createjob">
-                            
+
                             <h2 style="">Create an article post a job! </h2>
-                            
+
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="name">Name company:</label>
@@ -89,7 +90,7 @@
                                 <textarea id="description" name="description" rows="6" cols="70">
                                 </textarea>
                             </div>
-                                    <h3 style="color: red">${notice}</h3>
+                            <h3 style="color: red">${notice}</h3>
 
                             <div class="form-submit">
                                 <a href="homeemployeer.jsp">  <input type="" value="Back Home" class="submit" name="reset" id="reset" /></a>

@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Skill Test Manage</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Free Job For Everyone</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!-- Additional CSS Files -->
@@ -181,9 +182,9 @@
                                             url: "deleteanswer?ansid=" + idAns + "&id=" + jobid,
                                             type: 'GET',
                                             success: function (response) {
-                                                
+
                                                 console.log('Answer deleted successfully');
-                                                $('#answer-' + idAns).remove();  
+                                                $('#answer-' + idAns).remove();
                                                 alert('Answer deleted successfully');
 
                                             },

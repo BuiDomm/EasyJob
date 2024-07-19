@@ -12,6 +12,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Easyjob | Free Job For Everyone</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
         <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
@@ -265,7 +266,7 @@
                                             </div>
 
                                         </div>   
-                                            
+
                                         <div class="container mt-3">
                                             <iframe name="pdfViewer" width="100%" height="600px" style="border: none;"></iframe>
                                         </div>

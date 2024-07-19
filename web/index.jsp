@@ -10,7 +10,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="assets/images/favicon.ico">
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
         <title>Easyjob | Free Job For Everyone</title>
         <!-- Bootstrap core CSS -->
@@ -219,7 +219,7 @@
                      <c:forEach  items="${blogItem.top3Blogs}" var="blogs">
                     <div class="col-lg-4 col-md-6">
                         <div class="service-item">
-                            <a href="#" class="services-item-image"><img src="assets/blog/${blogs.image}" style="width: 350px; height: 293px; object-fit: cover" class="img-fluid" alt=""></a>
+                            <a href="blogDetails?bid=${blogs.blogId}" class="services-item-image"><img src="assets/blog/${blogs.image}" style="width: 350px; height: 293px; object-fit: cover" class="img-fluid" alt=""></a>
 
                             <div class="down-content">
                                 <h4><a href="#">${blogs.title}</a></h4>

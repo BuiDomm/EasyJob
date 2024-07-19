@@ -9,11 +9,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="assets/images/favicon.ico">
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Free Job For Everyone</title>
         <link rel="stylesheet" href="assets/css/button.css">
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-        <title>PHPJabbers.com | Free Job Agency Website Template</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">

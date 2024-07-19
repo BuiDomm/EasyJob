@@ -6,7 +6,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Skill Test Manage</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Free Job For Everyone</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!-- Additional CSS Files -->
@@ -61,7 +62,7 @@
                     <div id="questions-container" class="col">
                         <div style="border-radius: 15px; background-color: white" class="row p-3 mb-4 question-block">
                             <div class="col">
-                                
+
                                 <div class="row mt-5 px-3">
                                     <div class="input-group col mt-3">
                                         <textarea style="border-radius: 24px; border-color: black; border: solid 1px; background-color: white; width: 100%; height: 150px" class="form-control p-4 h3" name="questionTitle[]" placeholder="Question title" wrap="soft" required=""></textarea>
@@ -71,7 +72,7 @@
                                             <textarea class="form-control p-4 mt-3 mx-4" style="border-radius: 15px; background-color: #FBC540;" name="answer[]" placeholder="Answer" wrap="soft" required=""></textarea>
                                             <div class="position-relative">
                                                 <textarea class="form-control p-4 mt-3 mx-4 bg-dark text-light" style="border-radius: 15px; background-color: #FFF;" name="incorrectanswer[]" placeholder="Incorrect answer" wrap="soft" required=""></textarea>
-                                                
+
                                             </div>
                                             <div class="incorrect-answers-container" data-incorrect-count="1"></div>
                                             <input type="hidden" name="incorrectAnswersCount[]" value="1">
@@ -114,7 +115,7 @@
                                         <c:if test="${answer.isTrue eq 0}">
                                             <div style="border-radius: 15px; position: relative;" class="col-5 p-4 mt-3 mx-4 bg-dark text-light">
                                                 ${answer.answerText}
-                                                
+
                                             </div>
                                         </c:if>
                                     </c:forEach>
@@ -134,39 +135,39 @@
         <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/js/bootstrap.min.js"></script>
         <script>
-                                                    function addIncorrectAnswer(button) {
-                                                        const container = button.parentElement.querySelector('.incorrect-answers-container');
-                                                        let incorrectAnswerCount = parseInt(container.getAttribute('data-incorrect-count'));
-                                                        if (incorrectAnswerCount >= 3) {
-                                                            alert('Maximum 3 incorrect answers');
-                                                            return;
-                                                        }
+                        function addIncorrectAnswer(button) {
+                            const container = button.parentElement.querySelector('.incorrect-answers-container');
+                            let incorrectAnswerCount = parseInt(container.getAttribute('data-incorrect-count'));
+                            if (incorrectAnswerCount >= 3) {
+                                alert('Maximum 3 incorrect answers');
+                                return;
+                            }
 
-                                                        incorrectAnswerCount++;
-                                                        const wrapper = document.createElement('div');
-                                                        wrapper.className = 'position-relative mt-3';
-                                                        wrapper.innerHTML = `
+                            incorrectAnswerCount++;
+                            const wrapper = document.createElement('div');
+                            wrapper.className = 'position-relative mt-3';
+                            wrapper.innerHTML = `
             <textarea class="form-control p-4 mx-4 bg-dark text-light" style="border-radius: 15px; background-color: #FFF; height: 100px;" name="incorrectanswer[]" placeholder="Incorrect Answer" wrap="soft" required></textarea>
             <a onclick="this.parentElement.remove();" style="color: white; position: absolute; top: 5px; right: -20px; z-index: 10" class="close btn">&times;</a>
         `;
 
-                                                        container.appendChild(wrapper);
+                            container.appendChild(wrapper);
 
-                                                        container.setAttribute('data-incorrect-count', incorrectAnswerCount);
+                            container.setAttribute('data-incorrect-count', incorrectAnswerCount);
 
-                                                        const incorrectCountInput = container.parentElement.querySelector('input[name="incorrectAnswersCount[]"]');
-                                                        incorrectCountInput.value = incorrectAnswerCount;
-                                                    }
+                            const incorrectCountInput = container.parentElement.querySelector('input[name="incorrectAnswersCount[]"]');
+                            incorrectCountInput.value = incorrectAnswerCount;
+                        }
 
 
-                                                    function addQuestion() {
-                                                        const questionContainer = document.getElementById('questions-container');
-                                                        const questionBlock = document.createElement('div');
-                                                        questionBlock.className = 'question-block row p-3 mb-4';
-                                                        questionBlock.style.borderRadius = '15px';
-                                                        questionBlock.style.backgroundColor = 'white';
+                        function addQuestion() {
+                            const questionContainer = document.getElementById('questions-container');
+                            const questionBlock = document.createElement('div');
+                            questionBlock.className = 'question-block row p-3 mb-4';
+                            questionBlock.style.borderRadius = '15px';
+                            questionBlock.style.backgroundColor = 'white';
 
-                                                        questionBlock.innerHTML = `
+                            questionBlock.innerHTML = `
                     <div class="col">
                         <a onclick="this.parentElement.parentElement.remove();" style="color: red; z-index: 10; font-size: 46px; margin-right: -30px; margin-top: -20px" class="close closeq btn">&times;</a>
                         <div class="row mt-5 px-3">
@@ -191,8 +192,8 @@
                     </div>
                 `;
 
-                                                        questionContainer.appendChild(questionBlock);
-                                                    }
+                            questionContainer.appendChild(questionBlock);
+                        }
         </script>
     </body>
 </html>

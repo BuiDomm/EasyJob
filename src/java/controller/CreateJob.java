@@ -7,6 +7,8 @@ package controller;
 import dao.CategoryDAO;
 import dao.CompanyDAO;
 import dao.JobDAO;
+import dao.JobseekerDAO;
+import dao.NotificationDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -128,29 +130,44 @@ public class CreateJob extends HttpServlet {
             request.getRequestDispatcher("createjob.jsp").forward(request, response);
         }
         Pattern p = Pattern.compile("[^\\d\\W]+|\\s");
-        String location = request.getParameter("location"); 
+        String location = request.getParameter("location");
         if (!p.matcher(location).find()) {
             request.setAttribute("notice", "Location do not contain numbers or special characters");
             request.getRequestDispatcher("createjob.jsp").forward(request, response);
 
+        } else {
+            String desc = request.getParameter("description");
+            CategoryDAO cd = new CategoryDAO();
+            Category c = cd.findById(idCate);
+
+            Job j = new Job(com, c, nameWork, desc, yearExpr, location, salary, "Pending");
+
+            JobDAO jd = new JobDAO();
+            jd.insert(j);
+            // danh sach cac job da tao boi nguoi dung
+            List<Job> list = jd.findByIdUser(epl.getIdUser());
+            // thong tin ve job moi tao ra can day nhat
+            Job currentJob = jd.getJobCurrentInsert(epl.getIdUser());
+            
+            
+            // send notitifica sang admin
+            NotificationDAO nd = new NotificationDAO();
+            JobseekerDAO js = new JobseekerDAO();
+            List<User> adminlist = js.getAll();
+            for (User user : adminlist) {
+                if (user.getRoleId() == 1) {
+                    nd.insertNotificationApprovel(user.getIdUser(), com.getNameCompany() + " has sent a request to create a new Job named " + j.getTitle() +".", 1);
+                }
+            }
+            
+            // send data sang jsp
+            request.setAttribute("successfully", true);
+            request.setAttribute("list", list);
+            request.setAttribute("job", currentJob);
+            request.getRequestDispatcher("listjobcreated").forward(request, response);
         }
-        else {
-        String desc = request.getParameter("description");
-        CategoryDAO cd = new CategoryDAO();
-        Category c = cd.findById(idCate);
-
-        Job j = new Job(com, c, nameWork, desc, yearExpr, location, salary, "Pending");
-
-        JobDAO jd = new JobDAO();
-        jd.insert(j);
-        List<Job> list = jd.findByIdUser(epl.getIdUser());
-        Job currentJob = jd.getJobCurrentInsert(epl.getIdUser());
-        request.setAttribute("successfully", true);
-        request.setAttribute("list", list);
-        request.setAttribute("job", currentJob);
-        request.getRequestDispatcher("listjobcreated").forward(request, response);
     }
-    }
+
     /**
      * Returns a short description of the servlet.
      *

@@ -12,6 +12,7 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <title>Easyjob | Free Job For Everyone</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
         <link rel="stylesheet" href="https://unpkg.com/bootstrap@5.3.3/dist/css/bootstrap.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
@@ -429,17 +430,17 @@
         <script>
             // Validate phone number, email, CV file format, and profile picture format
             function validateForm() {
-                
+
                 var email = document.getElementById("inputEmail").value;
                 var cvFile = document.getElementById("fileInput").files[0];
                 var avatarFile = document.getElementById("fileInputAvatar").files[0];
 
-               
-               var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 var cvRegex = /^.*\.(pdf)$/i;
                 var avatarRegex = /^.*\.(jpg|jpeg|png)$/i;
 
-                
+
 
                 if (!emailRegex.test(email)) {
                     alert("Email must be a Gmail address (e.g., example@gmail.com)");
@@ -554,7 +555,7 @@
             );
         </script>
 
-        
+
 
 
         <!-- Bootstrap core JavaScript -->

@@ -8,7 +8,7 @@
         <!-- Mobile Specific Meta -->
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <!-- Favicon-->
-        <link rel="shortcut icon" href="img/fav.png">
+      
         <!-- Author Meta -->
         <meta name="author" content="codepixer">
         <!-- Meta Description -->
@@ -18,8 +18,8 @@
         <!-- meta character set -->
         <meta charset="UTF-8">
         <!-- Site Title -->
-        <title>Job Listing</title>
-
+          <link rel="icon" href="assets/images/android-chrome-192x192.png">
+            <title>Easyjob | Free Job For Everyone</title>
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
         <!--
             CSS
@@ -32,7 +32,7 @@
               href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.2.0/css/material-design-iconic-font.min.css">
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="icon" href="assets/images/favicon.ico">
+       
         <link rel="stylesheet" href="assets/css/icontop.css">
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 

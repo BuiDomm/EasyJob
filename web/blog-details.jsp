@@ -590,7 +590,9 @@
                                                     <div class="user justify-content-between d-flex">
                                                         <div class="thumb">
                                                             <img src="assets/avatars/${c.avatar}" alt="" style="width: 62px; height: 62px; border-radius: 50%; border: 2px solid #000; ;">
-                                                            <a class="report-button" href="reportComment?commentId=${c.commentId}&blogId=${blog.blogId}" onclick="return confirm('Are you sure you want to report this comment?')">Report</a>
+                                                            <c:if test="${sessionScope.account != null && sessionScope.account.roleId == 2}">
+                                                                <a class="report-button" href="reportComment?commentId=${c.commentId}&blogId=${blog.blogId}" onclick="return confirm('Are you sure you want to report this comment?')">Report</a>
+                                                            </c:if>
                                                         </div>
                                                         <div class="desc">
                                                             <h5><a>${c.uFullName}</a></h5>
@@ -725,11 +727,11 @@
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script>
-        handleDisplayBox = () => {
-            var element = document.getElementById("boxNotification");
-            element.classList.toggle("d-block");
-        };
-    </script>
+                                                              handleDisplayBox = () => {
+                                                                  var element = document.getElementById("boxNotification");
+                                                                  element.classList.toggle("d-block");
+                                                              };
+        </script>
 
         <!-- Additional Scripts -->
         <script src="assets/js/custom.js"></script>

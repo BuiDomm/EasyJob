@@ -696,8 +696,30 @@ if (upgrade == "upgrade") {
             $(document).ready(function () {
                 $("#saveJobFavoriteBtn").click(function (event) {
                     event.preventDefault();
+
+
+                    var isLoggedIn = ${sessionScope.account != null};
+                    var roleid = ${sessionScope.account != null ? sessionScope.account.roleId : 0};
+
+                    if (!isLoggedIn) {
+
+                        toastr.warning("You need to log in to save jobs.", "Easyjob Notice", {
+                            timeOut: 2000,
+                        });
+                        return;
+                    }
+
+                    if (roleid !== 2) {
+
+                        toastr.warning("You do not have permission to save jobs.", "Easyjob Notice", {
+                            timeOut: 2000,
+                        });
+                        window.location.href = "${pageContext.request.contextPath}/404.jsp";
+                        return;
+                    }
+
                     var userId = "${sessionScope.account.idUser}";
-                    var jobId = ${cc.jobID}
+                    var jobId = ${cc.jobID};
 
                     $.ajax({
                         url: "${pageContext.request.contextPath}/favoriteJobs",
@@ -711,8 +733,8 @@ if (upgrade == "upgrade") {
                         error: function (jqXHR, textStatus, errorThrown) {
                             console.log("Job fail");
                         }
-                    })
-                })
+                    });
+                });
             });
 //            $(document).ready(function () {
 //                $(".show-modal").click(function (event) {

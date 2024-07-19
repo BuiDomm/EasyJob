@@ -70,7 +70,7 @@
                                 </div>
                             </li>
 
-                            <li class="nav-item"><a class="nav-link" href="contact.jsp">Contact Us</a></li>
+                            <li class="nav-item"><a class="nav-link" href="managerblog">Manager Blog</a></li>
 
 
 

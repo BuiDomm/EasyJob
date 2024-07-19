@@ -15,8 +15,8 @@ import model.User;
 
 
 
-@WebFilter(filterName = "CommentAndLikeFilter", urlPatterns = {"/commentBlog", "/editblog", "/addblog", "/favoriteJobs", "/reportComment", "/rejectblog", "/pendingblog", "/managerblog", "/favoriteJobList", "/CVSeeker", "/createCV", "/acceptblog",})
-public class CommentAndLikeFilter implements Filter {
+@WebFilter(filterName = "AdminListAccountFilter", urlPatterns = {"/listaccount", "/lockaccount", "/unlockaccount"})
+public class AdminListAccountFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
@@ -30,7 +30,7 @@ public class CommentAndLikeFilter implements Filter {
         // kiem tra dang nhap va roleid
         User account = (User) session.getAttribute("account");
 
-        if (account != null && account.getRoleId() == 2) {
+        if (account != null && account.getRoleId() == 1) {
             // neu la jobseeker thi cho dung
             chain.doFilter(request, response);
         } else {

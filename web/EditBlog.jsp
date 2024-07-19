@@ -72,6 +72,7 @@
                 <div class="mt-2 d-grid gap-2">
                     <button type="submit" class="btn btn-warning btn-block">Update</button>
                 </div>
+                <a href="managerblog" class="btn btn-primary btn-sm" style="margin-top: 10px">Back Home</a>
                     
             </form>
 

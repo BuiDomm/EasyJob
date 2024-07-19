@@ -13,28 +13,26 @@ import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import model.User;
 
-
-
-@WebFilter(filterName = "CommentAndLikeFilter", urlPatterns = {"/commentBlog", "/editblog", "/addblog", "/favoriteJobs", "/reportComment", "/rejectblog", "/pendingblog", "/managerblog", "/favoriteJobList", "/CVSeeker", "/createCV", "/acceptblog",})
-public class CommentAndLikeFilter implements Filter {
+@WebFilter(filterName = "AdminModerationFilter", urlPatterns = {"/requestList", "/adminJobDetail", "/adminAcceptJob", "/adminRejectJob",
+    "/adminListBlog", "/adminBlogAccept", "/adminBlogReject", "/adminBlogDetail"  })
+public class AdminModerationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response,
-                         FilterChain chain)
+            FilterChain chain)
             throws IOException, ServletException {
 
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse res = (HttpServletResponse) response;
         HttpSession session = req.getSession();
 
-        // kiem tra dang nhap va roleid
         User account = (User) session.getAttribute("account");
 
-        if (account != null && account.getRoleId() == 2) {
-            // neu la jobseeker thi cho dung
+        if (account != null && account.getRoleId() == 1) {
+
             chain.doFilter(request, response);
         } else {
-            // khong phai jobseeker hoac chua dang nhap, tu choi truy cap
+
             res.sendRedirect(req.getContextPath() + "/404.jsp");
 
         }

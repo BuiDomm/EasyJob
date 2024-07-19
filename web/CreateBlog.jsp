@@ -47,12 +47,12 @@
             <form class="user-form container" action="addblog" method="get" enctype="multipart/form-data">
                 <label class="form-label">Title blogs</label>
                 <div class="input-group mb-3">
-                    <input value="" name="title" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                    <input value="" name="title" type="text" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
                 </div>
 
                 <div class="mt-3 mb-3">
                     <label class="form-label">Your Blogs Description</label>
-                    <textarea class="form-control" name="content" rows="5"></textarea>
+                    <textarea class="form-control" name="content" rows="5" required></textarea>
                 </div>
 
                 <div class="mt-3 input-group mb-3">
@@ -61,7 +61,7 @@
                         <div class="container">
                             
                             <div class="row">
-                                <input type="file" class="form-control mt-2 col-9" name="image" id="fileInputBlogImage" aria-describedby="inputGroupFileAddon03" aria-label="Upload">
+                                <input type="file" class="form-control mt-2 col-9" name="image" id="fileInputBlogImage" aria-describedby="inputGroupFileAddon03" aria-label="Upload" accept="image/*">
                                 
                             </div>
                         </div>
@@ -71,6 +71,7 @@
 
                     <div class="mt-2 d-grid gap-2">
                         <button type="submit" class="btn btn-warning btn-block">Create</button>
+                        <a href="managerblog" class="btn btn-primary btn-sm" style="margin-top: 10px">Back Home</a>
                     </div>
             </form>
 

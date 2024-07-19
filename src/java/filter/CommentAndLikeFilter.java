@@ -15,7 +15,7 @@ import model.User;
 
 
 
-@WebFilter(filterName = "CommentAndLikeFilter", urlPatterns = {"/commentBlog", "/editblog", "/addblog", "/favoriteJobs", "/reportComment", "/rejectblog", "/pendingblog", "/managerblog"})
+@WebFilter(filterName = "CommentAndLikeFilter", urlPatterns = {"/commentBlog", "/editblog", "/addblog", "/favoriteJobs", "/reportComment", "/rejectblog", "/pendingblog", "/managerblog", "/favoriteJobList", "/CVSeeker", "/createCV", "/acceptblog",})
 public class CommentAndLikeFilter implements Filter {
 
     @Override

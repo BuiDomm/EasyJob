@@ -32,7 +32,7 @@ public class CVJobSeekerServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("account");
 
-        if (user != null && user.getRoleId() == 2) {
+       if (user != null && user.getRoleId() == 2) {
             CVDAO cvDao = new CVDAO();
             CVProfile cvProfile = cvDao.findByEmail(user.getEmail());
 
@@ -52,7 +52,7 @@ public class CVJobSeekerServlet extends HttpServlet {
                 response.sendRedirect("createCV");
             }
         } else {
-            response.sendRedirect("login.jsp");
+            response.sendRedirect("404.jsp");
         }
     }
 

@@ -9,7 +9,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Easyjob</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Free Job For Everyone</title>
         <link rel="stylesheet" href="assets/css/login.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -73,7 +74,7 @@
                     </svg>
                     <input placeholder="Password" title="Inpit title" name="password" value="${cookie.cpasse.value}" type="password" class="input_field" id="password_field">
                 </div>
-                    <b class="notice-erorr">${notice}</b>
+                <b class="notice-erorr">${notice}</b>
                 <div style="display: flex;align-items: center; gap:0 15px; margin-left: -63%">
                     <label class="container1">
                         <input  ${cookie.creme != null ?"checked":""} type="checkbox" name="rem"/> 
@@ -81,7 +82,7 @@
                     </label>
                     <h4>Remember Me</h4>
                 </div>
-                        <button style="background-color: #7808d0;" title="Sign In" type="submit" class="sign-in_btn">
+                <button style="background-color: #7808d0;" title="Sign In" type="submit" class="sign-in_btn">
                     <span class="sign-in-text">Sign In</span>
                 </button>
 

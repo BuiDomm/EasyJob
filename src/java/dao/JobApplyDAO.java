@@ -328,7 +328,7 @@ public class JobApplyDAO {
 
     public static void main(String[] args) {
         JobApplyDAO dao = new JobApplyDAO();
-        List<Apply> j = dao.pagingCVList(2, "Pending", 1);
+        List<Apply> j = dao.pagingCVList(2, "Pending", 2);
         Job a = dao.findByApplyId(1003);
         System.out.println(a);
         for (Apply cVProfile : j) {

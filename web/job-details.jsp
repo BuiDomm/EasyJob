@@ -10,9 +10,10 @@
         <meta name="description" content="">
         <meta name="author" content="">
         <link rel="stylesheet" href="assets/css/button.css">
-        <link rel="icon" href="assets/images/favicon.ico">
+
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-        <title>PHPJabbers.com | Free Job Agency Website Template</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Free Job For Everyone</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!-- Additional CSS Files -->
@@ -79,7 +80,7 @@ if (upgrade == "upgrade") {
         if (isVerifiedParam) {
             if (confirm("${noticeUpgrade}")) {
                 window.location.href = "listUserPackage";
-            } 
+            }
         }
 
     </script>
@@ -471,14 +472,14 @@ if (upgrade == "upgrade") {
                                     </c:when>
                                     <c:when test="${apply.status == 'Pending'}">
                                         <c:if test="${(not empty questions) && (empty checktest)}">
-                                        <a class="filled-button btn-block hover" style="text-align: center; background-color: black" href="dotest?id=${cc.jobID}" >
-                                            Do Skill Test
-                                        </a>
+                                            <a class="filled-button btn-block hover" style="text-align: center; background-color: black" href="dotest?id=${cc.jobID}" >
+                                                Do Skill Test
+                                            </a>
                                         </c:if>
                                         <c:if test="${not empty checktest}">
-                                        <div style="border-radius: 15px;" class="bg-secondary p-2 text-center m-2" >
-                                            <h6 class="text-light">You Have Finished Test</h6>
-                                        </div>
+                                            <div style="border-radius: 15px;" class="bg-secondary p-2 text-center m-2" >
+                                                <h6 class="text-light">You Have Finished Test</h6>
+                                            </div>
                                         </c:if>
                                         <a class="filled-button btn-block hover" style="text-align: center; background-color: #ff4444" onclick="withdrawJob('${cc.category.categoryName}', '${cc.jobID}')" href="#!" class="filled-button btn-block">
                                             Withdraw job application.

@@ -18,6 +18,7 @@
 
             <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
             <title>Easyjob | Free Job For Everyone</title>
+            <link rel="icon" href="assets/images/android-chrome-192x192.png">
             <!-- Bootstrap core CSS -->
             <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
             <!-- Additional CSS Files -->
@@ -59,10 +60,12 @@
 
                     <div class="mt-3 input-group mb-3">
                         <div class="container">
-                            
+
                             <div class="row">
+
                                 <input type="file" class="form-control mt-2 col-9" name="image" id="fileInputBlogImage" aria-describedby="inputGroupFileAddon03" aria-label="Upload" accept="image/*">
                                 
+
                             </div>
                         </div>
                     </div>
@@ -71,7 +74,9 @@
 
                     <div class="mt-2 d-grid gap-2">
                         <button type="submit" class="btn btn-warning btn-block">Create</button>
+=
                         <a href="managerblog" class="btn btn-primary btn-sm" style="margin-top: 10px">Back Home</a>
+
                     </div>
             </form>
 
@@ -93,7 +98,7 @@
             <script src="assets/js/owl.js"></script>
 
             <script>
-             
+
 
                 document.getElementById('fileInputBlogImage').addEventListener('change', function () {
                     var formData = new FormData();

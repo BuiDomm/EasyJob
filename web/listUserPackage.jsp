@@ -11,9 +11,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Free Job For Everyone</title>
         <link rel="stylesheet" href="assets/css/userpackage.css">
-        <link rel="icon" href="assets/images/favicon.ico">
+
         <link rel="stylesheet" href="assets/css/button.css">
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -104,7 +105,7 @@
                                         <c:if test="${pack.packageID == p.packageID}">
                                             <a style="pointer-events:none;background: #FF6D00;border: 1px solid #ccc;color: #fff" class="" href="">Package In Use</a>
                                         </c:if>
-                                              <c:if test="${pack.packageID != p.packageID}">
+                                        <c:if test="${pack.packageID != p.packageID}">
                                             <a class="" href="upgrage?idPackage=${p.packageID}">Upgrade</a>
                                         </c:if>
                                     </div>

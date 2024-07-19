@@ -9,13 +9,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="assets/images/favicon.ico">
+
         <link rel="stylesheet" href="assets/css/button.css">
 
 
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
 
-        <title>PHPJabbers.com | Free Job Agency Website Template</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Free Job For Everyone</title>
 
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -61,7 +62,7 @@
         <div class="products">
             <div class="container">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-3" style="background-color: #ea682a;height: 900px;">
                         <div class="contact-form">
                             <form action="searchAndFilter">
 
@@ -113,7 +114,13 @@
 
 
                                 <h5 style="margin-bottom: 15px">Salary</h5>
+                                <div>
+                                    <label>
+                                        <input name="salary" value="0" type="radio" ${(salary == 0) ? 'checked' : ''}>
 
+                                        <small value="1">All</small>
+                                    </label>
+                                </div>
 
                                 <div>
                                     <label>
@@ -144,54 +151,62 @@
 
 
                                 <h5 style="margin-bottom: 15px">Years of experience</h5>
-
                                 <div>
                                     <label>
-                                        <input name="year" value="1" type="radio" ${(year == 1) ? 'checked' : ''}>
+                                        <input name="year" value="0" type="radio" ${(year == 0) ? 'checked' : ''}>
 
-                                        <small value="1">< 1 Year</small>
+                                        <small>All</small>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <input name="year" value="2" type="radio" ${(year == 2) ? 'checked' : ''}>
+
+                                        <small>< 2 Year</small>
                                     </label>
                                 </div>
 
                                 <div>
                                     <label>
-                                        <input  name="year" value="2" type="radio" ${(year == 2) ? 'checked' : ''}>
+                                        <input  name="year" value="4" type="radio" ${(year == 4) ? 'checked' : ''}>
 
-                                        <small>1 - 2 Year</small>
+                                        <small>2 - 5 Year</small>
                                     </label>
                                 </div>
 
                                 <div>
                                     <label>
-                                        <input  name="year" value="3" type="radio" ${(year == 3) ? 'checked' : ''}>
+                                        <input  name="year" value="6" type="radio" ${(year == 6) ? 'checked' : ''}>
 
-                                        <small>> 3 Year</small>
+                                        <small>> 5 Year</small>
                                     </label>
                                 </div>
 
-                                <button type="submit" class="text-white w-100 p-lg-1" style="background-color: #ff6600; border: none">submit</button>
+                                <button type="submit" class="text-black w-100 p-lg-1" style="background-color: #FFF; border: none;">submit</button>
                             </form>
                         </div>
                     </div>
+
+
 
                     <div class="col-md-9">
                         <div class="row">
                             <c:forEach var="item" items="${listjob}" >
                                 <div class="col-md-4">
                                     <div class="product-item">
-                                        <a href="jobdetails?id=${item.jobID}"><img src="./${dao.companyByJobId(item.jobID).url}" alt=""></a>
+                                        <a href="jobdetails?id=${item.jobID}"><img style="height: 47%; object-fit: cover" src="./${dao.companyByJobId(item.jobID).url}" alt=""></a>
                                         <div class="down-content">
-                                            <a href="./jobdetails?id=${item.jobID}"><h4>${item.title}</h4></a>
+                                            <a   href="./jobdetails?id=${item.jobID}"><h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.title}</h4></a>
 
-                                            <h6>Salary: ${item.salary}</h6>
+                                            <h6 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">Salary: ${item.salary}</h6>
 
-                                            <h4><small><i class="fa fa-briefcase"></i> ${item.category.categoryName}<br> <strong><i class="fa fa-building"></i>${item.company.nameCompany}</strong></small></h4>
+                                            <h4 style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" ><small ><i class="fa fa-briefcase"></i> ${item.category.categoryName}<br> <strong style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><i class="fa fa-building"></i>${item.company.nameCompany}</strong></small></h4>
 
                                             <small>
-                                                <strong title="Posted on">Years of Experience: ${item.yearEx}</strong> 
+                                                <strong style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="Posted on" >Years of Experience: ${item.yearEx}</strong>
                                                 <!--<strong title="Type"><i class="fa fa-file"></i> Contract</strong> &nbsp;&nbsp;&nbsp;&nbsp;-->
                                                 <br>
-                                                <strong title="Location"> <i class="fa fa-map-marker"></i>&nbsp; ${item.location}</strong>
+                                                <p title="Location" class="fs-4" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-weight: bolder;"> <i class="fa fa-map-marker"></i>  ${item.location}</p>
                                             </small>
                                         </div>
                                     </div>
@@ -230,7 +245,7 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="inner-content">
-                            <p>Copyright © 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
+                            <p>Copyright Â© 2020 Company Name - Template by: <a href="https://www.phpjabbers.com/">PHPJabbers.com</a></p>
                         </div>
                     </div>
                 </div>

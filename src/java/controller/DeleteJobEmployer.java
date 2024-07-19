@@ -60,6 +60,8 @@ public class DeleteJobEmployer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+       try {
+       
         int idJob = Integer.parseInt(request.getParameter("id"));
         JobDAO jd = new JobDAO();
         jd.delete(idJob);
@@ -70,6 +72,10 @@ public class DeleteJobEmployer extends HttpServlet {
         request.setAttribute("list", list);
         request.getRequestDispatcher("listjobcreated").forward(request, response);
 
+       }
+       catch(Exception e) {
+           response.sendRedirect("404.jsp");
+       }
     }
 
     /**

@@ -12,7 +12,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <title>Skill Test Manage</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Free Job For Everyone</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!-- Additional CSS Files -->
@@ -64,8 +65,8 @@
             </div>
         </div>
         <div class="container mt-5">
-        <hr>
-        <h2>Update Skill Test</h2>
+            <hr>
+            <h2>Update Skill Test</h2>
         </div>
         <div style="border-radius: 36px" class="container p-5 bg-secondary mt-5">
             <div class="card-group">
@@ -89,8 +90,8 @@
             </div>
         </div>
 
-            <!-- jQuery and Bootstrap JS -->
-            <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/js/bootstrap.min.js"></script>
+        <!-- jQuery and Bootstrap JS -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.6.2/js/bootstrap.min.js"></script>
     </body>
 </html>

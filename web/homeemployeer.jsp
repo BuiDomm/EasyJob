@@ -9,9 +9,10 @@
             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
             <meta name="description" content="">
             <meta name="author" content="">
-            <link rel="icon" href="assets/images/favicon.ico">
+
             <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-            <title>Easyjob | Free Job For Everyone</title>
+            <link rel="icon" href="assets/images/android-chrome-192x192.png">
+            <title>EasyJob | Free Job For Everyone</title>
             <!-- Bootstrap core CSS -->
             <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
             <!-- Additional CSS Files -->
@@ -183,7 +184,7 @@
                                         <c:if test="${i.status == 'Reject'}">
                                             <td style="color: red;" class="open-positions">${i.status}</td>
                                         </c:if>
-                                        
+
                                     </tr>
                                 </c:if>
                             </c:forEach>

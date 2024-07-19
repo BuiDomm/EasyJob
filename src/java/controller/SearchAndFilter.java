@@ -76,7 +76,7 @@ public class SearchAndFilter extends HttpServlet {
         System.out.println(txt);
 
         request.setAttribute("endP", endPage);
-        request.setAttribute("listjob", listJob);
+request.setAttribute("listjob", listJob);
         request.setAttribute("listCompany", listCompany);
         request.setAttribute("listCategory", listCategory);
         request.setAttribute("listLocation", listLocation);

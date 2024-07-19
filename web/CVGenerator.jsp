@@ -11,7 +11,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+             <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>Easyjob | Create CV</title>
         <script src="https://kit.fontawesome.com/3ef3559250.js" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="assets/css/cvgenerator.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">

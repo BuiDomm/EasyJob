@@ -7,7 +7,8 @@
             <meta charset="utf-8"/>
             <meta http-equiv="X-UA-Compatible" content=="IE=edge"/>
             <meta name="google" value="notranslate"/>
-            <title>Side Menu</title>
+            <link rel="icon" href="assets/images/android-chrome-192x192.png">
+            <title>EasyJob | Details Job </title>
 
             <link rel="stylesheet" type="text/css" href="./assets/css/empui.css">
 
@@ -28,8 +29,8 @@
             <link rel="stylesheet" href="assets/css/style.css">
             <link rel="stylesheet" href="assets/css/icontop.css">
             <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 
 
@@ -40,29 +41,29 @@
         <body>
 
             <jsp:include page="employerheader.jsp"/>
-         <!-- Page Content -->
-        <div class="page-heading about-heading header-text" style="background-image: url(assets/images/heading-6-1920x500.jpg);">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="text-content">
-                            <h4>We are hiring for now ! </h4>
+            <!-- Page Content -->
+            <div class="page-heading about-heading header-text" style="background-image: url(assets/images/heading-6-1920x500.jpg);">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="text-content">
+                                <h4>We are hiring for now ! </h4>
 
-                            <h2>Security Officer - Luxury Retail</h2>
+                                <h2>Security Officer - Luxury Retail</h2>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        
+
             <div class="container mt-5">
                 <div class="row">
                     <div class="col-md-9 col-sm-8">
                         <div class="row">
                             <i style="font-size: 36px" class="fa fa-map-marker"></i> 
                             <i style="font-size: 16px;margin-top: 24px;">${job.location}</i>
-                            
+
                         </div>
                         <br/>
                         <p></p>
@@ -71,13 +72,13 @@
                         </div>
 
                         <hr>
-                        
+
                         <ul>
                             <li>Company Name:   <b style="color: #ff6600">   ${com.nameCompany}</b></li>
                             <li>Job Position: <b>${job.category.categoryName}</b></li>
                             <li>Year Experience: <b>${job.yearEx}</b></li>
                             <li>Salary <b>${job.salary}</b></li>
-                            
+
 
                         </ul>
                     </div>
@@ -87,13 +88,13 @@
                     <div class="col-md-3 col-sm-4">
                         <div class="contact-form">
                             <div class="form-group">
-                                
-                                        <a style="text-align: center;" href="loadjobservlet" class="filled-button btn-block">Edit Job Information</a>
-                                                    </div>
+
+                                <a style="text-align: center;" href="loadjobservlet" class="filled-button btn-block">Edit Job Information</a>
+                            </div>
                         </div>
 
                         <div>
-                            
+
                             <img src="${com.url}" alt="" class="img-fluid wc-image">
                         </div>
                         <br>
@@ -102,104 +103,104 @@
                     </div>
                 </div>
             </div>
-        
-
-                            <div class="section">
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <div class="section-heading">
-                                                <h2>About Job Description </h2>
-                                            </div>
-                                            <p class="col">${job.descrip}</p> 
-                                        </div>
-
-                                        <div class="col-md-3">
-                                            <div class="section-heading">
-                                                <h2>Contact Details</h2>
-                                            </div>
-
-                                            <div class="left-content">
-                                                <p>
-                                                    <span>Name</span>
-
-                                                    <br>
 
 
-                                                    <strong>hieu</strong>
-                                                </p>
+            <div class="section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <div class="section-heading">
+                                <h2>About Job Description </h2>
+                            </div>
+                            <p class="col">${job.descrip}</p> 
+                        </div>
 
-                                                <p>
-                                                    <span>Phone</span>
-
-                                                    <br>
-
-                                                    <strong>
-
-                                                        <a href="tel:${not empty u.phoneNumber ? u.phoneNumber : ""}">${not empty u.phoneNumber ? u.phoneNumber : "Unknow"}</a>
-
-                                                    </strong>
-                                                </p>
-
-                                                <p>
-                                                    <span>Mobile phone</span>
-
-                                                    <br>
-
-
-                                                    <strong>
-
-                                                        <a href="tel:${not empty u.phoneNumber ? u.phoneNumber : ""}">${not empty u.phoneNumber ? u.phoneNumber : "Unknow"}</a>
-                                                    </strong>
-                                                </p>
-                                                <p>
-                                                    <span>Email</span>
-                                                    <br>
-                                                    <strong>
-                                                        <a href="mailto:${u.email}">${u.email}</a>
-                                                    </strong>
-                                                </p>
-
-
-                                            </div>
-                                            <div class="contact-form">
-                                                <div class="form-group">
-                                                    <a style="text-align: center" href="companycontrolservlet" class="filled-button btn-block">Company Profile</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                        <div class="col-md-3">
+                            <div class="section-heading">
+                                <h2>Contact Details</h2>
                             </div>
 
-                            <footer>
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="inner-content">
-                                                <p>Copyright © 2020 Company Name </p>
-                                            </div>
-                                        </div>
-                                    </div>
+                            <div class="left-content">
+                                <p>
+                                    <span>Name</span>
+
+                                    <br>
+
+
+                                    <strong>hieu</strong>
+                                </p>
+
+                                <p>
+                                    <span>Phone</span>
+
+                                    <br>
+
+                                    <strong>
+
+                                        <a href="tel:${not empty u.phoneNumber ? u.phoneNumber : ""}">${not empty u.phoneNumber ? u.phoneNumber : "Unknow"}</a>
+
+                                    </strong>
+                                </p>
+
+                                <p>
+                                    <span>Mobile phone</span>
+
+                                    <br>
+
+
+                                    <strong>
+
+                                        <a href="tel:${not empty u.phoneNumber ? u.phoneNumber : ""}">${not empty u.phoneNumber ? u.phoneNumber : "Unknow"}</a>
+                                    </strong>
+                                </p>
+                                <p>
+                                    <span>Email</span>
+                                    <br>
+                                    <strong>
+                                        <a href="mailto:${u.email}">${u.email}</a>
+                                    </strong>
+                                </p>
+
+
+                            </div>
+                            <div class="contact-form">
+                                <div class="form-group">
+                                    <a style="text-align: center" href="companycontrolservlet" class="filled-button btn-block">Company Profile</a>
                                 </div>
-                            </footer>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="inner-content">
+                                <p>Copyright © 2020 Company Name </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
 
 
 
 
-                            <jsp:include page="employermenu.jsp"/> 
+            <jsp:include page="employermenu.jsp"/> 
 
 
 
 
 
-                            <!-- Bootstrap core JavaScript -->
-                            <script src="vendor/jquery/jquery.min.js"></script>
-                            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+            <!-- Bootstrap core JavaScript -->
+            <script src="vendor/jquery/jquery.min.js"></script>
+            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
 
-                            <!-- Additional Scripts -->
-                            <script src="assets/js/custom.js"></script>
-                            <script src="assets/js/owl.js"></script>
+            <!-- Additional Scripts -->
+            <script src="assets/js/custom.js"></script>
+            <script src="assets/js/owl.js"></script>
         </body>
     </html>

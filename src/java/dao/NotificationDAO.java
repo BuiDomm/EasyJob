@@ -49,7 +49,7 @@ public class NotificationDAO {
 
     public List<Notification> getNewNotificationsesByAccount(int accountID) {
         List<Notification> listN = new ArrayList<>();
-        String query = "SELECT TOP 3 *\n"
+        String query = "SELECT TOP 5 *\n"
                 + "from Notifications\n"
                 + " where UserID = ?\n"
                 + "order by Time desc";

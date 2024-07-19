@@ -8,10 +8,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="icon" href="assets/images/favicon.ico">
         <link rel="stylesheet" href="assets/css/icontop.css">
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-        <title>Easyjob | Free Job For Everyone</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Free Job For Everyone</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!-- Additional CSS Files -->
@@ -21,7 +21,7 @@
         <link rel="stylesheet" href="assets/css/button.css">
 
     </head>
-  
+
 
     <body>
 
@@ -37,43 +37,43 @@
         <!-- ***** Preloader End ***** -->
 
         <!-- Header -->
-     
+
         <jsp:include page="header.jsp"></jsp:include>
-        <!-- Page Content -->
-        <!-- Banner Starts Here -->
-        <div class="banner header-text">
-            <div class="owl-banner owl-carousel">
-                <div class="banner-item-01">
-                    <div class="text-content">
-                        <h4>Find your car today!</h4>
-                        <h2>Lorem ipsum dolor sit amet</h2>
+            <!-- Page Content -->
+            <!-- Banner Starts Here -->
+            <div class="banner header-text">
+                <div class="owl-banner owl-carousel">
+                    <div class="banner-item-01">
+                        <div class="text-content">
+                            <h4>Find your car today!</h4>
+                            <h2>Lorem ipsum dolor sit amet</h2>
+                        </div>
                     </div>
-                </div>
-                <div class="banner-item-02">
-                    <div class="text-content">
-                        <h4>Fugiat Aspernatur</h4>
-                        <h2>Laboriosam reprehenderit ducimus</h2>
+                    <div class="banner-item-02">
+                        <div class="text-content">
+                            <h4>Fugiat Aspernatur</h4>
+                            <h2>Laboriosam reprehenderit ducimus</h2>
+                        </div>
                     </div>
-                </div>
-                <div class="banner-item-03">
-                    <div class="text-content">
-                        <h4>Saepe Omnis</h4>
-                        <h2>Quaerat suscipit unde minus dicta</h2>
+                    <div class="banner-item-03">
+                        <div class="text-content">
+                            <h4>Saepe Omnis</h4>
+                            <h2>Quaerat suscipit unde minus dicta</h2>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Banner Ends Here -->
+            <!-- Banner Ends Here -->
 
-        <div class="latest-products">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="section-heading">
-                            <h2>Featured Jobs</h2>
-                            <a href="paging?id=1">view more <i class="fa fa-angle-right"></i></a>
+            <div class="latest-products">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section-heading">
+                                <h2>Featured Jobs</h2>
+                                <a href="paging?id=1">view more <i class="fa fa-angle-right"></i></a>
+                            </div>
                         </div>
-                    </div>
 
 
                     <jsp:useBean id="jobItem" class="dao.JobDAO" /> 

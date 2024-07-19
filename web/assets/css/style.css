@@ -162,7 +162,7 @@ a.filled-button:hover {
     5% {
         opacity: 1;
     }
-    100% {
+100% {
         -webkit-transform: scale(1);
         transform: scale(1);
         opacity: 0;
@@ -301,7 +301,7 @@ header .navbar {
     padding: 300px 0px;
     background-image: url(../images/slider-image-1-1920x600.jpg);
     background-size: cover;
-    background-repeat: no-repeat;
+background-repeat: no-repeat;
     background-position: center center;
 }
 
@@ -468,7 +468,7 @@ header .navbar {
 }
 
 .about-features p {
-    border-bottom: 1px solid #eee;
+border-bottom: 1px solid #eee;
     padding-bottom: 20px;
 }
 
@@ -660,7 +660,6 @@ footer .inner-content p a {
     display: inline-block;
     margin: 0px 2px;
 }
-
 .products ul.pages li a {
     width: 44px;
     height: 44px;
@@ -838,7 +837,7 @@ footer .inner-content p a {
 
 .happy-clients .client-item img {
     max-width: 100%;
-    overflow: hidden;
+overflow: hidden;
     transition: all .3s;
     cursor: pointer;
 }
@@ -1023,7 +1022,7 @@ footer .inner-content p a {
         display: block;
         margin-bottom: 20px;
     }
-    .product-item .down-content h4 {
+.product-item .down-content h4 {
         margin-bottom: 20px!important;
     }
     .best-features .left-content {
@@ -1112,7 +1111,6 @@ footer .inner-content p a {
   justify-content: center;
   margin: 0;
   padding: 0;
-  background-color: white;
   font-family: 'Knewave', cursive;
 }
 
@@ -1125,17 +1123,8 @@ footer .inner-content p a {
 .search-form input {
   width: 100%;
   display: flex;
-  padding: 15px;
-  background-color: white;
-  border: 2px solid #ff6600;
-  color: #ff6600;
-  font-size: 15px;
-  box-shadow: 3px 1px 0px 2px, 0px -1px 0px 2px rgba(0, 0, 0, 0.62);
-  height: 58px;
-  transform: skew(-3deg, 1deg);
-  font-family: 'Knewave', cursive;
-  letter-spacing: 2px;
-  text-transform: uppercase;
+  padding: 12px;
+ border: 1px solid black;
 }
 
 .search-form input:focus,
@@ -1164,7 +1153,7 @@ footer .inner-content p a {
 .search-form input:focus ~ ul li:nth-child(4)::before,
 .search-form input:valid ~ ul li:nth-child(4)::before {
   filter: blur(20px);
-  transform: translate(0, -35px) rotate(-210deg);
+transform: translate(0, -35px) rotate(-210deg);
 }
 
 .search-form input:focus ~ ul li:nth-child(5)::before,
@@ -1301,7 +1290,6 @@ footer .inner-content p a {
   left: 36px;
   color: #ff6600;
 }
-
 .search-form ul li[data-char="l"]::before {
   content: 'l';
   transition-delay: 800ms;

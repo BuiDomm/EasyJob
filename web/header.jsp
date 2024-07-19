@@ -11,10 +11,10 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="icon" href="assets/images/favicon.ico">
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Free Job For Everyone</title>
         <link rel="stylesheet" href="assets/css/icontop.css">
         <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">
-        <title>Easyjob | Free Job For Everyone</title>
         <!-- Bootstrap core CSS -->
         <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
         <!-- Additional CSS Files -->
@@ -140,7 +140,7 @@
                                                             <h6 class="mb-1 fw-semibold">${fn:substring(n.time, 0, 10)}  
                                                                 &nbsp;&nbsp;&nbsp;&nbsp;</h6>
                                                             <p class="mb-1">${n.message}</p>
-                                                           
+
                                                         </div>
                                                     </div>
                                                 </a>

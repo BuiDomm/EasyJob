@@ -21,7 +21,7 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
 
     //Cv task
     public CVProfile findByEmail(String email) {
-        String sql = "Select TOP 1 * from CVProfile where UserID = (select UserID from Users where Email = ? )\n";
+        String sql = "Select TOP 1 * from CVProfile where UserID = (select UserID from Users where Email = ? )";
 
         try {
             PreparedStatement ps = getConnection().prepareStatement(sql);
@@ -243,7 +243,7 @@ public class CVDAO extends DBContext implements BaseDAO<CVProfile> {
 
     public static void main(String[] args) {
         CVDAO cd = new CVDAO();
-        System.out.println(cd.findByIdUser(1).getLinkUrl());
+        System.out.println(cd.findByEmail("nhanbtde170234@fpt.edu.vn"));
     }
 
 }

@@ -39,14 +39,14 @@
                 <form action="createCV" method="POST" class="row gy-3 gy-xxl-4">
                     <div class="col-12">
                         <div class="row gy-2">
-                            <p id="avatarImage"></p>
+                          
                             <div class="col-12">
                                 <!-- fix -->
                                 <div class="row">
                                     <div class="col-md-6 mb-4 mb-xl-0">
                                         <div class="card">  <div class="card-header">CV Upload</div>  <div class="card-body">
                                                 <p id="avatarImage"><c:out value="${cv.linkPdf}"/></p>
-                                                <div>  <input type="file" id="fileInput" style="display: none;" name="linkPdf" >
+                                                <div>  <input type="file" id="fileInput" style="display: none;" name="linkPdf" accept="application/pdf">
                                                     <a href="#!" id="uploadButton" class="d-inline-block bg-primary link-light lh-1 p-2 rounded">
                                                         <i class="bi bi-upload"></i> Upload file pdf
                                                     </a>
@@ -57,7 +57,7 @@
                                     <div class="col-md-6 mb-4 mb-xl-0">
                                         <div class="card">  <div class="card-header">Avatar Upload</div>  <div class="card-body">
                                                 <p id="avatarImageAvatar"><c:out value="${cv.avatar}"/></p>
-                                                <div>  <input type="file" id="fileInputAvatar" style="display: none;" name="linkAvt" >
+                                                <div>  <input type="file" id="fileInputAvatar" style="display: none;" name="linkAvt" accept="image/*">
                                                     <a href="#!" id="uploadButtonAvatar" class="d-inline-block bg-primary link-light lh-1 p-2 rounded">
                                                         <i class="bi bi-upload"></i> Upload avatar
                                                     </a>

@@ -317,6 +317,7 @@ isVerified1 = false;
                                 <th scope="col">Phone Number</th>
                                 <th scope="col">Apply Date</th>
                                 <th scope="col">Status</th>
+                                <th scope="col">Test Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -338,6 +339,15 @@ isVerified1 = false;
                                     </c:if>
                                     <c:if test="${i.status == 'Reject'}">
                                         <td style="color: red;" class="open-positions">${i.status}</td>
+                                    </c:if>
+                                    <c:if test="${not empty status.getFirstChooseAnswerStatus(i.job.jobID, dao.getUserByCVid(i.cvProfile.CVId).idUser)}">
+                                        <c:if test="${status.getFirstChooseAnswerStatus(i.job.jobID, dao.getUserByCVid(i.cvProfile.CVId).idUser) eq'completed'}">
+                                            <td><a href="skilltestmark?id=${i.job.jobID}&userid=${dao.getUserByCVid(i.cvProfile.CVId).idUser}" class="more text-success">Completed Test</a></td>
+                                        </c:if>
+                                        <c:if test="${status.getFirstChooseAnswerStatus(i.job.jobID, dao.getUserByCVid(i.cvProfile.CVId).idUser) eq'cancel'}">
+                                            <td class="text-danger">Cancel Test</td>
+                                        </c:if>    
+
                                     </c:if>
 
                                 </tr>

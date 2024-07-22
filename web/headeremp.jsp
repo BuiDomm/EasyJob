@@ -8,7 +8,7 @@
 
 <link rel="stylesheet" type="text/css" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 
-<link rel="icon" href="assets/images/favicon.ico">
+
 <link rel="stylesheet" href="assets/css/icontop1.css">
 
 <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,300,400,500,600,700,800,900&display=swap" rel="stylesheet">

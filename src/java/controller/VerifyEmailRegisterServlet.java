@@ -197,7 +197,7 @@ public class VerifyEmailRegisterServlet extends HttpServlet {
 
                 if (reqToken == numOTP) {
                     JobseekerDAO jd = new JobseekerDAO();
-                    User u = new User(jobseekerFirstName, jobseekerLastName, jobseekerEmail, jobseekerPassword, 2, "", "Active");
+                    User u = new User(jobseekerFirstName, jobseekerLastName, jobseekerEmail, jobseekerPassword, 3, "", "Active");
                     if (jd.insert(u)) {
                         request.setAttribute("successfully", true);
                         request.getRequestDispatcher("loginemployeer.jsp").forward(request, response);

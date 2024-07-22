@@ -222,7 +222,7 @@
                             <a href="blogDetails?bid=${blogs.blogId}" class="services-item-image"><img src="assets/blog/${blogs.image}" style="width: 350px; height: 293px; object-fit: cover" class="img-fluid" alt=""></a>
 
                             <div class="down-content">
-                                <h4><a href="#">${blogs.title}</a></h4>
+                                <h4><a href="blogDetails?bid=${blogs.blogId}">${blogs.title}</a></h4>
 
                                 <p style="margin: 0;"><i class="zmdi zmdi-favorite"></i> ${blogs.nLike} Likes &nbsp;&nbsp;|&nbsp;&nbsp;<i class="zmdi zmdi-border-color"></i> ${blogs.nCmt} Comments &nbsp;&nbsp;|&nbsp;&nbsp;</p>
                                 <p style="margin: 0;"><i class="zmdi zmdi-calendar-alt"></i> ${blogs.date} Publish Date</p>

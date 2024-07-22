@@ -46,8 +46,13 @@ public class MessageListAccount extends HttpServlet {
         } else if (account.getRoleId() == 3) {
             List<String> cvProfiles = new ArrayList<>();
             for (User u : receiver) {
+            try {
                 CVProfile cv = cvd.findByIdUser(u.getIdUser());
                 cvProfiles.add("/easyjob/assets/avatars/" + cv.getAvatar());
+            
+            } catch(Exception e) {
+                  cvProfiles.add("./assets/images/defaultImg.png"); 
+            }
             }
             request.setAttribute("cvProfiles", cvProfiles);
         }

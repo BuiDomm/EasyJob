@@ -143,7 +143,7 @@
                                     </div>
                                 </li>
 
-                                <li class="nav-item"><a class="nav-link" href="contact.jsp">Contact Us</a></li>
+                                <li class="nav-item"><a class="nav-link" href="managerblog">Manager Blogs</a></li>
                             </ul>
                             <c:choose>
                                 <c:when test="${sessionScope.account == null}">
@@ -246,7 +246,7 @@
 
                                                         <hr>
                                                         <li>
-                                                            <a class="a-new" href="#!">
+                                                            <a class="a-new" href="listUserPackage">
                                                                 <img width="30" height="30" src="https://img.icons8.com/material/30/buy-upgrade--v1.png" alt="buy-upgrade--v1"/>
                                                                 <span>Upgrade Package</span>
                                                             </a>
@@ -276,6 +276,7 @@
                 </div>
             </nav>
         </header>
+                                       
 
         <!-- Page Content -->
         <div class="page-heading about-heading header-text" style="background-image: url(assets/images/heading-6-1920x500.jpg);">

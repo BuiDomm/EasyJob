@@ -31,21 +31,32 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.0/css/all.min.css" integrity="sha512-3PN6gfRNZEX4YFyz+sIyTF6pGlQiryJu9NlGhu9LrLMQ7eDjNgudQoFDK3WSNAayeIKc6B8WXXpo4a7HqxjKwg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>  
     </head>
-    <style>
+<style>
         .responsive-nav {
             width: 50%;
+        }
+        @media (max-width: 3840px) {
+            .responsive-nav {
+                width: 15%;
+            }
+        }
+        @media (max-width: 2560px) {
+            .responsive-nav {
+                width: 25%;
+            }
+        }
+        @media (max-width: 1920px) {
+            .responsive-nav {
+                width: 35%;
+            }
         }
         @media (max-width: 1440px) {
             .responsive-nav {
                 width: 50%;
             }
         }
-        @media(max-width: 1920px) {
-            .responsive-nav {
-                width: 35%;
-            }
-        }
     </style>
+    
     <div id="preloader">
         <div class="jumper">
             <div></div>
@@ -175,7 +186,7 @@
 
 
                         <li  class="nav-item col p-3 text-center">
-                            <a style="border-radius: 15px" class="nav-link active btn-success "data-toggle="tab" href="#accept" role="tab" >Job Accept</a>
+                            <a style="border-radius: 15px;" class="nav-link active btn-success "data-toggle="tab" href="#accept" role="tab" >Job Accept</a>
                         </li>
 
                         <li class="nav-item col p-3 text-center">

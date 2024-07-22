@@ -102,9 +102,15 @@ public class GetSorttedReceiverList extends HttpServlet {
             jsonObject.addProperty("url", ca.getUrl());
             jsonObject.addProperty("nameCompany", ca.getNameCompany());
         } else {
+       try {
             CVDAO cd = new CVDAO();
             CVProfile cp = cd.findByIdUser(user.getIdUser());
             jsonObject.addProperty("url", "/easyjob/assets/avatars/" + cp.getAvatar());
+       
+       }catch(Exception e){ 
+           jsonObject.addProperty("url","./assets/images/defaultImg.png");
+           
+       }
             jsonObject.addProperty("nameCompany", ""); // Để trống nếu không phải công ty
         }
 

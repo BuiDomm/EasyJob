@@ -7,6 +7,7 @@ package controller;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import dao.CVDAO;
 import dao.CompanyDAO;
 import dao.MessagessDAO;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.util.List;
+import model.CVProfile;
 import model.Company;
 import model.User;
 
@@ -69,16 +71,27 @@ public class SeachNameListMessage extends HttpServlet {
     }
 
     private JsonObject convertAccountToJson(User user) {
-        JsonObject jsonObject = new JsonObject();
+                JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("accountID", user.getIdUser());
-        jsonObject.addProperty("name", user.getFirstName());
         jsonObject.addProperty("fullName", user.getFirstName() + " " + user.getLastName());
+        jsonObject.addProperty("roleId", user.getRoleId());
 
         if (user.getRoleId() == 3) {
             CompanyDAO comDAO = new CompanyDAO();
             Company ca = comDAO.findCompanyByUserId(user.getIdUser());
             jsonObject.addProperty("url", ca.getUrl());
-
+            jsonObject.addProperty("nameCompany", ca.getNameCompany());
+        } else {
+       try {
+            CVDAO cd = new CVDAO();
+            CVProfile cp = cd.findByIdUser(user.getIdUser());
+            jsonObject.addProperty("url", "/easyjob/assets/avatars/" + cp.getAvatar());
+       
+       }catch(Exception e){ 
+           jsonObject.addProperty("url","./assets/images/defaultImg.png");
+           
+       }
+            jsonObject.addProperty("nameCompany", ""); // Để trống nếu không phải công ty
         }
 
         return jsonObject;

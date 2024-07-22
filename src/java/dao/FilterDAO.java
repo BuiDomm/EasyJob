@@ -49,13 +49,7 @@ public class FilterDAO {
             query.append(" AND J.CategoryID = ?");
         }
 
-        if (experienceOption == 2) {
-            query.append(" AND J.ExperienceYears >= 0 AND J.ExperienceYears <= 2");
-        } else if (experienceOption == 4) {
-            query.append(" AND J.ExperienceYears > 2 AND J.ExperienceYears <= 5");
-        } else if (experienceOption == 6) {
-            query.append(" AND J.ExperienceYears > 5");
-        }
+
 
         if (location != null) {
             query.append(" AND J.[Location] LIKE ?");
@@ -142,12 +136,12 @@ if (location != null) {
             query.append(" AND J.CategoryID = ?");
         }
 
-        if (experienceOption == 1) {
-            query.append(" AND J.ExperienceYears >= 0 AND J.ExperienceYears <= 1");
-        } else if (experienceOption == 2) {
-            query.append(" AND J.ExperienceYears > 1 AND J.ExperienceYears <= 2");
-        } else if (experienceOption == 3) {
-            query.append(" AND J.ExperienceYears > 2");
+        if (experienceOption == 2) {
+            query.append(" AND J.ExperienceYears >= 0 AND J.ExperienceYears <= 2");
+        } else if (experienceOption == 4) {
+            query.append(" AND J.ExperienceYears > 2 AND J.ExperienceYears <= 5");
+        } else if (experienceOption == 6) {
+            query.append(" AND J.ExperienceYears > 5");
         }
 
         if (location != null) {

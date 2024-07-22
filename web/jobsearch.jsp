@@ -29,6 +29,24 @@
         <link rel="stylesheet" href="assets/css/style.css">
 
     </head>
+    <style>
+             #button-submit {
+                border: 1px #fff solid;
+                border-radius: 3px;
+                background-color: #FFF;
+                transition: ease 0.5s;
+
+            }
+            #button-submit:hover {
+              cursor: pointer;
+                background-color: #000;
+                color:#007bff;
+                border-color: #000;
+                font-size: 18px;
+               
+            }
+        
+    </style>
 
     <body>
 
@@ -182,11 +200,10 @@
                                     </label>
                                 </div>
 
-                                <button type="submit" class="text-black w-100 p-lg-1" style="background-color: #FFF; border: none;">submit</button>
+                                        <button type="submit" class="text-black w-100 p-lg-1" id="button-submit">Submit</button>
                             </form>
                         </div>
                     </div>
-
 
 
                     <div class="col-md-9">
@@ -206,7 +223,7 @@
                                                 <strong style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" title="Posted on" >Years of Experience: ${item.yearEx}</strong>
                                                 <!--<strong title="Type"><i class="fa fa-file"></i> Contract</strong> &nbsp;&nbsp;&nbsp;&nbsp;-->
                                                 <br>
-                                                <p title="Location" class="fs-4" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-weight: bolder;"> <i class="fa fa-map-marker"></i>Â  ${item.location}</p>
+                                                <p title="Location" class="fs-4" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;font-weight: bolder;"> <i class="fa fa-map-marker"></i>  ${item.location}</p>
                                             </small>
                                         </div>
                                     </div>

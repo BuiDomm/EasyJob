@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.ChooseAnswerDAO;
 import dao.CompanyDAO;
 import dao.JobApplyDAO;
 import dao.JobDAO;
@@ -76,6 +77,9 @@ public class JobDetailForEmployer extends HttpServlet {
         for (Apply apply : listApply) {
             System.out.println(apply.getCvProfile().getUserID());
         }
+        
+        ChooseAnswerDAO chd = new ChooseAnswerDAO();
+        request.setAttribute("status", chd);
          request.setAttribute("dao", dao);
         request.setAttribute("listApply", listApply);
         request.setAttribute("com", com);

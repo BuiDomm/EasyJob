@@ -93,7 +93,7 @@
                             <h3 style="color: red">${notice}</h3>
 
                             <div class="form-submit">
-                                <a href="homeemployeer.jsp">  <input type="" value="Back Home" class="submit" name="reset" id="reset" /></a>
+                                <a href="employerhomeservlet">  <input type="" value="Back Home" class="submit" name="reset" id="reset" /></a>
                                 <input type="submit" value="Submit Form" class="submit" name="submit" id="submit" />
                             </div>
                         </form>

@@ -111,9 +111,15 @@ public class CreateMessage extends HttpServlet {
         jsonObject.addProperty("name", user.getFirstName());
         // check neu nguoi gui la jobseeker thi co hinh anh nay
         if (user.getRoleId() == 2) {
+          try{
             CVDAO cvd = new CVDAO();
             CVProfile cp = cvd.findByIdUser(user.getIdUser());
             jsonObject.addProperty("url", "/easyjob/assets/avatars/" + cp.getAvatar());
+          
+          } catch(Exception e) { 
+             jsonObject.addProperty("url", "./assets/images/defaultImg.png");
+          
+          }
             // check neu nguoi gui la employer thi co hinh anh nay
         } else if (user.getRoleId() == 3) {
             CompanyDAO companyDAO = new CompanyDAO();

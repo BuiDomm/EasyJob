@@ -54,6 +54,9 @@
   color: #333;
   line-height: 1.8;
   flex: 1;
+  overflow: hidden;            /* Ẩn phần nội dung vượt quá chiều rộng */
+  text-overflow: ellipsis;     /* Thêm dấu chấm ba ở cuối dòng bị cắt */
+  white-space: inherit;       
 }
 
 .jobs-list-container .details-btn {

@@ -13,8 +13,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-          <link rel="icon" href="assets/images/android-chrome-192x192.png">
-            <title>EasyJob | Chat</title>
+        <link rel="icon" href="assets/images/android-chrome-192x192.png">
+        <title>EasyJob | Chat</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -218,7 +218,8 @@
     </script>
 
     <script>
-        var ws = new WebSocket("ws://localhost:8080/easyjob/messageListAccount/" + userId);
+        var ws = new WebSocket("wss://6cfa-171-255-165-233.ngrok-free.app/easyjob/messageListAccount/" + userId);
+
 
         ws.onopen = function () {
             // Connection is open
@@ -236,6 +237,13 @@
         ws.onclose = function () {
             // Connection is closed
         };
+        
+        
+            function scrollToBottom() {
+            var chatContainer = document.getElementById('chat-messages');
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+        
 
         var userId = 0;
         // click vô thì hiện tin nahwns cũ
@@ -298,6 +306,7 @@
                                                                     <span   class="input-group-text send_btn" value="` + response.receiver.accountID + `" onclick="postMessage(` + response.receiver.accountID + `);" ><i class="fas fa-location-arrow"></i></span>
                                                                 </div>`);
                     formSendDiv.append(formMessage);
+                    
 
                     // sự kiện enter với keycode =13    
                     $('#content').on('keypress', function (e) {
@@ -334,6 +343,7 @@
                         messageDiv.append(imgDiv);
                         messageDiv.append(contentDiv);
                         chatMessagesDiv.append(messageDiv);
+                        scrollToBottom();
                     }
 
                     $('#container-chat').removeClass('d-none');
@@ -351,7 +361,8 @@
                         userId = senderID + '' + receiverID;
                     }
 
-                    ws = new WebSocket("ws://localhost:8080/easyjob/messageListAccount/" + userId);
+                    ws = new WebSocket("wss://6cfa-171-255-165-233.ngrok-free.app/easyjob/messageListAccount/" + userId);
+
                     setupWebSocket();
                     console.log("done");
                     console.log(ws);
@@ -369,6 +380,60 @@
                 document.querySelector('#container-chat').classList.add('d-none');
             }
         });
+        
+        
+        
+         function updateReceiverListSender() {
+            $.ajax({
+                url: "getSortedReceiverList",
+                type: "GET",
+                dataType: 'json',
+                success: function (response) {
+                    var contactsBody = $('.contacts_body');
+                    var contactsList = $('<ul class="contacts"></ul>');
+
+                    response.receiver.forEach(function (a, index) {
+                        var imgSrc = a.url == null ? 'https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg' : a.url;
+
+
+                        var companyName = a.nameCompany || "";
+                        if (index === 0) {
+                            var li = $('<li class="contact-item active-chat"></li>');
+                        } else
+                            var li = $('<li class="contact-item "></li>');
+                        li.click(function () {
+                            show(a.accountID, response.sender.accountID);
+                        });
+
+                        var divFlex = $('<div class="d-flex bd-highlight"></div>');
+                        var divImgCont = $('<div class="img_cont"></div>');
+                        var img = $('<img class="rounded-circle user_img">').attr('src', imgSrc);
+                        var onlineIcon = $('<span class="online_icon"></span>');
+
+                        divImgCont.append(img).append(onlineIcon);
+
+                        var divUserInfo = $('<div class="user_info"></div>');
+                        var spanName = $('<span></span>').text(a.firstName + ' ' + a.lastName);
+                        var pCompanyName = $('<p></p>').text(companyName);
+
+                        divUserInfo.append(spanName).append(pCompanyName);
+
+                        divFlex.append(divImgCont).append(divUserInfo);
+                        li.append(divFlex);
+
+                        contactsList.append(li);
+                    });
+
+
+                    contactsBody.empty().append(contactsList);
+
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    console.log(textStatus, errorThrown);
+                }
+            });
+        }
+        
 
         function formatDate(dateString) {
             // Chuyển chuỗi ngày tháng thành đối tượng Date
@@ -443,6 +508,7 @@
                             </div>`;
 
                     chatMessagesDiv.append(messageDiv);
+                    
 
                     // Prepare received messages but do not append to 'chat-message-left'
                     messageDiv = `<div class="d-flex justify-content-start mb-4">
@@ -461,6 +527,7 @@
 
                     // Cập nhật lại danh sách người gửi
                     updateReceiverListSender();
+                    scrollToBottom();
 //                    updateSenderListReceiver(receiverId);
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
@@ -479,7 +546,9 @@
                     var contactsList = $('<ul class="contacts"></ul>');
 
                     response.receiver.forEach(function (a, index) {
-                        var imgSrc = a.url;
+                        var imgSrc = a.url == null ? 'https://st3.depositphotos.com/9998432/13335/v/450/depositphotos_133352156-stock-illustration-default-placeholder-profile-icon.jpg' : a.url;
+
+
                         var companyName = a.nameCompany || "";
                         if (index === 0) {
                             var li = $('<li class="contact-item active-chat"></li>');
@@ -566,7 +635,7 @@
                 }
             });
         }
-
+    
 
         // bắt sự enter
 
@@ -595,7 +664,6 @@
                 // Connection is closed
             };
         }
-
 
     </script>
 </html>

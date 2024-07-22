@@ -31,7 +31,26 @@
 
             .contact-form select, .contact-form .form-control {
                 border: 1px solid black !important;
+
             }
+
+
+            #button-submit {
+                border: 1px #fff solid;
+                border-radius: 3px;
+                background-color: #FFF;
+                transition: ease 0.5s;
+
+            }
+            #button-submit:hover {
+              cursor: pointer;
+                background-color: #000;
+                color:#007bff;
+                border-color: #000;
+                font-size: 18px;
+               
+            }
+
         </style>
     </head>
 
@@ -105,7 +124,7 @@
 
 
                                 <select name="location">
-                                    <option  value=" ">Select Location</option>
+                                    <option value="">Select Location</option>
                                     ${location}
                                     <c:forEach var="l" items="${listLocation}" >                       
                                         <option  value="${l.location}" ${(l.location == location) ? selected : ""}>${l.location}</option>
@@ -155,37 +174,36 @@
                                 <h5 style="margin-bottom: 15px">Years of experience</h5>
                                 <div>
                                     <label>
-                                        <input name="year" value="0" type="radio">
+                                        <input name="year" value="0" type="radio" ${(year == 0) ? 'checked' : ''}>
 
-                                        <small value="1">All</small>
+                                        <small>All</small>
+                                    </label>
+                                </div>
+                                <div>
+                                    <label>
+                                        <input name="year" value="2" type="radio" ${(year == 2) ? 'checked' : ''}>
+
+                                        <small>< 2 Year</small>
                                     </label>
                                 </div>
 
                                 <div>
                                     <label>
-                                        <input name="year" value="1" type="radio">
+                                        <input  name="year" value="4" type="radio" ${(year == 4) ? 'checked' : ''}>
 
-                                        <small value="1">< 1 Year</small>
+                                        <small>2 - 5 Year</small>
                                     </label>
                                 </div>
 
                                 <div>
                                     <label>
-                                        <input value="2" type="radio">
+                                        <input  name="year" value="6" type="radio" ${(year == 6) ? 'checked' : ''}>
 
-                                        <small>1 - 2 Year</small>
+                                        <small>> 5 Year</small>
                                     </label>
                                 </div>
 
-                                <div>
-                                    <label>
-                                        <input value="3" type="radio">
-
-                                        <small>> 3 Year</small>
-                                    </label>
-                                </div>
-
-                                <button type="submit" class="text-black w-100 p-lg-1 " style="background-color: #FFF; border: none;">submit</button>
+                                <button type="submit" class="text-black w-100 p-lg-1" id="button-submit" >Submit</button>
                             </form>
                         </div>
                     </div>

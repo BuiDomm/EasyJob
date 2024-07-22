@@ -148,6 +148,7 @@ html {
     background-color: #82ccdd;
     padding: 10px;
     position: relative;
+  
 }
 .msg_cotainer_send {
     margin-top: auto;
@@ -157,6 +158,7 @@ html {
     background-color: #78e08f;
     padding: 10px;
     position: relative;
+  
 }
 .msg_time {
     position: absolute;
@@ -167,7 +169,7 @@ html {
 }
 .msg_time_send {
     position: absolute;
-    right: 0;
+    right: -26px;
     bottom: -15px;
     color: rgba(255, 255, 255, 0.5);
     font-size: 10px;
@@ -247,4 +249,9 @@ html {
 .active-chat {
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 12px;
+}
+
+
+#chat-messages {
+    overflow-y: auto;
 }

@@ -113,10 +113,14 @@ public class MessageDetail extends HttpServlet {
             CompanyDAO comDAO = new CompanyDAO();
             Company ca = comDAO.findCompanyByUserId(user.getIdUser());
             jsonObject.addProperty("url", ca.getUrl());
-        }else { 
-            CVDAO cd = new CVDAO();
-            CVProfile cp =cd.findByIdUser(user.getIdUser());
-             jsonObject.addProperty("url","/easyjob/assets/avatars/"+ cp.getAvatar());
+        } else {
+            try {
+                CVDAO cd = new CVDAO();
+                CVProfile cp = cd.findByIdUser(user.getIdUser());
+                jsonObject.addProperty("url", "/easyjob/assets/avatars/" + cp.getAvatar());
+            } catch (Exception e) {
+                jsonObject.addProperty("url", "./assets/images/defaultImg.png");
+            }
         }
 //    jsonObject.addProperty("img", user.getImg());
 

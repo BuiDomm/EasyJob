@@ -30,12 +30,12 @@
                 <span class="mainHeading">Enter OTP</span>
                 <p class="otpSubheading">We have sent a verification code to your mobile number</p>
                 <div class="inputContainer">
-                    <input autocomplete="" required="required" maxlength="1" type="text" class="otp-input" name="otp-input1">
-                    <input autocomplete="" required="required" maxlength="1" type="text" class="otp-input" name="otp-input2">
-                    <input autocomplete="" required="required" maxlength="1" type="text" class="otp-input" name="otp-input3">
-                    <input autocomplete="" required="required" maxlength="1" type="text" class="otp-input" name="otp-input4"> 
-                    <input autocomplete="" required="required" maxlength="1" type="text" class="otp-input" name="otp-input5"> 
-                    <input autocomplete="" required="required" maxlength="1" type="text" class="otp-input" name="otp-input6"> 
+                    <input autocomplete="off" required="required" maxlength="1" type="text" class="otp-input" name="otp-input1">
+                    <input autocomplete="off" required="required" maxlength="1" type="text" class="otp-input" name="otp-input2">
+                    <input autocomplete="off" required="required" maxlength="1" type="text" class="otp-input" name="otp-input3">
+                    <input autocomplete="off" required="required" maxlength="1" type="text" class="otp-input" name="otp-input4"> 
+                    <input autocomplete="off" required="required" maxlength="1" type="text" class="otp-input" name="otp-input5"> 
+                    <input autocomplete="off" required="required" maxlength="1" type="text" class="otp-input" name="otp-input6"> 
 
 
                 </div>

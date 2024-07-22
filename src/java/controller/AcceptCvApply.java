@@ -31,7 +31,7 @@ public class AcceptCvApply extends HttpServlet {
         String mess = company + " approved your Cv for Job : " +title ;
         dao.accpetCv(applyid);
         dao.insertNotificationApprovel(userApply, mess, 1);
-        response.sendRedirect("listApplyCv");
+        response.sendRedirect("listApplyCv?status=Accept");
     } 
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
